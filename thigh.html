@@ -1432,7 +1432,8 @@ const ThighModel = (() => {
     const foot=sweep([[0,499,0],[0,516,-7],[0,520,16],[0,519,44]].map(turn),[[11,10],[15,10],[20,8],[14,6]]);
     return {bones,muscles,tendons,foot,knee:[0,KNEE,0],patella,insertion,angle,drive};
   }
-  const view=(p,camera)=>camera==='back'?[-p[0],p[1],-p[2]]:camera==='side'?[p[2],p[1],-p[0]]:p.slice();
+  const cameraCos=Math.cos(32*Math.PI/180),cameraSin=Math.sin(32*Math.PI/180);
+  const view=(p,camera)=>camera==='back'?[-p[0]*cameraCos+p[2]*cameraSin,p[1],-p[0]*cameraSin-p[2]*cameraCos]:camera==='side'?[p[2],p[1],-p[0]]:[p[0]*cameraCos+p[2]*cameraSin,p[1],-p[0]*cameraSin+p[2]*cameraCos];
   function verify(){
     let finite=true,femurFixed=true,kneeFixed=true,lowerLegRigid=true;
     const initial=frame(0),fixed=JSON.stringify(initial.bones.find(b=>b.id==='femur').rows);
@@ -1669,14 +1670,14 @@ const ThighRenderer = (() => {
     if(camera==='side'||transparent.checked){const calf=[byId.get('gastrocnemius-medial'),byId.get('gastrocnemius-lateral')].sort((a,b)=>b.area-a.area)[0];if(calf?.area>45)leader('calf','장딴지근',.14,437,calf.anchor);}
     const rounded=Math.round(angle),text=rounded===0?'펴짐 0°':`굽힘 ${rounded}°`;
     value.textContent=text;slider.value=rounded;slider.setAttribute('aria-valuetext',text);
-    root.dataset.angle=String(f(angle));root.dataset.camera=camera;root.dataset.drive=String(f(drive));root.dataset.revision='reference-thigh-v3';
+    root.dataset.angle=String(f(angle));root.dataset.camera=camera;root.dataset.drive=String(f(drive));root.dataset.revision='oblique-reference-thigh-v4';root.dataset.cameraYaw=String(camera==='side'?90:32);
     root.dataset.knee=ThighModel.view(m.knee,camera).map(f).join(',');
   }
   function sync(){
     play.textContent=playing?'일시정지':'재생';play.setAttribute('aria-pressed',String(playing));
     root.classList.toggle('no-fibers',!fibers.checked);root.classList.toggle('transparent',transparent.checked);
     buttons.forEach(([b,v])=>b.setAttribute('aria-pressed',String(v===camera)));
-    const view=camera==='front'?'정면':camera==='back'?'후면':'측면';
+    const view=camera==='front'?'앞쪽에서 약간 비스듬하게':camera==='back'?'뒤쪽에서 약간 비스듬하게':'측면';
     const action=drive>.04?'굽힘 · 햄스트링 단축 예시':drive<-.04?'폄 · 대퇴사두근 단축 예시':'무릎 펴짐–굽힘';
     caption.textContent=`${view} · 고관절 고정 · ${action}`;
   }
