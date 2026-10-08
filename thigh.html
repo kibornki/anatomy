@@ -1,0 +1,1690 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="referrer" content="no-referrer"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline'; img-src data:; object-src 'none'; base-uri 'none'"><title>허벅지 근육과 무릎 굽힘</title><style>:root {
+  color-scheme: light dark;
+  background-color: var(
+    --background,
+    var(--color-background-primary, light-dark(rgb(255 255 255), rgb(24 24 24)))
+  ) !important;
+
+  /* Agent-facing contract; keep in sync with SKILL.md. */
+  --background: var(
+    --color-background-primary,
+    light-dark(rgb(255 255 255), rgb(24 24 24))
+  );
+  --foreground: var(
+    --color-text-primary,
+    light-dark(rgb(26 28 31), rgb(255 255 255))
+  );
+  --card: color-mix(in oklab, var(--foreground) 5%, var(--background));
+  --card-foreground: var(
+    --color-text-primary,
+    light-dark(rgb(26 28 31), rgb(255 255 255))
+  );
+  --popover: var(
+    --color-background-secondary,
+    light-dark(rgb(255 255 255), rgb(45 45 45))
+  );
+  --popover-foreground: var(
+    --color-text-primary,
+    light-dark(rgb(26 28 31), rgb(255 255 255))
+  );
+  --primary: var(
+    --color-text-info,
+    light-dark(rgb(51 156 255), rgb(131 195 255))
+  );
+  --primary-foreground: var(
+    --color-text-inverse,
+    light-dark(rgb(255 255 255), rgb(13 13 13))
+  );
+  --secondary: var(
+    --color-background-secondary,
+    light-dark(rgb(255 255 255 / 96%), rgb(54 54 54 / 96%))
+  );
+  --secondary-foreground: var(
+    --color-text-primary,
+    light-dark(rgb(26 28 31), rgb(255 255 255))
+  );
+  --muted: color-mix(in srgb, var(--foreground) 10%, transparent);
+  --muted-foreground: var(
+    --color-text-secondary,
+    light-dark(rgb(26 28 31 / 49.4%), rgb(255 255 255 / 49.8%))
+  );
+  --accent: var(
+    --color-background-info,
+    light-dark(rgb(229 242 255), rgb(13 39 63))
+  );
+  --accent-foreground: var(
+    --color-text-info,
+    light-dark(rgb(51 156 255), rgb(131 195 255))
+  );
+  --destructive: var(
+    --color-text-warning,
+    light-dark(rgb(226 85 7), rgb(255 133 73))
+  );
+  --border: var(
+    --color-border-secondary,
+    light-dark(rgb(26 28 31 / 8%), rgb(255 255 255 / 8.2%))
+  );
+  --input: var(
+    --color-border-primary,
+    light-dark(
+      rgb(26 28 31 / 11.8%),
+      color-mix(in oklab, rgb(0 0 0) 10%, transparent)
+    )
+  );
+  --ring: var(
+    --color-ring-primary,
+    light-dark(rgb(51 156 255), rgb(131 195 255 / 76%))
+  );
+  --font-size-base: var(--font-text-md-size, 14px);
+  --blue: light-dark(rgb(51 156 255), rgb(51 156 255));
+  --orange: light-dark(rgb(226 85 7), rgb(251 106 34));
+  --green: light-dark(rgb(0 162 64), rgb(64 201 119));
+  --red: light-dark(rgb(224 46 42), rgb(255 103 100));
+  --purple: light-dark(rgb(146 79 247), rgb(173 123 249));
+  --yellow: light-dark(rgb(255 195 0), rgb(255 210 64));
+  --viz-series-1: var(--primary);
+  --viz-series-2: light-dark(rgb(243 136 59), rgb(245 154 86));
+  --viz-series-3: light-dark(rgb(93 201 119), rgb(116 213 139));
+  --viz-series-4: light-dark(rgb(235 119 177), rgb(240 143 192));
+  --viz-series-5: light-dark(rgb(155 121 236), rgb(170 145 239));
+  --viz-series-6: light-dark(rgb(58 185 177), rgb(90 203 194));
+
+  /* Internal implementation variables; not part of the agent contract. */
+  --font-sans: -apple-system, system-ui, "Segoe UI", sans-serif;
+  --font-mono:
+    ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, "Liberation Mono",
+    monospace;
+  --font-size-normal: max(11px, var(--font-size-base));
+  --font-size-tooltip: calc(var(--font-size-base) - 1px);
+  --font-size-small: max(11px, calc(var(--font-size-base) - 2px));
+  --font-size-h1: calc(var(--font-size-normal) * 1.7142857143);
+  --font-size-h2: calc(var(--font-size-normal) * 1.4285714286);
+  --font-size-h3: calc(var(--font-size-normal) * 1.2857142857);
+  --font-weight-normal: 430;
+  --font-weight-medium: 500;
+  --icon-size: 16px;
+  --line-height-normal: calc(var(--font-size-normal) * 1.5);
+  --line-height-tooltip: calc(var(--font-size-tooltip) * 1.4285714286);
+  --line-height-small: calc(var(--font-size-small) + 4px);
+  --corner-shape: round;
+  --radius: var(--border-radius-lg, 10px);
+  --radius-sm: calc(var(--radius) * 0.6);
+  --radius-md: calc(var(--radius) * 0.8);
+  --radius-lg: var(--radius);
+  --radius-2xl: calc(var(--radius) * 1.6);
+  --radius-full: 9999px;
+  --shadow-sm: 0 1px 2px -1px rgb(0 0 0 / 8%);
+  --checkmark-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 17 17'%3E%3Cpath d='M12.8961 3.64101C13.1297 3.41418 13.4984 3.37523 13.7779 3.56581C14.0571 3.75635 14.1554 4.11331 14.0299 4.41347L13.9615 4.53847L7.71151 13.7045C7.59411 13.8767 7.4063 13.9877 7.19881 14.0072C6.99136 14.0267 6.78564 13.9533 6.63826 13.806L2.88826 10.056L2.79842 9.9457C2.6192 9.67407 2.64927 9.30496 2.88826 9.06581C3.12738 8.82669 3.49647 8.79676 3.76815 8.97597L3.8785 9.06581L7.03084 12.2182L12.8053 3.74941L12.8961 3.64101Z'/%3E%3C/svg%3E");
+
+  /* Legacy aliases; not part of the current agent contract. */
+  --viz-bg: transparent;
+  --viz-panel: var(--card);
+  --viz-border: var(--border);
+  --viz-text: var(--foreground);
+  --viz-muted: var(--muted-foreground);
+  --viz-accent: var(--primary);
+  --viz-accent-text: var(--primary-foreground);
+  --viz-accent-bg: var(--accent);
+  --viz-font-size: var(--font-size-base);
+  --viz-warning: var(--destructive);
+}
+
+:root[data-theme="light"] {
+  color-scheme: light;
+}
+
+:root[data-theme="dark"] {
+  color-scheme: dark;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html > body {
+  /* Preserve MCP aliases for older inline renderers without creating :root cycles. */
+  --color-background-primary: var(
+    --background,
+    light-dark(rgb(255 255 255), rgb(24 24 24))
+  );
+  --color-text-primary: var(
+    --foreground,
+    light-dark(rgb(26 28 31), rgb(255 255 255))
+  );
+  --color-border-secondary: var(
+    --border,
+    light-dark(rgb(26 28 31 / 8%), rgb(255 255 255 / 8.2%))
+  );
+
+  margin: 0;
+  padding: var(--visualize-paint-gutter, 0px);
+  color: var(--foreground);
+  background: transparent !important;
+  font-family: var(--font-sans) !important;
+  font-size: var(--font-size-normal);
+  font-weight: var(--font-weight-normal);
+  line-height: var(--line-height-normal);
+}
+
+.cursor-interaction {
+  cursor: var(--cursor-interaction, pointer);
+}
+
+a {
+  color: color-mix(in srgb, var(--viz-accent) 80%, var(--viz-text) 20%);
+  cursor: var(--cursor-interaction, pointer);
+  font-weight: var(--font-weight-medium, 500);
+  text-decoration: none;
+  text-underline-offset: 2px;
+}
+
+a:is(:hover, :focus-visible) {
+  text-decoration-line: underline;
+  text-decoration-style: dashed;
+  text-decoration-thickness: 0.5px;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p {
+  margin-block: 0;
+}
+
+h1 {
+  font-size: var(--font-size-h1);
+  font-weight: var(--font-weight-medium);
+  line-height: 1.25;
+}
+
+h2 {
+  font-size: var(--font-size-h2);
+  font-weight: var(--font-weight-medium);
+  line-height: 1.25;
+}
+
+h3,
+h4,
+h5,
+h6 {
+  font-size: var(--font-size-h3);
+  font-weight: var(--font-weight-medium);
+  line-height: 1.3;
+}
+
+b,
+strong,
+th {
+  font-weight: var(--font-weight-medium);
+}
+
+code:not(pre code) {
+  display: inline;
+  padding: 1px 6px;
+  border-radius: var(--radius-sm);
+  corner-shape: var(--corner-shape);
+  background: var(--muted);
+  font-family: var(--font-mono);
+  font-size: 0.92em;
+  overflow-wrap: anywhere;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+  word-break: break-word;
+}
+
+.table-responsive {
+  width: 100%;
+  overflow-x: auto;
+  scrollbar-width: thin;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  color: var(--foreground);
+  font: inherit;
+  text-align: start;
+}
+
+.table :is(th, td) {
+  padding-block: 10px;
+  padding-inline: 0 24px;
+  overflow-wrap: anywhere;
+  border-bottom: 1px solid var(--border);
+  text-align: start;
+  vertical-align: top;
+}
+
+.table-responsive > .table :is(th, td) {
+  overflow-wrap: break-word;
+}
+
+.table :is(th, td):last-child {
+  padding-inline-end: 0;
+}
+
+.table :is(caption, thead th) {
+  font-weight: 600;
+}
+
+.table thead th {
+  padding-block: 8px;
+  border-bottom-color: color-mix(in srgb, var(--foreground) 16%, transparent);
+}
+
+.table tbody tr:last-child :is(th, td) {
+  border-bottom: 0;
+}
+
+.table.table-sm :is(th, td) {
+  padding-block: 6px;
+}
+
+.table.table-sm :is(th, td):not(:last-child) {
+  padding-inline-end: 16px;
+}
+
+.table :is(.text-end, [align="right"]) {
+  text-align: end;
+  font-variant-numeric: tabular-nums;
+}
+
+.table :is(.text-center, [align="center"]) {
+  text-align: center;
+}
+
+.table .text-nowrap {
+  white-space: nowrap;
+}
+
+#widget {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 100%;
+  padding: 0;
+  background: transparent !important;
+}
+
+.card {
+  min-width: 0;
+  padding: 12px;
+  overflow: hidden;
+  overflow-wrap: break-word;
+  border-radius: var(--radius-2xl);
+  corner-shape: var(--corner-shape);
+  color: var(--card-foreground);
+  background: var(--card);
+}
+
+.widget {
+  min-width: 0;
+  overflow: hidden;
+  border: 0;
+  border-radius: var(--radius-lg);
+  corner-shape: var(--corner-shape);
+  box-shadow: 0 0 0 0.5px var(--border-strong, var(--border));
+  color: var(--foreground);
+  background: var(--background);
+}
+
+#widget > :not(.card, .widget, .progress) {
+  width: 100% !important;
+  max-width: none !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+.tooltip {
+  position: fixed;
+  z-index: 50;
+  top: 0;
+  left: 0;
+  width: max-content;
+  max-width: min(
+    20rem,
+    var(--tooltip-available-width, calc(100vw - 10px)),
+    calc(100vw - 10px)
+  );
+  max-height: min(
+    var(--tooltip-available-height, calc(100vh - 10px)),
+    calc(100vh - 10px)
+  );
+  padding: 4px 8px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  corner-shape: var(--corner-shape);
+  color: var(--popover-foreground);
+  background: var(--popover);
+  box-shadow: none;
+  font-size: var(--font-size-tooltip);
+  line-height: var(--line-height-tooltip);
+  overflow-wrap: break-word;
+  white-space: normal;
+  pointer-events: none;
+  user-select: none;
+}
+
+.viz-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(max(180px, 24%), 1fr));
+  gap: 10px;
+}
+
+.viz-stat {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.viz-stat-value {
+  font-size: var(--font-size-h2);
+  font-weight: var(--font-weight-medium);
+  line-height: 1.25;
+}
+
+.viz-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+}
+
+hr {
+  width: 100%;
+  height: 1px;
+  margin-block: 6px;
+  border: 0;
+  background: var(--border);
+}
+
+.nav {
+  display: flex;
+  min-width: 0;
+  align-items: center;
+  gap: 4px;
+}
+
+.progress {
+  display: flex;
+  height: 8px;
+  margin-block: calc((var(--line-height-normal, 1.5em) - 8px) / 2);
+  overflow: hidden;
+  border: 0;
+  border-radius: var(--radius-full);
+  background: var(--muted);
+}
+
+.progress-bar:only-child {
+  border-radius: var(--radius-full);
+}
+
+.progress-bar {
+  height: 100%;
+  flex-shrink: 0;
+  border: 0;
+  background: var(--viz-series-1);
+}
+
+.viz-badge {
+  padding: 3px 8px;
+  border-radius: var(--radius-full);
+  color: var(--accent-foreground);
+  background: var(--accent);
+  font-weight: var(--font-weight-medium);
+}
+
+small,
+.text-small,
+.viz-badge {
+  font-size: var(--font-size-small);
+  line-height: var(--line-height-small);
+}
+
+.text-muted {
+  color: var(--muted-foreground);
+}
+
+.tabular-nums {
+  font-variant-numeric: tabular-nums;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.viz-controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+}
+
+.viz-controls > .form-label {
+  display: grid;
+  min-width: min(100%, 260px);
+  flex: 1 1 280px;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: baseline;
+  gap: 2px 12px;
+  margin-bottom: 0;
+}
+
+.viz-controls > .form-label > :is(.form-control, .form-range, .form-select) {
+  grid-column: 1 / -1;
+}
+
+.btn,
+.nav-link,
+.form-check-input,
+.form-control,
+.form-range,
+.form-select {
+  font: inherit;
+}
+
+.btn,
+.nav-link {
+  appearance: button;
+  display: inline-flex;
+  inline-size: fit-content;
+  max-inline-size: 100%;
+  min-height: 28px;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  margin: 0;
+  padding: 0 8px;
+  -webkit-app-region: no-drag;
+  border: 1px solid var(--input);
+  border-radius: var(--radius-lg);
+  corner-shape: var(--corner-shape);
+  color: var(--secondary-foreground);
+  background: var(--secondary);
+  cursor: var(--cursor-interaction, pointer);
+  text-align: center;
+  text-decoration: none;
+  white-space: nowrap;
+  user-select: none;
+  -webkit-font-smoothing: antialiased;
+}
+
+.btn:is(.btn-block, .viz-tile) {
+  inline-size: 100%;
+}
+
+.btn.viz-tile {
+  min-width: 0;
+  overflow-wrap: anywhere;
+  white-space: normal;
+}
+
+a.btn {
+  cursor: var(--cursor-interaction, pointer);
+  text-decoration: none;
+}
+
+.btn:not(:disabled):hover,
+.nav-link:not(:disabled):not([aria-disabled="true"]):hover {
+  background: color-mix(in srgb, var(--foreground) 6%, var(--secondary));
+}
+
+.btn-primary {
+  border-color: transparent;
+  color: var(--primary-foreground);
+  background: var(--foreground);
+  background-clip: padding-box;
+}
+
+.btn-primary .text-muted {
+  color: color-mix(in srgb, var(--primary-foreground) 50%, transparent);
+}
+
+.btn-primary:not(:disabled):hover {
+  background: color-mix(in srgb, var(--foreground) 80%, transparent);
+  background-clip: padding-box;
+}
+
+.btn-ghost {
+  border-color: transparent;
+  color: var(--muted-foreground);
+  background: transparent;
+}
+
+.btn-ghost:not(:disabled):hover {
+  color: var(--foreground);
+  background: color-mix(in srgb, var(--foreground) 6%, var(--secondary));
+}
+
+.nav-pills .nav-link {
+  min-width: 0;
+  border-color: transparent;
+  color: var(--muted-foreground);
+  background: transparent;
+}
+
+.nav-justified .nav-link {
+  flex: 1 1 0;
+  overflow-wrap: anywhere;
+  white-space: normal;
+}
+
+.nav-pills .nav-link.active {
+  color: var(--foreground);
+  background: var(--muted);
+}
+
+/* Shared preview chrome; product styles stay inside each variant. */
+.viz-dotted-background {
+  background-image: radial-gradient(
+    circle,
+    color-mix(in srgb, var(--foreground) 14%, transparent) 0.8px,
+    transparent 0.8px
+  );
+  background-position: center;
+  background-size: 16px 16px;
+}
+
+.viz-carousel {
+  position: relative;
+  min-width: 0;
+}
+
+.viz-carousel:has(> .viz-carousel-controls) {
+  min-height: calc(60px + var(--viz-carousel-picker-height, 0px));
+  padding-bottom: 60px;
+}
+
+.viz-carousel > [data-variant][hidden] {
+  display: none !important;
+}
+
+.viz-carousel > [data-variant] {
+  isolation: isolate;
+}
+
+.viz-carousel-controls {
+  --viz-carousel-hover: light-dark(
+    color-mix(in srgb, var(--foreground) 5.4%, transparent),
+    color-mix(in srgb, var(--foreground) 7.8%, transparent)
+  );
+  position: absolute;
+  z-index: 2;
+  bottom: 8px;
+  left: 50%;
+  display: flex;
+  width: max-content;
+  /* Leave room for the host's design-controls launcher at the trailing edge. */
+  max-width: calc(100% - 96px);
+  align-items: center;
+  gap: 0;
+  padding: 0;
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  color: var(--foreground);
+  background: var(--background);
+  font-family: var(--font-sans);
+  /* Match the settings dropdown chrome independently of the content font size. */
+  font-size: 13px;
+  font-weight: var(--font-weight-normal);
+  line-height: 18px;
+  transform: translateX(-50%);
+  user-select: none;
+}
+
+/* Keep authored mockup button styles out of the shared carousel chrome. */
+.viz-carousel-controls button,
+.viz-carousel-picker > summary {
+  display: flex !important;
+  height: auto !important;
+  min-height: 30px;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 4px;
+  padding: 0 6px !important;
+  -webkit-app-region: no-drag;
+  border: 0 !important;
+  border-radius: 14px !important;
+  color: inherit !important;
+  background: transparent !important;
+  font: inherit !important;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.viz-carousel-controls > button,
+.viz-carousel-picker > summary {
+  position: relative;
+  isolation: isolate;
+}
+
+.viz-carousel-controls > button {
+  --icon-size: 16px;
+  width: 30px !important;
+  padding: 0 !important;
+}
+
+.viz-carousel-picker > summary {
+  padding-inline: 12px !important;
+}
+
+.viz-carousel-controls .viz-carousel-caret {
+  width: 14px;
+  height: 14px;
+  flex: none;
+  margin: 0;
+  color: inherit;
+  transform: rotate(180deg);
+}
+
+.viz-carousel-controls > button > svg,
+.viz-carousel-controls .viz-carousel-caret,
+.viz-carousel-count {
+  opacity: 0.5;
+}
+
+.viz-carousel-controls > button::before,
+.viz-carousel-picker > summary::before {
+  position: absolute;
+  z-index: -1;
+  inset: 3px;
+  border-radius: 12px;
+  content: "";
+  pointer-events: none;
+}
+
+.viz-carousel-controls > button:hover::before,
+.viz-carousel-picker > summary:hover::before {
+  background: var(--viz-carousel-hover);
+}
+
+.viz-carousel-controls > button,
+.viz-carousel-controls [data-lucide],
+.viz-carousel-controls .lucide {
+  flex-shrink: 0;
+}
+
+.viz-carousel-picker {
+  min-width: 0;
+}
+
+.viz-carousel-picker > summary {
+  min-width: 0;
+  list-style: none;
+}
+
+.viz-carousel-picker > summary::-webkit-details-marker {
+  display: none;
+}
+
+.viz-carousel-count {
+  flex-shrink: 0;
+  white-space: nowrap;
+}
+
+.viz-carousel-name {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.viz-carousel-options {
+  position: absolute;
+  right: 0;
+  bottom: calc(100% + 4px);
+  left: 0;
+  display: flex;
+  max-height: 240px;
+  flex-direction: column;
+  gap: 2px;
+  overflow: auto;
+  padding: 4px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  background: var(--background);
+  box-shadow: 0 4px 12px light-dark(rgb(0 0 0 / 6%), rgb(0 0 0 / 25%));
+}
+
+.viz-carousel-options > button {
+  border-radius: max(0px, calc(var(--radius-lg) - 5px)) !important;
+  width: 100% !important;
+  min-height: 28px;
+  justify-content: flex-start !important;
+  padding: 4px 8px !important;
+  font-size: var(--font-size-small) !important;
+  text-align: start;
+  white-space: normal;
+  overflow-wrap: anywhere;
+}
+
+.viz-carousel-options > [aria-current="true"],
+.viz-carousel-options > button:hover {
+  background: var(--viz-carousel-hover) !important;
+}
+
+.btn:disabled,
+.nav-link:disabled,
+.nav-link[aria-disabled="true"] {
+  cursor: not-allowed;
+  opacity: 0.4;
+}
+
+[data-lucide] {
+  stroke-width: 1.6;
+}
+
+.form-label {
+  display: block;
+  margin-bottom: 6px;
+  color: var(--foreground);
+}
+
+.form-control {
+  display: block;
+  width: 100%;
+  min-height: 28px;
+  padding: 0 8px;
+  outline: none;
+  border: 1px solid var(--input);
+  border-radius: var(--radius-lg);
+  corner-shape: var(--corner-shape);
+  color: var(--foreground);
+  background: var(--secondary);
+}
+
+.form-control::placeholder {
+  color: var(--muted-foreground);
+}
+
+.form-control[type="file"] {
+  padding: 0;
+  overflow: hidden;
+  cursor: var(--cursor-interaction, pointer);
+}
+
+.form-control[type="file"]::file-selector-button {
+  min-height: 26px;
+  margin-right: 8px;
+  padding: 0 8px;
+  border: 0;
+  border-right: 1px solid var(--input);
+  color: var(--secondary-foreground);
+  background: var(--secondary);
+  cursor: inherit;
+  font: inherit;
+}
+
+.form-control[type="file"]:not(:disabled):hover::file-selector-button {
+  background: color-mix(in srgb, var(--foreground) 6%, var(--secondary));
+}
+
+.form-control-color[type="color"] {
+  width: 40px;
+  height: 28px;
+  padding: 3px;
+  cursor: var(--cursor-interaction, pointer);
+}
+
+.form-control-color[type="color"]::-webkit-color-swatch-wrapper {
+  padding: 0;
+}
+
+.form-control-color[type="color"]::-webkit-color-swatch {
+  border: 0;
+  border-radius: calc(var(--radius-lg) - 4px);
+  corner-shape: var(--corner-shape);
+}
+
+textarea.form-control {
+  height: auto;
+  min-height: 72px;
+  padding: 8px 10px;
+  resize: vertical;
+}
+
+.form-control:focus-visible {
+  border-color: var(--ring);
+  box-shadow: inset 0 0 0 1px var(--ring);
+}
+
+.form-control:disabled,
+.form-select:disabled {
+  cursor: not-allowed;
+  opacity: 0.4;
+}
+
+.form-select {
+  appearance: none;
+  display: block;
+  width: 100%;
+  min-height: 28px;
+  margin: 0;
+  padding: 0 32px 0 8px;
+  outline: none;
+  border: 1px solid var(--input);
+  border-radius: var(--radius-lg);
+  corner-shape: var(--corner-shape);
+  color: var(--foreground);
+  background-color: var(--secondary);
+  background-image:
+    linear-gradient(45deg, transparent 50%, var(--muted-foreground) 50%),
+    linear-gradient(135deg, var(--muted-foreground) 50%, transparent 50%);
+  background-position:
+    calc(100% - 14px) 50%,
+    calc(100% - 10px) 50%;
+  background-repeat: no-repeat;
+  background-size: 4px 4px;
+  cursor: var(--cursor-interaction, default);
+}
+
+.form-select:not(:disabled):hover {
+  background-color: color-mix(in srgb, var(--foreground) 6%, var(--secondary));
+}
+
+.form-select:focus-visible {
+  border-color: var(--ring);
+  box-shadow: inset 0 0 0 1px var(--ring);
+}
+
+.form-check {
+  display: flex;
+  min-height: 20px;
+  align-items: center;
+  gap: 6px;
+}
+
+.form-check-input {
+  appearance: none;
+  width: 14px;
+  height: 14px;
+  flex: 0 0 auto;
+  margin: 0;
+  border: 1px solid var(--input);
+  color: var(--primary-foreground);
+  background-color: transparent;
+  cursor: var(--cursor-interaction, default);
+  transition:
+    background-color 150ms,
+    border-color 150ms,
+    box-shadow 150ms;
+}
+
+.form-check:not(.form-switch) .form-check-input[type="checkbox"] {
+  border-color: var(--input);
+  border-radius: var(--radius-sm);
+  corner-shape: var(--corner-shape);
+  background-color: var(--secondary);
+  box-shadow: var(--shadow-sm);
+}
+
+.form-check:not(.form-switch)
+  .form-check-input:not(:disabled):not(:checked):hover {
+  background-color: var(--card);
+}
+
+.form-check:not(.form-switch) .form-check-input[type="checkbox"]:checked {
+  border-color: var(--primary);
+  background-color: var(--primary);
+}
+
+.form-check:not(.form-switch)
+  .form-check-input[type="checkbox"]:checked::before {
+  display: block;
+  width: 100%;
+  height: 100%;
+  background: var(--primary-foreground);
+  content: "";
+  mask: var(--checkmark-image) center / 12px 12px no-repeat;
+}
+
+.form-check-input[type="radio"] {
+  width: 14px;
+  height: 14px;
+  border-radius: var(--radius-full);
+}
+
+.form-check-input[type="radio"]:checked {
+  border: 2px solid var(--primary);
+  background:
+    radial-gradient(circle, var(--primary-foreground) 0 2.5px, transparent 3px),
+    var(--primary);
+}
+
+.form-check:not(.form-switch) .form-check-input:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 2px;
+}
+
+.form-check:not(.form-switch) .form-check-input:disabled {
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+.form-check:not(.form-switch) .form-check-input:disabled + .form-check-label {
+  cursor: not-allowed;
+}
+
+.form-switch .form-check-input:disabled,
+.form-switch .form-check-input:disabled + .form-check-label {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.form-check-label {
+  color: var(--foreground);
+  cursor: var(--cursor-interaction, default);
+}
+
+.form-switch .form-check-input {
+  position: relative;
+  width: 32px;
+  height: 20px;
+  border: 0;
+  border-radius: var(--radius-full);
+  background: var(--muted);
+  box-shadow: none;
+  transition: background-color 200ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+.form-switch .form-check-input::before {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 16px;
+  height: 16px;
+  box-sizing: border-box;
+  border: 1px solid light-dark(var(--primary-foreground), var(--foreground));
+  border-radius: var(--radius-full);
+  background: light-dark(var(--primary-foreground), var(--foreground));
+  box-shadow: var(--shadow-sm);
+  content: "";
+  transform: translate(2px, -50%);
+  transition: transform 200ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+.form-switch .form-check-input:checked {
+  background: var(--primary);
+}
+
+.form-switch .form-check-input:checked::before {
+  transform: translate(14px, -50%);
+}
+
+.form-switch .form-check-input:focus-visible {
+  box-shadow: 0 0 0 2px var(--ring);
+}
+
+.form-range {
+  appearance: none;
+  display: block;
+  width: 100%;
+  height: 28px;
+  flex: 1;
+  margin: 0;
+  padding: 0;
+  outline: none;
+  border: 0;
+  accent-color: var(--primary);
+  background: linear-gradient(
+      color-mix(in srgb, var(--foreground) 7%, transparent),
+      color-mix(in srgb, var(--foreground) 7%, transparent)
+    )
+    center / 100% 2px no-repeat;
+}
+
+.form-range::-webkit-slider-runnable-track {
+  height: 28px;
+  background: transparent;
+}
+
+.form-range::-webkit-slider-thumb {
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  margin-top: 4px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-full);
+  background: light-dark(var(--primary-foreground), var(--foreground));
+}
+
+.form-range:focus-visible::-webkit-slider-thumb {
+  border-color: var(--ring);
+  box-shadow: inset 0 0 0 1px var(--ring);
+}
+
+.form-range::-moz-range-track {
+  height: 28px;
+  background: transparent;
+}
+
+.form-range::-moz-range-thumb {
+  width: 20px;
+  height: 20px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-full);
+  background: light-dark(var(--primary-foreground), var(--foreground));
+}
+
+.form-range:focus-visible::-moz-range-thumb {
+  border-color: var(--ring);
+  box-shadow: inset 0 0 0 1px var(--ring);
+}
+
+.form-range:disabled {
+  cursor: not-allowed;
+  opacity: 0.4;
+}
+
+.btn:not(.btn-primary, .viz-tile):is(
+  [aria-pressed="true"],
+  [aria-selected="true"],
+  .is-selected
+) {
+  border-color: var(--primary);
+  color: var(--primary-foreground);
+  background: var(--primary);
+}
+
+.btn.viz-tile:is([aria-pressed="true"], [aria-selected="true"], .is-selected) {
+  border-color: var(--primary);
+  box-shadow: inset 0 0 0 1px var(--primary);
+}
+
+.btn:focus-visible,
+.nav-link:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 2px;
+}
+
+.viz-carousel-controls :is(button, summary):focus-visible {
+  outline: 2px solid var(--ring) !important;
+  outline-offset: 2px !important;
+}
+
+@media (pointer: coarse) {
+  .viz-carousel:has(> .viz-carousel-controls) {
+    min-height: calc(76px + var(--viz-carousel-picker-height, 0px));
+    padding-bottom: 76px;
+  }
+
+  .btn,
+  .nav-link,
+  .viz-carousel-controls button,
+  .viz-carousel-picker > summary,
+  .form-control,
+  .form-select {
+    min-width: 44px;
+    min-height: 44px;
+  }
+
+  /* Keep small-screen WebKit from zooming when a text field receives focus. */
+  .form-control,
+  .form-select {
+    font-size: max(16px, var(--font-size-normal));
+  }
+
+  .form-control[type="file"]::file-selector-button {
+    min-width: 44px;
+    min-height: 44px;
+  }
+
+  .form-control-color[type="color"] {
+    width: 44px;
+    height: 44px;
+  }
+
+  .form-control:is(
+    [type="date"],
+    [type="datetime-local"],
+    [type="month"],
+    [type="time"],
+    [type="week"]
+  ) {
+    min-width: 0;
+    max-width: 100%;
+    padding-block: 8px;
+  }
+
+  .form-check {
+    min-height: 44px;
+    padding-inline: 15px;
+  }
+
+  .form-check-input {
+    position: relative;
+  }
+
+  .form-check-input::after {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 44px;
+    height: 44px;
+    content: "";
+    transform: translate(-50%, -50%);
+  }
+
+  .form-check-label {
+    display: inline-flex;
+    min-width: 44px;
+    min-height: 44px;
+    align-items: center;
+  }
+
+  .form-range {
+    height: 44px;
+    touch-action: pan-y;
+  }
+
+  .form-range::-webkit-slider-runnable-track {
+    height: 44px;
+  }
+
+  .form-range::-moz-range-track {
+    height: 44px;
+  }
+
+  .form-range::-webkit-slider-thumb {
+    margin-top: 12px;
+  }
+}
+
+svg {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+#widget > svg {
+  width: 100%;
+}
+
+/* Model-authored chart rules can otherwise stretch icons after these styles load. */
+svg.lucide {
+  display: block;
+  width: var(--icon-size) !important;
+  height: var(--icon-size) !important;
+  flex: none;
+  margin: 0 !important;
+  stroke-width: 1.6;
+}
+
+.text-warning,
+.text-destructive {
+  color: var(--destructive);
+}
+
+html>body{padding:0}
+
+html{color-scheme:light;background:white!important}
+:root{--background:#fff;--foreground:#202b3b;--muted-foreground:#728095;--font-sans:"Malgun Gothic",system-ui,sans-serif}
+body{padding:16px!important;overflow-x:hidden}
+#thigh-motion{margin:0 auto;max-width:100%}
+#thigh-motion h2{padding-right:0;font-size:20px;line-height:1.4}
+button,input{accent-color:#2675db}
+</style></head><body><div id="thigh-motion">
+  <h2>허벅지 근육과 무릎 굽힘</h2>
+  <div class="text-small" id="thigh-view-caption">정면에서 본 오른쪽 다리 · 고관절 고정 · 무릎 펴짐–굽힘 120°</div>
+  <svg class="thigh-scene" role="img" aria-labelledby="thigh-title thigh-desc">
+    <title id="thigh-title">무릎을 굽힐 때 허벅지 근육의 배열 변화</title>
+    <desc id="thigh-desc">고관절과 허벅지는 고정되고 무릎 아래가 회전하는 오른쪽 다리 도해입니다. 정면, 측면, 후면에서 대퇴사두근과 햄스트링을 살펴볼 수 있습니다. 굽힘에서는 햄스트링이 짧고 두꺼워지고 대퇴사두근이 길어지며, 폄에서는 대퇴사두근의 수축을 표현합니다. 작화용 근육 덩어리 표현입니다.</desc>
+    <defs></defs>
+    <g class="thigh-drawing"><g class="thigh-volumes"></g></g>
+    <g class="thigh-labels"></g>
+  </svg>
+  <div class="thigh-legend text-small"><span><i class="quad-key"></i>대퇴사두근</span><span><i class="ham-key"></i>햄스트링</span><span><i class="deep-key"></i>봉공근·내전근</span></div>
+  <div class="thigh-controls">
+    <div class="thigh-control-top"><div class="viz-row">
+      <button type="button" class="btn btn-primary" id="thigh-play" aria-pressed="true">일시정지</button>
+      <label class="form-check"><input type="checkbox" class="form-check-input" id="thigh-fibers" checked><span class="form-check-label">근섬유</span></label>
+      <label class="form-check"><input type="checkbox" class="form-check-input" id="thigh-transparent"><span class="form-check-label">근육 반투명</span></label>
+    </div><div class="thigh-views" role="group" aria-label="보기 방향">
+      <button type="button" class="btn" id="thigh-front" aria-pressed="true">정면</button>
+      <button type="button" class="btn" id="thigh-side" aria-pressed="false">측면</button>
+      <button type="button" class="btn" id="thigh-back" aria-pressed="false">후면</button>
+    </div></div>
+    <label class="form-label" for="thigh-angle">무릎 굽힘 <output id="thigh-value" class="tabular-nums">펴짐 0°</output></label>
+    <input type="range" class="form-range" id="thigh-angle" min="0" max="120" value="0" step="1" aria-label="무릎 굽힘 각도, 0도는 펴진 상태">
+  </div>
+  <div class="text-small thigh-note">0°: 펴짐 · 120°: 굽힘 · 능동 굽힘·폄을 단순화한 작화용 도해</div>
+</div>
+<style>
+  #thigh-motion{color:var(--foreground);--quad:var(--red);--ham:var(--blue);--deep:var(--purple)}
+  #thigh-motion h2{margin-bottom:4px}
+  #thigh-motion .thigh-scene{display:block;width:100%;margin:8px 0 10px}
+  #thigh-motion .thigh-legend{display:flex;flex-wrap:wrap;gap:8px 16px;justify-content:center}
+  #thigh-motion .thigh-legend span{display:inline-flex;align-items:center;gap:6px}
+  #thigh-motion .thigh-legend i{width:10px;height:10px;border-radius:50%}
+  #thigh-motion .quad-key{background:var(--quad)}#thigh-motion .ham-key{background:var(--ham)}#thigh-motion .deep-key{background:var(--deep)}
+  #thigh-motion .thigh-controls{display:grid;gap:12px;margin:18px 0 12px}
+  #thigh-motion .thigh-control-top{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+  #thigh-motion .thigh-views{display:flex;gap:4px;margin-left:auto}
+  #thigh-motion .thigh-views .btn{padding:5px 12px;border:1px solid color-mix(in srgb,var(--muted-foreground) 30%,var(--background));color:var(--foreground);background:var(--background)}
+  #thigh-motion .thigh-views .btn[aria-pressed="true"]{background:var(--foreground);color:var(--background);border-color:var(--foreground)}
+  #thigh-motion .form-label{display:flex;justify-content:space-between}#thigh-motion .thigh-note{color:var(--muted-foreground)}
+  #thigh-motion .bone{fill:var(--muted);stroke:var(--foreground);stroke-width:1.25;stroke-linejoin:round}
+  #thigh-motion .muscle{stroke:var(--foreground);stroke-opacity:.65;stroke-width:1.1;stroke-linejoin:round}
+  #thigh-motion .quad{fill:color-mix(in srgb,var(--quad) 62%,var(--background))}
+  #thigh-motion .ham{fill:color-mix(in srgb,var(--ham) 60%,var(--background))}
+  #thigh-motion .aux{fill:color-mix(in srgb,var(--deep) 48%,var(--background))}
+  #thigh-motion .calf{fill:color-mix(in srgb,var(--green) 58%,var(--background))}
+  #thigh-motion .lower{fill:color-mix(in srgb,var(--muted-foreground) 32%,var(--background))}
+  #thigh-motion .tendon{fill:var(--background);stroke:var(--foreground);stroke-width:1.15}
+  #thigh-motion .fiber{fill:none;stroke:var(--foreground);stroke-opacity:.32;stroke-width:.75}
+  #thigh-motion .thigh-labels{fill:var(--foreground)}#thigh-motion .thigh-labels text{font-size:12px}#thigh-motion .thigh-labels path{fill:none;stroke:var(--muted-foreground);stroke-width:.9}
+  #thigh-motion.no-fibers .fibers{display:none}#thigh-motion.transparent .muscle{fill-opacity:.34}#thigh-motion.transparent .tendon{fill-opacity:.6}
+</style>
+<script>/* Artist anatomy: right thigh, fixed hip, active knee flexion/extension.
+   X+: medial, Z+: anterior. Distal attachments rotate with tibia/fibula.
+   Belly shape is schematic; it is not a measured activation or force model. */
+const ThighModel = (() => {
+  const KNEE=270,N=24;
+  const add=(a,b)=>a.map((v,i)=>v+b[i]),sub=(a,b)=>a.map((v,i)=>v-b[i]);
+  const mul=(a,k)=>a.map(v=>v*k),mix=(a,b,t)=>add(mul(a,1-t),mul(b,t));
+  const cross=(a,b)=>[a[1]*b[2]-a[2]*b[1],a[2]*b[0]-a[0]*b[2],a[0]*b[1]-a[1]*b[0]];
+  const unit=p=>mul(p,1/(Math.hypot(...p)||1));
+  function lower(p,angle){
+    const t=angle*Math.PI/180,y=p[1]-KNEE;
+    return [p[0],KNEE+y*Math.cos(t)+p[2]*Math.sin(t),-y*Math.sin(t)+p[2]*Math.cos(t)];
+  }
+  function section(center,rx,rz,u=[1,0,0],v=[0,0,1]){
+    return {center,rx,rz,ring:Array.from({length:N},(_,i)=>add(center,add(mul(u,rx*Math.cos(i*2*Math.PI/N)),mul(v,rz*Math.sin(i*2*Math.PI/N)))))};
+  }
+  function tube(rows,transform=p=>p){
+    return rows.map(([y,x,z,rx,rz])=>{
+      const s=section([x,y,z],rx,rz);
+      return {...s,center:transform(s.center),ring:s.ring.map(transform)};
+    });
+  }
+  function sweep(points,radii){
+    return points.map((center,i)=>{
+      const tangent=unit(sub(points[Math.min(i+1,points.length-1)],points[Math.max(0,i-1)]));
+      const v=unit(cross([1,0,0],tangent)),u=unit(cross(tangent,v));
+      const [rx,rz]=Array.isArray(radii[i])?radii[i]:[radii[i],radii[i]];
+      return section(center,rx,rz,u,v);
+    });
+  }
+  function volume(rows){
+    let n=0;
+    for(let i=1;i<rows.length;i++)n+=(rows[i][0]-rows[i-1][0])*Math.PI*(rows[i][3]*rows[i][4]+rows[i-1][3]*rows[i-1][4])/2;
+    return n;
+  }
+  // Shortening redistributes section area. Active bulging is concentrated in
+  // the middle, with the integrated belly volume retained across the movement.
+  function belly(id,kind,base,stretch,active,offset=0,extra={}){
+    // Smooth muscle bellies between anatomical section stations.
+    const stations=base;
+    base=[];
+    for(let i=0;i<stations.length-1;i++)for(let j=0;j<4;j++){
+      const t=j/4,a=stations[Math.max(0,i-1)],b=stations[i],c=stations[i+1],d=stations[Math.min(stations.length-1,i+2)];
+      base.push(b.map((v,k)=>k===0?v+(c[k]-v)*t:.5*((2*v)+(-a[k]+c[k])*t+(2*a[k]-5*v+4*c[k]-d[k])*t*t+(-a[k]+3*v-3*c[k]+d[k])*t*t*t)));
+    }
+    base.push(stations.at(-1));
+    const y0=base[0][0],span=base.at(-1)[0]-y0;
+    const rows=base.map(([y,x,z,rx,rz])=>{
+      const t=(y-y0)/span,bulge=1+.24*active*Math.sin(Math.PI*t)**2;
+      return [y0+(y-y0)*stretch,x,z+offset*Math.sin(Math.PI*t),rx/Math.sqrt(stretch)*bulge,rz/Math.sqrt(stretch)*bulge];
+    });
+    const normal=Math.sqrt(volume(base)/volume(rows));
+    rows.forEach(r=>{r[3]*=normal;r[4]*=normal;});
+    const sections=tube(rows);
+    return {id,kind,rows:sections,active,stretch,bellyLength:rows.at(-1)[0]-rows[0][0],bellyVolume:volume(rows),...extra};
+  }
+  const rectus=[[3,-3,29,3,4],[33,-2,31,12,10],[85,-1,31,17,13],[139,0,30,17,13],[190,0,27,12,10],[221,0,25,3,4]];
+  const lateral=[[29,-25,9,4,6],[61,-29,11,14,18],[111,-31,12,22,21],[161,-29,14,23,21],[205,-21,17,17,16],[242,-10,19,4,5]];
+  const medial=[[77,18,8,3,5],[124,22,10,9,13],[171,26,12,13,17],[214,26,15,19,20],[240,19,18,16,15],[251,9,21,3,4]];
+  const biceps=[[23,-14,-25,3,4],[53,-20,-28,12,13],[99,-24,-29,19,18],[148,-25,-28,18,17],[199,-23,-24,11,12],[240,-23,-19,3,4]];
+  const semitendinosus=[[18,9,-27,3,4],[47,12,-29,10,12],[94,16,-30,15,16],[140,18,-29,14,15],[188,19,-26,9,10],[222,19,-22,3,4]];
+  const semimembranosus=[[18,11,-15,3,4],[56,15,-18,11,13],[109,18,-20,16,15],[159,18,-20,15,14],[204,17,-18,8,10],[243,17,-17,3,4]];
+  const adductor=[[-5,34,-3,4,6],[37,36,-4,12,15],[84,34,-5,17,18],[138,28,-5,15,16],[191,22,-3,9,10],[239,19,0,3,4]];
+  function frame(angle,drive=0){
+    angle=Math.max(0,Math.min(120,angle));drive=Math.max(-1,Math.min(1,drive));
+    const t=angle/120,hamActive=Math.max(0,drive),quadActive=Math.max(0,-drive);
+    const turn=p=>lower(p,angle),hamStretch=1-.17*t,quadStretch=1+.12*t;
+    const phi=(-25+.7*angle)*Math.PI/180;
+    const patella=[0,KNEE+29*Math.sin(phi),29*Math.cos(phi)];
+    const tangent=[0,Math.cos(phi),-Math.sin(phi)],normal=[0,Math.sin(phi),Math.cos(phi)];
+    const patellaRows=[[-13,5,3],[-7,13,5],[3,15,5],[12,6,3]].map(([s,rx,rz])=>section(add(patella,mul(tangent,s)),rx,rz,[1,0,0],normal));
+    const bones=[
+      {id:'hip-socket',rows:tube([[-37,24,-3,24,13],[-20,25,-3,25,15],[-4,22,-4,15,10]])},
+      {id:'femoral-head',rows:tube([[-24,18,0,4,4],[-17,18,0,13,13],[-7,18,0,7,8]])},
+      {id:'femoral-neck',rows:sweep([[15,-10,0],[5,2,0],[-8,15,0]],[[9,9],[10,9],[10,10]])},
+      {id:'femur',rows:tube([[-1,-20,0,7,8],[16,-15,0,14,12],[47,-8,0,10,10],[103,-6,0,9,10],[172,-3,0,9,10],[223,0,0,12,13],[250,0,-1,21,19],[268,0,-1,25,20]])},
+      {id:'tibia',rows:tube([[272,3,-1,22,17],[285,3,-1,20,16],[307,4,0,12,12],[366,5,0,9,9],[444,4,0,7,8],[499,4,0,11,10]],turn)},
+      {id:'fibula',rows:tube([[280,-24,-4,7,8],[300,-22,-3,4,5],[365,-19,-3,3,4],[438,-17,-3,3,4],[503,-16,-3,6,7]],turn)},
+      {id:'patella',rows:patellaRows}
+    ];
+    const muscles=[
+      belly('rectus-femoris','quad',rectus,quadStretch,quadActive,1.5*quadActive),
+      belly('vastus-lateralis','quad',lateral,1+.075*t,quadActive),
+      belly('vastus-medialis','quad',medial,1+.055*t,quadActive),
+      belly('biceps-femoris','ham',biceps,hamStretch,hamActive,-2*t),
+      belly('semitendinosus','ham',semitendinosus,hamStretch,hamActive,-2*t),
+      belly('semimembranosus','ham',semimembranosus,1-.12*t,hamActive,0,{deep:true}),
+      belly('vastus-intermedius','quad',[[27,0,12,4,5],[73,0,14,14,12],[130,0,15,18,13],[186,0,16,15,11],[223,0,18,4,5]],1+.1*t,quadActive,0,{deep:true}),
+      belly('adductor','aux',adductor,1,0)
+    ];
+    // Sartorius: lateral ASIS → diagonal anterior thigh → medial pes anserinus.
+    const sartoriusEnd=turn([24,296,13]);
+    const sartoriusPath=[[-33,-8,24],[-27,28,36],[-13,77,44],[4,128,45],[21,180,40],[32,220,28],[28,250,17]];
+    const sartorius={id:'sartorius',kind:'aux',rows:sweep(sartoriusPath,[[2,2],[4,3],[4.5,3],[4.5,3],[4.5,3],[4,3],[2,2]])};
+    muscles.push(sartorius);
+    // Gastrocnemius is posterior; its femoral origin stays fixed while the
+    // belly and Achilles insertion follow the lower leg. It assists flexion.
+    for(const [id,x,size] of [['gastrocnemius-lateral',-12,11],['gastrocnemius-medial',13,14]]){
+      const path=[[x,258,-15],turn([x,294,-19]),turn([x,326,-23]),turn([x*.8,360,-22]),turn([x*.4,389,-14])];
+      muscles.push({id,kind:'calf',rows:sweep(path,[[3,3],[size*.7,9],[size,13],[size*.7,10],[2,3]])});
+    }
+    muscles.push({id:'tibialis-anterior',kind:'lower',rows:tube([[300,-7,13,3,4],[337,-7,16,8,7],[384,-7,15,7,6],[438,-6,12,5,5],[477,-4,10,2,3]],turn)});
+    const end=id=>muscles.find(m=>m.id===id).rows.at(-1).center;
+    const insertion={biceps:turn([-24,280,-4]),semitendinosus:turn([22,302,12]),semimembranosus:turn([19,282,-12]),sartorius:sartoriusEnd};
+    const superior=add(patella,mul(tangent,-13)),inferior=add(patella,mul(tangent,12));
+    const tendons=[
+      {id:'quad-tendon',rows:sweep([end('rectus-femoris'),[0,244+14*t,30],superior],[[4,3],[7,3],[7,3]])},
+      {id:'lateral-quad-tendon',rows:sweep([end('vastus-lateralis'),mix(end('vastus-lateralis'),superior,.55),add(superior,[-6,0,0])],[[3,2],[3,2],[3,2]])},
+      {id:'medial-quad-tendon',rows:sweep([end('vastus-medialis'),mix(end('vastus-medialis'),superior,.55),add(superior,[6,0,0])],[[3,2],[3,2],[3,2]])},
+      {id:'patellar-tendon',rows:sweep([inferior,mix(inferior,turn([1,305,17]),.5),turn([1,305,17])],[[6,3],[5,3],[4,3]])},
+      {id:'biceps-origin',rows:sweep([[-5,-20,-23],[-10,4,-24],muscles.find(m=>m.id==='biceps-femoris').rows[0].center],[[3,2],[3,2],[3,2]])},
+      {id:'semitendinosus-origin',rows:sweep([[7,-20,-24],[8,1,-25],muscles.find(m=>m.id==='semitendinosus').rows[0].center],[[3,2],[3,2],[3,2]])},
+      {id:'biceps-tendon',rows:sweep([end('biceps-femoris'),[-27,250-9*t,-20],[-28,268,-12],insertion.biceps],[[3,2],[3,2],[3,2],[3,2]])},
+      {id:'semitendinosus-tendon',rows:sweep([end('semitendinosus'),[29,246-10*t,-18],[31,269,-1],insertion.semitendinosus],[[2,2],[2,2],[2,2],[2,2]])},
+      {id:'semimembranosus-tendon',rows:sweep([end('semimembranosus'),[20,255,-17],insertion.semimembranosus],[[4,2],[4,2],[4,2]])},
+      {id:'sartorius-tendon',rows:sweep([sartoriusPath.at(-1),[30,272,8],sartoriusEnd],[[2,2],[2,2],[2,2]])},
+      {id:'achilles-tendon',rows:sweep([turn([0,385,-16]),turn([0,439,-13]),turn([0,497,-12]),turn([0,514,-9])],[[4,3],[4,3],[3,3],[3,3]])}
+    ];
+    const foot=sweep([[0,499,0],[0,516,-7],[0,520,16],[0,519,44]].map(turn),[[11,10],[15,10],[20,8],[14,6]]);
+    return {bones,muscles,tendons,foot,knee:[0,KNEE,0],patella,insertion,angle,drive,hamActive,quadActive};
+  }
+  const view=(p,camera)=>camera==='back'?[-p[0],p[1],-p[2]]:camera==='side'?[p[2],p[1],-p[0]]:p.slice();
+  function verify(){
+    let finite=true,femurFixed=true,kneeFixed=true,lowerLegRigid=true;
+    const initial=frame(0),fixed=JSON.stringify(initial.bones.find(b=>b.id==='femur').rows);
+    const ankle=initial.bones.find(b=>b.id==='tibia').rows.at(-1).center;
+    const length=Math.hypot(ankle[0],ankle[1]-KNEE,ankle[2]);
+    for(let a=0;a<=120;a++){
+      const m=frame(a),all=m.bones.concat(m.muscles,m.tendons).flatMap(x=>x.rows).flatMap(s=>s.ring);
+      finite&&=all.flat().every(Number.isFinite);
+      femurFixed&&=JSON.stringify(m.bones.find(b=>b.id==='femur').rows)===fixed;
+      kneeFixed&&=JSON.stringify(m.knee)===JSON.stringify(initial.knee);
+      const p=m.bones.find(b=>b.id==='tibia').rows.at(-1).center;
+      lowerLegRigid&&=Math.abs(Math.hypot(p[0],p[1]-KNEE,p[2])-length)<1e-8;
+    }
+    const a=frame(0),b=frame(120);
+    const muscle=(m,id)=>m.muscles.find(x=>x.id===id);
+    return {angles:121,cameraViews:3,finite,femurFixed,kneeFixed,lowerLegRigid,
+      hamstringsShorten:muscle(b,'biceps-femoris').bellyLength<muscle(a,'biceps-femoris').bellyLength,
+      quadricepsLengthen:muscle(b,'rectus-femoris').bellyLength>muscle(a,'rectus-femoris').bellyLength,
+      bellyVolumePreserved:['rectus-femoris','biceps-femoris','semitendinosus'].every(id=>Math.abs(muscle(a,id).bellyVolume/muscle(b,id).bellyVolume-1)<1e-8)};
+  }
+  return {frame,view,lower,verify};
+})();
+
+/* Local surface visibility from the actual projected tube mesh. A single
+   average depth cannot handle a folded calf crossing the thigh. */
+const ThighRenderer = (() => {
+  const STEP=1.7,X0=-280,Y0=-40,NX=224,NY=350;
+  const key=(x,y)=>y*(NX+1)+x;
+  const clamp=(v,min,max)=>Math.max(min,Math.min(max,v));
+  function simplify(points,tolerance=.65){
+    if(points.length<5)return points;
+    const keep=new Set([0,points.length-1]);
+    function visit(lo,hi){
+      const a=points[lo],b=points[hi],vx=b[0]-a[0],vy=b[1]-a[1],length=vx*vx+vy*vy;
+      let far=-1,max=tolerance*tolerance;
+      for(let i=lo+1;i<hi;i++){
+        const p=points[i],t=length?clamp(((p[0]-a[0])*vx+(p[1]-a[1])*vy)/length,0,1):0;
+        const d=(p[0]-a[0]-t*vx)**2+(p[1]-a[1]-t*vy)**2;
+        if(d>max){max=d;far=i;}
+      }
+      if(far>=0){keep.add(far);visit(lo,far);visit(far,hi);}
+    }
+    visit(0,points.length-1);return points.filter((_,i)=>keep.has(i));
+  }
+  function contours(owns,bounds){
+    const edges=new Map();
+    const add=(x1,y1,x2,y2)=>{const k=key(x1,y1);if(!edges.has(k))edges.set(k,[]);edges.get(k).push(key(x2,y2));};
+    for(let y=bounds.y0;y<=bounds.y1;y++)for(let x=bounds.x0;x<=bounds.x1;x++){
+      if(!owns(x,y))continue;
+      if(!owns(x,y-1))add(x,y,x+1,y);
+      if(!owns(x+1,y))add(x+1,y,x+1,y+1);
+      if(!owns(x,y+1))add(x+1,y+1,x,y+1);
+      if(!owns(x-1,y))add(x,y+1,x,y);
+    }
+    const loops=[];
+    while(edges.size){
+      const start=edges.keys().next().value;let p=start;const points=[];
+      do{
+        points.push([X0+(p%(NX+1))*STEP,Y0+Math.floor(p/(NX+1))*STEP,0]);
+        const next=edges.get(p);if(!next)break;
+        const q=next.pop();if(!next.length)edges.delete(p);p=q;
+      }while(p!==start&&points.length<30000);
+      if(points.length>4){
+        // Smooth the grid boundary before reducing vertices, preserving the
+        // established curved outlines instead of exposing raster stair steps.
+        const weights=[1,2,3,4,3,2,1],smooth=points.map((_,i)=>[0,1,2].map(axis=>weights.reduce((sum,w,j)=>sum+w*points[(i+j-3+points.length)%points.length][axis],0)/16));
+        const mid=Math.floor(smooth.length/2);
+        loops.push(simplify(smooth.slice(0,mid+1)).concat(simplify(smooth.slice(mid).concat([smooth[0]])).slice(1,-1)));
+      }
+    }
+    return loops;
+  }
+  function patch(loops){
+    return loops.map(points=>{
+      let twiceArea=0,x=0,y=0;
+      points.forEach((p,i)=>{const q=points[(i+1)%points.length],c=p[0]*q[1]-q[0]*p[1];twiceArea+=c;x+=(p[0]+q[0])*c;y+=(p[1]+q[1])*c;});
+      return {area:Math.abs(twiceArea)/2,anchor:Math.abs(twiceArea)>1e-8?[x/(3*twiceArea),y/(3*twiceArea),0]:points[0]};
+    }).sort((a,b)=>b.area-a.area)[0]||{area:0,anchor:[0,0,0]};
+  }
+  function render(model,camera,transparent){
+    const view=p=>ThighModel.view(p,camera);
+    const raw=model.bones.map(x=>({...x,kind:'bone'})).concat(model.muscles,model.tendons.map(x=>({...x,kind:'tendon'})),[{id:'foot',kind:'bone',rows:model.foot}]);
+    const items=raw.map(x=>({...x,rows:x.rows.map(s=>({...s,center:view(s.center),ring:s.ring.map(view)}))}));
+    const depth=new Float32Array(NX*NY).fill(-Infinity),owner=new Int16Array(NX*NY).fill(-1);
+    function triangle(a,b,c,id,item){
+      const den=(b[1]-c[1])*(a[0]-c[0])+(c[0]-b[0])*(a[1]-c[1]);
+      if(Math.abs(den)<1e-8)return;
+      const xlo=clamp(Math.floor((Math.min(a[0],b[0],c[0])-X0)/STEP),0,NX-1),xhi=clamp(Math.floor((Math.max(a[0],b[0],c[0])-X0)/STEP),0,NX-1);
+      const ylo=clamp(Math.floor((Math.min(a[1],b[1],c[1])-Y0)/STEP),0,NY-1),yhi=clamp(Math.floor((Math.max(a[1],b[1],c[1])-Y0)/STEP),0,NY-1);
+      for(let y=ylo;y<=yhi;y++){
+        const py=Y0+(y+.5)*STEP;
+        for(let x=xlo;x<=xhi;x++){
+          const px=X0+(x+.5)*STEP;
+          const u=((b[1]-c[1])*(px-c[0])+(c[0]-b[0])*(py-c[1]))/den;
+          const v=((c[1]-a[1])*(px-c[0])+(a[0]-c[0])*(py-c[1]))/den,w=1-u-v;
+          if(u<-.000001||v<-.000001||w<-.000001)continue;
+          if(item.mask)item.mask[(y-item.bounds.y0)*item.maskWidth+x-item.bounds.x0]=1;
+          const z=u*a[2]+v*b[2]+w*c[2],index=y*NX+x;
+          if(z>depth[index]){depth[index]=z;owner[index]=id;}
+        }
+      }
+    }
+    items.forEach((item,id)=>{
+      const points=item.rows.flatMap(s=>s.ring),xs=points.map(p=>p[0]),ys=points.map(p=>p[1]);
+      item.bounds={x0:clamp(Math.floor((Math.min(...xs)-X0)/STEP),0,NX-1),x1:clamp(Math.floor((Math.max(...xs)-X0)/STEP),0,NX-1),y0:clamp(Math.floor((Math.min(...ys)-Y0)/STEP),0,NY-1),y1:clamp(Math.floor((Math.max(...ys)-Y0)/STEP),0,NY-1)};
+      item.maskWidth=item.bounds.x1-item.bounds.x0+1;
+      if(transparent)item.mask=new Uint8Array(item.maskWidth*(item.bounds.y1-item.bounds.y0+1));
+      const rows=item.rows,n=rows[0].ring.length;
+      for(let row=0;row<rows.length-1;row++)for(let j=0;j<n;j++){
+        const k=(j+1)%n,a=rows[row].ring[j],b=rows[row].ring[k],c=rows[row+1].ring[k],d=rows[row+1].ring[j];
+        triangle(a,b,c,id,item);triangle(a,c,d,id,item);
+      }
+      for(const row of [rows[0],rows.at(-1)])for(let j=0;j<n;j++)triangle(row.center,row.ring[j],row.ring[(j+1)%n],id,item);
+      item.depth=rows.reduce((s,r)=>s+r.center[2],0)/rows.length;
+    });
+    items.forEach((item,id)=>{
+      const owns=(x,y)=>x>=0&&x<NX&&y>=0&&y<NY&&owner[y*NX+x]===id;
+      item.visible=contours(owns,item.bounds);
+      if(transparent){
+        const b=item.bounds;
+        item.loops=contours((x,y)=>x>=b.x0&&x<=b.x1&&y>=b.y0&&y<=b.y1&&item.mask[(y-b.y0)*item.maskWidth+x-b.x0]===1,b);
+      }else item.loops=item.visible;
+      Object.assign(item,patch(item.loops));
+      // A concave visible patch can have its centroid under another muscle.
+      // Place its leader inside the actual visible region, with edge clearance.
+      if(!transparent&&item.area){
+        let best=null,distance=Infinity;
+        for(let y=item.bounds.y0+2;y<=item.bounds.y1-2;y++)for(let x=item.bounds.x0+2;x<=item.bounds.x1-2;x++){
+          if(!owns(x,y)||!owns(x-2,y)||!owns(x+2,y)||!owns(x,y-2)||!owns(x,y+2))continue;
+          const p=[X0+(x+.5)*STEP,Y0+(y+.5)*STEP,0],d=(p[0]-item.anchor[0])**2+(p[1]-item.anchor[1])**2;
+          if(d<distance){best=p;distance=d;}
+        }
+        if(best)item.anchor=best;
+      }
+      delete item.mask;
+    });
+    return items;
+  }
+  function fiber(rows,u){
+    return rows.map(row=>{
+      const p=row.ring,xs=p.map(v=>v[0]),x=Math.min(...xs)+(Math.max(...xs)-Math.min(...xs))*u;
+      let best=null;
+      for(let j=0;j<p.length;j++){
+        const a=p[j],b=p[(j+1)%p.length],dx=b[0]-a[0];
+        if(Math.abs(dx)<1e-8||x<Math.min(a[0],b[0])||x>Math.max(a[0],b[0]))continue;
+        const t=(x-a[0])/dx,q=[x,a[1]+(b[1]-a[1])*t,a[2]+(b[2]-a[2])*t];
+        if(!best||q[2]>best[2])best=q;
+      }
+      return best||p.reduce((a,b)=>a[2]>b[2]?a:b);
+    });
+  }
+  return {render,fiber};
+})();
+
+(() => {
+  const root=document.getElementById('thigh-motion'),svg=root.querySelector('svg');
+  const drawing=root.querySelector('.thigh-volumes'),labels=root.querySelector('.thigh-labels'),defs=svg.querySelector('defs');
+  const slider=root.querySelector('#thigh-angle'),value=root.querySelector('#thigh-value'),play=root.querySelector('#thigh-play');
+  const fibers=root.querySelector('#thigh-fibers'),transparent=root.querySelector('#thigh-transparent'),caption=root.querySelector('#thigh-view-caption');
+  const buttons=['front','side','back'].map(view=>[root.querySelector('#thigh-'+view),view]);
+  const NS='http://www.w3.org/2000/svg',store='artist-thigh-knee-v1';
+  const f=n=>Math.round(n*100)/100,P=p=>[280+p[0],45+p[1]],xy=p=>`${f(p[0])},${f(p[1])}`;
+  const el=(tag,attrs,parent)=>{const e=document.createElementNS(NS,tag);Object.entries(attrs).forEach(([k,v])=>e.setAttribute(k,v));parent.appendChild(e);return e;};
+  let angle=0,drive=0,camera='front',playing=!matchMedia('(prefers-reduced-motion: reduce)').matches;
+  let phase=0,last=0,lastDraw=0,width=560,scale=1,interacted=false;
+  const parts=new Map(),labelNodes=new Map();
+  function curve(points){
+    if(!points.length)return '';
+    let d='M '+xy(P(points[0]));
+    for(let i=0;i<points.length-1;i++){
+      const a=points[Math.max(0,i-1)],b=points[i],c=points[i+1],q=points[Math.min(points.length-1,i+2)];
+      d+=` C ${xy(P(b.map((v,j)=>v+(c[j]-a[j])/6)))} ${xy(P(c.map((v,j)=>v-(q[j]-b[j])/6)))} ${xy(P(c))}`;
+    }
+    return d;
+  }
+  function outline(loops){
+    return loops.map(points=>{
+      if(points.length<3)return '';
+      const mid=(a,b)=>a.map((v,i)=>(v+b[i])/2);
+      let d='M '+xy(P(mid(points.at(-1),points[0])));
+      points.forEach((p,i)=>d+=` Q ${xy(P(p))} ${xy(P(mid(p,points[(i+1)%points.length])))}`);
+      return d+' Z';
+    }).join(' ');
+  }
+  function part(item){
+    if(parts.has(item.id))return parts.get(item.id);
+    const group=el('g',{'data-muscle':item.id},drawing),id='thigh-'+item.id;
+    const shape=el('path',{id,class:item.kind==='bone'?'bone':item.kind==='tendon'?'tendon':'muscle '+item.kind,d:''},group);
+    const clip=el('clipPath',{id:id+'-clip'},defs),clipShape=el('path',{},clip);
+    const fiberGroup=el('g',{class:'fibers','clip-path':`url(#${id}-clip)`},group);
+    const count=item.id==='sartorius'?3:item.kind==='aux'?9:13;
+    const lines=['bone','tendon'].includes(item.kind)?[]:Array.from({length:count},()=>el('path',{class:'fiber',d:''},fiberGroup));
+    const result={group,shape,clipShape,fiberGroup,lines};parts.set(item.id,result);return result;
+  }
+  function label(name){
+    if(labelNodes.has(name))return labelNodes.get(name);
+    const group=el('g',{},labels),line=el('path',{},group),text=el('text',{},group);
+    const result={group,line,text};labelNodes.set(name,result);return result;
+  }
+  function leader(name,text,x,y,anchor){
+    const node=label(name),q=P(anchor).map(v=>v*scale),px=width*x,py=y*scale;
+    node.group.style.display='';node.text.textContent=text;
+    node.text.setAttribute('text-anchor',x>.5?'end':'start');node.text.setAttribute('x',px);node.text.setAttribute('y',py);
+    node.line.setAttribute('d',`M ${f(px)},${f(py+4)} L ${xy(q)}`);
+  }
+  function draw(){
+    const m=ThighModel.frame(angle,drive),items=ThighRenderer.render(m,camera,transparent.checked),byId=new Map(items.map(x=>[x.id,x]));
+    items.sort((a,b)=>transparent.checked?(a.kind==='bone'?0:1)-(b.kind==='bone'?0:1)||a.depth-b.depth:a.depth-b.depth);
+    for(const item of items){
+      const node=part(item),d=outline(item.loops);
+      node.shape.setAttribute('d',d);node.clipShape.setAttribute('d',d);
+      node.group.style.display=d?'':'none';node.fiberGroup.style.display=fibers.checked?'':'none';
+      node.lines.forEach((line,i)=>line.setAttribute('d',curve(ThighRenderer.fiber(item.rows,(i+1)/(node.lines.length+1)))));
+      if(item.bellyLength){node.group.dataset.bellyLength=String(f(item.bellyLength));node.group.dataset.bellyVolume=String(f(item.bellyVolume));node.group.dataset.activation=String(f(item.active));}
+      drawing.appendChild(node.group);
+    }
+    labelNodes.forEach(n=>n.group.style.display='none');
+    leader('hip','고관절',.14,Math.max(23,14/scale),ThighModel.view([18,-17,0],camera));
+    function muscle(id,text,x,y){const item=byId.get(id);if(item&&item.area>(transparent.checked?12:45))leader(id,text,x,y,item.anchor);}
+    if(camera==='front'){
+      muscle('sartorius','봉공근',.87,82);muscle('rectus-femoris','대퇴직근',.14,145);
+      muscle('vastus-lateralis','외측광근',.14,222);muscle('vastus-medialis','내측광근',.87,284);
+      if(transparent.checked)muscle('vastus-intermedius','중간광근 · 깊은층',.87,197);
+    }else if(camera==='back'){
+      muscle('biceps-femoris','대퇴이두근',.14,158);muscle('semitendinosus','반힘줄근',.87,190);
+      muscle('adductor','내전근군',.87,93);
+      if(transparent.checked)muscle('semimembranosus','반막근 · 깊은층',.87,248);
+    }else{
+      muscle('biceps-femoris','대퇴이두근',.14,153);muscle('vastus-lateralis','외측광근',.87,191);
+      muscle('sartorius','봉공근',.87,98);
+    }
+    const patella=byId.get('patella');
+    if(patella?.area>15||transparent.checked)leader('patella','무릎뼈',.87,352,ThighModel.view(m.patella,camera));
+    if(camera==='side'||transparent.checked){const calf=[byId.get('gastrocnemius-medial'),byId.get('gastrocnemius-lateral')].sort((a,b)=>b.area-a.area)[0];if(calf?.area>45)leader('calf','장딴지근',.14,437,calf.anchor);}
+    const rounded=Math.round(angle),text=rounded===0?'펴짐 0°':`굽힘 ${rounded}°`;
+    value.textContent=text;slider.value=rounded;slider.setAttribute('aria-valuetext',text);
+    root.dataset.angle=String(f(angle));root.dataset.camera=camera;root.dataset.drive=String(f(drive));root.dataset.revision='functional-thigh-v2';
+    root.dataset.knee=ThighModel.view(m.knee,camera).map(f).join(',');
+  }
+  function sync(){
+    play.textContent=playing?'일시정지':'재생';play.setAttribute('aria-pressed',String(playing));
+    root.classList.toggle('no-fibers',!fibers.checked);root.classList.toggle('transparent',transparent.checked);
+    buttons.forEach(([b,v])=>b.setAttribute('aria-pressed',String(v===camera)));
+    const view=camera==='front'?'정면':camera==='back'?'후면':'측면';
+    const action=drive>.04?'굽힘 · 햄스트링 수축':drive<-.04?'폄 · 대퇴사두근 수축':'무릎 펴짐–굽힘';
+    caption.textContent=`${view} · 고관절 고정 · ${action}`;
+  }
+  function phaseFor(a,d){const p=Math.acos(Math.max(-1,Math.min(1,1-a/60)));return d<0?2*Math.PI-p:p;}
+  function snapshot(){return {modelContent:{topic:'대퇴부 무릎 굽힘 도해',angle:Math.round(angle),drive,camera,fibers:fibers.checked,transparent:transparent.checked},privateContent:{playing}};}
+  function save(){const s=snapshot();try{localStorage.setItem(store,JSON.stringify(s));}catch{}if(window.openai?.setWidgetState)Promise.resolve(window.openai.setWidgetState(s)).catch(()=>{});}
+  function restore(s){
+    const d=s?.modelContent;if(d?.topic!=='대퇴부 무릎 굽힘 도해')return;
+    if(Number.isFinite(d.angle))angle=Math.max(0,Math.min(120,d.angle));
+    if(Number.isFinite(d.drive))drive=Math.max(-1,Math.min(1,d.drive));
+    if(['front','side','back'].includes(d.camera))camera=d.camera;
+    if(typeof d.fibers==='boolean')fibers.checked=d.fibers;if(typeof d.transparent==='boolean')transparent.checked=d.transparent;
+    if(typeof s.privateContent?.playing==='boolean')playing=s.privateContent.playing&&!matchMedia('(prefers-reduced-motion: reduce)').matches;
+    phase=phaseFor(angle,drive);
+  }
+  function resize(){width=root.clientWidth;scale=width/560;const height=620*scale+16;svg.setAttribute('viewBox',`0 0 ${width} ${height}`);svg.setAttribute('height',height);drawing.setAttribute('transform',`scale(${scale})`);draw();}
+  play.addEventListener('click',()=>{interacted=true;playing=!playing;if(playing)phase=phaseFor(angle,drive);sync();save();});
+  slider.addEventListener('input',()=>{interacted=true;const next=Number(slider.value);drive=next>angle ? .75 : next<angle ? -.75 : drive;angle=next;playing=false;phase=phaseFor(angle,drive);sync();draw();});slider.addEventListener('change',save);
+  [fibers,transparent].forEach(c=>c.addEventListener('change',()=>{interacted=true;sync();draw();save();}));
+  buttons.forEach(([b,v])=>b.addEventListener('click',()=>{interacted=true;camera=v;sync();draw();save();}));
+  window.addEventListener('openai:set_globals',e=>{if(!interacted){restore(e.detail?.globals?.widgetState);sync();draw();}});
+  try{restore(window.openai?.widgetState||JSON.parse(localStorage.getItem(store)||'null'));}catch{}
+  sync();new ResizeObserver(resize).observe(root);resize();root.dataset.geometryVerification=JSON.stringify(ThighModel.verify());
+  function tick(t){
+    const dt=last?Math.min((t-last)/1000,.08):0;last=t;
+    if(playing&&!document.hidden){phase+=dt*Math.PI/5;angle=60*(1-Math.cos(phase));drive=Math.sin(phase);if(t-lastDraw>=33){sync();draw();lastDraw=t;}}
+    if(root.isConnected)requestAnimationFrame(tick);
+  }
+  requestAnimationFrame(tick);
+})();
+</script>
+<script>
+(()=>{const r=document.getElementById('thigh-motion'),s=r.querySelector('svg');let p=false;function f(){p=false;const available=Math.max(0,document.documentElement.clientWidth-32),overhead=r.scrollHeight-s.getBoundingClientRect().height,heightWidth=(innerHeight-overhead-48)*560/620,w=Math.min(available,700,Math.max(220,heightWidth)),n=Math.floor(w)+'px';if(r.style.width!==n)r.style.width=n;}const q=()=>{if(!p){p=true;requestAnimationFrame(f);}};new ResizeObserver(q).observe(r);window.addEventListener('resize',q);q();})();
+</script></body></html>
