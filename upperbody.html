@@ -1300,7 +1300,9 @@ html{color-scheme:light;background:white!important}:root{--background:#fff;--for
 #upperbody .classic-side .thorax-mass{fill:var(--muted);fill-opacity:.25;stroke:var(--muted-foreground);stroke-width:.9;stroke-opacity:.6}#upperbody .classic-side .cartilage{fill:var(--background);stroke:var(--muted-foreground);stroke-width:.9}#upperbody.transparent .muscle,#upperbody.transparent .tendon{fill-opacity:1}#upperbody h2{padding-right:0}#upperbody .classic-side .bone-detail{fill:none;stroke:var(--muted-foreground);stroke-width:.9}#upperbody .classic-side .rib{fill:var(--muted);stroke:var(--muted-foreground);stroke-width:1.1}#upperbody .classic-side .upper{fill:color-mix(in srgb,var(--red) 65%,var(--background))}#upperbody .classic-side .lat{fill:color-mix(in srgb,var(--purple) 57%,var(--background))}#upperbody .classic-side .infraspinatus{fill:color-mix(in srgb,var(--yellow) 68%,var(--background))}#upperbody .classic-side .clavicular{fill:color-mix(in srgb,var(--red) 65%,var(--background))}#upperbody .classic-side .sternal{fill:color-mix(in srgb,var(--blue) 62%,var(--background))}#upperbody .classic-side .abdominal{fill:color-mix(in srgb,var(--green) 65%,var(--background))}#upperbody.transparent .classic-side .muscle-layer{opacity:.35}#upperbody.no-fibers .classic-side .fibers{display:none}
 #upperbody .serratus{fill:color-mix(in srgb,var(--orange) 65%,var(--background))}#upperbody.transparent .serratus-layer{opacity:.35}
 #upperbody .side-labels text{font-size:12px;fill:var(--foreground)}#upperbody .side-labels path{stroke:var(--muted-foreground);stroke-width:1;fill:none}
-</style></head><body><div id="upperbody" class="diagram"><h2>상체 근육과 팔 올리기</h2><div class="text-small diagram-caption">팔 외전 · 가슴·등·전거근</div><svg class="diagram-scene pm-scene back-scene" role="img" aria-labelledby="upperbody-title upperbody-desc"><title id="upperbody-title">상체 근육과 팔 올리기</title><desc id="upperbody-desc">척추의 경추·흉추·요추 굴곡, 흉곽의 기울기와 열두 갈비뼈, 골반을 기반으로 근육을 배치한 측면 도해입니다. 정면은 대흉근 아래에서 전거근 하부가 드러나고, 후면은 기존 등 곡선을 유지합니다. 세 방향은 작화용 도해입니다.</desc><defs></defs><g class="classic-chest">
+
+#upperbody .torso-context{fill:var(--muted);fill-opacity:.13;stroke:var(--muted-foreground);stroke-opacity:.45;stroke-width:.9}#upperbody .rib-outline{fill:none;stroke:var(--muted-foreground);stroke-width:6;stroke-linecap:round}#upperbody .classic-back [data-part="coronal-vertebrae"] [data-region],#upperbody .classic-chest [data-part="coronal-vertebrae"] [data-region="thoracic"],#upperbody .classic-chest [data-part="coronal-vertebrae"] [data-region="lumbar"]{visibility:hidden}#upperbody.transparent [data-part="coronal-vertebrae"] [data-region]{visibility:visible}
+</style></head><body><div id="upperbody" class="diagram"><h2>상체 근육과 팔 올리기</h2><div class="text-small diagram-caption">팔 외전 · 가슴·등·전거근</div><svg class="diagram-scene pm-scene back-scene" role="img" aria-labelledby="upperbody-title upperbody-desc"><title id="upperbody-title">상체 근육과 팔 올리기</title><desc id="upperbody-desc">정면·후면은 경추 7개·흉추 12개·요추 5개와 12쌍의 늑골, 흉곽·허리·골반 기준을 공유합니다. 대흉근·전거근·등 근육은 같은 어깨 운동 기준으로 배치하며, 후면 척추는 반투명에서 보입니다. 측면은 척추 굴곡과 흉곽 기울기를 표현합니다. 방향별 작화용 2D 도해입니다.</desc><defs></defs><g class="classic-chest">
 
 
     <defs>
@@ -1329,7 +1331,85 @@ html{color-scheme:light;background:white!important}:root{--background:#fff;--for
       <g class="back-spine"></g>
     </g>
     <g class="back-labels"></g>
-  </g><g class="classic-side"><g class="side-drawing"></g><g class="side-labels"></g></g><g class="diagram-labels"></g></svg><div class="diagram-legend text-small"></div><div class="diagram-controls"><div class="diagram-top"><div class="viz-row"><button type="button" class="btn btn-primary" id="upperbody-play" aria-pressed="true">일시정지</button><label class="form-check"><input type="checkbox" class="form-check-input" id="upperbody-fibers" checked><span class="form-check-label">근섬유</span></label><label class="form-check"><input type="checkbox" class="form-check-input" id="upperbody-transparent"><span class="form-check-label">근육 반투명</span></label></div><div class="diagram-views" role="group" aria-label="보기 방향"><button type="button" class="btn" id="upperbody-front" aria-pressed="true">정면</button><button type="button" class="btn" id="upperbody-back" aria-pressed="false">후면</button><button type="button" class="btn" id="upperbody-side" aria-pressed="false">측면</button></div></div><label class="form-label" for="upperbody-angle">팔 외전 각도<output id="upperbody-value" class="tabular-nums">60°</output></label><input type="range" class="form-range" id="upperbody-angle" min="15" max="120" value="60" step="1" aria-label="팔 외전 각도"></div><div class="text-small diagram-note">근육 위치·겹침을 단순화한 도해</div></div><script type="application/json" id="diagram-config">{"id": "upperbody", "model": "upperbody", "topic": "상체 팔 올리기", "title": "상체 근육과 팔 올리기", "caption": "팔 외전 · 가슴·등·전거근", "width": 830, "height": 430, "origin": [435, 100], "min": 15, "max": 120, "initialAngle": 60, "interval": 50, "maxWidth": 1100, "revision": "curved-lateral-spine-thorax-v5", "movement": "팔 외전 각도", "desc": "척추의 경추·흉추·요추 굴곡, 흉곽의 기울기와 열두 갈비뼈, 골반을 기반으로 근육을 배치한 측면 도해입니다. 정면은 대흉근 아래에서 전거근 하부가 드러나고, 후면은 기존 등 곡선을 유지합니다. 세 방향은 작화용 도해입니다.", "note": "근육 위치·겹침을 단순화한 도해", "labels": {"front": [{"ids": ["r-pec-clavicular", "l-pec-clavicular"], "text": "대흉근 쇄골부", "side": "left", "y": 200}, {"ids": ["r-pec-sternal", "l-pec-sternal"], "text": "대흉근 흉골부", "side": "left", "y": 290}, {"ids": ["r-pec-abdominal", "l-pec-abdominal"], "text": "대흉근 복부", "side": "left", "y": 400}, {"ids": ["r-serratus-0", "r-serratus-1", "r-serratus-2", "r-serratus-3", "r-serratus-4", "r-serratus-5", "r-serratus-6", "r-serratus-7", "l-serratus-0", "l-serratus-1", "l-serratus-2", "l-serratus-3", "l-serratus-4", "l-serratus-5", "l-serratus-6", "l-serratus-7"], "text": "전거근", "side": "right", "y": 430}], "back": [{"ids": ["r-trap-upper", "l-trap-upper"], "text": "승모근 상부", "side": "left", "y": 185}, {"ids": ["r-trap-middle", "l-trap-middle"], "text": "승모근 중부", "side": "left", "y": 290}, {"ids": ["r-trap-lower", "l-trap-lower"], "text": "승모근 하부", "side": "left", "y": 410}, {"ids": ["r-latissimus", "l-latissimus"], "text": "광배근", "side": "right", "y": 515}, {"ids": ["r-teres-major", "l-teres-major"], "text": "대원근", "side": "right", "y": 420}, {"ids": ["r-infraspinatus", "l-infraspinatus"], "text": "극하근", "side": "right", "y": 325}, {"ids": ["r-teres-minor", "l-teres-minor"], "text": "소원근", "side": "right", "y": 230}, {"ids": ["r-serratus-0", "r-serratus-1", "r-serratus-2", "r-serratus-3", "r-serratus-4", "r-serratus-5", "r-serratus-6", "r-serratus-7", "l-serratus-0", "l-serratus-1", "l-serratus-2", "l-serratus-3", "l-serratus-4", "l-serratus-5", "l-serratus-6", "l-serratus-7"], "text": "전거근 · 깊은층", "side": "left", "y": 520, "onlyTransparent": true, "deep": true}], "side": [{"ids": ["r-pec-sternal", "l-pec-sternal"], "text": "대흉근", "side": "left", "y": 260}, {"ids": ["r-trap-upper", "l-trap-upper"], "text": "승모근", "side": "left", "y": 160}, {"ids": ["r-serratus-0", "r-serratus-1", "r-serratus-2", "r-serratus-3", "r-serratus-4", "r-serratus-5", "r-serratus-6", "r-serratus-7", "l-serratus-0", "l-serratus-1", "l-serratus-2", "l-serratus-3", "l-serratus-4", "l-serratus-5", "l-serratus-6", "l-serratus-7"], "text": "전거근", "side": "right", "y": 350}, {"ids": ["r-latissimus", "l-latissimus"], "text": "광배근", "side": "left", "y": 470}, {"ids": ["r-teres-major", "l-teres-major"], "text": "대원근", "side": "right", "y": 240}]}, "legend": {"front": [{"kind": "red", "text": "대흉근 쇄골부"}, {"kind": "blue", "text": "흉늑부"}, {"kind": "green", "text": "복부"}, {"kind": "orange", "text": "전거근"}], "back": [{"kind": "red", "text": "승모근 상부"}, {"kind": "blue", "text": "중부"}, {"kind": "green", "text": "하부"}, {"kind": "purple", "text": "광배근"}, {"kind": "orange", "text": "대원근"}, {"kind": "yellow", "text": "극하근"}, {"kind": "teal", "text": "소원근"}], "side": [{"kind": "red", "text": "대흉근 쇄골부"}, {"kind": "blue", "text": "흉늑부"}, {"kind": "purple", "text": "광배근"}, {"kind": "orange", "text": "전거근"}]}, "label": "상체", "renderer": "classic"}</script><script>function ClassicChest(host){
+  </g><g class="classic-side"><g class="side-drawing"></g><g class="side-labels"></g></g><g class="diagram-labels"></g></svg><div class="diagram-legend text-small"></div><div class="diagram-controls"><div class="diagram-top"><div class="viz-row"><button type="button" class="btn btn-primary" id="upperbody-play" aria-pressed="true">일시정지</button><label class="form-check"><input type="checkbox" class="form-check-input" id="upperbody-fibers" checked><span class="form-check-label">근섬유</span></label><label class="form-check"><input type="checkbox" class="form-check-input" id="upperbody-transparent"><span class="form-check-label">근육 반투명</span></label></div><div class="diagram-views" role="group" aria-label="보기 방향"><button type="button" class="btn" id="upperbody-front" aria-pressed="true">정면</button><button type="button" class="btn" id="upperbody-back" aria-pressed="false">후면</button><button type="button" class="btn" id="upperbody-side" aria-pressed="false">측면</button></div></div><label class="form-label" for="upperbody-angle">팔 외전 각도<output id="upperbody-value" class="tabular-nums">60°</output></label><input type="range" class="form-range" id="upperbody-angle" min="15" max="120" value="60" step="1" aria-label="팔 외전 각도"></div><div class="text-small diagram-note">근육 위치·겹침을 단순화한 도해</div></div><script type="application/json" id="diagram-config">{"id": "upperbody", "model": "upperbody", "topic": "상체 팔 올리기", "title": "상체 근육과 팔 올리기", "caption": "팔 외전 · 가슴·등·전거근", "width": 830, "height": 430, "origin": [435, 100], "min": 15, "max": 120, "initialAngle": 60, "interval": 50, "maxWidth": 1100, "revision": "reviewed-coronal-and-lateral-v6", "movement": "팔 외전 각도", "desc": "정면·후면은 경추 7개·흉추 12개·요추 5개와 12쌍의 늑골, 흉곽·허리·골반 기준을 공유합니다. 대흉근·전거근·등 근육은 같은 어깨 운동 기준으로 배치하며, 후면 척추는 반투명에서 보입니다. 측면은 척추 굴곡과 흉곽 기울기를 표현합니다. 방향별 작화용 2D 도해입니다.", "note": "근육 위치·겹침을 단순화한 도해", "labels": {"front": [{"ids": ["r-pec-clavicular", "l-pec-clavicular"], "text": "대흉근 쇄골부", "side": "left", "y": 200}, {"ids": ["r-pec-sternal", "l-pec-sternal"], "text": "대흉근 흉골부", "side": "left", "y": 290}, {"ids": ["r-pec-abdominal", "l-pec-abdominal"], "text": "대흉근 복부", "side": "left", "y": 400}, {"ids": ["r-serratus-0", "r-serratus-1", "r-serratus-2", "r-serratus-3", "r-serratus-4", "r-serratus-5", "r-serratus-6", "r-serratus-7", "l-serratus-0", "l-serratus-1", "l-serratus-2", "l-serratus-3", "l-serratus-4", "l-serratus-5", "l-serratus-6", "l-serratus-7"], "text": "전거근", "side": "right", "y": 430}], "back": [{"ids": ["r-trap-upper", "l-trap-upper"], "text": "승모근 상부", "side": "left", "y": 185}, {"ids": ["r-trap-middle", "l-trap-middle"], "text": "승모근 중부", "side": "left", "y": 290}, {"ids": ["r-trap-lower", "l-trap-lower"], "text": "승모근 하부", "side": "left", "y": 410}, {"ids": ["r-latissimus", "l-latissimus"], "text": "광배근", "side": "right", "y": 515}, {"ids": ["r-teres-major", "l-teres-major"], "text": "대원근", "side": "right", "y": 420}, {"ids": ["r-infraspinatus", "l-infraspinatus"], "text": "극하근", "side": "right", "y": 325}, {"ids": ["r-teres-minor", "l-teres-minor"], "text": "소원근", "side": "right", "y": 230}, {"ids": ["r-serratus-0", "r-serratus-1", "r-serratus-2", "r-serratus-3", "r-serratus-4", "r-serratus-5", "r-serratus-6", "r-serratus-7", "l-serratus-0", "l-serratus-1", "l-serratus-2", "l-serratus-3", "l-serratus-4", "l-serratus-5", "l-serratus-6", "l-serratus-7"], "text": "전거근 · 깊은층", "side": "left", "y": 520, "onlyTransparent": true, "deep": true}], "side": [{"ids": ["r-pec-sternal", "l-pec-sternal"], "text": "대흉근", "side": "left", "y": 260}, {"ids": ["r-trap-upper", "l-trap-upper"], "text": "승모근", "side": "left", "y": 160}, {"ids": ["r-serratus-0", "r-serratus-1", "r-serratus-2", "r-serratus-3", "r-serratus-4", "r-serratus-5", "r-serratus-6", "r-serratus-7", "l-serratus-0", "l-serratus-1", "l-serratus-2", "l-serratus-3", "l-serratus-4", "l-serratus-5", "l-serratus-6", "l-serratus-7"], "text": "전거근", "side": "right", "y": 350}, {"ids": ["r-latissimus", "l-latissimus"], "text": "광배근", "side": "left", "y": 470}, {"ids": ["r-teres-major", "l-teres-major"], "text": "대원근", "side": "right", "y": 240}]}, "legend": {"front": [{"kind": "red", "text": "대흉근 쇄골부"}, {"kind": "blue", "text": "흉늑부"}, {"kind": "green", "text": "복부"}, {"kind": "orange", "text": "전거근"}], "back": [{"kind": "red", "text": "승모근 상부"}, {"kind": "blue", "text": "중부"}, {"kind": "green", "text": "하부"}, {"kind": "purple", "text": "광배근"}, {"kind": "orange", "text": "대원근"}, {"kind": "yellow", "text": "극하근"}, {"kind": "teal", "text": "소원근"}], "side": [{"kind": "red", "text": "대흉근 쇄골부"}, {"kind": "blue", "text": "흉늑부"}, {"kind": "purple", "text": "광배근"}, {"kind": "orange", "text": "전거근"}]}, "label": "상체", "renderer": "classic"}</script><script>/* Original coronal drawing landmarks. OpenStax A&P 2e 7.3/7.4/8.3/11.5
+   informs connections, not measured body proportions or clinical kinematics. */
+const ClassicCoronalAnatomy=(()=>{
+ const vertebrae=[...Array.from({length:7},(_,i)=>({id:'C'+(i+1),region:'cervical',y:83+i*12,w:9})),...Array.from({length:12},(_,i)=>({id:'T'+(i+1),region:'thoracic',y:173+i*16,w:11+i*.15})),...Array.from({length:5},(_,i)=>({id:'L'+(i+1),region:'lumbar',y:373+i*18,w:15+i*.4}))];
+ const extents=[88,103,117,128,134,137,138,135,127,115,93,70];
+ const anterior=[[49,191],[55,216],[61,235],[67,253],[73,272],[79,288],[85,302],[96,321],[100,342],[98,363],[67,377],[49,386]];
+ const sternumY=[178,202,220,237,253,269,283];
+ const ribs=vertebrae.filter(v=>v.region==='thoracic').map((v,i)=>({number:i+1,type:i<7?'true':i<10?'false':'floating',y:v.y,extent:extents[i],end:anterior[i],cartilageEnd:i<7?[i===0?17:12,sternumY[i]]:i<10?anterior[i-1]:null}));
+ const ribPoint=(r,t)=>{const u=1-t,a=[r.extent,r.y+10],b=[r.extent+3,r.y+27],c=[r.end[0]+18,r.end[1]-4],d=r.end;return [0,1].map(k=>u*u*u*a[k]+3*u*u*t*b[k]+3*u*t*t*c[k]+t*t*t*d[k]);};
+ const serratusOrigins=ribs.slice(0,8).map(r=>ribPoint(r,.2));
+ function girdle(angle){
+  const lift=(angle-15)/105,up=30*lift,r=-up*Math.PI/180;
+  const S=p=>{const x=p[0]-112,y=(p[1]-190)*.9;return [112+x*Math.cos(r)-y*Math.sin(r)+5*lift,190+x*Math.sin(r)+y*Math.cos(r)-12*lift];};
+  const a=angle*Math.PI/180,d=[Math.sin(a),Math.cos(a)],n=[Math.cos(a),-Math.sin(a)],g=S([165,176]);
+  const H=[g[0]+13*n[0],g[1]+13*n[1]],at=(s,o=0)=>[H[0]+s*d[0]+o*n[0],H[1]+s*d[1]+o*n[1]];
+  return {lift,up,S,H,at,scapTransform:`translate(${5*lift} ${-12*lift}) rotate(${-up} 112 190) translate(0 19) scale(1 .9)`};
+ }
+ function draw(axial,el,path,view){
+  const context=el('g',{'data-part':'coronal-torso-context'},axial);
+  path('M -78,157 Q -127,166 -138,235 Q -148,297 -113,357 Q -92,389 -89,413 Q -113,432 -113,460 L -80,485 Q -46,469 0,474 Q 46,469 80,485 L 113,460 Q 113,432 89,413 Q 92,389 113,357 Q 148,297 138,235 Q 127,166 78,157 Z','torso-context',context);
+  const skull=el('g',{'data-part':'coronal-skull'},axial);
+  path('M -43,9 Q -47,-50 0,-50 Q 47,-50 43,9 L 40,42 Q 28,70 0,78 Q -28,70 -40,42 Z','bone',skull);
+  path(view==='front'?'M -24,15 L -10,15 M 10,15 L 24,15 M 0,20 L -4,36 L 4,36 M -13,51 Q 0,56 13,51':'M -35,45 Q 0,36 35,45 M -25,63 Q 0,53 25,63','bone-detail',skull);
+  const column=el('g',{'data-part':'coronal-vertebrae'},axial);
+  for(const v of vertebrae){
+   const g=el('g',{'data-vertebra':v.id,'data-region':v.region},column),{w,y}=v;
+   path(`M ${-w},${y} Q 0,${y-3} ${w},${y} L ${w+2},${y+8} Q 0,${y+13} ${-w-2},${y+8} Z`,'bone',g);
+   if(view==='back')path(`M -3,${y+3} L 3,${y+3} L 4,${y+12} L 0,${y+15} L -4,${y+12} Z`,'bone',g);
+  }
+  for(const sign of [-1,1]){
+   const side=el('g',{transform:`scale(${sign} 1)`,'data-side':sign},axial);
+   for(const r of ribs){
+    const g=el('g',{'data-rib':r.number,'data-rib-type':r.type},side),{y,extent:x,end:e}=r;
+    // Open rib arc, with a separate anterior end. The small floating ribs
+    // finish laterally, without adding them to the anterior costal arch.
+    const curve=`M 13,${y} C 51,${y-13} ${x-10},${y-17} ${x},${y+10} C ${x+3},${y+27} ${e[0]+18},${e[1]-4} ${e[0]},${e[1]}`;
+    if(view==='front')path(curve,'rib-outline',g);
+    const bone=path(curve,'rib',g);
+    if(view==='front')bone.setAttribute('style','fill:none;stroke:color-mix(in srgb,var(--foreground) 10%,var(--background));stroke-width:4;stroke-linecap:round');
+    if(view==='front'&&r.cartilageEnd){const c=r.cartilageEnd;
+     const p=path(`M ${e[0]},${e[1]} Q ${(e[0]+c[0])/2},${e[1]-4} ${c[0]},${c[1]} L ${c[0]},${c[1]+6} Q ${(e[0]+c[0])/2},${e[1]+3} ${e[0]-2},${e[1]+6} Z`,'cartilage',g);
+     p.setAttribute('data-connects-to',r.number<=7?'sternum':'rib-'+(r.number-1));
+    }
+   }
+   const pelvis=el('g',{'data-part':'coronal-hip-bone'},side);
+   const hip=view==='front'?'M 25,442 Q 20,425 39,420 Q 75,400 106,420 Q 124,433 113,446 L 99,457 Q 104,464 91,471 Q 86,476 88,487 Q 90,508 66,515 Q 49,511 4,495 L 4,479 Q 35,480 58,468 Q 65,454 45,447 Q 30,456 25,442 Z M 47,482 Q 62,469 73,483 Q 76,499 63,503 Q 48,500 37,491 Q 36,484 47,482 Z':'M 20,440 Q 28,422 49,416 Q 80,401 103,416 Q 115,425 108,441 L 91,452 Q 83,459 86,471 L 92,490 Q 87,506 66,510 Q 47,505 32,491 L 26,478 Q 39,467 44,456 L 29,449 Z M 47,479 Q 62,470 72,482 Q 74,495 61,498 Q 47,496 44,486 Z';
+   path(hip,'bone',pelvis).setAttribute('fill-rule','evenodd');
+   path('M 33,430 Q 74,409 103,430','bone-detail',pelvis);
+   if(view==='front')path('M 94,459 Q 82,461 85,475','bone-detail',pelvis);
+  }
+  path(view==='front'?'M -20,449 Q 0,441 20,449 L 22,457 Q 18,474 0,486 Q -18,474 -22,457 Z':'M -18,445 Q 0,439 18,445 L 22,459 Q 17,485 0,497 Q -17,485 -22,459 Z','bone',axial).setAttribute('data-part','coronal-sacrum');
+  path(view==='front'?'M -3,485 Q 3,490 0,495':'M -3,496 Q 3,501 0,508','bone-detail',axial);
+  if(view==='front'){
+   path('M -4,479 L 4,479 L 4,495 L -4,495 Z','cartilage',axial).setAttribute('data-part','coronal-pubic-symphysis');
+   const g=el('g',{'data-part':'coronal-sternum'},axial);
+   path('M -17,148 Q -10,144 -7,153 L 7,153 Q 10,144 17,148 L 20,177 L 12,196 L 11,277 Q 12,286 5,290 L 0,300 L -5,290 Q -12,286 -11,277 L -12,196 L -20,177 Z','bone',g);
+   path('M -12,196 L 12,196 M -10,219 L 10,219 M -10,240 L 10,240 M -9,261 L 9,261','bone-detail',g);
+  }else{
+   const fascia=path('M -9,347 L 9,347 Q 27,377 23,427 L 15,456 L 0,474 L -15,456 L -23,427 Q -27,377 -9,347 Z','fascia',axial);
+   axial.insertBefore(fascia,column);
+  }
+ }
+ // Keep leaders inside their muscle as the humeral attachment moves.
+ function anchor(shape){
+  const b=shape.getBBox(),screen=shape.getScreenCTM(),local=shape.getCTM(),points=[];
+  for(let row=0;row<13;row++)for(let col=0;col<13;col++)points.push(new DOMPoint(b.x+b.width*(col+.5)/13,b.y+b.height*(row+.5)/13));
+  points.sort((a,c)=>Math.hypot(a.x-b.x-b.width/2,a.y-b.y-b.height/2)-Math.hypot(c.x-b.x-b.width/2,c.y-b.y-b.height/2));
+  let fallback=null;
+  for(const p of points){if(!shape.isPointInFill(p))continue;fallback??=p;
+   const q=p.matrixTransform(screen),hit=document.elementFromPoint(q.x,q.y);
+   if(hit===shape||hit?.closest('[clip-path]')?.getAttribute('clip-path')===`url(#${shape.id}-clip)`){const s=p.matrixTransform(local);return {point:[s.x,s.y],visible:true};}
+  }
+  if(fallback){const s=fallback.matrixTransform(local);return {point:[s.x,s.y],visible:false};}
+  return null;
+ }
+ return {vertebrae,ribs,ribPoint,serratusOrigins,girdle,draw,anchor};
+})();
+
+function ClassicChest(host){
 const root=host;
   const svg = root.querySelector('svg');
   const drawing = root.querySelector('.pm-drawing');
@@ -1348,26 +1428,7 @@ const root=host;
   const mix=(a,b,t)=>[a[0]+(b[0]-a[0])*t,a[1]+(b[1]-a[1])*t];
   let angle=60, phase=Math.acos(1-2*(60-15)/105), playing=!matchMedia('(prefers-reduced-motion: reduce)').matches;
   let width=600,scale=1,top=0,lastTime=0,interacted=false;
-  // Frontal schematic coordinates. The scapular/clavicular coupling is illustrative,
-  // not a measured, patient-specific kinematic model. No force/activation inference.
-  for(let i=0;i<6;i++){
-    const y=78+i*12;
-    path(`M -10,${y} Q 0,${y-3} 10,${y} L 12,${y+8} Q 0,${y+12} -12,${y+8} Z`,'bone',axial);
-  }
-  // Paired ribs and anterior costal cartilages, cropped to the thoracic region.
-  for(const side of [-1,1]){
-    const ribs=el('g',{transform:`scale(${side} 1)`},axial);
-    for(let i=0;i<10;i++){
-      const y=153+i*17, x=93+Math.sin((i+1)/11*Math.PI)*43;
-      const endY=i<7?164+i*20:285+(i-6)*10;
-      const endX=i<7?17:21+(i-6)*12;
-      const tipX=43+i*3,tipY=y+32;
-      path(`M 15,${y-9} C 73,${y-22} ${x},${y-12} ${x+1},${y+5} C ${x+5},${y+22} 93,${tipY+10} ${tipX},${tipY} L ${tipX+2},${tipY-7} C 91,${tipY+1} ${x-6},${y+17} ${x-7},${y+5} C ${x-9},${y-4} 66,${y-12} 17,${y-1} Z`,'rib',ribs);
-      path(`M ${tipX+2},${tipY-7} Q 39,${tipY-9} ${endX},${endY} L ${endX},${endY+7} Q 40,${tipY+1} ${tipX},${tipY} Z`,'cartilage',ribs);
-    }
-  }
-  path('M -17,142 Q -10,137 -7,146 L 7,146 Q 10,137 17,142 L 20,170 L 12,185 L 11,276 Q 16,285 7,292 L 0,314 L -7,292 Q -16,285 -11,276 L -12,185 L -20,170 Z','bone',axial);
-  path('M -12,183 L 12,183 M -10,211 L 10,211 M -10,238 L 10,238 M -9,266 L 9,266','bone-detail',axial);
+  ClassicCoronalAnatomy.draw(axial,el,path,'front');
   const sides=[root.querySelector('.pm-left'),root.querySelector('.pm-right')].map((group,index)=>{
     const scap=el('g',{},group); el('use',{href:'#pm-scapula',class:'bone',opacity:'.55'},scap);
     path('M 99,174 Q 125,169 151,179 M 111,283 Q 106,224 119,182','bone-detail',scap);
@@ -1394,27 +1455,25 @@ const root=host;
   const label=(text)=>{const g=el('g',{},labelLayer);const line=path('','',g);const t=el('text',{'text-anchor':'middle'},g);t.textContent=text;return {g,line,t};};
   const clavLabel=label('쇄골'),sternumLabel=label('흉골'),scapLabel=label('견갑골');
   function draw(){
-    const a=angle*Math.PI/180, lift=(angle-15)/105;
-    const H=[170-5*lift,164-22*lift];
-    const d=[Math.sin(a),Math.cos(a)],n=[Math.cos(a),-Math.sin(a)];
-    const at=(s,o=0)=>[H[0]+d[0]*s+n[0]*o,H[1]+d[1]*s+n[1]*o];
+    const {lift,S,H,at,scapTransform}=ClassicCoronalAnatomy.girdle(angle);
     // Broad humeral attachment follows the proximal shaft, below its head.
     const proximal=at(34,-8),distal=at(72,-8),mid=at(53,-8);
     const bellyProx=[proximal[0]-10,proximal[1]+1],bellyDist=[distal[0]-10,distal[1]+1];
     const co0=[22,153-2*lift],co1=[88,155-12*lift];
     for(const s of sides){
-      s.scap.setAttribute('transform',`translate(${-5*lift} ${-22*lift}) rotate(${-30*lift} 157 170)`);
+      s.scap.setAttribute('transform',scapTransform);
       s.arm.setAttribute('transform',`translate(${xy(H)}) rotate(${-angle})`);
       const cy=150-19*lift;
-      s.clav.setAttribute('d',`M 18,144 Q 47,137 81,${f(cy-3)} T 151,${f(cy-6)} Q 165,${f(cy-5)} 166,${f(cy+1)} Q 161,${f(cy+9)} 149,${f(cy+5)} Q 111,${f(cy+1)} 83,${f(cy+7)} T 19,154 Z`);
-      s.abdomen.setAttribute('d',`M 55,263 Q ${f(bellyProx[0]-45)},${f((bellyProx[1]+264)/2)} ${xy(bellyProx)} L ${xy(at(31,-13))} Q ${f(bellyProx[0]-45)},${f((273+bellyProx[1])/2+6)} 85,273 Q 69,278 55,263 Z`);
-      s.sternum.setAttribute('d',`M ${xy(co0)} Q 87,${f(186-17*lift)} ${xy(mix(bellyProx,bellyDist,.45))} L ${xy(bellyProx)} Q ${f(bellyProx[0]-45)},${f((bellyProx[1]+264)/2)} 55,263 Q 27,266 19,250 L 17,185 Z`);
+      const acromion=S([170,163]);
+      s.clav.setAttribute('d',`M 18,151 Q 61,139 ${xy(acromion)} L ${xy([acromion[0],acromion[1]+7])} Q 67,151 18,160 Z`);
+      s.abdomen.setAttribute('d',`M 55,276 Q ${f(bellyProx[0]-45)},${f((bellyProx[1]+277)/2+9)} ${xy(bellyProx)} L ${xy(at(31,-13))} Q ${f(bellyProx[0]-45)},${f((286+bellyProx[1])/2+13)} 85,286 Q 67,293 55,276 Z`);
+      s.sternum.setAttribute('d',`M ${xy(co0)} Q 87,${f(186-17*lift)} ${xy(mix(bellyProx,bellyDist,.45))} L ${xy(bellyProx)} Q ${f(bellyProx[0]-45)},${f((bellyProx[1]+277)/2+9)} 55,276 Q 27,286 19,263 L 17,185 Z`);
       s.clavicle.setAttribute('d',`M ${xy(co0)} Q 53,${f(151-7*lift)} ${xy(co1)} Q ${f((co1[0]+bellyDist[0])/2)},${f((co1[1]+bellyDist[1])/2-4)} ${xy(bellyDist)} L ${xy(mix(bellyProx,bellyDist,.45))} Q 87,${f(186-17*lift)} ${xy(co0)} Z`);
       s.tendon.setAttribute('d',`M ${xy(bellyProx)} L ${xy(proximal)} L ${xy(distal)} L ${xy(bellyDist)} Z`);
       s.attach.setAttribute('cx',mid[0]);s.attach.setAttribute('cy',mid[1]);
       s.sl.forEach((p,i)=>{
         const t=(i+1)/28;
-        const origin=t<.8?[19,173+t*96]:mix([19,250],[55,260],(t-.8)/.2);
+        const origin=t<.8?[19,183+t*88]:mix([19,263],[55,275],(t-.8)/.2);
         const end=mix(mix(bellyProx,bellyDist,.45),bellyProx,t);
         const control=mix(origin,end,.55);control[1]+=7+12*t;
         p.setAttribute('d',`M ${xy(origin)} Q ${xy(control)} ${xy(end)}`);
@@ -1425,7 +1484,7 @@ const root=host;
         p.setAttribute('d',`M ${xy(origin)} Q ${xy(control)} ${xy(end)}`);
       });
       s.al.forEach((p,i)=>{
-        const t=(i+1)/9,origin=mix([58,265],[83,272],t),end=mix(bellyProx,at(31,-13),t);
+        const t=(i+1)/9,origin=mix([58,278],[83,286],t),end=mix(bellyProx,at(31,-13),t);
         const control=mix(origin,end,.5);control[1]+=7;
         p.setAttribute('d',`M ${xy(origin)} Q ${xy(control)} ${xy(end)}`);
       });
@@ -1447,8 +1506,8 @@ const root=host;
   function cyForLabel(lift){return 146-13*lift;}
   function resize(){
     width=root.clientWidth;
-    scale=width/830;top=width<440?0:-15;
-    const height=430*scale+15;
+    scale=width/870;top=70*scale;
+    const height=605*scale+10;
     svg.setAttribute('viewBox',`0 0 ${width} ${height}`);svg.setAttribute('height',height);
     drawing.setAttribute('transform',`translate(${width/2} ${top}) scale(${scale})`);draw();
   }
@@ -1458,10 +1517,10 @@ const root=host;
     // The sheet wraps the thoracic wall. Its posterior continuation must
     // not turn into a frontal flap when the 2D scapula rotates laterally.
     const wallId=`upperbody-serratus-thorax-${side}`,wallClip=el('clipPath',{id:wallId},svg.querySelector('defs'));
-    const wall=Array.from({length:10},(_,i)=>[97+Math.sin((i+1)/11*Math.PI)*43,158+i*17]);
-    let boundary=`M 0,140 L ${xy([wall[0][0]-5,140])}`;
-    wall.forEach((p,i)=>{boundary+=` Q ${xy(p)} ${xy(i<9?mix(p,wall[i+1],.5):[p[0]-8,p[1]+13])}`;});
-    path(boundary+' L 0,332 Z','',wallClip);g.setAttribute('clip-path',`url(#${wallId})`);
+    const wall=ClassicCoronalAnatomy.ribs.slice(0,10).map(r=>[r.extent+3,r.y+15]);
+    let boundary=`M 0,155 L ${xy([wall[0][0]-5,155])}`;
+    wall.forEach((p,i)=>{boundary+=` Q ${xy(p)} ${xy(i<9?mix(p,wall[i+1],.5):[p[0]-8,p[1]+35])}`;});
+    path(boundary+' L 0,370 Z','',wallClip);g.setAttribute('clip-path',`url(#${wallId})`);
     // One connected sheet, with rib digitations at its lateral edge.
     // Upper fibers are covered by pectoralis; lower rib slips remain visible.
     const shape=path('','muscle serratus',g),id=`upperbody-serratus-front-${side}`;shape.id=id;
@@ -1471,8 +1530,8 @@ const root=host;
   });
   const muscleLabels=['대흉근 쇄골부','대흉근 흉늑부','대흉근 복부','전거근'].map(text=>{const node=label(text);node.g.dataset.label=text;return node;});
   function updateSerratus(){
-    const lift=(angle-15)/105,r=-30*lift*Math.PI/180,S=p=>{const x=p[0]-157,y=p[1]-170;return [157+x*Math.cos(r)-y*Math.sin(r)-5*lift,170+x*Math.sin(r)+y*Math.cos(r)-22*lift];};
-    const origins=Array.from({length:8},(_,i)=>{const y=153+i*17,x=93+Math.sin((i+1)/11*Math.PI)*43;return [x-11,y+9];});
+    const {lift,S}=ClassicCoronalAnatomy.girdle(angle);
+    const origins=ClassicCoronalAnatomy.serratusOrigins;
     const insertion=t=>t<.45?S(mix([90,169],[101,254],t/.45)):S(mix([104,278],[109,291],(t-.45)/.55));
     serratus.forEach(n=>{
       let d=`M ${xy(origins[0])}`;
@@ -1482,23 +1541,23 @@ const root=host;
       n.lines.forEach((line,j)=>{const i=Math.floor(j/4),t=((j%4)+1)/5,o=[origins[i][0]-3+6*t,origins[i][1]+2+t*10],e=insertion((i+t)/8),c=mix(o,e,.55);c[0]=Math.max(o[0],e[0])+9;line.setAttribute('d',`M ${xy(o)} Q ${xy(c)} ${xy(e)}`);});
     });
     for(const node of [clavLabel,sternumLabel,scapLabel])node.g.style.display='none';
-    const targets=[[-64,159-7*lift],[-70,238],[-79,267],[127,278]],ys=[147,220,280,325];
+    const targets=[[-64,159-7*lift],[-70,238],[-79,283],[130,291]],ys=[147,220,286,337];
     // Aim at a painted superficial slip, including when the arm is lowered.
     const surface=serratus.at(-1).shape,matrix=surface.getScreenCTM();
-    if(matrix){let found=false;for(const y of [278,286,269,292,261]){for(const x of [127,122,117,132,112]){
+    if(matrix){let found=false;for(const y of [291,299,282,306,313]){for(const x of [130,125,120,135,115]){
       const local=new DOMPoint(x,y),point=local.matrixTransform(matrix),hit=document.elementFromPoint(point.x,point.y);
       if(surface.isPointInFill(local)&&hit?.closest('.serratus-layer')===surface.parentNode){targets[3]=[x,y];found=true;break;}
     }if(found)break;}}
-    muscleLabels.forEach((node,i)=>{const x=i<3?8:width-8,y=top+ys[i]*scale,q=[width/2+targets[i][0]*scale,top+targets[i][1]*scale];node.t.setAttribute('text-anchor',i<3?'start':'end');node.t.setAttribute('x',x);node.t.setAttribute('y',y);node.line.setAttribute('d',`M ${f(x)},${f(y+4)} L ${xy(q)}`);});
+    muscleLabels.forEach((node,i)=>{const x=i<3?8:width-8,y=top+ys[i]*scale,painted=i<3?ClassicCoronalAnatomy.anchor([sides[0].clavicle,sides[0].sternum,sides[0].abdomen][i]):null,q=painted?.point||[width/2+targets[i][0]*scale,top+targets[i][1]*scale];node.t.setAttribute('text-anchor',i<3?'start':'end');node.t.setAttribute('x',x);node.t.setAttribute('y',y);node.line.setAttribute('d',`M ${f(x)},${f(y+4)} L ${xy(q)}`);});
   }
-  return {render(a){angle=a;resize();updateSerratus();},metrics:{width:830,height:430},source:'classic-pectoral-corrected-costal-border'};
+  return {render(a){angle=a;resize();updateSerratus();},metrics:{width:870,height:605},source:'reviewed-coronal-pectoral-and-costal-arch'};
 
 }
 function ClassicBack(host){
 const root=host;
   const svg=root.querySelector('svg'),drawing=root.querySelector('.back-drawing');
   const axial=root.querySelector('.back-axial'),spine=root.querySelector('.back-spine');
-  const labels=root.querySelector('.back-labels'),defs=svg.querySelector('defs');
+  const labels=root.querySelector('.back-labels'),defs=svg.querySelector('defs');labels.setAttribute('pointer-events','none');
   const slider=root.querySelector('#upperbody-angle'),value=root.querySelector('#upperbody-value');
   const play=root.querySelector('#upperbody-play'),fiberCheck=root.querySelector('#upperbody-fibers');
   const transparentCheck=root.querySelector('#upperbody-transparent');
@@ -1514,22 +1573,7 @@ const root=host;
   // Scapulothoracic coupling is continuous and illustrative, not a universal ratio.
   // Rotations below are posterior-view in-plane projections, not clinical 3D joint angles.
   // Posterior tilt and humeral external rotation require a 3D model and are omitted.
-  path('M -26,25 Q -30,1 0,-1 Q 30,1 26,25 L 25,53 Q 18,75 0,78 Q -18,75 -25,53 Z','bone',axial);
-  path('M -22,52 Q 0,45 22,52 M -16,66 Q 0,59 16,66','bone-detail',axial);
-  for(const sign of [-1,1]){
-    const g=el('g',{transform:`scale(${sign} 1)`},axial);
-    for(let i=0;i<12;i++){
-      const y=161+i*16,extent=74+Math.sin((i+1)/13*Math.PI)*72;
-      path(`M 12,${y} C 55,${y-13} ${extent},${y-17} ${extent},${y+12} Q ${extent-4},${y+35} 73,${y+28}`,'rib',g);
-    }
-    path('M 18,430 Q 67,406 106,424 Q 114,441 101,457 L 56,465 Q 29,455 18,444 Z','bone',g);
-    path('M 19,433 Q 62,418 103,430','bone-detail',g);
-  }
-  path('M -9,336 L 9,336 Q 30,371 28,411 L 12,451 L 0,464 L -12,451 L -28,411 Q -30,371 -9,336 Z','fascia',axial);
-  for(let i=0;i<24;i++){
-    const y=83+i*14.5,w=i<7?9:i<19?12:15;
-    path(`M ${-w},${y} L -4,${y-3} L 4,${y-3} L ${w},${y} L ${w+3},${y+5} L 5,${y+7} L 2,${y+11} L -2,${y+11} L -5,${y+7} L ${-w-3},${y+5} Z`,'bone',spine);
-  }
+  ClassicCoronalAnatomy.draw(axial,el,path,'back');
   const sides=[root.querySelector('.back-left'),root.querySelector('.back-right')].map((group,index)=>{
     const scap=el('g',{},group);
     el('use',{href:'#back-scapula',class:'bone'},scap);
@@ -1564,21 +1608,7 @@ const root=host;
   const upperLabel=label('승모근 상부'),middleLabel=label('승모근 중부'),lowerLabel=label('승모근 하부'),latLabel=label('광배근');
   const teresLabel=label('대원근');
   const infraLabel=label('극하근'),minorLabel=label('소원근');
-  function pose(){
-    // Do not directly apply a literature 3D upward-rotation angle to a flat posterior drawing.
-    // A moderated in-plane projection keeps the inferior border near the thoracic envelope.
-    // This schematic projection is illustrative rather than a fitted patient-specific angle.
-    const radians=angle*Math.PI/180,up=Math.max(0,(angle-25)/125)*32;
-    const r=-up*Math.PI/180,lift=(angle-15)/135;
-    const S=p=>{
-      const x=p[0]-112,y=p[1]-190;
-      return [112+x*Math.cos(r)-y*Math.sin(r)+lift*7,190+x*Math.sin(r)+y*Math.cos(r)-lift*8];
-    };
-    const direction=[Math.sin(radians),Math.cos(radians)],normal=[Math.cos(radians),-Math.sin(radians)];
-    const H=add(S([165,176]),[normal[0]*13,normal[1]*13]);
-    const at=(length,lateral=0)=>[H[0]+direction[0]*length+normal[0]*lateral,H[1]+direction[1]*length+normal[1]*lateral];
-    return {up,lift,S,H,at};
-  }
+  function pose(){return ClassicCoronalAnatomy.girdle(angle);}
   function fibers(region,origins,ends,bow=0){
     region.lines.forEach((p,i)=>{
       const t=(i+1)/(region.lines.length+1),o=origins(t),end=ends(t),c=mix(o,end,.5);c[1]+=bow;
@@ -1608,7 +1638,7 @@ const root=host;
     return {control,end};
   }
   function draw(){
-    const {up,lift,S,H,at}=pose();
+    const {up,lift,S,H,at,scapTransform}=pose();
     const acromion=S([170,163]),spineOuter=S([149,177]),spineMid=S([112,180]),spineRoot=S([67,180]);
     const lowerRoot=S([76,188]),upperMed=[4,166],middleMed=[4,226];
     // The visible latissimus belly leads into the posterior axillary fold.
@@ -1637,7 +1667,7 @@ const root=host;
     const teresTopControl=add(mix(teresUpper,teresEndUpper,.5),teresNormal.map(n=>-14*n));
     const teresLowControl=add(mix(teresLower,teresEndLower,.5),teresNormal.map(n=>14*n));
     for(const s of sides){
-      s.scap.setAttribute('transform',`translate(${f(7*lift)} ${f(-8*lift)}) rotate(${-up} 112 190)`);
+      s.scap.setAttribute('transform',scapTransform);
       s.arm.setAttribute('transform',`translate(${xy(H)}) rotate(${-angle})`);
       s.infra.shape.setAttribute('d',`M ${xy(infraMedialUpper)} Q ${xy(S([109,185]))} ${xy(infraTop)} Q ${xy(mix(infraTop,infraEndUpper,.5))} ${xy(infraEndUpper)} L ${xy(infraEndLower)} Q ${xy(S([147,210]))} ${xy(infraLateralLower)} L ${xy(S([101,279]))} Q ${xy(S([87,289]))} ${xy(infraMedialLower)} Q ${xy(S([65,241]))} ${xy(infraMedialUpper)} Z`);
       fibers(s.infra,t=>S([68+15*t*t,194+81*t]),t=>mix(infraEndUpper,infraEndLower,t),3);
@@ -1647,7 +1677,7 @@ const root=host;
       s.minorTendon.setAttribute('d',`M ${xy(minorEndUpper)} L ${xy(minorInsertUpper)} L ${xy(minorInsertLower)} L ${xy(minorEndLower)} Z`);
       s.clav.setAttribute('d',`M 17,148 Q 88,${f(acromion[1]-13)} ${xy(acromion)} L ${xy(add(acromion,[0,7]))} Q 88,${f(acromion[1]-4)} 17,156 Z`);
       const latStart=[6,273];
-      s.lat.shape.setAttribute('d',`M ${xy(latStart)} Q 82,292 ${xy(fold)} L ${xy(foldLow)} Q ${xy(latContour.control)} ${xy(latContour.end)} Q 107,402 104,437 Q 75,459 26,451 L 6,387 Z`);
+      s.lat.shape.setAttribute('d',`M ${xy(latStart)} Q 82,292 ${xy(fold)} L ${xy(foldLow)} Q ${xy(latContour.control)} ${xy(latContour.end)} Q 101,380 89,402 Q 92,422 104,437 Q 75,455 26,451 L 6,387 Z`);
       s.teres.shape.setAttribute('d',`M ${xy(teresUpper)} Q ${xy(teresTopControl)} ${xy(teresEndUpper)} L ${xy(teresEndLower)} Q ${xy(teresLowControl)} ${xy(teresLower)} Q ${xy(S([101,275]))} ${xy(teresUpper)} Z`);
       s.teres.lines.forEach((p,i)=>{
         const t=(i+1)/(s.teres.lines.length+1);
@@ -1675,7 +1705,9 @@ const root=host;
     // Keep muscle names visible at mobile widths; the text stays in screen
     // coordinates while leaders follow the actual moving anatomy.
     const named=(l,left,y,target)=>{
-      const x=left?8:width-8,py=offset+y*scale,q=screen(target);
+      const x=left?8:width-8,py=offset+y*scale;
+      const shapes=new Map([[upperLabel,sides[0].upper.shape],[middleLabel,sides[0].middle.shape],[lowerLabel,sides[0].lower.shape],[latLabel,sides[1].lat.shape],[teresLabel,sides[1].teres.shape],[infraLabel,sides[1].infra.shape],[minorLabel,sides[1].minor.shape]]);
+      const painted=ClassicCoronalAnatomy.anchor(shapes.get(l)),q=painted?.point||screen(target);
       l.t.setAttribute('text-anchor',left?'start':'end');
       l.t.setAttribute('x',x);l.t.setAttribute('y',py);
       l.line.setAttribute('d',`M ${f(x)},${f(py+4)} L ${xy(q)}`);
@@ -1703,12 +1735,12 @@ const root=host;
   }
   function resize(){
     width=root.clientWidth;scale=width/870;offset=70*scale;
-    const height=565*scale+10;
+    const height=605*scale+10;
     svg.setAttribute('viewBox',`0 0 ${width} ${height}`);svg.setAttribute('height',height);
     drawing.setAttribute('transform',`translate(${width/2} ${offset}) scale(${scale})`);draw();
   }
   for(const node of [upperLabel,middleLabel,lowerLabel,latLabel,teresLabel,infraLabel,minorLabel])node.g.dataset.label=node.t.textContent;
-  return {render(a){angle=a;resize();for(const node of [scapLabel,fasciaLabel,insertionLabel])node.g.style.display='none';},metrics:{width:870,height:565},source:'original-back-curves'};
+  return {render(a){angle=a;resize();for(const node of [scapLabel,fasciaLabel,insertionLabel])node.g.style.display='none';},metrics:{width:870,height:605},source:'reviewed-posterior-layering-and-waist'};
 
 }
 /* Qualitative lateral landmarks based on OpenStax A&P 2e, chapters 7.3/7.4.
