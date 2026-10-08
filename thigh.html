@@ -1427,9 +1427,13 @@ const ThighModel = (() => {
       {id:'semitendinosus-tendon',rows:sweep([end('semitendinosus'),[29,246-10*t,-18],[31,269,-1],insertion.semitendinosus],[[2,2],[2,2],[2,2],[2,2]])},
       {id:'semimembranosus-tendon',rows:sweep([end('semimembranosus'),[20,255,-17],insertion.semimembranosus],[[4,2],[4,2],[4,2]])},
       {id:'sartorius-tendon',rows:sweep([sartoriusPath.at(-1),[30,272,8],sartoriusEnd],[[2,2],[2,2],[2,2]])},
-      {id:'achilles-tendon',rows:sweep([turn([0,385,-16]),turn([0,439,-13]),turn([0,497,-12]),turn([0,514,-9])],[[4,3],[4,3],[3,3],[3,3]])}
+      {id:'achilles-tendon',rows:sweep([turn([0,385,-16]),turn([0,439,-13]),turn([0,497,-12]),turn([0,514,-24])],[[4,3],[4,3],[3,3],[3,3]])}
     ];
-    const foot=sweep([[0,499,0],[0,516,-7],[0,520,16],[0,519,44]].map(turn),[[11,10],[15,10],[20,8],[14,6]]);
+    // Neutral foot: posterior heel, elevated midfoot arch and broader
+    // metatarsal region. Its scale follows the limb, not a tiny ankle marker.
+    const footProfiles=[[-26,516,3,3],[-18,514,14,14],[0,510,14,17],[22,514,13,11],[55,520,21,7],[80,520,26,8],[100,520,24,7]];
+    const foot=footProfiles.map(([z,y,rx,ry])=>{const s=section([0,y,z],rx,ry,[1,0,0],[0,1,0]);return {...s,center:turn(s.center),ring:s.ring.map(turn)};});
+    for(let i=0;i<5;i++)bones.push({id:'toe-'+i,rows:sweep([[20-i*10,520,96],[21-i*10,520,109],[22-i*10,520,[137,135,130,124,116][i]]].map(turn),[[i?4.5:6,5],[i?4:5.5,4],[3,3]])});
     return {bones,muscles,tendons,foot,knee:[0,KNEE,0],patella,insertion,angle,drive};
   }
   const cameraCos=Math.cos(32*Math.PI/180),cameraSin=Math.sin(32*Math.PI/180);
@@ -1460,7 +1464,7 @@ const ThighModel = (() => {
 /* Local surface visibility from the actual projected tube mesh. A single
    average depth cannot handle a folded calf crossing the thigh. */
 const ThighRenderer = (() => {
-  const STEP=1.7,X0=-280,Y0=-40,NX=224,NY=350;
+  const STEP=1.7,X0=-310,Y0=-40,NX=285,NY=360;
   const key=(x,y)=>y*(NX+1)+x;
   const clamp=(v,min,max)=>Math.max(min,Math.min(max,v));
   function simplify(points,tolerance=.65){
@@ -1595,7 +1599,7 @@ const ThighRenderer = (() => {
   const fibers=root.querySelector('#thigh-fibers'),transparent=root.querySelector('#thigh-transparent'),caption=root.querySelector('#thigh-view-caption');
   const buttons=['front','side','back'].map(view=>[root.querySelector('#thigh-'+view),view]);
   const NS='http://www.w3.org/2000/svg',store='artist-thigh-knee-v1';
-  const f=n=>Math.round(n*100)/100,P=p=>[280+p[0],45+p[1]],xy=p=>`${f(p[0])},${f(p[1])}`;
+  const f=n=>Math.round(n*100)/100,P=p=>[300+p[0],45+p[1]],xy=p=>`${f(p[0])},${f(p[1])}`;
   const el=(tag,attrs,parent)=>{const e=document.createElementNS(NS,tag);Object.entries(attrs).forEach(([k,v])=>e.setAttribute(k,v));parent.appendChild(e);return e;};
   let angle=0,drive=0,camera='front',playing=!matchMedia('(prefers-reduced-motion: reduce)').matches;
   let phase=0,last=0,lastDraw=0,width=560,scale=1,interacted=false;
@@ -1670,7 +1674,7 @@ const ThighRenderer = (() => {
     if(camera==='side'||transparent.checked){const calf=[byId.get('gastrocnemius-medial'),byId.get('gastrocnemius-lateral')].sort((a,b)=>b.area-a.area)[0];if(calf?.area>45)leader('calf','장딴지근',.14,437,calf.anchor);}
     const rounded=Math.round(angle),text=rounded===0?'펴짐 0°':`굽힘 ${rounded}°`;
     value.textContent=text;slider.value=rounded;slider.setAttribute('aria-valuetext',text);
-    root.dataset.angle=String(f(angle));root.dataset.camera=camera;root.dataset.drive=String(f(drive));root.dataset.revision='oblique-reference-thigh-v4';root.dataset.cameraYaw=String(camera==='side'?90:32);
+    root.dataset.angle=String(f(angle));root.dataset.camera=camera;root.dataset.drive=String(f(drive));root.dataset.revision='foot-proportions-thigh-v5';root.dataset.cameraYaw=String(camera==='side'?90:32);
     root.dataset.knee=ThighModel.view(m.knee,camera).map(f).join(',');
   }
   function sync(){

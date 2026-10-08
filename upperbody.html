@@ -1871,7 +1871,7 @@ function ClassicUpperbody(host){
  const classic=c.renderer==='classic'?ClassicUpperbody(root):null;
  const buttons=['front','back','side'].map(v=>[root.querySelector('#'+c.id+'-'+v),v]);
  const NS='http://www.w3.org/2000/svg',parts=new Map(),labels=new Map(),store='artist-'+c.id+'-v1',f=n=>Math.round(n*100)/100;
- const P=p=>[c.origin[0]+p[0],c.origin[1]+p[1]],xy=p=>p.map(f).join(','),el=(tag,attrs,parent)=>{const node=document.createElementNS(NS,tag);Object.entries(attrs).forEach(([k,v])=>node.setAttribute(k,v));parent.appendChild(node);return node;};
+ const P=p=>[c.origin[0]+p[0]*(c.modelScale||1),c.origin[1]+p[1]*(c.modelScale||1)],xy=p=>p.map(f).join(','),el=(tag,attrs,parent)=>{const node=document.createElementNS(NS,tag);Object.entries(attrs).forEach(([k,v])=>node.setAttribute(k,v));parent.appendChild(node);return node;};
  let angle=c.initialAngle,camera='front',drive=1,playing=!matchMedia('(prefers-reduced-motion: reduce)').matches,phase=0,last=0,lastDraw=0,width=c.width,scale=1,interacted=false,lastLegend='';
  const phaseFor=(a,d)=>{const p=Math.acos(Math.max(-1,Math.min(1,1-2*(a-c.min)/(c.max-c.min))));return d<0?2*Math.PI-p:p;};
  function curve(points){if(!points.length)return '';let d='M '+xy(P(points[0]));for(let i=0;i<points.length-1;i++){const a=points[Math.max(0,i-1)],b=points[i],q=points[i+1],r=points[Math.min(points.length-1,i+2)];d+=` C ${xy(P(b.map((v,j)=>v+(q[j]-a[j])/6)))} ${xy(P(q.map((v,j)=>v-(r[j]-b[j])/6)))} ${xy(P(q))}`;}return d;}

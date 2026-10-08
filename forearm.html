@@ -1522,14 +1522,14 @@ const ForearmAnatomy = (() => {
     const tendonSets=(side)=>[-29,-12,5,20].map((x,i)=>{
       const start=limbPoint([x*.45,side>0?238:229,side*17],a);
       const wrist=radial([x*.55-4,313,side*14],a);
-      const end=radial([x,[419,429,423,407][i],side*9],a);
+      const end=radial([x,[496,511,503,482][i],side*9],a);
       return ribbon(start,wrist,end,1.7);
     });
     const flexTendons=tendonSets(1);
-    flexTendons.push(ribbon(limbPoint([-24,170,24],a),radial([-31,311,14],a),radial([-29,355,10],a),2));
-    flexTendons.push(ribbon(limbPoint([28,245,18],a),radial([19,309,13],a),radial([19,332,12],a),2.3));
+    flexTendons.push(ribbon(limbPoint([-24,170,24],a),radial([-31,311,14],a),radial([-29,381.4,10],a),2));
+    flexTendons.push(ribbon(limbPoint([28,245,18],a),radial([19,309,13],a),radial([19,344.6,12],a),2.3));
     const extTendons=tendonSets(-1);
-    const ecrTendons=[-29,-12].map(x=>ribbon(ecr.at(-1).center,radial([x,311,-13],a),radial([x,355,-10],a),1.8));
+    const ecrTendons=[-29,-12].map(x=>ribbon(ecr.at(-1).center,radial([x,311,-13],a),radial([x,381.4,-10],a),1.8));
     const brEnd=radial([-45,297,1],a);
     // Cropped distal upper arm: fixed humeral muscle masses, with separate
     // biceps→radius / brachialis→ulna / triceps→olecranon connections.
@@ -1671,6 +1671,26 @@ const ForearmAnatomy = (() => {
   return {frame,projectFrame,verify,visibleContours};
 })();
 
+/* Neutral wrist and hand block. All sections undergo the same rigid
+   radius/hand transform; this is a drawing construction, not a scan. */
+const ForearmHand=(()=>{
+ const view=(p,camera)=>camera==='back'?[-p[0],p[1],-p[2]]:camera==='side'?[p[2],p[1],-p[0]]:p;
+ function frame(angle,camera='front'){
+  const transform=p=>view(ForearmModel.radial(p,angle),camera);
+  const tube=stations=>stations.map(([y,x,z,rx,rz])=>{
+   const center=transform([x,y,z]),ring=Array.from({length:48},(_,i)=>{const t=i*Math.PI/24;return transform([x+rx*Math.cos(t),y,z+rz*Math.sin(t)]);});return {center,ring};
+  });
+  const parts=[{id:'palm',rows:tube([[320,-10,0,31,11],[346,-10,0,34,13],[376,-9,0,34,12],[409,-7,0,30,10]])}];
+  for(let i=0;i<4;i++){
+   const x=[-29,-12,5,20][i],end=[500,515,507,486][i];
+   parts.push({id:'finger-'+i,rows:tube([[403,x,0,7.5,9],[430,x,0,7.5,8],[end-22,x,0,6.5,7],[end-4,x,0,5,5],[end,x,0,1.5,2]])});
+  }
+  parts.push({id:'thumb',rows:tube([[347,-39,2,12,10],[372,-52,3,11,9],[405,-66,3,8,8],[424,-72,3,6,6],[429,-72,3,2,2]])});
+  return parts;
+ }
+ return {frame,wristY:311,middleTipY:515};
+})();
+
 (() => {
   const root=document.getElementById('forearm-motion');
   const svg=root.querySelector('.forearm-scene'),drawing=root.querySelector('.forearm-drawing');
@@ -1683,13 +1703,13 @@ const ForearmAnatomy = (() => {
   const el=(tag,attrs,parent)=>{const n=document.createElementNS(NS,tag);Object.entries(attrs).forEach(([k,v])=>n.setAttribute(k,v));parent.appendChild(n);return n;};
   const path=(d,cls,parent)=>el('path',{d,class:cls},parent);
   const f=n=>Math.round(n*100)/100,xy=p=>`${f(p[0])},${f(p[1])}`;
-  const P=p=>[275+p[0],145+p[1]];
+  const P=p=>[275+p[0]*.9,145+p[1]*.9];
   const mix=(a,b,t)=>a.map((v,i)=>v+(b[i]-v)*t);
   const R=(p,a)=>ForearmModel.radial(p,a);
   const farTendons=el('g',{class:'muscle-layer'},drawing);drawing.insertBefore(farTendons,bones);
   const nearTendons=el('g',{class:'muscle-layer'},drawing);drawing.insertBefore(nearTendons,muscles);
   const frameClip=el('clipPath',{id:'forearm-frame-clip',clipPathUnits:'userSpaceOnUse'},svg.querySelector('defs'));
-  el('rect',{x:100,y:38,width:360,height:570},frameClip);drawing.setAttribute('clip-path','url(#forearm-frame-clip)');
+  el('rect',{x:100,y:38,width:360,height:578},frameClip);drawing.setAttribute('clip-path','url(#forearm-frame-clip)');
   function hull(points){
     const sorted=points.map(P).sort((a,b)=>a[0]-b[0]||a[1]-b[1]);
     const cross=(o,a,b)=>(a[0]-o[0])*(b[1]-o[1])-(a[1]-o[1])*(b[0]-o[0]);
@@ -1721,6 +1741,7 @@ const ForearmAnatomy = (() => {
   const humerus=path('','bone',bones),ulna=path('','bone',bones),radius=path('','bone',bones);
   const radialHead=path('','bone-detail',bones),ulnarDetail=path('','bone-detail',bones);
   const wrist=path('','bone',bones),hand=path('','bone',bones),handDetail=path('','bone-detail',bones);
+  const handParts=Array.from({length:5},()=>path('','bone',bones));
   radius.id='forearm-radius';ulna.id='forearm-ulna';hand.id='forearm-hand';
   function region(cls,id,count=17){
     const group=el('g',{id:id+'-region'},muscles),tendon=path('','tendon',nearTendons),shape=path('',`muscle ${cls}`,group);shape.id=id;
@@ -1749,10 +1770,10 @@ const ForearmAnatomy = (() => {
   const handLabel=label('손바닥','end');
   const upperLabel=label('상완 하단'),elbowLabel=label('팔꿈치','end');
   function draw(){
-    const theta=angle+80,transform=p=>V(R(p,angle));
+    const theta=angle+80,transform=p=>V(R(p,angle)),handPoint=p=>[p[0],311+(p[1]-311)*1.6,p[2]];
     const anatomy=ForearmAnatomy.projectFrame(ForearmAnatomy.frame(angle),camera);
     const cutXs=[anatomy.biceps,anatomy.brachialis,anatomy.triceps].flatMap(s=>s[0].ring.map(p=>p[0]));
-    upperCut.setAttribute('d',`M ${f(275+Math.min(...cutXs))},38 L ${f(275+Math.max(...cutXs))},38`);
+    upperCut.setAttribute('d',`M ${f(275+Math.min(...cutXs)*.9)},41.5 L ${f(275+Math.max(...cutXs)*.9)},41.5`);
     // The radius and neutral wrist/hand block rotate rigidly; the ulna remains fixed.
     humerus.setAttribute('d',volume(anatomy.humerus));
     ulna.setAttribute('d',volume(anatomy.ulna));
@@ -1760,11 +1781,11 @@ const ForearmAnatomy = (() => {
     radialHead.setAttribute('d',`M ${xy(P(transform([-39,1,5])))} Q ${xy(P(transform([-27,8,8])))} ${xy(P(transform([-15,1,5])))}`);
     ulnarDetail.setAttribute('d',`M ${xy(P(V([15,7,5])))} Q ${xy(P(V([24,16,10])))} ${xy(P(V([33,7,5])))}`);
     wrist.setAttribute('d',hull([[-43,309,-12],[23,309,-12],[23,321,-12],[-43,321,-12],[-43,309,12],[23,309,12],[23,321,12],[-43,321,12]].map(transform)));
-    // Match the simplified hand silhouette used in the existing arm illustrations.
-    const handContour=[[-42,320,0],[23,320,0],[28,370,0],[25,411,0],[18,430,0],[4,435,0],[-11,434,0],[-27,425,0],[-38,393,0],[-41,370,0],[-58,391,2],[-70,386,2],[-66,371,2],[-48,345,1]];
-    hand.setAttribute('d',hull(handContour.flatMap(p=>[transform([p[0],p[1],-8]),transform([p[0],p[1],8])])));
+    const handGeometry=ForearmHand.frame(angle,camera);
+    hand.setAttribute('d',volume(handGeometry[0].rows));
+    handParts.forEach((n,i)=>n.setAttribute('d',volume(handGeometry[i+1].rows)));
     const palmFacing=transform([-10,335,13])[2]-transform([-10,335,0])[2];
-    handDetail.setAttribute('d',palmFacing>5?`M ${xy(P(transform([-32,342,9])))} Q ${xy(P(transform([-5,354,9])))} ${xy(P(transform([18,345,9])))}`:'');
+    handDetail.setAttribute('d',palmFacing>5?`M ${xy(P(transform(handPoint([-32,342,9]))))} Q ${xy(P(transform(handPoint([-5,354,9]))))} ${xy(P(transform(handPoint([18,345,9]))))}`:'');
     function mass(part,sections,tendons=[]){
       const rows=edges(sections);
       part.shape.setAttribute('d',volume(sections));
@@ -1827,7 +1848,7 @@ const ForearmAnatomy = (() => {
     leader(supinatorLabel,width*.15,124*scale,mix(V([-24,4,-8]),suEnd,.6));
     leader(quadratusLabel,width*.86,362*scale,mix(pqPoints[0],pqPoints[2],.5));
     const handText=palmFacing>5?'손바닥':palmFacing<-5?'손등':'엄지 쪽';handLabel.text.textContent=handText;
-    leader(handLabel,width*.83,520*scale,transform([-12,366,0]));
+    leader(handLabel,width*.83,520*scale,transform([-12,374,0]));
     const nearFlex=anatomy.nearFlex;
     flexorLabel.group.style.display=width>=360&&(nearFlex||transparent.checked)?'':'none';
     extensorLabel.group.style.display=width>=360&&(!nearFlex||transparent.checked)?'':'none';
@@ -1838,7 +1859,7 @@ const ForearmAnatomy = (() => {
     const rounded=Math.round(angle),text=rounded===0?'중립 0°':`${rounded<0?'회외':'회내'} ${Math.abs(rounded)}°`;
     slider.value=rounded;value.textContent=text;slider.setAttribute('aria-valuetext',text);
     root.dataset.angle=String(f(angle));root.dataset.wrist=transform([-10,311,0]).map(f).join(',');
-    root.dataset.anatomyRevision='upper-arm-three-views-v4';root.dataset.camera=camera;
+    root.dataset.anatomyRevision='hand-proportions-v5';root.dataset.camera=camera;
   }
   function resize(){width=root.clientWidth;scale=width/560;const height=620*scale+16;
     svg.setAttribute('viewBox',`0 0 ${width} ${height}`);svg.setAttribute('height',height);drawing.setAttribute('transform',`scale(${scale})`);draw();

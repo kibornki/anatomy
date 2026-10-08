@@ -1239,7 +1239,7 @@ html{color-scheme:light;background:white!important}:root{--background:#fff;--for
 .diagram .red-key{background:var(--red)}.diagram .blue-key{background:var(--blue)}.diagram .green-key{background:var(--green)}.diagram .purple-key{background:var(--purple)}.diagram .orange-key{background:var(--orange)}.diagram .yellow-key{background:var(--yellow)}.diagram .teal-key{background:color-mix(in srgb,var(--blue) 55%,var(--green))}
 .diagram-labels{fill:var(--foreground)}.diagram-labels text{font-size:12px}.diagram-labels path{fill:none;stroke:var(--muted-foreground);stroke-width:.9}.diagram.transparent .muscle{fill-opacity:.30}.diagram.transparent .tendon{fill-opacity:.6}.diagram.no-fibers .fibers{display:none}
 
-</style></head><body><div id="arm" class="diagram"><h2>팔 근육과 팔꿈치 굽힘</h2><div class="text-small diagram-caption">오른팔 · 이두·삼두·삼각근</div><svg class="diagram-scene" role="img" aria-labelledby="arm-title arm-desc"><title id="arm-title">팔 근육과 팔꿈치 굽힘</title><desc id="arm-desc">상완이두근과 상완삼두근, 삼각근을 같은 오른팔의 정면·후면·측면에서 살펴봅니다. 이두근은 요골 조면으로, 삼두근은 척골 주두로 이어집니다. 삼각근은 쇄골부·견봉부·견갑극부가 상완골 삼각근 조면으로 모이며 팔꿈치 굽힘에서는 어깨와 상완골이 고정됩니다. 상완근은 깊은층입니다. 근육 변형은 경로 길이에 따른 작화용 표현이며 근활성도나 실제 수축률을 계산하지 않습니다.</desc><defs></defs><g class="diagram-volumes"></g><g class="diagram-labels"></g></svg><div class="diagram-legend text-small"></div><div class="diagram-controls"><div class="diagram-top"><div class="viz-row"><button type="button" class="btn btn-primary" id="arm-play" aria-pressed="true">일시정지</button><label class="form-check"><input type="checkbox" class="form-check-input" id="arm-fibers" checked><span class="form-check-label">근섬유</span></label><label class="form-check"><input type="checkbox" class="form-check-input" id="arm-transparent"><span class="form-check-label">근육 반투명</span></label></div><div class="diagram-views" role="group" aria-label="보기 방향"><button type="button" class="btn" id="arm-front" aria-pressed="true">정면</button><button type="button" class="btn" id="arm-back" aria-pressed="false">후면</button><button type="button" class="btn" id="arm-side" aria-pressed="false">측면</button></div></div><label class="form-label" for="arm-angle">팔꿈치 굽힘<output id="arm-value" class="tabular-nums">55°</output></label><input type="range" class="form-range" id="arm-angle" min="0" max="135" value="55" step="1" aria-label="팔꿈치 굽힘"></div><div class="text-small diagram-note">0°: 펴짐 · 135°: 굽힘 · 어깨 고정 · 변형은 작화용 단순화</div></div><script type="application/json" id="diagram-config">{"id": "arm", "model": "arm", "topic": "팔 팔꿈치 굽힘", "title": "팔 근육과 팔꿈치 굽힘", "caption": "오른팔 · 이두·삼두·삼각근", "width": 640, "height": 680, "origin": [300, 65], "min": 0, "max": 135, "initialAngle": 55, "interval": 33, "maxWidth": 700, "revision": "deltoid-wrap-v3", "movement": "팔꿈치 굽힘", "desc": "상완이두근과 상완삼두근, 삼각근을 같은 오른팔의 정면·후면·측면에서 살펴봅니다. 이두근은 요골 조면으로, 삼두근은 척골 주두로 이어집니다. 삼각근은 쇄골부·견봉부·견갑극부가 상완골 삼각근 조면으로 모이며 팔꿈치 굽힘에서는 어깨와 상완골이 고정됩니다. 상완근은 깊은층입니다. 근육 변형은 경로 길이에 따른 작화용 표현이며 근활성도나 실제 수축률을 계산하지 않습니다.", "note": "0°: 펴짐 · 135°: 굽힘 · 어깨 고정 · 변형은 작화용 단순화", "labels": {"front": [{"ids": ["deltoid-clavicular"], "text": "삼각근 쇄골부", "side": "left", "y": 105}, {"ids": ["deltoid-acromial"], "text": "삼각근 견봉부", "side": "right", "y": 170}, {"ids": ["biceps-long"], "text": "이두근 장두", "side": "left", "y": 245}, {"ids": ["biceps-short"], "text": "이두근 단두", "side": "right", "y": 320}, {"ids": ["brachialis"], "text": "상완근 · 깊은층", "side": "left", "y": 390, "onlyTransparent": true, "deep": true}, {"ids": ["biceps-tendon"], "text": "요골 조면 정지", "side": "right", "y": 450}], "back": [{"ids": ["deltoid-spinal"], "text": "삼각근 견갑극부", "side": "left", "y": 110}, {"ids": ["deltoid-acromial"], "text": "삼각근 견봉부", "side": "right", "y": 175}, {"ids": ["triceps-long"], "text": "삼두근 장두", "side": "left", "y": 255}, {"ids": ["triceps-lateral"], "text": "삼두근 외측두", "side": "right", "y": 320}, {"ids": ["triceps-medial"], "text": "삼두근 내측두", "side": "right", "y": 390, "onlyTransparent": true, "deep": true}, {"ids": ["triceps-long-tendon", "triceps-lateral-tendon"], "text": "척골 주두 정지", "side": "left", "y": 450}], "side": [{"ids": ["deltoid-acromial"], "text": "삼각근 견봉부", "side": "right", "y": 150}, {"ids": ["biceps-long", "biceps-short"], "text": "상완이두근", "side": "right", "y": 280}, {"ids": ["triceps-lateral", "triceps-long"], "text": "상완삼두근", "side": "left", "y": 255}, {"ids": ["brachialis"], "text": "상완근 · 깊은층", "side": "right", "y": 405, "onlyTransparent": true, "deep": true}]}, "legend": {"front": [{"kind": "red", "text": "이두근 장두"}, {"kind": "blue", "text": "단두"}, {"kind": "purple", "text": "삼각근 쇄골부"}, {"kind": "orange", "text": "견봉부"}], "back": [{"kind": "red", "text": "삼두근 장두"}, {"kind": "blue", "text": "외측두"}, {"kind": "green", "text": "내측두·깊은층"}, {"kind": "yellow", "text": "삼각근 견갑극부"}, {"kind": "orange", "text": "견봉부"}], "side": [{"kind": "red", "text": "이두·삼두 장두"}, {"kind": "blue", "text": "이두 단두·삼두 외측두"}, {"kind": "orange", "text": "삼각근 견봉부"}]}, "label": "팔"}</script><script>/* Shared original schematic geometry. X: subject's right, Y: inferior,
+</style></head><body><div id="arm" class="diagram"><h2>팔 근육과 팔꿈치 굽힘</h2><div class="text-small diagram-caption">오른팔 · 이두·삼두·삼각근</div><svg class="diagram-scene" role="img" aria-labelledby="arm-title arm-desc"><title id="arm-title">팔 근육과 팔꿈치 굽힘</title><desc id="arm-desc">상완이두근과 상완삼두근, 삼각근을 같은 오른팔의 정면·후면·측면에서 살펴봅니다. 이두근은 요골 조면으로, 삼두근은 척골 주두로 이어집니다. 삼각근은 쇄골부·견봉부·견갑극부가 상완골 삼각근 조면으로 모이며 팔꿈치 굽힘에서는 어깨와 상완골이 고정됩니다. 상완근은 깊은층입니다. 근육 변형은 경로 길이에 따른 작화용 표현이며 근활성도나 실제 수축률을 계산하지 않습니다.</desc><defs></defs><g class="diagram-volumes"></g><g class="diagram-labels"></g></svg><div class="diagram-legend text-small"></div><div class="diagram-controls"><div class="diagram-top"><div class="viz-row"><button type="button" class="btn btn-primary" id="arm-play" aria-pressed="true">일시정지</button><label class="form-check"><input type="checkbox" class="form-check-input" id="arm-fibers" checked><span class="form-check-label">근섬유</span></label><label class="form-check"><input type="checkbox" class="form-check-input" id="arm-transparent"><span class="form-check-label">근육 반투명</span></label></div><div class="diagram-views" role="group" aria-label="보기 방향"><button type="button" class="btn" id="arm-front" aria-pressed="true">정면</button><button type="button" class="btn" id="arm-back" aria-pressed="false">후면</button><button type="button" class="btn" id="arm-side" aria-pressed="false">측면</button></div></div><label class="form-label" for="arm-angle">팔꿈치 굽힘<output id="arm-value" class="tabular-nums">55°</output></label><input type="range" class="form-range" id="arm-angle" min="0" max="135" value="55" step="1" aria-label="팔꿈치 굽힘"></div><div class="text-small diagram-note">0°: 펴짐 · 135°: 굽힘 · 어깨 고정 · 변형은 작화용 단순화</div></div><script type="application/json" id="diagram-config">{"id": "arm", "model": "arm", "topic": "팔 팔꿈치 굽힘", "title": "팔 근육과 팔꿈치 굽힘", "caption": "오른팔 · 이두·삼두·삼각근", "width": 640, "height": 680, "origin": [300, 65], "min": 0, "max": 135, "initialAngle": 55, "interval": 33, "maxWidth": 700, "revision": "elbow-hinge-proportions-v4", "movement": "팔꿈치 굽힘", "desc": "상완이두근과 상완삼두근, 삼각근을 같은 오른팔의 정면·후면·측면에서 살펴봅니다. 이두근은 요골 조면으로, 삼두근은 척골 주두로 이어집니다. 삼각근은 쇄골부·견봉부·견갑극부가 상완골 삼각근 조면으로 모이며 팔꿈치 굽힘에서는 어깨와 상완골이 고정됩니다. 상완근은 깊은층입니다. 근육 변형은 경로 길이에 따른 작화용 표현이며 근활성도나 실제 수축률을 계산하지 않습니다.", "note": "0°: 펴짐 · 135°: 굽힘 · 어깨 고정 · 변형은 작화용 단순화", "labels": {"front": [{"ids": ["deltoid-clavicular"], "text": "삼각근 쇄골부", "side": "left", "y": 105}, {"ids": ["deltoid-acromial"], "text": "삼각근 견봉부", "side": "right", "y": 170}, {"ids": ["biceps-long"], "text": "이두근 장두", "side": "left", "y": 245}, {"ids": ["biceps-short"], "text": "이두근 단두", "side": "right", "y": 320}, {"ids": ["brachialis"], "text": "상완근 · 깊은층", "side": "left", "y": 390, "onlyTransparent": true, "deep": true}, {"ids": ["biceps-tendon"], "text": "요골 조면 정지", "side": "right", "y": 450}], "back": [{"ids": ["deltoid-spinal"], "text": "삼각근 견갑극부", "side": "left", "y": 110}, {"ids": ["deltoid-acromial"], "text": "삼각근 견봉부", "side": "right", "y": 175}, {"ids": ["triceps-long"], "text": "삼두근 장두", "side": "left", "y": 255}, {"ids": ["triceps-lateral"], "text": "삼두근 외측두", "side": "right", "y": 320}, {"ids": ["triceps-medial"], "text": "삼두근 내측두", "side": "right", "y": 390, "onlyTransparent": true, "deep": true}, {"ids": ["triceps-common-tendon"], "text": "척골 주두 정지", "side": "left", "y": 450}], "side": [{"ids": ["deltoid-acromial"], "text": "삼각근 견봉부", "side": "right", "y": 150}, {"ids": ["biceps-long", "biceps-short"], "text": "상완이두근", "side": "right", "y": 280}, {"ids": ["triceps-lateral", "triceps-long"], "text": "상완삼두근", "side": "left", "y": 255}, {"ids": ["brachialis"], "text": "상완근 · 깊은층", "side": "right", "y": 405, "onlyTransparent": true, "deep": true}]}, "legend": {"front": [{"kind": "red", "text": "이두근 장두"}, {"kind": "blue", "text": "단두"}, {"kind": "purple", "text": "삼각근 쇄골부"}, {"kind": "orange", "text": "견봉부"}], "back": [{"kind": "red", "text": "삼두근 장두"}, {"kind": "blue", "text": "외측두"}, {"kind": "green", "text": "내측두·깊은층"}, {"kind": "yellow", "text": "삼각근 견갑극부"}, {"kind": "orange", "text": "견봉부"}], "side": [{"kind": "red", "text": "이두·삼두 장두"}, {"kind": "blue", "text": "이두 단두·삼두 외측두"}, {"kind": "orange", "text": "삼각근 견봉부"}]}, "label": "팔", "modelScale": 0.88}</script><script>/* Shared original schematic geometry. X: subject's right, Y: inferior,
    Z: anterior. These surfaces are illustrative, not measured anatomy. */
 const AnatomyGeometry=(()=>{
  const N=24,add=(a,b)=>a.map((v,i)=>v+b[i]),sub=(a,b)=>a.map((v,i)=>v-b[i]),mul=(a,k)=>a.map(v=>v*k);
@@ -1274,8 +1274,28 @@ const ArmModel=(()=>{
  const trLat=[[49,11,-19,6,5],[86,16,-25,14,11],[124,18,-27,17,12],[170,18,-29,15,12],[208,11,-29,9,8],[229,4,-28,4,3]];
  const trMed=[[126,0,-12,4,4],[155,0,-15,13,9],[192,0,-18,17,11],[227,0,-21,10,7],[244,0,-23,3,3]];
  const brach=[[124,0,14,4,4],[152,0,17,16,9],[192,0,19,20,10],[229,0,20,11,7],[242,-4,19,3,3]];
+ // Fixed-density linear sweeps keep hinge arcs on their constructed surface;
+ // Catmull-Rom interpolation can cut inside a concave notch or overshoot a tendon.
+ function linearSweep(points,radii){
+  return points.map((center,i)=>{
+   const tangent=G.unit(sub(points[Math.min(i+1,points.length-1)],points[Math.max(0,i-1)]));
+   const ref=Math.abs(tangent[0])>.9?[0,0,1]:[1,0,0],v=G.unit(G.cross(ref,tangent)),u=G.unit(G.cross(tangent,v));
+   return G.section(center,...radii[i],u,v);
+  });
+ }
+ function resample(points,count=25){
+  const distances=[0];points.slice(1).forEach((p,i)=>distances.push(distances.at(-1)+Math.hypot(...sub(p,points[i]))));
+  return Array.from({length:count},(_,i)=>{const d=distances.at(-1)*i/(count-1);let j=1;while(j<points.length-1&&distances[j]<d)j++;return mix(points[j-1],points[j],(d-distances[j-1])/(distances[j]-distances[j-1]||1));});
+ }
+ const commonTriceps=[-10,E-17,-20];
  function paths(a){const radial=forearm([7,E+33,4],a),ulnar=forearm([-10,E+24,9],a),olecranon=forearm([-10,E-13,-16],a);
-  const radius=Math.hypot(13,16),start=Math.atan2(-13,16),wrap=Array.from({length:Math.max(1,Math.ceil(a/10))+1},(_,i,list)=>{const phi=start+a*Math.PI/180*i/Math.max(1,Math.ceil(a/10));return [-10,E+radius*Math.sin(phi),-radius*Math.cos(phi)];});return {
+  // The common triceps tendon is straight until it meets the posterior
+  // elbow envelope, then wraps tangentially to the moving olecranon.
+  const r=24,dy=commonTriceps[1]-E,z=commonTriceps[2];
+  const tangentPhi=Math.atan2(dy,-z)+Math.acos(r/Math.hypot(dy,z));
+  const endPhi=Math.atan2(-13,16)+a*Math.PI/180;
+  const route=endPhi<=tangentPhi?[commonTriceps,olecranon]:[commonTriceps,...Array.from({length:25},(_,i)=>{const phi=tangentPhi+(endPhi-tangentPhi)*i/24;return [-10,E+r*Math.sin(phi),-r*Math.cos(phi)];}),olecranon];
+  const wrap=resample(route);return {
   radial,ulnar,olecranon,wrap,
   biceps:[origins.bicepsShort,[0,66,29],radial],
   triceps:[origins.tricepsLong,[-15,50,-28],...wrap],
@@ -1290,21 +1310,29 @@ const ArmModel=(()=>{
   bones.push({id:'clavicle',rows:sweep([[-80,-23,19],[-48,-27,24],[-19,-22,20],[-6,-19,8]],[[4,4],[5,4],[5,4],[5,4]])});
   bones.push({id:'coracoid',rows:sweep([[-32,-18,8],[-43,-25,22],[-39,-15,29]],[[5,5],[5,4],[4,4]])});
   bones.push({id:'glenoid',rows:tube([[-22,-23,-6,4,5],[-12,-23,-6,10,12],[11,-23,-6,11,12],[30,-25,-13,6,6]])});
-  bones.push({id:'humerus',rows:tube([[-18,0,0,5,6],[-8,0,0,20,18],[13,0,0,22,19],[40,0,0,12,11],[70,0,0,9,9],[180,0,0,9,9],[232,0,0,12,11],[250,0,0,22,16],[264,0,0,21,14]])});
-  bones.push({id:'ulna',rows:tube([[E-13,-13,-14,7,8],[E,-13,-5,10,11],[E+26,-12,0,6,6],[E+106,-11,0,4,5],[E+198,-10,0,5,5],[E+215,-10,0,7,7]],F)});
-  bones.push({id:'radius',rows:tube([[E+7,18,0,8,8],[E+17,17,0,5,5],[E+33,13,0,10,9],[E+106,14,0,5,5],[E+193,18,0,8,7],[E+215,20,0,12,10]],F)});
-  bones.push({id:'palm',rows:sweep([[0,E+223,0],[0,E+242,1],[0,E+263,2]].map(F),[[19,7],[24,8],[19,7]])});
-  for(let finger=0;finger<4;finger++)bones.push({id:'finger-'+finger,rows:sweep([[-14+finger*10,E+257,2],[-15+finger*10,E+279+(finger===0?0:5),2],[-15+finger*10,E+301-(finger===3?9:0),2]].map(F),[[4,4],[3.5,3.5],[3,3]])});
-  bones.push({id:'thumb',rows:sweep([[21,E+238,2],[31,E+254,3],[38,E+272,3]].map(F),[[5,4],[4,4],[3,3]])});
+  bones.push({id:'humerus',rows:tube([[-18,0,0,5,6],[-8,0,0,20,18],[13,0,0,22,19],[40,0,0,12,11],[70,0,0,9,9],[180,0,0,9,9],[232,0,0,12,11],[249,0,-2,22,12],[255,0,-3,20,6]])});
+  // Trochlea and capitulum share the hinge axis; the C-shaped ulnar
+  // notch rotates around the trochlea instead of a flat bone end.
+  bones.push({id:'trochlea',rows:linearSweep([[-21,E,0],[-17,E,0],[-10,E,0],[-3,E,0],[1,E,0]],[[11,11],[13,13],[12,12],[13,13],[11,11]])});
+  bones.push({id:'capitulum',rows:tube([[E-9,18,0,.5,.5],[E-6,18,0,7,7],[E,18,0,9,9],[E+6,18,0,7,7],[E+9,18,0,.5,.5]])});
+  const notch=Array.from({length:25},(_,i)=>{const phi=Math.atan2(-13,16)+(2.10-Math.atan2(-13,16))*i/24;return [-10,E+17.5*Math.sin(phi),-17.5*Math.cos(phi)];});
+  bones.push({id:'ulnar-notch',rows:linearSweep(notch,notch.map(()=>[9,4])).map(s=>({...s,center:F(s.center),ring:s.ring.map(F)}))});
+  bones.push({id:'olecranon',rows:sweep([[-10,E-13,-16],[-10,E-6,-19],[-10,E+2,-18]].map(F),[[8,4],[9,5],[8,4]])});
+  bones.push({id:'ulna',rows:tube([[E+12,-10,-9,8,7],[E+26,-12,0,6,6],[E+106,-11,0,4,5],[E+198,-10,0,5,5],[E+215,-10,0,7,7]],F)});
+  bones.push({id:'radius',rows:tube([[E+10,18,0,8,8],[E+15,18,0,9,9],[E+21,17,0,5,5],[E+33,13,0,10,9],[E+106,14,0,5,5],[E+193,18,0,8,7],[E+215,20,0,12,10]],F)});
+  bones.push({id:'carpals',rows:sweep([[0,E+214,0],[0,E+222,0],[0,E+229,0]].map(F),[[21,8],[24,9],[23,8]])});
+  bones.push({id:'palm',rows:sweep([[0,E+223,0],[0,E+257,1],[0,E+292,2]].map(F),[[21,8],[29,10],[26,9]])});
+  for(let finger=0;finger<4;finger++)bones.push({id:'finger-'+finger,rows:sweep([[-20+finger*14,E+288,2],[-21+finger*14,E+324+[0,7,3,-8][finger],2],[-21+finger*14,E+354+[0,9,2,-18][finger],2]].map(F),[[5.5,5],[4.5,4],[3,3]])});
+  bones.push({id:'thumb',rows:sweep([[24,E+245,2],[42,E+269,3],[53,E+300,3]].map(F),[[7,6],[5.5,5],[3.5,3.5]])});
   // Changes derive from fixed origins and moving insertions routed on the
   // appropriate side of the elbow, without an activation-based pump factor.
   const db=length(p.biceps)-length(neutral.biceps),dt=length(p.triceps)-length(neutral.triceps),dh=length(p.brachialis)-length(neutral.brachialis);
   const bounded=(stations,delta,maxY)=>Math.min(delta,maxY-stations.at(-1)[0]);
   muscles.push(belly('biceps-long','red',bLong,bounded(bLong,db,Math.min(E-25,p.radial[1]-15))));
   muscles.push(belly('biceps-short','blue',bShort,bounded(bShort,db,Math.min(E-25,p.radial[1]-15))));
-  muscles.push(belly('triceps-long','red',trLong,bounded(trLong,dt,E-17)));
-  muscles.push(belly('triceps-lateral','blue',trLat,bounded(trLat,dt,E-17)));
-  muscles.push({...belly('triceps-medial','green',trMed,bounded(trMed,dt,E-10)),deep:true});
+  muscles.push(belly('triceps-long','red',trLong,bounded(trLong,dt,E-20)));
+  muscles.push(belly('triceps-lateral','blue',trLat,bounded(trLat,dt,E-20)));
+  muscles.push({...belly('triceps-medial','green',trMed,bounded(trMed,dt,E-20)),deep:true});
   muscles.push({...belly('brachialis','neutral',brach,bounded(brach,dh,Math.min(E-14,p.ulnar[1]-9))),deep:true});
   // Distributed fleshy humeral origins connect the monoarticular heads
   // to posterior/anterior cortex rather than leaving free spindle tips.
@@ -1317,8 +1345,9 @@ const ArmModel=(()=>{
   tendons.push({id:'biceps-tendon',rows:sweep([mix(end('biceps-long'),end('biceps-short'),.5),p.radial],[[6,3],[4,3]])});
   tendons.push({id:'brachialis-tendon',rows:sweep([end('brachialis'),p.ulnar],[[4,3],[3,3]])});
   tendons.push({id:'triceps-long-origin',rows:sweep([origins.tricepsLong,[-23,39,-21],muscles[2].rows[0].center],[[3,2],[3,2],[3,2]])});
-  for(const id of ['triceps-long','triceps-lateral','triceps-medial'])tendons.push({id:id+'-tendon',rows:sweep([end(id),...p.wrap],[[4,3],...p.wrap.map(()=>[5,3])])});
-  tendons.push(fan('bicipital-aponeurosis','tendon',mix(end('biceps-short'),p.radial,.3),mix(end('biceps-long'),p.radial,.4),F([-30,E+69,13]),F([-30,E+92,11]),{thickness:1.5,normal:[0,0,1]}));
+  for(const id of ['triceps-long','triceps-lateral','triceps-medial'])tendons.push({id:id+'-tendon',rows:sweep([end(id),commonTriceps],[[4,3],[6,3]])});
+  tendons.push({id:'triceps-common-tendon',rows:linearSweep(p.wrap,p.wrap.map(()=>[6,2.5]))});
+  tendons.push(fan('bicipital-aponeurosis','tendon',mix(end('biceps-short'),p.radial,.75),mix(end('biceps-long'),p.radial,.92),F([-24,E+44,14]),F([-22,E+62,12]),{thickness:1,normal:[0,0,1]}));
   const tuberosity=[15,134,0];
   // Joined cap surface: the three parts share their borders and wrap the
   // humeral head. Broader anterior/posterior wrap and a proximal rounded
@@ -1335,7 +1364,7 @@ const ArmModel=(()=>{
   muscles.push(cap('deltoid-acromial','orange',40,-40,[13,-24,16],[9,-24,-20]));
   muscles.push(cap('deltoid-spinal','yellow',-40,-140,[9,-24,-20],[-64,-5,-30]));
   tendons.push({id:'deltoid-tendon',rows:sweep([[15,126,0],tuberosity],[[4,3],[3,3]])});
-  return {bones,muscles,tendons,angle,elbow:[0,E,0],origins,insertion:{biceps:p.radial,brachialis:p.ulnar,triceps:p.olecranon,deltoid:tuberosity},grid:{step:1.7,x:-285,y:-65,nx:355,ny:390}};
+  return {bones,muscles,tendons,angle,elbow:[0,E,0],origins,insertion:{biceps:p.radial,brachialis:p.ulnar,triceps:p.olecranon,deltoid:tuberosity},grid:{step:1.7,x:-285,y:-65,nx:410,ny:420}};
  }
  function verify(){let finite=true,rigid=true,volume=true;const m0=frame(0),base=m0.bones.find(x=>x.id==='radius').rows.at(-1).center,dist=Math.hypot(base[0],base[1]-E,base[2]);for(let a=0;a<=135;a+=5){const m=frame(a);finite&&=m.bones.concat(m.muscles,m.tendons).flatMap(x=>x.rows).flatMap(x=>x.ring).flat().every(Number.isFinite);const p=m.bones.find(x=>x.id==='radius').rows.at(-1).center;rigid&&=Math.abs(Math.hypot(p[0],p[1]-E,p[2])-dist)<1e-8;for(const b of m.muscles.filter(x=>x.bellyVolume))volume&&=Math.abs(b.bellyVolume/m0.muscles.find(x=>x.id===b.id).bellyVolume-1)<1e-8;}return {finite,forearmRigid:rigid,bellyVolumePreserved:volume,cameras:3,deltoidParts:3};}
  return {frame,forearm,verify};
@@ -1483,7 +1512,7 @@ const AnatomyRenderer = (() => {
  const classic=c.renderer==='classic'?ClassicUpperbody(root):null;
  const buttons=['front','back','side'].map(v=>[root.querySelector('#'+c.id+'-'+v),v]);
  const NS='http://www.w3.org/2000/svg',parts=new Map(),labels=new Map(),store='artist-'+c.id+'-v1',f=n=>Math.round(n*100)/100;
- const P=p=>[c.origin[0]+p[0],c.origin[1]+p[1]],xy=p=>p.map(f).join(','),el=(tag,attrs,parent)=>{const node=document.createElementNS(NS,tag);Object.entries(attrs).forEach(([k,v])=>node.setAttribute(k,v));parent.appendChild(node);return node;};
+ const P=p=>[c.origin[0]+p[0]*(c.modelScale||1),c.origin[1]+p[1]*(c.modelScale||1)],xy=p=>p.map(f).join(','),el=(tag,attrs,parent)=>{const node=document.createElementNS(NS,tag);Object.entries(attrs).forEach(([k,v])=>node.setAttribute(k,v));parent.appendChild(node);return node;};
  let angle=c.initialAngle,camera='front',drive=1,playing=!matchMedia('(prefers-reduced-motion: reduce)').matches,phase=0,last=0,lastDraw=0,width=c.width,scale=1,interacted=false,lastLegend='';
  const phaseFor=(a,d)=>{const p=Math.acos(Math.max(-1,Math.min(1,1-2*(a-c.min)/(c.max-c.min))));return d<0?2*Math.PI-p:p;};
  function curve(points){if(!points.length)return '';let d='M '+xy(P(points[0]));for(let i=0;i<points.length-1;i++){const a=points[Math.max(0,i-1)],b=points[i],q=points[i+1],r=points[Math.min(points.length-1,i+2)];d+=` C ${xy(P(b.map((v,j)=>v+(q[j]-a[j])/6)))} ${xy(P(q.map((v,j)=>v-(r[j]-b[j])/6)))} ${xy(P(q))}`;}return d;}
