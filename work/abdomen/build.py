@@ -5,12 +5,12 @@ w=Path(__file__).resolve().parent;root=w.parents[1]
 head=(w/'page-template.html').read_text().replace('몸통 굽힘','몸통 움직임')
 head=re.sub(r'<div class="text-small diagram-caption">.*?</div>','<div class="text-small diagram-caption">전거근·외복사근·내복사근·복직근·광배근</div>',head)
 head=re.sub(r'<div class="text-small diagram-note">.*?</div>','<div class="text-small diagram-note" id="abdomen-note">골반 고정 · 상체 좌우 비틀기 · 절개창: 내복사근</div>',head)
-head=head.replace('aria-pressed="true">일시정지','aria-pressed="false">재생').replace('min="-10" max="45" value="15"','min="-140" max="140" value="135"').replace('>15°</output>','>135°</output>')
-head=head.replace('<label class="form-label" for="abdomen-angle">몸통 움직임','<label class="form-label" for="abdomen-angle"><span id="abdomen-motion-label">척추 비틀기</span>')
-head=head.replace('id="abdomen-front" aria-pressed="true"','id="abdomen-front" aria-pressed="false"').replace('>측면</button></div>','>측면</button><button type="button" class="btn" id="abdomen-twist" aria-pressed="true">비틀기</button></div>')
-head=re.sub(r'<desc id="abdomen-desc">.*?</desc>','<desc id="abdomen-desc">복부와 광배근 도해. 정면과 측면의 상체 척추 C자 말기, 골반을 고정하고 척추 축을 따라 흉곽과 견갑대를 함께 돌리는 비틀기를 제공합니다. 비틀기는 정면과 같은 16도 사선 시점입니다. 근육과 최대 회전 자세는 작화용 근사입니다.</desc>',head)
+head=head.replace('aria-pressed="true">일시정지','aria-pressed="false">재생').replace('min="-10" max="45" value="15"','min="0" max="100" value="0"').replace('>15°</output>','>0%</output>')
+head=head.replace('<label class="form-label" for="abdomen-angle">몸통 움직임','<label class="form-label" for="abdomen-angle"><span id="abdomen-motion-label">몸통 말기</span>')
+head=head.replace('>측면</button></div>','>측면</button><button type="button" class="btn" id="abdomen-twist" aria-pressed="false">비틀기</button></div>')
+head=re.sub(r'<desc id="abdomen-desc">.*?</desc>','<desc id="abdomen-desc">복부와 광배근 도해. 정면과 측면의 상체 척추 C자 말기, 골반을 고정하고 척추 축을 따라 흉추에 주로 회전을 나누고 요추의 회전은 작게 유지하는 비틀기를 제공합니다. 비틀기는 정면과 같은 16도 사선 시점입니다. 근육 외형과 운동 분포는 작화용 근사입니다.</desc>',head)
 head=head.replace('</style>','\n'+(w/'style.css').read_text()+'\n</style>')
-scripts='\n'.join((w/name).read_text() for name in ['classic-coronal-anatomy.js','classic-side-anatomy.js','side-skeleton.js','flexion.js','depth-renderer.js','twist.js','controls.js'])
+scripts='\n'.join((w/name).read_text() for name in ['classic-coronal-anatomy.js','classic-side-anatomy.js','side-skeleton.js','flexion.js','twist.js','controls.js'])
 document=head+'<script>'+scripts+'</script></body></html>'
 out=root/'drafts/abdomen-twist-reviewed.html';out.write_text(document);print(out)
 if '--publish' in sys.argv:

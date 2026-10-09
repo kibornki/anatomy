@@ -22,7 +22,7 @@ function AbdomenFlexion(host) {
   const scapula='M 147,159 Q 127,145 89,165 Q 85,212 109,291 Q 121,298 130,277 L 163,190 Q 177,180 166,161 L 160,154 Q 164,144 151,143 L 135,146 Q 128,151 139,155 Z';
   for(const sign of [-1,1]){
    const side=el('g',{transform:`scale(${sign} 1)`,'data-part':'shoulder-skeleton'},g);
-   const scap=bone(side,scapula);scap.setAttribute('transform',G.scapTransform);
+   const scap=bone(side,scapula);scap.setAttribute('transform',G.scapTransform);scap.setAttribute('data-depth','posterior');
    bone(side,`M ${xy(B([18,151]))} Q ${xy(B([61,139]))} ${xy(G.S([170,163]))} L ${xy(mix(G.S([170,163]),[G.S([170,163])[0],G.S([170,163])[1]+7],1))} Q ${xy(B([67,151]))} ${xy(B([18,160]))} Z`);
   }
   const muscles=el('g',{class:'muscle-layers'},g);
@@ -70,7 +70,7 @@ function AbdomenFlexion(host) {
   // On the near side, an organic peeled section exposes the intermediate layer.
   const ioD='M 78,350 Q 88,359 86,378 Q 83,397 87,414 Q 66,425 53,416 Q 43,401 45,382 Q 50,364 62,359 Q 73,358 78,350 Z';
   const io=region(muscles,ioD,'green','internal-oblique');
-  fibers(io,Array.from({length:30},(_,i)=>{const t=i/29,o=[48+39*t,420-7*t],e=[40+44*t,374-37*t];return `M ${xy(o)} C ${xy([o[0]-12,397-22*t])} ${xy([e[0]+7,e[1]+12])} ${xy(e)}`;}));
+  fibers(io,Array.from({length:30},(_,i)=>{const t=i/29,o=[50+35*t,420-8*t],e=[29+35*t,360+6*t];return `M ${xy(o)} C ${xy([o[0]-15,392-10*t])} ${xy([e[0]+13,375+5*t])} ${xy(e)}`;}));
   path('M 78,350 Q 88,359 86,378 Q 83,397 87,414','section-edge',muscles);
   // Rectus is a paired continuous muscle. Three thin intersections subdivide
   // the upper belly; the long inferior portion tapers to the pubic crest.
@@ -125,11 +125,12 @@ function AbdomenFlexion(host) {
   for(const [x,y] of [[57,285],[53,314],[48,343]])path(`M ${x},${y} Q ${x+8},${y+2} ${x+18},${y+5} L ${x+18},${y+7} Q ${x+6},${y+4} ${x},${y+2} Z`,'intersection',bands);
   // Subdued shoulder context, reused scapular outline. It conceals the
   // serratus insertion rather than letting the fan float behind the back.
-  path('M -34,177 Q -58,208 -49,265 Q -34,251 -7,174 Q -15,164 -34,177 Z','bone',g);
-  path('M -49,191 Q -26,178 -7,171 M -47,257 L -51,203','bone-detail',g);
-  path('M 44,169 Q 21,156 -7,168 L -7,175 Q 20,164 46,176 Z','bone',g);
-  path('M -2,170 Q 15,170 16,188 L 12,252 Q 10,265 0,266 L -10,263 Q -18,258 -13,247 L -14,190 Q -18,179 -2,170 Z','bone',g);
-  path('M -10,186 Q 1,195 12,183 M -5,210 L -3,246','bone-detail',g);
+  const girdle=el('g',{'data-part':'shoulder-skeleton'},g);
+  path('M -34,177 Q -58,208 -49,265 Q -34,251 -7,174 Q -15,164 -34,177 Z','bone',girdle);
+  path('M -49,191 Q -26,178 -7,171 M -47,257 L -51,203','bone-detail',girdle);
+  path('M 44,169 Q 21,156 -7,168 L -7,175 Q 20,164 46,176 Z','bone',girdle);
+  // No humerus in the abdomen plate: keep the shoulder girdle as context.
+  g.insertBefore(girdle,muscles);
   path('M 44,174 Q 61,189 69,221 Q 78,249 67,278 Q 43,257 13,215 L 14,192 Q 27,176 44,174 Z','context-muscle',g);
   return {g,anchors:{serratus:[36,270],external:[-41,327],internal:[7,353],rectus:[58,335],latissimus:[-51,310]},ys:[200,320,377,429]};
  }
@@ -161,16 +162,45 @@ function AbdomenFlexion(host) {
    const matrix=n.getCTM(),gMatrix=plate.g.getCTM(),local=gMatrix.inverse().multiply(matrix);
    const pelvis=!!n.closest('[data-part="coronal-hip-bone"],[data-part="coronal-sacrum"],[data-part="coronal-pubic-symphysis"],[data-part="pelvic-skeleton"]');
    const posterior=!!n.closest('[data-part="coronal-vertebrae"]'),rear=!!n.closest('[data-depth="posterior"]');
-   const points=samples(n.getAttribute('d')).map(q=>{if(!q.p)return q;const p=new DOMPoint(...q.p).matrixTransform(local);return {...q,xyz:view==='side'?[0,1.24*p.y-39,p.x]:[p.x,p.y,posterior?spineZ(p.y):rear?backZ(p.x,p.y):frontZ(p.x,p.y)]};});
+   const ribNumber=+(n.closest('[data-rib]')?.dataset.rib||0),ribLandmark=ribNumber&&C.ribs[ribNumber-1];
+   const points=samples(n.getAttribute('d')).map((q,index)=>{if(!q.p)return q;const p=new DOMPoint(...q.p).matrixTransform(local);let z=posterior?spineZ(p.y):rear?backZ(p.x,p.y):frontZ(p.x,p.y);
+    if(view==='front'&&ribLandmark&&(n.classList.contains('rib')||n.classList.contains('rib-outline'))){
+     const [c,depth]=profile(p.y),radius=ribLandmark.extent*C.proportions.axialWidth,t=Math.min(1,Math.abs(p.x)/radius),arc=depth*Math.sqrt(Math.max(0,1-t*t));
+     z=index<=18?mix([spineZ(ribLandmark.y+4)],[c-arc],Math.min(1,t*3))[0]:c+arc;
+    }
+    if(view==='front'&&ribLandmark&&n.classList.contains('cartilage')&&ribLandmark.cartilageEnd){
+     const sign=p.x<0?-1:1,start=C.body(ribLandmark.end),end=C.body(ribLandmark.cartilageEnd),dx=end[0]-start[0],dy=end[1]-start[1],t=Math.max(0,Math.min(1,((sign*p.x-start[0])*dx+(p.y-start[1])*dy)/(dx*dx+dy*dy)));
+     const ribDepth=(r,pt)=>{const [c,radius]=profile(pt[1]),width=r.extent*C.proportions.axialWidth;return c+radius*Math.sqrt(Math.max(0,1-(pt[0]/width)**2));};
+     const za=ribDepth(ribLandmark,start),zb=ribNumber<=7?frontZ(sign*end[0],end[1]):ribDepth(C.ribs[ribNumber-2],end);
+     z=za+(zb-za)*t;
+    }
+    return {...q,xyz:view==='side'?[0,1.24*p.y-39,p.x]:[p.x,p.y,z]};});
    const shoulder=!!n.closest('[data-part="shoulder-skeleton"]'),rib=+(n.closest('[data-rib]')?.dataset.rib||0);
    const rv=rib&&(view==='side'?S.vertebrae:C.vertebrae).filter(v=>v.region==='thoracic')[rib-1],ribY=rv&&(view==='side'?1.24*rv.center[1]-39:rv.y+4);
    const vertebra=n.closest('[data-vertebra]')?.dataset.vertebra;
    const v=vertebra&&(view==='side'?S.vertebrae:C.vertebrae).find(v=>v.id===vertebra),vy=v&&(view==='side'?1.24*v.center[1]-39:v.y+4);
-   return {n,points,pelvis,shoulder,rib:ribY,vertebra:vy};
+   const sternum=!!n.closest('[data-part="coronal-sternum"],[data-part="side-sternum"]');
+   let cartilage=null;
+   if(ribLandmark&&n.classList.contains('cartilage')&&ribLandmark.cartilageEnd){
+    let start,end,level;
+    if(view==='front'){
+     const sign=points.find(q=>q.xyz)?.xyz[0]<0?-1:1;
+     start=C.body(ribLandmark.end);end=C.body(ribLandmark.cartilageEnd);start[0]*=sign;end[0]*=sign;
+     level=ribNumber<=7?177:C.vertebrae.filter(v=>v.region==='thoracic')[ribNumber-2].y+4;
+    }else{
+     const r=S.ribs[ribNumber-1];start=[r.end[0],1.24*r.end[1]-39];end=[r.cartilageEnd[0],1.24*r.cartilageEnd[1]-39];
+     level=ribNumber<=7?177:1.24*S.vertebrae.filter(v=>v.region==='thoracic')[ribNumber-2].center[1]-39;
+    }
+    cartilage={start,end,level,side:view==='side'};
+   }
+   return {n,points,pelvis,shoulder,sternum,cartilage,rib:ribY,vertebra:vy};
   });
   for(const m of masks.filter(m=>m.view===view))plate.paths.push({n:m.n,pelvis:false,points:samples(m.n.getAttribute('d')).map(q=>q.p?{...q,xyz:[m.sign*q.p[0],q.p[1],frontZ(m.sign*q.p[0],q.p[1])]}:q)});
   // Coordinates have been baked; remove the neutral transforms afterwards.
   plate.g.querySelectorAll('[transform]').forEach(n=>n.removeAttribute('transform'));
+  // The anterior wall hides the posterior column only where it overlaps.
+  // When curled, exposed upper rib roots must still meet the spinal column.
+  if(view==='front')plate.g.insertBefore(plate.g.querySelector('[data-part="coronal-vertebrae"]'),plate.g.querySelector('.front-wall-occluder'));
   // During deep flexion the anterior chest passes in front of the upper
   // abdominal wall. Keep its existing context surface above that overlap.
   if(view==='front')plate.g.querySelectorAll('.context-muscle').forEach(n=>plate.g.appendChild(n));
@@ -180,7 +210,7 @@ function AbdomenFlexion(host) {
   // Only the spinal column curls: pelvis remains fixed, with no hip motion.
   // Distribute flexion through thoracic and lumbar levels rather than rotating
   // the complete rib cage about a single lower-back hinge.
-  const p=Math.max(0,Math.min(1,angle/100)),alpha=y=>80*p*Math.PI/180*smooth((455-y)/260),centers=new Map();let cy=455,cz=spineZ(455);centers.set(455,[cy,cz]);
+  const p=Math.max(0,Math.min(1,angle/100)),alpha=y=>p*Math.PI/180*(30*smooth((455-y)/85)+30*smooth((370-y)/180)),centers=new Map();let cy=455,cz=spineZ(455);centers.set(455,[cy,cz]);
   for(let y=454;y>=60;y--){const a=alpha(y+.5),dy=-1,dz=spineZ(y)-spineZ(y+1);cy+=dy*Math.cos(a)+dz*Math.sin(a);cz+=-dy*Math.sin(a)+dz*Math.cos(a);centers.set(y,[cy,cz]);}
   function center(y){const lo=Math.floor(y),t=y-lo,a=centers.get(lo)||centers.get(60),b=centers.get(lo+1)||a;return mix(a,b,t);}
   function deform([x,y,z],pelvic=false){if(pelvic||y>=455)return [x,y,z];const c=center(y),a=alpha(y),dz=z-spineZ(y);return [x,c[0]+dz*Math.sin(a),c[1]+dz*Math.cos(a)];}
@@ -188,19 +218,24 @@ function AbdomenFlexion(host) {
   return {deform,segment,alpha,progress:p};
  }
  function yawFrame(degrees){
-  const a=Math.max(-35,Math.min(35,degrees))*Math.PI/180;
+  const a=Math.max(-40,Math.min(40,degrees))*Math.PI/180;
   // Small lumbar contribution; most axial rotation accumulates in the thorax.
   // The pelvis is stationary. All rotation acts about the spinal column in 3D,
   // before the fixed 16-degree camera projection, not on the final SVG image.
-  const theta=y=>a*(.14*smooth((455-y)/95)+.86*smooth((360-y)/160));
+  // 5 degrees across lumbar levels and 35 across thoracic levels at the
+  // illustrative endpoint. These are conservative model choices, not a
+  // patient measurement or a textbook claim about exact regional limits.
+  const stations=[[80,1],[177,1],[193,.92045],[209,.84091],[225,.76136],[241,.68182],[257,.60227],[273,.52273],[289,.44318],[305,.36364],[321,.28409],[337,.20455],[353,.125],[377,.125],[395,.10],[413,.075],[431,.05],[449,.025],[455,0]];
+  const theta=y=>{if(y>=455)return 0;let i=0;while(i<stations.length-2&&y>stations[i+1][0])i++;const l=stations[i],r=stations[i+1],t=Math.max(0,Math.min(1,(y-l[0])/(r[0]-l[0])));return a*(l[1]+(r[1]-l[1])*t);};
   function segment([x,y,z],level){if(level>=455)return [x,y,z];const t=theta(level),axis=spineZ(level),dz=z-axis;return [x*Math.cos(t)+dz*Math.sin(t),y,axis-x*Math.sin(t)+dz*Math.cos(t)];}
-  return {deform(q,pelvic=false){return pelvic||q[1]>=455?q:segment(q,q[1]);},segment,alpha:theta,degrees};
+  return {deform(q,pelvic=false){return pelvic||q[1]>=455?q:segment(q,q[1]);},segment,alpha:theta,theta,degrees,spineZ};
  }
  const nodes=['serratus','external','internal','rectus','latissimus'].map((id,i)=>{const group=el('g',{'data-label':id},labels),line=path('','',group),text=el('text',{},group);text.textContent=['전거근','외복사근','내복사근','복직근','광배근'][i];return {line,text};});
  function render(angle,view){
   const camera=view==='twist'?'front':view,f=view==='twist'?yawFrame(angle):frame(angle),plate=plates[camera],yaw=16*Math.PI/180,project=p=>camera==='side'?[p[2],p[1]]:[p[0]*Math.cos(yaw)+p[2]*Math.sin(yaw),p[1]];
   for(const [v,p] of Object.entries(plates))p.g.style.display=v===camera?'':'none';
-  for(const p of plate.paths)p.n.setAttribute('d',p.points.map(q=>q.cmd==='Z'?'Z':q.cmd+' '+xy(project(p.pelvis?q.xyz:p.rib?f.segment(q.xyz,p.rib):p.shoulder?f.segment(q.xyz,175):p.vertebra?f.segment(q.xyz,p.vertebra):f.deform(q.xyz)))).join(' '));
+  function transform(q,p){if(p.pelvis)return q;if(p.cartilage){const {start,end,level,side}=p.cartilage,d=end.map((v,i)=>v-start[i]),x=side?q[2]:q[0],t=Math.max(0,Math.min(1,((x-start[0])*d[0]+(q[1]-start[1])*d[1])/(d[0]*d[0]+d[1]*d[1])));return mix(f.segment(q,p.rib),f.segment(q,level),t);}return p.sternum?f.segment(q,177):p.rib?f.segment(q,p.rib):p.shoulder?f.segment(q,175):p.vertebra?f.segment(q,p.vertebra):f.deform(q);}
+  for(const p of plate.paths)p.n.setAttribute('d',p.points.map(q=>q.cmd==='Z'?'Z':q.cmd+' '+xy(project(transform(q.xyz,p)))).join(' '));
   // Lock the camera as well as the pelvis, so playback visibly curls only
   // the upper body instead of moving or zooming the lower base.
   const scale=1.04,center=camera==='side'?250:310,top=-42;
@@ -213,10 +248,10 @@ function AbdomenFlexion(host) {
   // Select a visible painted point on the intended layer, including cutaways.
   // Reuse the reviewed upperbody hit-test rather than aiming at hidden fibers.
   nodes.forEach((n,i)=>{const key=['serratus','external-oblique','internal-oblique','rectus','latissimus'][i],targets=Array.from(plate.g.querySelectorAll(`[data-muscle="${key}"] > .muscle`));
-   for(const target of (i===1||i===3?targets:targets.reverse())){const a=C.anchor(target);if(a?.visible){const q=new DOMPoint(...a.point).matrixTransform(svg.getCTM().inverse()),current=n.line.getAttribute('d').split(' L ')[0];n.line.setAttribute('d',current+' L '+xy([q.x,q.y]));break;}}
+   let found=false;for(const target of (i===1||i===3?targets:targets.reverse())){const a=C.anchor(target);if(a&&(a.visible||host.classList.contains('transparent'))){const q=new DOMPoint(...a.point).matrixTransform(svg.getCTM().inverse()),current=n.line.getAttribute('d').split(' L ')[0];n.line.setAttribute('d',current+' L '+xy([q.x,q.y]));found=true;break;}}n.line.parentElement.style.display=found?'':'none';
   });
   svg.setAttribute('viewBox','0 0 640 515');svg.setAttribute('height',host.clientWidth*515/640);
   host.dataset.angle=angle;host.dataset.view=view;host.dataset.cameraYaw=camera==='front'?'16':'90';host.dataset.motion=view==='twist'?'yaw':'flexion';
  }
- return {render,frame,yawFrame,plates,frontZ,backZ,profile,source:'abdomen-latissimus-axial-twist-draft'};
+ return {render,frame,yawFrame,plates,frontZ,backZ,spineZ,profile,source:'abdomen-anatomy-reviewed-curves'};
 }

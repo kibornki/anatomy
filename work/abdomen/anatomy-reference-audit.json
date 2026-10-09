@@ -1,0 +1,42 @@
+{
+  "review_date": "2026-10-09",
+  "sources": [
+    {
+      "source": "https://github.com/openstax/osbooks-anatomy-physiology/blob/5ae32b3f4bc24ed003e91dc38bf47dba80751044/modules/m46377/index.cnxml",
+      "sha256": "6bcd3fe72a29f27ba7b86135862a51c30e181ec2b1f52a1aa7cc7a33aeda383a"
+    },
+    {
+      "source": "https://github.com/openstax/osbooks-anatomy-physiology/blob/5ae32b3f4bc24ed003e91dc38bf47dba80751044/modules/m46485/index.cnxml",
+      "sha256": "59d9878560ebcacc2f28ab4c087670adb3997d5cb0de4eb1c7d8d3db6121a233"
+    },
+    {
+      "source": "https://github.com/openstax/osbooks-anatomy-physiology/blob/5ae32b3f4bc24ed003e91dc38bf47dba80751044/modules/m46495/index.cnxml",
+      "sha256": "59f36cddc5fb885b1c1c5a82a3b6ada34bd08ac7d829113b0efa5a15f74bdb93"
+    },
+    {
+      "source": "https://github.com/openstax/osbooks-anatomy-physiology/blob/5ae32b3f4bc24ed003e91dc38bf47dba80751044/media/1112_Muscles_of_the_Abdomen.jpg",
+      "sha256": "9d2436009c5f5c429372ec10b1b1e26788aef92d27b0674478745ea511ac3823"
+    },
+    {
+      "source": "https://github.com/openstax/osbooks-anatomy-physiology/blob/5ae32b3f4bc24ed003e91dc38bf47dba80751044/media/1118_Muscles_that_Position_the_Pectoral_Girdle.jpg",
+      "sha256": "4c15f7e808efeca26f4ba5e79ba1439c55bb3715569a6c5f97148483ef9c4999"
+    }
+  ],
+  "findings": {
+    "rotation": "OpenStax vertebral-joints discussion: lumbar facets largely prohibit rotation; the thoracic cage limits flexion and other motions. It does not specify the exact endpoints used here.",
+    "external_oblique": "Superficial layer; fibers predominantly inferior and medial.",
+    "internal_oblique": "Intermediate layer; fibers predominantly superior and medial; displayed through a cutaway.",
+    "serratus_anterior": "Costal slips on ribs 1–8 or 1–9 converge toward the costal surface of the medial scapular border. Upper slips are partly covered by pectoral context.",
+    "rectus_abdominis": "Paired muscle from pubic crest/symphysis toward xiphoid and upper costal cartilages; linea alba and three tendinous intersections.",
+    "latissimus_dorsi": "Broad posterior lower thoracic/lumbar/iliac origin, narrowing toward the humeral insertion. Humerus is omitted; the insertion is covered by shoulder context, not attached to scapula."
+  },
+  "illustrative_choices": {
+    "yaw_total_degrees": 40,
+    "yaw_lumbar_degrees": 5,
+    "yaw_thoracic_degrees": 35,
+    "curl_lumbar_degrees": 30,
+    "curl_thoracic_degrees": 30,
+    "clinical_range_claim": false,
+    "limits": "No subject-specific measurements, muscle sliding, activation, pressure or clinical joint/contact simulation. SVG layers depict anatomical overlap; this is not a volumetric dissection renderer."
+  }
+}

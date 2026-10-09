@@ -1,10 +1,10 @@
-"""Verify depth rendering, coherent geometry and production controls/state."""
+"""Browser checks for the reviewed native abdominal illustration, not clinical certification."""
 from pathlib import Path
 from playwright.sync_api import sync_playwright
 import json, os, re, subprocess
 
 root=Path(__file__).resolve().parents[2]
-out=Path('/workspace/artifacts/abdomen-twist-implemented');out.mkdir(parents=True,exist_ok=True)
+out=Path('/workspace/artifacts/abdomen-anatomy-review');out.mkdir(parents=True,exist_ok=True)
 base=os.environ.get('ANATOMY_REVIEW_BASE','http://127.0.0.1:8767/')
 errors=[];metrics=[]
 with sync_playwright() as p:
@@ -12,77 +12,97 @@ with sync_playwright() as p:
     page=browser.new_page(viewport={'width':1100,'height':1000})
     page.on('pageerror',lambda e:errors.append(str(e)))
     page.goto(base+'abdomen.html');page.wait_for_timeout(100)
-    pelvis=[]
-    for angle in range(-140,141,20):
-        page.evaluate('a=>abdomenDraft.setPose(a,"twist")',angle)
-        result=page.evaluate('''()=>{
-          const m=abdomenDraft.model.twisting,f=m.rig(+abdomenDraft.root.dataset.angle),gl=m.depthRenderer.gl;
-          let maxBoneError=0;
-          for(const part of m.meshes.filter(m=>m.bone)){const a=part.points[0],b=part.points.at(-1),aa=f.at(a,part.level),bb=f.at(b,part.level),distance=(a,b)=>Math.hypot(...a.map((v,i)=>v-b[i]));maxBoneError=Math.max(maxBoneError,Math.abs(distance(a,b)-distance(aa,bb)));}
-          const targets=[...document.querySelectorAll('.twist-labels [data-label]')].filter(g=>g.style.display!=='none').map(g=>{const l=g.querySelector('path'),p=l.getPointAtLength(l.getTotalLength());return {label:g.dataset.label,hit:m.depthRenderer.pickAt(p.x,p.y)};});
-          let colored=0,purple=0;for(let y=60;y<390;y+=2)for(let x=120;x<540;x+=2){const id=m.depthRenderer.pickAt(x,y);if(id)colored++;if(id===5)purple++;}
-          return {angle:+abdomenDraft.root.dataset.angle,maxBoneError,targets,error:gl.getError(),colored,purple,base:f.at([45,475,15]),theta:[455,420,380,330,285].map(y=>f.theta(y)*180/Math.PI)};
-        }''')
-        assert result['error']==0,result
-        assert result['colored']>500,result
-        assert result['maxBoneError']<1e-8,result
-        assert result['base']==[45,475,15]
-        expected={'serratus':1,'external-oblique':2,'internal-oblique':3,'rectus':4,'latissimus':5}
-        assert all(t['hit']==expected[t['label']] for t in result['targets']),result
-        assert page.locator('#abdomen').get_attribute('data-camera-yaw')=='16'
-        pelvis.append(page.locator('[data-part="twist-pelvis"]').evaluate('n=>({html:n.innerHTML,matrix:[n.getScreenCTM().a,n.getScreenCTM().d,n.getScreenCTM().e,n.getScreenCTM().f]})'))
-        metrics.append(result)
-    assert all(p==pelvis[0] for p in pelvis)
-    assert max(m['purple'] for m in metrics if abs(m['angle'])>=120)>2*next(m['purple'] for m in metrics if m['angle']==0)
-    # Latissimus fan patches must form exactly two connected surfaces; this
-    # detects detached fragments or insertion triangles in the rejected draft.
-    assert page.evaluate('''()=>{const faces=abdomenDraft.model.twisting.meshes.filter(m=>m.muscle==='latissimus'),parents=faces.map((_,i)=>i),owner=new Map(),find=i=>parents[i]===i?i:parents[i]=find(parents[i]);for(let i=0;i<faces.length;i++)for(const p of faces[i].points){const key=p.map(v=>v.toFixed(6)).join(',');if(owner.has(key))parents[find(i)]=find(owner.get(key));else owner.set(key,i);}return new Set(parents.map((_,i)=>find(i))).size===2;}''')
-    for view in ['front','side']:
-        for angle in [0,50,100]:
+    assert page.locator('#abdomen-value').inner_text()=='0%'
+    assert page.locator('#abdomen-front').get_attribute('aria-pressed')=='true'
+    assert page.locator('canvas').count()==0
+    assert page.locator('[data-view="front"] .fiber').count()>350
+    # Opposing superficial/intermediate fiber directions, continuous muscles,
+    # costal slips and rectus intersections must survive the native curve build.
+    assert page.evaluate('''()=>{const m=abdomenDraft.model.flexion,p=m.plates.front.paths,dirs=id=>p.filter(q=>q.n.classList.contains('fiber')&&q.n.closest('[data-muscle]')?.dataset.muscle===id).map(q=>{let a=q.points.find(q=>q.xyz).xyz,b=q.points.filter(q=>q.xyz).at(-1).xyz;return [b[0]-a[0],b[1]-a[1]]});return dirs('external-oblique').some(q=>q[0]<0&&q[1]>0)&&dirs('internal-oblique').every(q=>q[0]<0&&q[1]<0)&&m.plates.front.g.querySelectorAll('[data-muscle="latissimus"] > .muscle').length===2&&m.plates.front.g.querySelectorAll('.intersection').length===6;}''')
+    pelvis={}
+    for view,angles in [('front',[0,25,50,75,100]),('side',[0,25,50,75,100]),('twist',list(range(-40,41,10)))]:
+        for angle in angles:
             page.evaluate('([a,v])=>abdomenDraft.setPose(a,v)',[angle,view])
-            assert page.locator('.twist-canvas').evaluate('n=>n.style.display')=='none'
-            assert page.evaluate('''()=>[...document.querySelectorAll('.diagram-volumes path')].every(p=>!/NaN|Infinity/.test(p.getAttribute('d')))''')
-            if angle in [0,100]:page.locator('#abdomen').screenshot(path=str(out/f'{view}-{angle}.png'))
-    for angle in [-135,0,135]:
-        page.evaluate('a=>abdomenDraft.setPose(a,"twist")',angle)
-        page.locator('#abdomen').screenshot(path=str(out/f'twist-{angle}.png'))
-    page.locator('#abdomen-transparent').check();page.locator('#abdomen').screenshot(path=str(out/'twist-transparent.png'))
-    page.locator('#abdomen-fibers').uncheck()
-    assert page.locator('#abdomen').evaluate("r=>r.classList.contains('no-fibers')")
+            result=page.evaluate('''()=>{
+              const m=abdomenDraft.model.flexion,r=abdomenDraft.root,view=r.dataset.view,plate=m.plates[view==='twist'?'front':view],a=+r.dataset.angle,f=view==='twist'?m.yawFrame(a):m.frame(a),camera=view==='side',yaw=16*Math.PI/180,proj=q=>camera?[q[2],q[1]]:[q[0]*Math.cos(yaw)+q[2]*Math.sin(yaw),q[1]],dist=(a,b)=>Math.hypot(...a.map((v,i)=>v-b[i]));
+              let boneError=0,renderError=0,bones=0,seamError=0,minFiber=9,maxFiber=0;
+              const rendered=p=>[...p.n.getAttribute('d').matchAll(/[ML]\\s+([-\\d.]+),([-\\d.]+)/g)].map(q=>[+q[1],+q[2]]);
+              for(const path of plate.paths){const qs=path.points.filter(q=>q.xyz).map(q=>q.xyz),actual=rendered(path);
+                if(path.cartilage){const rib=plate.paths.find(p=>p.rib===path.rib&&p.n.classList.contains('rib')&&p.n.closest('[data-side]')===path.n.closest('[data-side]'));seamError=Math.max(seamError,dist(actual[0],rendered(rib)[36]));const end=proj(f.segment(qs[18],path.cartilage.level));renderError=Math.max(renderError,dist(actual[18],end));}
+                if(!path.cartilage&&(path.sternum||path.rib||path.shoulder||path.vertebra)){
+                  const level=path.sternum?177:path.rib|| (path.shoulder?175:path.vertebra),newQ=qs.map(q=>f.segment(q,level));bones++;
+                  for(let i=0;i<qs.length;i++){renderError=Math.max(renderError,dist(actual[i],proj(newQ[i])));if(i)boneError=Math.max(boneError,Math.abs(dist(qs[i],qs[i-1])-dist(newQ[i],newQ[i-1])));}
+                }
+                if(view==='twist'&&path.n.classList.contains('fiber'))for(let i=1;i<qs.length;i++){const d=dist(qs[i],qs[i-1]);if(d<.1)continue;const ratio=dist(f.deform(qs[i]),f.deform(qs[i-1]))/d;minFiber=Math.min(minFiber,ratio);maxFiber=Math.max(maxFiber,ratio);}
+              }
+              const s=m.yawFrame(40),theta=y=>s.theta(y)*180/Math.PI;
+              const labels=[...document.querySelectorAll('.diagram-labels [data-label]')].filter(g=>g.style.display!=='none').map(g=>{const line=g.querySelector('path'),point=line.getPointAtLength(line.getTotalLength()),screen=point.matrixTransform(line.getScreenCTM()),hit=document.elementFromPoint(screen.x,screen.y);return {id:g.dataset.label,hit:hit?.closest('[data-muscle]')?.dataset.muscle};});
+              return {view,angle:a,bones,boneError,renderError,seamError,minFiber,maxFiber,lumbar:theta(377),upper:theta(177),thoracicStep:theta(177)-theta(193),pelvisFixed:JSON.stringify(s.deform([40,475,15]))==='[40,475,15]',labels};
+            }''')
+            assert result['boneError']<1e-8,result
+            assert result['renderError']<.001,result
+            assert result['seamError']<.002,result
+            assert result['bones']>60,result
+            assert abs(result['lumbar']-5)<1e-8 and abs(result['upper']-40)<1e-8,result
+            assert 0<result['thoracicStep']<3.3 and result['pelvisFixed'],result
+            if view=='twist':assert .7<result['minFiber']<=result['maxFiber']<1.4,result
+            expected={'serratus':'serratus','external':'external-oblique','internal':'internal-oblique','rectus':'rectus','latissimus':'latissimus'}
+            assert len(result['labels'])==5 and all(l['hit']==expected[l['id']] for l in result['labels']),result
+            selector='[data-part="pelvic-skeleton"]' if view=='side' else '[data-part="coronal-hip-bone"],[data-part="coronal-sacrum"],[data-part="coronal-pubic-symphysis"]'
+            current=page.locator('[data-view="'+('side' if view=='side' else 'front')+'"] '+selector).evaluate_all('nodes=>nodes.map(n=>n.outerHTML)')
+            key='side' if view=='side' else 'front'
+            if key in pelvis:assert current==pelvis[key]
+            else:pelvis[key]=current
+            assert page.locator('#abdomen').get_attribute('data-camera-yaw')==('90' if view=='side' else '16')
+            assert page.evaluate("()=>[...document.querySelectorAll('.diagram-volumes path')].every(p=>!/NaN|Infinity/.test(p.getAttribute('d')))")
+            metrics.append(result)
+            if angle in [0,100,-40,40]:page.locator('#abdomen').screenshot(path=str(out/f'{view}-{angle}.png'))
+    page.evaluate('abdomenDraft.setPose(0,"front")')
+    bone_styles=page.locator('.bone,.rib,.cartilage').evaluate_all('nodes=>nodes.map(n=>{const s=getComputedStyle(n);return [s.opacity,s.fillOpacity,s.strokeOpacity,s.fill,s.stroke]})')
+    page.locator('#abdomen-transparent').check()
+    assert bone_styles==page.locator('.bone,.rib,.cartilage').evaluate_all('nodes=>nodes.map(n=>{const s=getComputedStyle(n);return [s.opacity,s.fillOpacity,s.strokeOpacity,s.fill,s.stroke]})')
+    assert page.locator('[data-muscle]').evaluate_all("nodes=>nodes.every(n=>getComputedStyle(n).opacity==='0.32'&&getComputedStyle(n.parentElement).opacity==='1')")
+    assert page.locator('[data-muscle] > .muscle').evaluate_all("nodes=>nodes.every(n=>getComputedStyle(n).fillOpacity==='1')")
+    for view,angle in [('front',0),('side',100),('twist',-40),('twist',40)]:
+        page.evaluate('([a,v])=>abdomenDraft.setPose(a,v)',[angle,view]);page.locator('#abdomen').screenshot(path=str(out/f'{view}-{angle}-transparent.png'))
+        assert page.locator('.diagram-labels [data-label]:visible').count()==5
+    page.locator('#abdomen-fibers').uncheck();assert page.locator('[data-view="front"] .fibers').evaluate_all("ns=>ns.every(n=>getComputedStyle(n).display==='none')")
     page.locator('#abdomen-transparent').uncheck();page.locator('#abdomen-fibers').check()
-    page.evaluate('abdomenDraft.setPose(70,"twist")');page.locator('#abdomen-play').click();page.wait_for_timeout(250)
-    assert float(page.locator('#abdomen').get_attribute('data-angle'))!=70
+    assert page.locator('[data-muscle]').evaluate_all("nodes=>nodes.every(n=>getComputedStyle(n).opacity==='1')")
+    page.evaluate('abdomenDraft.setPose(30,"twist")');page.locator('#abdomen-play').click();page.wait_for_timeout(250)
+    assert float(page.locator('#abdomen').get_attribute('data-angle'))!=30
     page.locator('#abdomen-play').click();stopped=page.locator('#abdomen').get_attribute('data-angle');page.wait_for_timeout(100)
     assert stopped==page.locator('#abdomen').get_attribute('data-angle')
-    # Production sandbox, legacy migration and independent view values.
+    # Migrate both old schemas and clamp the anatomically excessive old twist.
     page.goto(base)
-    page.evaluate("localStorage.setItem('anatomy-hub-v1',JSON.stringify({active:'abdomen',states:{abdomen:{modelContent:{revision:'abdomen-spine-curl-v1',angle:63,camera:'front',fibers:false,transparent:true},privateContent:{playing:false}}}}))")
-    page.reload();f=page.frame_locator('#anatomy-frame');f.locator('#abdomen').wait_for()
-    assert f.locator('#abdomen-value').inner_text()=='63%'
-    assert not f.locator('#abdomen-fibers').is_checked()
-    assert f.locator('#abdomen-transparent').is_checked()
-    f.locator('#abdomen-twist').click();assert f.locator('#abdomen-value').inner_text()=='135°'
-    f.locator('#abdomen-angle').fill('-110');f.locator('#abdomen-fibers').check();f.locator('#abdomen-transparent').uncheck()
-    page.wait_for_timeout(100);page.locator('#tab-arm').click();page.locator('#tab-abdomen').click();f.locator('#abdomen').wait_for()
-    assert f.locator('#abdomen-value').inner_text()=='-110°'
+    for old,expected_twist in [({'revision':'abdomen-spine-curl-v1','angle':63,'camera':'front','fibers':False,'transparent':True},'30°'),({'revision':'abdomen-twist-v2','curl':63,'twist':135,'camera':'front','fibers':False,'transparent':True},'40°')]:
+        page.evaluate("s=>localStorage.setItem('anatomy-hub-v1',JSON.stringify({active:'abdomen',states:{abdomen:{modelContent:s,privateContent:{playing:false}}}}))",old)
+        page.reload();f=page.frame_locator('#anatomy-frame');f.locator('#abdomen').wait_for()
+        assert f.locator('#abdomen-value').inner_text()=='63%'
+        assert not f.locator('#abdomen-fibers').is_checked() and f.locator('#abdomen-transparent').is_checked()
+        f.locator('#abdomen-twist').click();assert f.locator('#abdomen-value').inner_text()==expected_twist
+    f.locator('#abdomen-angle').fill('-35');f.locator('#abdomen-fibers').check();f.locator('#abdomen-transparent').uncheck()
+    page.locator('#tab-arm').click();page.locator('#tab-abdomen').click();f.locator('#abdomen').wait_for()
+    assert f.locator('#abdomen-value').inner_text()=='-35°'
     f.locator('#abdomen-side').click();assert f.locator('#abdomen-value').inner_text()=='63%'
-    f.locator('#abdomen-twist').click();page.reload();f.locator('#abdomen').wait_for()
-    assert f.locator('#abdomen-value').inner_text()=='-110°'
-    f.locator('#abdomen-angle').fill('135');page.wait_for_timeout(100);page.screenshot(path=str(out/'hub-desktop.png'))
+    f.locator('#abdomen-twist').click();page.reload();f.locator('#abdomen').wait_for();assert f.locator('#abdomen-value').inner_text()=='-35°'
+    page.screenshot(path=str(out/'hub-desktop.png'))
     for width in [320,390,680]:
-        page.set_viewport_size({'width':width,'height':844});page.wait_for_timeout(150)
-        assert f.locator('#abdomen').evaluate('n=>document.documentElement.scrollWidth<=innerWidth')
+        page.set_viewport_size({'width':width,'height':844});page.wait_for_timeout(100)
         for view in ['front','side','twist']:
             f.locator('#abdomen-'+view).click()
-        f.locator('#abdomen-angle').fill('135')
-        f.locator('.diagram-note').scroll_into_view_if_needed()
-        assert f.locator('.diagram-note').evaluate('n=>n.getBoundingClientRect().bottom<=innerHeight+1')
+            assert f.locator('#abdomen').evaluate('n=>document.documentElement.scrollWidth<=innerWidth')
+        f.locator('.diagram-note').scroll_into_view_if_needed();assert f.locator('.diagram-note').evaluate('n=>n.getBoundingClientRect().bottom<=innerHeight+1')
         if width==390:page.screenshot(path=str(out/'hub-mobile.png'))
-    mobile=browser.new_context(viewport={'width':390,'height':844},is_mobile=True,has_touch=True)
-    m=mobile.new_page();m.on('pageerror',lambda e:errors.append(str(e)));m.goto(base);m.locator('#tab-abdomen').tap();mf=m.frame_locator('#anatomy-frame');mf.locator('#abdomen').wait_for();mf.locator('#abdomen-twist').tap();mf.locator('#abdomen-play').tap();m.wait_for_timeout(200);mf.locator('#abdomen-play').tap()
+    # This Chromium/CDP combination offsets synthetic touch-clicks twice in
+    # opaque-origin OOPIFs. Keep production sandboxing; disable process isolation
+    # only in the separate touch-test browser. Desktop checks use default isolation.
+    touch_browser=p.chromium.launch(executable_path='/usr/bin/chromium',args=['--no-sandbox','--disable-site-isolation-trials'])
+    mobile=touch_browser.new_context(viewport={'width':390,'height':844},is_mobile=True,has_touch=True)
+    m=mobile.new_page();m.on('pageerror',lambda e:errors.append(str(e)));m.goto(base);m.locator('#tab-abdomen').tap();mf=m.frame_locator('#anatomy-frame');mf.locator('#abdomen').wait_for();mf.locator('#abdomen-twist').tap();mf.locator('#abdomen-play').tap();m.wait_for_timeout(200);mf.locator('#abdomen-play').tap();mf.locator('#abdomen-transparent').check()
     assert mf.locator('#abdomen').get_attribute('data-motion')=='yaw'
     assert mf.locator('#abdomen').evaluate('n=>document.documentElement.scrollWidth<=innerWidth')
-    m.screenshot(path=str(out/'hub-touch-mobile.png'))
+    m.screenshot(path=str(out/'hub-touch-mobile.png'));touch_browser.close()
     assert not errors,errors
     browser.close()
 def data(html):return json.loads(re.search(r'<script type="application/json" id="anatomy-data">(.*?)</script>',html,re.S)[1])
@@ -90,5 +110,5 @@ old=data(subprocess.check_output(['git','show','HEAD:index.html'],cwd=root,text=
 assert all(old[k]==new[k] for k in old if k!='abdomen')
 for name in ['upperbody.html','arm.html','forearm.html','thigh.html']:
     assert (root/name).read_bytes()==subprocess.check_output(['git','show','HEAD:'+name],cwd=root)
-(out/'verification.json').write_text(json.dumps({'twist_poses':metrics,'flexion_poses':6,'latissimus_connected_sheets':2,'sandbox_and_state_migration':'passed','mobile_and_touch':'passed','other_topics_unchanged':True,'errors':errors},indent=2))
-print('PASS: depth rendering, 15 twist / 6 flexion poses, fixed pelvis/camera, rigid bones, connected latissimus fans, visible label picking, sandbox/state/mobile/touch; other topics unchanged.')
+(out/'verification.json').write_text(json.dumps({'poses':metrics,'materials':'passed','sandbox_and_state_migration':'passed','mobile_and_touch':'passed','other_topics_unchanged':True,'errors':errors},indent=2)+'\n')
+print('PASS: 19 poses; distributed rotation, rigid bones, cartilage continuity, bounded fiber deformation, visible labels, group transparency, migration/state/playback, mobile/touch; other topics unchanged.')

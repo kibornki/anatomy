@@ -18,9 +18,10 @@ function drawSideSkeleton(drawing,el,path){const A=ClassicSideAnatomy,f=n=>Math.
    path(`M ${xy(r.end)} Q ${xy(c)} ${xy(end)} L ${xy(q(end))} Q ${xy(q(c))} ${xy(q(r.end))} Z`,'cartilage',g);
   }
  }
- path('M 42,174 Q 48,174 50,183 L 58,203 L 54,209 L 48,199 Z','bone',axial);
- path('M 54,205 L 60,204 Q 72,237 78,273 L 77,282 L 71,282 Q 66,238 54,205 Z','bone',axial);
- path('M 72,282 L 77,282 L 74,299 L 68,290 Z','bone',axial);
+ const sternum=el('g',{'data-part':'side-sternum'},axial);
+ path('M 42,174 Q 48,174 50,183 L 58,203 L 54,209 L 48,199 Z','bone',sternum);
+ path('M 54,205 L 60,204 Q 72,237 78,273 L 77,282 L 71,282 Q 66,238 54,205 Z','bone',sternum);
+ path('M 72,282 L 77,282 L 74,299 L 68,290 Z','bone',sternum);
  // Align vertical torso landmarks with the coronal plate, then reduce the
  // previously oversized lateral pelvic height without stretching the rim.
  const pelvic=(d,cls)=>{const n=path(d.replace(/(-?\d+(?:\.\d+)?),(-?\d+(?:\.\d+)?)/g,(_,x,y)=>`${x},${f(+y>390?390+(+y-390)*.6:+y)}`),cls,axial);n.setAttribute('data-part','pelvic-skeleton');return n;};

@@ -14,17 +14,13 @@
 .diagram .section-edge{fill:none;stroke:var(--foreground);stroke-opacity:.7;stroke-width:1.1}
 .diagram .context-muscle{fill:color-mix(in srgb,var(--foreground) 9%,var(--background));stroke:var(--muted-foreground);stroke-opacity:.65;stroke-width:.8}
 .diagram .context-muscle .fiber{stroke-opacity:.13}
-.diagram:not(.transparent) [data-part="coronal-vertebrae"]{visibility:hidden}
-.diagram.transparent .muscle-layers{opacity:.35}
+.diagram.transparent .muscle-layers{opacity:1}
+.diagram.transparent [data-muscle]{opacity:.32}
+.diagram.transparent .context-muscle{opacity:.22}
 .diagram.transparent .muscle{fill-opacity:1}
-.diagram.transparent .intersection,.diagram.transparent .aponeurosis{fill-opacity:1}
+.diagram.transparent .intersection{fill-opacity:1}
+.diagram.transparent .aponeurosis{fill-opacity:.2;stroke-opacity:.3}
 .diagram.no-fibers .fibers{display:none}
 .diagram .diagram-labels text{font-size:12px}
 .diagram .front-wall-occluder{fill:var(--background);stroke:none}
-.diagram.transparent .front-wall-occluder{fill-opacity:.15}
-.diagram .twist-face{stroke-linejoin:round}
-.diagram .twist-fiber{stroke:#425166;stroke-width:.55;stroke-opacity:.35;pointer-events:none}
-.diagram .twist-bone-line{stroke:#647286;stroke-width:.8;pointer-events:none}
-.diagram.transparent .twist-face[data-muscle]{fill-opacity:.30;stroke-opacity:.25}
-.diagram.transparent .twist-face.fascia{fill-opacity:.08;stroke-opacity:.08}
-.diagram .twist-labels path{fill:none;stroke:var(--muted-foreground);stroke-width:.9}
+.diagram.transparent .front-wall-occluder{fill-opacity:0}
