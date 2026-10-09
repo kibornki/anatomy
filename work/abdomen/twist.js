@@ -1,5 +1,4 @@
-/* Twist and flexion share the reviewed native curves, fibers and skeleton.
-   No separate rectangular muscle meshes or transparency depth-write path. */
+/* Both motions consume one attributed 3D atlas and skeletal skinning field. */
 function AbdomenTwist(host,flexion){
- return {render(angle){flexion.render(angle,'twist');},hide(){},rig:flexion.yawFrame,plates:flexion.plates};
+ return {render(angle){flexion.render(angle,'twist');},hide(){},rig:flexion.yawFrame};
 }

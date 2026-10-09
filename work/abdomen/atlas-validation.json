@@ -1,0 +1,122 @@
+{
+  "date": "2026-10-09",
+  "revision": "abdomen-atlas-v4",
+  "atlasSHA256": "a67baff961d3e716a54c6a880926510d62086048db0f0b88b0319af62ee1b26a",
+  "source": {
+    "name": "BodyParts3D 3.0",
+    "copyright": "BodyParts3D, (c) The Database Center for Life Science",
+    "license": "CC BY-SA 2.1 Japan",
+    "conversion": "Kevin Mattheus Moerman",
+    "commit": "f0eeb6e843380cfe6b83797cf8c3e1af74de5e61",
+    "uniformScale": 0.58,
+    "mirroring": "Left skeletal and soft-tissue atlas geometry mirrored for the right hemisphere.",
+    "limits": "Static atlas; fiber paths and skeletal skinning are illustrative, not measured physiological deformation."
+  },
+  "poses": [
+    {
+      "angle": 0,
+      "view": "front"
+    },
+    {
+      "angle": 100,
+      "view": "front"
+    },
+    {
+      "angle": 50,
+      "view": "front"
+    },
+    {
+      "angle": 0,
+      "view": "side"
+    },
+    {
+      "angle": 100,
+      "view": "side"
+    },
+    {
+      "angle": 50,
+      "view": "side"
+    },
+    {
+      "angle": -15,
+      "view": "twist"
+    },
+    {
+      "angle": -30,
+      "view": "twist"
+    },
+    {
+      "angle": -45,
+      "view": "twist"
+    },
+    {
+      "angle": -60,
+      "view": "twist"
+    },
+    {
+      "angle": 0,
+      "view": "twist"
+    },
+    {
+      "angle": 15,
+      "view": "twist"
+    },
+    {
+      "angle": 30,
+      "view": "twist"
+    },
+    {
+      "angle": 45,
+      "view": "twist"
+    },
+    {
+      "angle": 60,
+      "view": "twist"
+    }
+  ],
+  "browserErrors": [],
+  "ribContactDiagnostic": {
+    "serratus": {
+      "neutralCandidateVertices": 6,
+      "maxCandidateVertices": 6,
+      "neutralClosestSurfaceDistance": 0.5548545418658388,
+      "maxClosestSurfaceDistance": 0.5548545418658437
+    },
+    "external-oblique": {
+      "neutralCandidateVertices": 16,
+      "maxCandidateVertices": 16,
+      "neutralClosestSurfaceDistance": 0.27310478840222974,
+      "maxClosestSurfaceDistance": 0.2731047884022356
+    },
+    "latissimus": {
+      "neutralCandidateVertices": 2,
+      "maxCandidateVertices": 2,
+      "neutralClosestSurfaceDistance": 0.07849569243815223,
+      "maxClosestSurfaceDistance": 0.07849569243816715
+    },
+    "rectus": {
+      "neutralCandidateVertices": 0,
+      "maxCandidateVertices": 0,
+      "neutralClosestSurfaceDistance": 0,
+      "maxClosestSurfaceDistance": 0
+    },
+    "internal-oblique": {
+      "neutralCandidateVertices": 0,
+      "maxCandidateVertices": 0,
+      "neutralClosestSurfaceDistance": 0,
+      "maxClosestSurfaceDistance": 0
+    }
+  },
+  "checks": [
+    "Uniform source scaling and mirrors",
+    "Rigid bone dimensions and fixed pelvis",
+    "Common neutral 3D geometry in all views",
+    "Depth order independent of paint order",
+    "Muscle labels land on their own displayed fills",
+    "Muscle opacity without fading bones",
+    "Slider and playback",
+    "320px and 390px mobile layouts",
+    "Hub restore after changing tabs"
+  ],
+  "limitations": "Static male atlas mirrored to a symmetric plate. Fiber guides, cutaway/color boundaries, skeletal skinning and 60-degree twist are illustrative. Retained-vertex rib-contact diagnostics are not exhaustive triangle collision or physiological deformation validation."
+}

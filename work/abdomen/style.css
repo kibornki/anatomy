@@ -29,4 +29,9 @@
 .diagram.no-fibers .fibers{display:none}
 .diagram .diagram-labels text{font-size:12px}
 .diagram .front-wall-occluder{fill:var(--background);stroke:none}
+.diagram [data-atlas-part] .bone,.diagram [data-atlas-part] .rib{fill-opacity:1}
+.diagram.transparent [data-atlas-part][data-muscle]{opacity:.32}
+.diagram.transparent [data-atlas-part] .aponeurosis{fill-opacity:1}
+.diagram .atlas-credit{font-size:10px;color:var(--muted-foreground);margin-top:6px}
+.diagram .atlas-credit a{color:inherit}
 .diagram.transparent .front-wall-occluder{fill-opacity:0}

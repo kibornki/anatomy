@@ -1,8 +1,8 @@
 (()=>{
  const root=document.getElementById('abdomen'),flexion=AbdomenFlexion(root),twisting=AbdomenTwist(root,flexion),by=id=>document.getElementById('abdomen-'+id);
- const revision='abdomen-anatomy-review-v3',node=document.getElementById('hub-config'),config=node?JSON.parse(node.textContent):null,content=config?.state?.modelContent;
+ const revision='abdomen-atlas-v4',node=document.getElementById('hub-config'),config=node?JSON.parse(node.textContent):null,content=config?.state?.modelContent;
  let curl=0,twist=30,view='front',playing=false,phase=0,last=0;
- if([revision,'abdomen-twist-v2'].includes(content?.revision)){
+ if([revision,'abdomen-anatomy-review-v3','abdomen-twist-v2'].includes(content?.revision)){
   if(Number.isFinite(content.curl))curl=Math.max(0,Math.min(100,content.curl));
   if(Number.isFinite(content.twist))twist=Math.max(-60,Math.min(60,content.twist));
   if(['front','side','twist'].includes(content.camera))view=content.camera;
