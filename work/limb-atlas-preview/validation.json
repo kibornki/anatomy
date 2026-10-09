@@ -1,0 +1,2827 @@
+{
+  "views": [
+    {
+      "region": "forearm",
+      "view": "front",
+      "yaw": 0,
+      "labels": [
+        "상완요골근",
+        "굽힘근군",
+        "원회내근"
+      ],
+      "coverage": [
+        210,
+        2369,
+        569,
+        16208,
+        1533,
+        10687,
+        1779,
+        5785,
+        1358,
+        0,
+        147,
+        1584,
+        3809,
+        4014,
+        122,
+        102,
+        1750,
+        6568,
+        8072,
+        8,
+        25,
+        0,
+        8,
+        0,
+        1,
+        4599,
+        28,
+        0,
+        2349,
+        49,
+        239,
+        187,
+        51,
+        215,
+        604,
+        49,
+        210,
+        971,
+        904,
+        1005,
+        826,
+        644,
+        247,
+        423,
+        350,
+        211,
+        548,
+        295,
+        291,
+        150,
+        206,
+        1627,
+        1147,
+        386,
+        189,
+        953,
+        3,
+        1,
+        0,
+        10,
+        1961,
+        0,
+        629,
+        6497,
+        7345,
+        6769
+      ],
+      "parts": [
+        {
+          "name": "humerus",
+          "source": {
+            "url": "https://raw.githubusercontent.com/Kevin-Mattheus-Moerman/BodyParts3D/f0eeb6e843380cfe6b83797cf8c3e1af74de5e61/assets/BodyParts3D_data/stl/FMA23130.stl",
+            "sha256": "6e26ad2b9794b136000abe2cc0b54cade989b943214e2149732cc2db2e337dce",
+            "sourceFaces": 16268
+          },
+          "displayCut": -122.34632260081412
+        },
+        {
+          "name": "radius",
+          "source": {
+            "url": "https://raw.githubusercontent.com/Kevin-Mattheus-Moerman/BodyParts3D/f0eeb6e843380cfe6b83797cf8c3e1af74de5e61/assets/BodyParts3D_data/stl/FMA23464.stl",
+            "sha256": "23eed49ade9f558406782b47decee325d12ee9e1d5ef661a051a0516a142dfa3",
+            "sourceFaces": 2804
+          },
+          "displayCut": null
+        },
+        {
+          "name": "ulna",
+          "source": {
+            "url": "https://raw.githubusercontent.com/Kevin-Mattheus-Moerman/BodyParts3D/f0eeb6e843380cfe6b83797cf8c3e1af74de5e61/assets/BodyParts3D_data/stl/FMA23467.stl",
+            "sha256": "c6074d69a2ccbcef6db2fb8bf758b44a5f6438b035da3399d6efb41b9d759a03",
+            "sourceFaces": 3592
+          },
+          "displayCut": null
+        },
+        {
+          "name": "brachioradialis",
+          "source": {
+            "url": "https://raw.githubusercontent.com/Kevin-Mattheus-Moerman/BodyParts3D/f0eeb6e843380cfe6b83797cf8c3e1af74de5e61/assets/BodyParts3D_data/stl/FMA38486.stl",
+            "sha256": "40398de8e866a88962d98480a3c5a4487e61f0d5ac99c5064b1fdd3f6340f1f4",
+            "sourceFaces": 73160
+          },
+          "displayCut": null
+        },
+        {
+          "name": "brachioradialis-tendon-material",
+          "source": {
+            "url": "https://raw.githubusercontent.com/Kevin-Mattheus-Moerman/BodyParts3D/f0eeb6e843380cfe6b83797cf8c3e1af74de5e61/assets/BodyParts3D_data/stl/FMA38486.stl",
+            "sha256": "40398de8e866a88962d98480a3c5a4487e61f0d5ac99c5064b1fdd3f6340f1f4",
+            "sourceFaces": 73160
+          },
+          "displayCut": null
+        },
+        {
+          "name": "flexor-carpi-radialis",
+          "source": {
+            "url": "https://raw.githubusercontent.com/Kevin-Mattheus-Moerman/BodyParts3D/f0eeb6e843380cfe6b83797cf8c3e1af74de5e61/assets/BodyParts3D_data/stl/FMA38460.stl",
+            "sha256": "b042d3e4b44b0cf11da4d9fe041e94d84f0fff433e628cb124feb8df526ea3df",
+            "sourceFaces": 16722
+          },
+          "displayCut": null
+        },
+        {
+          "name": "flexor-carpi-radialis-tendon-material",
+          "source": {
+            "url": "https://raw.githubusercontent.com/Kevin-Mattheus-Moerman/BodyParts3D/f0eeb6e843380cfe6b83797cf8c3e1af74de5e61/assets/BodyParts3D_data/stl/FMA38460.stl",
+            "sha256": "b042d3e4b44b0cf11da4d9fe041e94d84f0fff433e628cb124feb8df526ea3df",
+            "sourceFaces": 16722
+          },
+          "displayCut": null
+        },
+        {
+          "name": "flexor-carpi-ulnaris-humeral",
+          "source": {
+            "url": "https://raw.githubusercontent.com/Kevin-Mattheus-Moerman/BodyParts3D/f0eeb6e843380cfe6b83797cf8c3e1af74de5e61/assets/BodyParts3D_data/stl/FMA38617.stl",
+            "sha256": "52c118d24fa6a756c2dc30f6facad1f50c6c458815d5bf7a70f66eb26dd76644",
+            "sourceFaces": 39130
+          },
+          "displayCut": null
+        },
+        {
+          "name": "flexor-carpi-ulnaris-humeral-tendon-material",
+          "source": {
+            "url": "https://raw.githubusercontent.com/Kevin-Mattheus-Moerman/BodyParts3D/f0eeb6e843380cfe6b83797cf8c3e1af74de5e61/assets/BodyParts3D_data/stl/FMA38617.stl",
+            "sha256": "52c118d24fa6a756c2dc30f6facad1f50c6c458815d5bf7a70f66eb26dd76644",
+            "sourceFaces": 39130
+          },
+          "displayCut": null
+        },
+        {
+          "name": "flexor-carpi-ulnaris-ulnar",
+          "source": {
+            "url": "https://raw.githubusercontent.com/Kevin-Mattheus-Moerman/BodyParts3D/f0eeb6e843380cfe6b83797cf8c3e1af74de5e61/assets/BodyParts3D_data/stl/FMA38619.stl",
+            "sha256": "587d7310268c5ef9e6ae2d4798a759c25eb30cfa3c64a22458772ba123bde25f",
+            "sourceFaces": 15216
+          },
+          "displayCut": null
+        },
+        {
+          "name": "flexor-carpi-ulnaris-ulnar-tendon-material",
+          "source": {
+            "url": "https://raw.githubusercontent.com/Kevin-Mattheus-Moerman/BodyParts3D/f0eeb6e843380cfe6b83797cf8c3e1af74de5e61/assets/BodyParts3D_data/stl/FMA38619.stl",
+            "sha256": "587d7310268c5ef9e6ae2d4798a759c25eb30cfa3c64a22458772ba123bde25f",
+            "sourceFaces": 15216
+          },
+          "displayCut": null
+        },
+        {
+          "name": "flexor-digitorum-superficialis-humeroulnar",
+          "source": {
+            "url": "https://raw.githubusercontent.com/Kevin-Mattheus-Moerman/BodyParts3D/f0eeb6e843380cfe6b83797cf8c3e1af74de5e61/assets/BodyParts3D_data/stl/FMA38638.stl",
+            "sha256": "4194a008246d158149e6f7bd0aeb5db3c56e6116e746c893a101f77bd968fe25",
+            "sourceFaces": 128150
+          },
+          "displayCut": null
+        },
+        {
+          "name": "flexor-digitorum-superficialis-humeroulnar-tendon-material",
+          "source": {
+            "url": "https://raw.githubusercontent.com/Kevin-Mattheus-Moerman/BodyParts3D/f0eeb6e843380cfe6b83797cf8c3e1af74de5e61/assets/BodyParts3D_data/stl/FMA38638.stl",
+            "sha256": "4194a008246d158149e6f7bd0aeb5db3c56e6116e746c893a101f77bd968fe25",
+            "sourceFaces": 128150
+          },
+          "displayCut": null
+        },
+        {
+          "name": "flexor-digitorum-superficialis-radial",
+          "source": {
+            "url": "https://raw.githubusercontent.com/Kevin-Mattheus-Moerman/BodyParts3D/f0eeb6e843380cfe6b83797cf8c3e1af74de5e61/assets/BodyParts3D_data/stl/FMA38640.stl",
+            "sha256": "99d4d6f1835668f6141704684f8f5a2a470997f07f7a13d80701d091ac0ed3f6",
+            "sourceFaces": 12768
+          },
+          "displayCut": null
+        },
+        {
+          "name": "flexor-digitorum-superficialis-radial-tendon-material",
+          "source": {
+            "url": "https://raw.githubusercontent.com/Kevin-Mattheus-Moerman/BodyParts3D/f0eeb6e843380cfe6b83797cf8c3e1af74de5e61/assets/BodyParts3D_data/stl/FMA38640.stl",
+            "sha256": "99d4d6f1835668f6141704684f8f5a2a470997f07f7a13d80701d091ac0ed3f6",
+            "sourceFaces": 12768
+          },
+          "displayCut": null
+        },
+        {
+          "name": "flexor-digitorum-profundus",
+          "source": {
+            "url": "https://raw.githubusercontent.com/Kevin-Mattheus-Moerman/BodyParts3D/f0eeb6e843380cfe6b83797cf8c3e1af74de5e61/assets/BodyParts3D_data/stl/FMA38479.stl",
+            "sha256": "fe247eb3cf81286795bb7b88818c56edda9480f0a73764fd94c9ade434cc9ab0",
+            "sourceFaces": 71294
+          },
+          "displayCut": null
+        },
+        {
+          "name": "flexor-digitorum-profundus-tendon-material",
+          "source": {
+            "url": "https://raw.githubusercontent.com/Kevin-Mattheus-Moerman/BodyParts3D/f0eeb6e843380cfe6b83797cf8c3e1af74de5e61/assets/BodyParts3D_data/stl/FMA38479.stl",
+            "sha256": "fe247eb3cf81286795bb7b88818c56edda9480f0a73764fd94c9ade434cc9ab0",
+            "sourceFaces": 71294
+          },
+          "displayCut": null
+        },
+        {
+          "name": "palmaris-longus",
+          "source": {
+            "url": "https://raw.githubusercontent.com/Kevin-Mattheus-Moerman/BodyParts3D/f0eeb6e843380cfe6b83797cf8c3e1af74de5e61/assets/BodyParts3D_data/stl/FMA38463.stl",
+            "sha256": "336863bb3a1eee6f75ad743232c03445efb48c28c1fe240e5f582faac1c01664",
+            "sourceFaces": 44410
+          },
+          "displayCut": null
+        },
+        {
+          "name": "palmaris-longus-tendon-material",
+          "source": {
+            "url": "https://raw.githubusercontent.com/Kevin-Mattheus-Moerman/BodyParts3D/f0eeb6e843380cfe6b83797cf8c3e1af74de5e61/assets/BodyParts3D_data/stl/FMA38463.stl",
+            "sha256": "336863bb3a1eee6f75ad743232c03445efb48c28c1fe240e5f582faac1c01664",
+            "sourceFaces": 44410
+          },
+          "displayCut": null
+        },
+        {
+          "name": "extensor-carpi-radialis-longus",
+          "source": {
+            "url": "https://raw.githubusercontent.com/Kevin-Mattheus-Moerman/BodyParts3D/f0eeb6e843380cfe6b83797cf8c3e1af74de5e61/assets/BodyParts3D_data/stl/FMA38495.stl",
+            "sha256": "981e5182dfe1f33d759f24c7a27503c95caa56e69ab6e209ec76197150e22398",
+            "sourceFaces": 37140
+          },
+          "displayCut": null
+        },
+        {
+          "name": "extensor-carpi-radialis-longus-tendon-material",
+          "source": {
+            "url": "https://raw.githubusercontent.com/Kevin-Mattheus-Moerman/BodyParts3D/f0eeb6e843380cfe6b83797cf8c3e1af74de5e61/assets/BodyParts3D_data/stl/FMA38495.stl",
+            "sha256": "981e5182dfe1f33d759f24c7a27503c95caa56e69ab6e209ec76197150e22398",
+            "sourceFaces": 37140
+          },
+          "displayCut": null
+        },
+        {
+          "name": "extensor-carpi-radialis-brevis",
+          "source": {
+            "url": "https://raw.githubusercontent.com/Kevin-Mattheus-Moerman/BodyParts3D/f0eeb6e843380cfe6b83797cf8c3e1af74de5e61/assets/BodyParts3D_data/stl/FMA38498.stl",
+            "sha256": "660ec157f7e9695c66896a7661da180e64a6b90e4f4b8fcf1269ba6b6af2f99b",
+            "sourceFaces": 31496
+          },
+          "displayCut": null
+        },
+        {
+          "name": "extensor-carpi-radialis-brevis-tendon-material",
+          "source": {
+            "url": "https://raw.githubusercontent.com/Kevin-Mattheus-Moerman/BodyParts3D/f0eeb6e843380cfe6b83797cf8c3e1af74de5e61/assets/BodyParts3D_data/stl/FMA38498.stl",
+            "sha256": "660ec157f7e9695c66896a7661da180e64a6b90e4f4b8fcf1269ba6b6af2f99b",
+            "sourceFaces": 31496
+          },
+          "displayCut": null
+        },
+        {
+          "name": "extensor-digitorum",
+          "source": {
+            "url": "https://raw.githubusercontent.com/Kevin-Mattheus-Moerman/BodyParts3D/f0eeb6e843380cfe6b83797cf8c3e1af74de5e61/assets/BodyParts3D_data/stl/FMA38501.stl",
+            "sha256": "f646030a212132b87c341b0b712c8bd2f70e4c1f9be5d36a944290a7e540aa75",
+            "sourceFaces": 64444
+          },
+          "displayCut": null
+        },
+        {
+          "name": "extensor-digitorum-tendon-material",
+          "source": {
+            "url": "https://raw.githubusercontent.com/Kevin-Mattheus-Moerman/BodyParts3D/f0eeb6e843380cfe6b83797cf8c3e1af74de5e61/assets/BodyParts3D_data/stl/FMA38501.stl",
+            "sha256": "f646030a212132b87c341b0b712c8bd2f70e4c1f9be5d36a944290a7e540aa75",
+            "sourceFaces": 64444
+          },
+          "displayCut": null
+        },
+        {
+          "name": "pronator-teres-humeral",
+          "source": {
+            "url": "https://raw.githubusercontent.com/Kevin-Mattheus-Moerman/BodyParts3D/f0eeb6e843380cfe6b83797cf8c3e1af74de5e61/assets/BodyParts3D_data/stl/FMA38560.stl",
+            "sha256": "e9364adad6d2967a4603bb79a29abb0b1ceef3bbd14c535b1b0925941065ec7f",
+            "sourceFaces": 25978
+          },
+          "displayCut": null
+        },
+        {
+          "name": "pronator-teres-ulnar",
+          "source": {
+            "url": "https://raw.githubusercontent.com/Kevin-Mattheus-Moerman/BodyParts3D/f0eeb6e843380cfe6b83797cf8c3e1af74de5e61/assets/BodyParts3D_data/stl/FMA38562.stl",
+            "sha256": "ac1686a00c28f3a10d2d1d615597ac94affcea2d2090523e45bbbc1b64c66dad",
+            "sourceFaces": 11374
+          },
+          "displayCut": null
+        },
+        {
+          "name": "supinator",
+          "source": {
+            "url": "https://raw.githubusercontent.com/Kevin-Mattheus-Moerman/BodyParts3D/f0eeb6e843380cfe6b83797cf8c3e1af74de5e61/assets/BodyParts3D_data/stl/FMA38513.stl",
+            "sha256": "2b814e510ffc4e7bbb69ef5f75418d06ce217254cd4332471eda32571bdd0a5e",
+            "sourceFaces": 27650
+          },
+          "displayCut": null
+        },
+        {
+          "name": "pronator-quadratus",
+          "source": {
+            "url": "https://raw.githubusercontent.com/Kevin-Mattheus-Moerman/BodyParts3D/f0eeb6e843380cfe6b83797cf8c3e1af74de5e61/assets/BodyParts3D_data/stl/FMA38454.stl",
+            "sha256": "636419c6c3f66a82aa71e4a42c8720c2231d1ebcdb81185a85a8426d081871f2",
+            "sourceFaces": 14666
+          },
+          "displayCut": null
+        },
+        {
+          "name": "trapezoid",
+          "source": {
+            "url": "https://raw.githubusercontent.com/Kevin-Mattheus-Moerman/BodyParts3D/f0eeb6e843380cfe6b83797cf8c3e1af74de5e61/assets/BodyParts3D_data/stl/FMA23725.stl",
+            "sha256": "db19cf9ed7c2e97266255c03615458913b8c970d3b6e44eb015a756e4c839e5c",
+            "sourceFaces": 616
+          },
+          "displayCut": null
+        },
+        {
+          "name": "scaphoid",
+          "source": {
+            "url": "https://raw.githubusercontent.com/Kevin-Mattheus-Moerman/BodyParts3D/f0eeb6e843380cfe6b83797cf8c3e1af74de5e61/assets/BodyParts3D_data/stl/FMA24435.stl",
+            "sha256": "106d5be5a72229257a9ba41a543a4f42d18eae0513b45e0cd21e8e34d62518b6",
+            "sourceFaces": 1074
+          },
+          "displayCut": null
+        },
+        {
+          "name": "lunate",
+          "source": {
+            "url": "https://raw.githubusercontent.com/Kevin-Mattheus-Moerman/BodyParts3D/f0eeb6e843380cfe6b83797cf8c3e1af74de5e61/assets/BodyParts3D_data/stl/FMA24437.stl",
+            "sha256": "4b35077cf6a5711e1dfdd39a07734d792f0c84ce19b3b8cc942e2ad4838ef8ea",
+            "sourceFaces": 864
+          },
+          "displayCut": null
+        },
+        {
+          "name": "triquetral",
+          "source": {
+            "url": "https://raw.githubusercontent.com/Kevin-Mattheus-Moerman/BodyParts3D/f0eeb6e843380cfe6b83797cf8c3e1af74de5e61/assets/BodyParts3D_data/stl/FMA24439.stl",
+            "sha256": "bb2139a7289e784de0ff2db5e1adcc9bd8f5c9c0d4418c0b885d379c97e8e319",
+            "sourceFaces": 704
+          },
+          "displayCut": null
+        },
+        {
+          "name": "pisiform",
+          "source": {
+            "url": "https://raw.githubusercontent.com/Kevin-Mattheus-Moerman/BodyParts3D/f0eeb6e843380cfe6b83797cf8c3e1af74de5e61/assets/BodyParts3D_data/stl/FMA24441.stl",
+            "sha256": "1357a32fd5fc1bb826a122dc67f5c795644516300ce53aae6e9b106da1997a19",
+            "sourceFaces": 396
+          },
+          "displayCut": null
+        },
+        {
+          "name": "trapezium",
+          "source": {
+            "url": "https://raw.githubusercontent.com/Kevin-Mattheus-Moerman/BodyParts3D/f0eeb6e843380cfe6b83797cf8c3e1af74de5e61/assets/BodyParts3D_data/stl/FMA24443.stl",
+            "sha256": "c28bb9f078fa7e1f164e549449c8025201a31965c47df0546476c84bb13cffaf",
+            "sourceFaces": 1026
+          },
+          "displayCut": null
+        },
+        {
+          "name": "capitate",
+          "source": {
+            "url": "https://raw.githubusercontent.com/Kevin-Mattheus-Moerman/BodyParts3D/f0eeb6e843380cfe6b83797cf8c3e1af74de5e61/assets/BodyParts3D_data/stl/FMA24446.stl",
+            "sha256": "4f717f2fba9b0cb432da64921d7aeaab2709d97129f39b6538c6ea147e68977d",
+            "sourceFaces": 1284
+          },
+          "displayCut": null
+        },
+        {
+          "name": "hamate",
+          "source": {
+            "url": "https://raw.githubusercontent.com/Kevin-Mattheus-Moerman/BodyParts3D/f0eeb6e843380cfe6b83797cf8c3e1af74de5e61/assets/BodyParts3D_data/stl/FMA24448.stl",
+            "sha256": "28fc3501dc45884187c91738d368194820d0fa8fc5c421cc40525e0c71665e7d",
+            "sourceFaces": 1150
+          },
+          "displayCut": null
+        },
+        {
+          "name": "proximal phalanx of thumb",
+          "source": {
+            "url": "https://raw.githubusercontent.com/Kevin-Mattheus-Moerman/BodyParts3D/f0eeb6e843380cfe6b83797cf8c3e1af74de5e61/assets/BodyParts3D_data/stl/FMA24450.stl",
+            "sha256": "12066c799d3468b5d697a87b6fcf0b35e71c68df5e030053ecdd3d39c2259dec",
+            "sourceFaces": 1368
+          },
+          "displayCut": null
+        },
+        {
+          "name": "proximal phalanx of index finger",
+          "source": {
+            "url": "https://raw.githubusercontent.com/Kevin-Mattheus-Moerman/BodyParts3D/f0eeb6e843380cfe6b83797cf8c3e1af74de5e61/assets/BodyParts3D_data/stl/FMA24451.stl",
+            "sha256": "29ac3a5b3459b99e81e4da835f4aa909b647f1fbb187423e53aa3e57315253ff",
+            "sourceFaces": 1664
+          },
+          "displayCut": null
+        },
+        {
+          "name": "proximal phalanx of middle finger",
+          "source": {
+            "url": "https://raw.githubusercontent.com/Kevin-Mattheus-Moerman/BodyParts3D/f0eeb6e843380cfe6b83797cf8c3e1af74de5e61/assets/BodyParts3D_data/stl/FMA24452.stl",
+            "sha256": "648823478862684fe11a5c647b02ae7892f634a3d56ff402c71b89e91aed33ec",
+            "sourceFaces": 1968
+          },
+          "displayCut": null
+        },
+        {
+          "name": "proximal phalanx of ring finger",
+          "source": {
+            "url": "https://raw.githubusercontent.com/Kevin-Mattheus-Moerman/BodyParts3D/f0eeb6e843380cfe6b83797cf8c3e1af74de5e61/assets/BodyParts3D_data/stl/FMA24453.stl",
+            "sha256": "3f36cfec72db8d90f89069910d0a1981c0e22b621fd4a7f9c6ad5d1517d2e15e",
+            "sourceFaces": 1620
+          },
+          "displayCut": null
+        },
+        {
+          "name": "proximal phalanx of little finger",
+          "source": {
+            "url": "https://raw.githubusercontent.com/Kevin-Mattheus-Moerman/BodyParts3D/f0eeb6e843380cfe6b83797cf8c3e1af74de5e61/assets/BodyParts3D_data/stl/FMA24454.stl",
+            "sha256": "bf7d8f3cd4dcc1bef6487551a87d703e5a6b2b5ce856bc8c941edd5e90519bc9",
+            "sourceFaces": 1208
+          },
+          "displayCut": null
+        },
+        {
+          "name": "middle phalanx of index finger",
+          "source": {
+            "url": "https://raw.githubusercontent.com/Kevin-Mattheus-Moerman/BodyParts3D/f0eeb6e843380cfe6b83797cf8c3e1af74de5e61/assets/BodyParts3D_data/stl/FMA24455.stl",
+            "sha256": "b44a016e7a7798587ad694405a65275931c904e3cf2d55dd64061cbecbabe2ab",
+            "sourceFaces": 1140
+          },
+          "displayCut": null
+        },
+        {
+          "name": "middle phalanx of middle finger",
+          "source": {
+            "url": "https://raw.githubusercontent.com/Kevin-Mattheus-Moerman/BodyParts3D/f0eeb6e843380cfe6b83797cf8c3e1af74de5e61/assets/BodyParts3D_data/stl/FMA24456.stl",
+            "sha256": "43d9601a373cf165c2e2bd604638186eda9ccded8f4418cc4aa382183cd5c2c2",
+            "sourceFaces": 1476
+          },
+          "displayCut": null
+        },
+        {
+          "name": "middle phalanx of ring finger",
+          "source": {
+            "url": "https://raw.githubusercontent.com/Kevin-Mattheus-Moerman/BodyParts3D/f0eeb6e843380cfe6b83797cf8c3e1af74de5e61/assets/BodyParts3D_data/stl/FMA24457.stl",
+            "sha256": "929519bef218c8e53a80751a46fa69ef3ac301b8dd278e3156d7600431618e85",
+            "sourceFaces": 1350
+          },
+          "displayCut": null
+        },
+        {
+          "name": "middle phalanx of little finger",
+          "source": {
+            "url": "https://raw.githubusercontent.com/Kevin-Mattheus-Moerman/BodyParts3D/f0eeb6e843380cfe6b83797cf8c3e1af74de5e61/assets/BodyParts3D_data/stl/FMA24458.stl",
+            "sha256": "d67f25f614d977663d141628d01bdefcd55b0624dc90b3aee91dc96abac1942f",
+            "sourceFaces": 900
+          },
+          "displayCut": null
+        },
+        {
+          "name": "distal phalanx of thumb",
+          "source": {
+            "url": "https://raw.githubusercontent.com/Kevin-Mattheus-Moerman/BodyParts3D/f0eeb6e843380cfe6b83797cf8c3e1af74de5e61/assets/BodyParts3D_data/stl/FMA24459.stl",
+            "sha256": "a9aa0c6acb7269cc5a81632a00b06ceb8a33cd2fe078634239da5a7f53ea1602",
+            "sourceFaces": 1040
+          },
+          "displayCut": null
+        },
+        {
+          "name": "distal phalanx of index finger",
+          "source": {
+            "url": "https://raw.githubusercontent.com/Kevin-Mattheus-Moerman/BodyParts3D/f0eeb6e843380cfe6b83797cf8c3e1af74de5e61/assets/BodyParts3D_data/stl/FMA24460.stl",
+            "sha256": "7f5f76eb2982eb79bbf51ed626f722abe0d8ceb6e678e433d6732a71187b61db",
+            "sourceFaces": 656
+          },
+          "displayCut": null
+        },
+        {
+          "name": "distal phalanx of middle finger",
+          "source": {
+            "url": "https://raw.githubusercontent.com/Kevin-Mattheus-Moerman/BodyParts3D/f0eeb6e843380cfe6b83797cf8c3e1af74de5e61/assets/BodyParts3D_data/stl/FMA24461.stl",
+            "sha256": "5a2321e130f03d57b18e6cc725c9129b8e8398385f06403d8e6228a3f959756a",
+            "sourceFaces": 640
+          },
+          "displayCut": null
+        },
+        {
+          "name": "distal phalanx of ring finger",
+          "source": {
+            "url": "https://raw.githubusercontent.com/Kevin-Mattheus-Moerman/BodyParts3D/f0eeb6e843380cfe6b83797cf8c3e1af74de5e61/assets/BodyParts3D_data/stl/FMA24462.stl",
+            "sha256": "9e14b18953b97f741d9ab5a0b05f786d6474cda29a13f06072d188b3ff978291",
+            "sourceFaces": 452
+          },
+          "displayCut": null
+        },
+        {
+          "name": "distal phalanx of little finger",
+          "source": {
+            "url": "https://raw.githubusercontent.com/Kevin-Mattheus-Moerman/BodyParts3D/f0eeb6e843380cfe6b83797cf8c3e1af74de5e61/assets/BodyParts3D_data/stl/FMA24463.stl",
+            "sha256": "520090dc80d537f973295acd49e070f3e094c4d5a48ef708e36a2b98a351d0d7",
+            "sourceFaces": 466
+          },
+          "displayCut": null
+        },
+        {
+          "name": "first metacarpal bone",
+          "source": {
+            "url": "https://raw.githubusercontent.com/Kevin-Mattheus-Moerman/BodyParts3D/f0eeb6e843380cfe6b83797cf8c3e1af74de5e61/assets/BodyParts3D_data/stl/FMA24464.stl",
+            "sha256": "5bca353b5b387b71fd6a9b3a588b08303a32cbf924a9c0bc7dc700024808624c",
+            "sourceFaces": 2434
+          },
+          "displayCut": null
+        },
+        {
+          "name": "second metacarpal bone",
+          "source": {
+            "url": "https://raw.githubusercontent.com/Kevin-Mattheus-Moerman/BodyParts3D/f0eeb6e843380cfe6b83797cf8c3e1af74de5e61/assets/BodyParts3D_data/stl/FMA24466.stl",
+            "sha256": "3541c67a2864e4e72f56fe2a0c01aaa5d87346e55864e92a0360b32991892fe7",
+            "sourceFaces": 3218
+          },
+          "displayCut": null
+        },
+        {
+          "name": "third metacarpal bone",
+          "source": {
+            "url": "https://raw.githubusercontent.com/Kevin-Mattheus-Moerman/BodyParts3D/f0eeb6e843380cfe6b83797cf8c3e1af74de5e61/assets/BodyParts3D_data/stl/FMA24468.stl",
+            "sha256": "f8d96b418c20308dc76868621875a3b029f9d6f072621efa37045dceb2730d5e",
+            "sourceFaces": 3018
+          },
+          "displayCut": null
+        },
+        {
+          "name": "fourth metacarpal bone",
+          "source": {
+            "url": "https://raw.githubusercontent.com/Kevin-Mattheus-Moerman/BodyParts3D/f0eeb6e843380cfe6b83797cf8c3e1af74de5e61/assets/BodyParts3D_data/stl/FMA24470.stl",
+            "sha256": "5b9338a2d75680e92abbdc2c539d36ae8dd6f634ea3a026f2a6b33c071fb8e35",
+            "sourceFaces": 2306
+          },
+          "displayCut": null
+        },
+        {
+          "name": "fifth metacarpal bone",
+          "source": {
+            "url": "https://raw.githubusercontent.com/Kevin-Mattheus-Moerman/BodyParts3D/f0eeb6e843380cfe6b83797cf8c3e1af74de5e61/assets/BodyParts3D_data/stl/FMA24472.stl",
+            "sha256": "4359ea925a821e599ed8f65bd02f3d6754144718f8724ef155177c38b9b79480",
+            "sourceFaces": 2178
+          },
+          "displayCut": null
+        },
+        {
+          "name": "extensor-carpi-ulnaris-humeral",
+          "source": {
+            "url": "https://raw.githubusercontent.com/Kevin-Mattheus-Moerman/BodyParts3D/f0eeb6e843380cfe6b83797cf8c3e1af74de5e61/assets/BodyParts3D_data/stl/BP45.stl",
+            "sha256": "05136156af80a46094f36e054626e6ea8a48fec5b27e51f9469bd3794aaa8078",
+            "sourceFaces": 31644
+          },
+          "displayCut": null
+        },
+        {
+          "name": "extensor-carpi-ulnaris-humeral-tendon-material",
+          "source": {
+            "url": "https://raw.githubusercontent.com/Kevin-Mattheus-Moerman/BodyParts3D/f0eeb6e843380cfe6b83797cf8c3e1af74de5e61/assets/BodyParts3D_data/stl/BP45.stl",
+            "sha256": "05136156af80a46094f36e054626e6ea8a48fec5b27e51f9469bd3794aaa8078",
+            "sourceFaces": 31644
+          },
+          "displayCut": null
+        },
+        {
+          "name": "extensor-carpi-ulnaris-ulnar",
+          "source": {
+            "url": "https://raw.githubusercontent.com/Kevin-Mattheus-Moerman/BodyParts3D/f0eeb6e843380cfe6b83797cf8c3e1af74de5e61/assets/BodyParts3D_data/stl/BP47.stl",
+            "sha256": "84c8c8801f59f49a41452c0adea06f0402f8e9b1c56d20907b6aca480429ad02",
+            "sourceFaces": 17208
+          },
+          "displayCut": null
+        },
+        {
+          "name": "extensor-carpi-ulnaris-ulnar-tendon-material",
+          "source": {
+            "url": "https://raw.githubusercontent.com/Kevin-Mattheus-Moerman/BodyParts3D/f0eeb6e843380cfe6b83797cf8c3e1af74de5e61/assets/BodyParts3D_data/stl/BP47.stl",
+            "sha256": "84c8c8801f59f49a41452c0adea06f0402f8e9b1c56d20907b6aca480429ad02",
+            "sourceFaces": 17208
+          },
+          "displayCut": null
+        },
+        {
+          "name": "biceps-long",
+          "source": {
+            "url": "https://raw.githubusercontent.com/Kevin-Mattheus-Moerman/BodyParts3D/f0eeb6e843380cfe6b83797cf8c3e1af74de5e61/assets/BodyParts3D_data/stl/FMA37695.stl",
+            "sha256": "1a92c34f2891072488e55f65b9bed1560b473f36b6a4b996a2ccab6681b4c3ea",
+            "sourceFaces": 26880
+          },
+          "displayCut": -122.34632260081412
+        },
+        {
+          "name": "biceps-short",
+          "source": {
+            "url": "https://raw.githubusercontent.com/Kevin-Mattheus-Moerman/BodyParts3D/f0eeb6e843380cfe6b83797cf8c3e1af74de5e61/assets/BodyParts3D_data/stl/FMA37697.stl",
+            "sha256": "c875ced0ecedde0637edf88b27e9a2086fd80088d9f89252664f49e981a8f855",
+            "sourceFaces": 36312
+          },
+          "displayCut": -122.34632260081412
+        },
+        {
+          "name": "brachialis",
+          "source": {
+            "url": "https://raw.githubusercontent.com/Kevin-Mattheus-Moerman/BodyParts3D/f0eeb6e843380cfe6b83797cf8c3e1af74de5e61/assets/BodyParts3D_data/stl/FMA37699.stl",
+            "sha256": "1ed7dd3d76fe3b6c89a6998e4cbd908ae22a545c4779a54e4cb720dc0e571a9f",
+            "sourceFaces": 39514
+          },
+          "displayCut": -122.34632260081412
+        },
+        {
+          "name": "triceps-long",
+          "source": {
+            "url": "https://raw.githubusercontent.com/Kevin-Mattheus-Moerman/BodyParts3D/f0eeb6e843380cfe6b83797cf8c3e1af74de5e61/assets/BodyParts3D_data/stl/FMA37684.stl",
+            "sha256": "254c2b9528925155b360d919be825040fd6fb46f9fcf006a9969f25d738a50b0",
+            "sourceFaces": 27840
+          },
+          "displayCut": -122.34632260081412
+        },
+        {
+          "name": "triceps-lateral",
+          "source": {
+            "url": "https://raw.githubusercontent.com/Kevin-Mattheus-Moerman/BodyParts3D/f0eeb6e843380cfe6b83797cf8c3e1af74de5e61/assets/BodyParts3D_data/stl/FMA37686.stl",
+            "sha256": "1ceb9b9892b4cfe905d108cd096a24c9ea0c20bbe182364d748852e1eaeab344",
+            "sourceFaces": 32266
+          },
+          "displayCut": -122.34632260081412
+        },
+        {
+          "name": "triceps-medial",
+          "source": {
+            "url": "https://raw.githubusercontent.com/Kevin-Mattheus-Moerman/BodyParts3D/f0eeb6e843380cfe6b83797cf8c3e1af74de5e61/assets/BodyParts3D_data/stl/FMA37668.stl",
+            "sha256": "2eb8019befa2c5f67e138757b0b4b52bef9bedba735e6bde1596becca8388b19",
+            "sourceFaces": 34988
+          },
+          "displayCut": -122.34632260081412
+        }
+      ]
+    },
+    {
+      "region": "forearm",
+      "view": "side",
+      "yaw": 90,
+      "labels": [
+        "상완요골근",
+        "굽힘근군",
+        "폄근군",
+        "원회내근"
+      ],
+      "coverage": [
+        87,
+        776,
+        62,
+        18582,
+        2014,
+        2670,
+        843,
+        0,
+        87,
+        0,
+        0,
+        87,
+        1411,
+        3267,
+        369,
+        202,
+        2033,
+        0,
+        1226,
+        9747,
+        1268,
+        2846,
+        582,
+        6404,
+        2404,
+        27,
+        0,
+        0,
+        695,
+        76,
+        314,
+        25,
+        0,
+        27,
+        534,
+        87,
+        5,
+        1009,
+        1030,
+        66,
+        10,
+        88,
+        429,
+        177,
+        93,
+        143,
+        639,
+        307,
+        218,
+        207,
+        202,
+        1668,
+        2296,
+        376,
+        49,
+        129,
+        4,
+        102,
+        849,
+        31,
+        369,
+        8883,
+        755,
+        695,
+        4921,
+        3796
+      ],
+      "parts": [
+        {
+          "name": "humerus",
+          "source": {
+            "url": "https://raw.githubusercontent.com/Kevin-Mattheus-Moerman/BodyParts3D/f0eeb6e843380cfe6b83797cf8c3e1af74de5e61/assets/BodyParts3D_data/stl/FMA23130.stl",
+            "sha256": "6e26ad2b9794b136000abe2cc0b54cade989b943214e2149732cc2db2e337dce",
+            "sourceFaces": 16268
+          },
+          "displayCut": -122.34632260081412
+        },
+        {
+          "name": "radius",
+          "source": {
+            "url": "https://raw.githubusercontent.com/Kevin-Mattheus-Moerman/BodyParts3D/f0eeb6e843380cfe6b83797cf8c3e1af74de5e61/assets/BodyParts3D_data/stl/FMA23464.stl",
+            "sha256": "23eed49ade9f558406782b47decee325d12ee9e1d5ef661a051a0516a142dfa3",
+            "sourceFaces": 2804
+          },
+          "displayCut": null
+        },
+        {
+          "name": "ulna",
+          "source": {
+            "url": "https://raw.githubusercontent.com/Kevin-Mattheus-Moerman/BodyParts3D/f0eeb6e843380cfe6b83797cf8c3e1af74de5e61/assets/BodyParts3D_data/stl/FMA23467.stl",
+            "sha256": "c6074d69a2ccbcef6db2fb8bf758b44a5f6438b035da3399d6efb41b9d759a03",
+            "sourceFaces": 3592
+          },
+          "displayCut": null
+        },
+        {
+          "name": "brachioradialis",
+          "source": {
+            "url": "https://raw.githubusercontent.com/Kevin-Mattheus-Moerman/BodyParts3D/f0eeb6e843380cfe6b83797cf8c3e1af74de5e61/assets/BodyParts3D_data/stl/FMA38486.stl",
+            "sha256": "40398de8e866a88962d98480a3c5a4487e61f0d5ac99c5064b1fdd3f6340f1f4",
+            "sourceFaces": 73160
+          },
+          "displayCut": null
+        },
+        {
+          "name": "brachioradialis-tendon-material",
+          "source": {
+            "url": "https://raw.githubusercontent.com/Kevin-Mattheus-Moerman/BodyParts3D/f0eeb6e843380cfe6b83797cf8c3e1af74de5e61/assets/BodyParts3D_data/stl/FMA38486.stl",
+            "sha256": "40398de8e866a88962d98480a3c5a4487e61f0d5ac99c5064b1fdd3f6340f1f4",
+            "sourceFaces": 73160
+          },
+          "displayCut": null
+        },
+        {
+          "name": "flexor-carpi-radialis",
+          "source": {
+            "url": "https://raw.githubusercontent.com/Kevin-Mattheus-Moerman/BodyParts3D/f0eeb6e843380cfe6b83797cf8c3e1af74de5e61/assets/BodyParts3D_data/stl/FMA38460.stl",
+            "sha256": "b042d3e4b44b0cf11da4d9fe041e94d84f0fff433e628cb124feb8df526ea3df",
+            "sourceFaces": 16722
+          },
+          "displayCut": null
+        },
+        {
+          "name": "flexor-carpi-radialis-tendon-material",
+          "source": {
+            "url": "https://raw.githubusercontent.com/Kevin-Mattheus-Moerman/BodyParts3D/f0eeb6e843380cfe6b83797cf8c3e1af74de5e61/assets/BodyParts3D_data/stl/FMA38460.stl",
+            "sha256": "b042d3e4b44b0cf11da4d9fe041e94d84f0fff433e628cb124feb8df526ea3df",
+            "sourceFaces": 16722
+          },
+          "displayCut": null
+        },
+        {
+          "name": "flexor-carpi-ulnaris-humeral",
+          "source": {
+            "url": "https://raw.githubusercontent.com/Kevin-Mattheus-Moerman/BodyParts3D/f0eeb6e843380cfe6b83797cf8c3e1af74de5e61/assets/BodyParts3D_data/stl/FMA38617.stl",
+            "sha256": "52c118d24fa6a756c2dc30f6facad1f50c6c458815d5bf7a70f66eb26dd76644",
+            "sourceFaces": 39130
+          },
+          "displayCut": null
+        },
+        {
+          "name": "flexor-carpi-ulnaris-humeral-tendon-material",
+          "source": {
+            "url": "https://raw.githubusercontent.com/Kevin-Mattheus-Moerman/BodyParts3D/f0eeb6e843380cfe6b83797cf8c3e1af74de5e61/assets/BodyParts3D_data/stl/FMA38617.stl",
+            "sha256": "52c118d24fa6a756c2dc30f6facad1f50c6c458815d5bf7a70f66eb26dd76644",
+            "sourceFaces": 39130
+          },
+          "displayCut": null
+        },
+        {
+          "name": "flexor-carpi-ulnaris-ulnar",
+          "source": {
+            "url": "https://raw.githubusercontent.com/Kevin-Mattheus-Moerman/BodyParts3D/f0eeb6e843380cfe6b83797cf8c3e1af74de5e61/assets/BodyParts3D_data/stl/FMA38619.stl",
+            "sha256": "587d7310268c5ef9e6ae2d4798a759c25eb30cfa3c64a22458772ba123bde25f",
+            "sourceFaces": 15216
+          },
+          "displayCut": null
+        },
+        {
+          "name": "flexor-carpi-ulnaris-ulnar-tendon-material",
+          "source": {
+            "url": "https://raw.githubusercontent.com/Kevin-Mattheus-Moerman/BodyParts3D/f0eeb6e843380cfe6b83797cf8c3e1af74de5e61/assets/BodyParts3D_data/stl/FMA38619.stl",
+            "sha256": "587d7310268c5ef9e6ae2d4798a759c25eb30cfa3c64a22458772ba123bde25f",
+            "sourceFaces": 15216
+          },
+          "displayCut": null
+        },
+        {
+          "name": "flexor-digitorum-superficialis-humeroulnar",
+          "source": {
+            "url": "https://raw.githubusercontent.com/Kevin-Mattheus-Moerman/BodyParts3D/f0eeb6e843380cfe6b83797cf8c3e1af74de5e61/assets/BodyParts3D_data/stl/FMA38638.stl",
+            "sha256": "4194a008246d158149e6f7bd0aeb5db3c56e6116e746c893a101f77bd968fe25",
+            "sourceFaces": 128150
+          },
+          "displayCut": null
+        },
+        {
+          "name": "flexor-digitorum-superficialis-humeroulnar-tendon-material",
+          "source": {
+            "url": "https://raw.githubusercontent.com/Kevin-Mattheus-Moerman/BodyParts3D/f0eeb6e843380cfe6b83797cf8c3e1af74de5e61/assets/BodyParts3D_data/stl/FMA38638.stl",
+            "sha256": "4194a008246d158149e6f7bd0aeb5db3c56e6116e746c893a101f77bd968fe25",
+            "sourceFaces": 128150
+          },
+          "displayCut": null
+        },
+        {
+          "name": "flexor-digitorum-superficialis-radial",
+          "source": {
+            "url": "https://raw.githubusercontent.com/Kevin-Mattheus-Moerman/BodyParts3D/f0eeb6e843380cfe6b83797cf8c3e1af74de5e61/assets/BodyParts3D_data/stl/FMA38640.stl",
+            "sha256": "99d4d6f1835668f6141704684f8f5a2a470997f07f7a13d80701d091ac0ed3f6",
+            "sourceFaces": 12768
+          },
+          "displayCut": null
+        },
+        {
+          "name": "flexor-digitorum-superficialis-radial-tendon-material",
+          "source": {
+            "url": "https://raw.githubusercontent.com/Kevin-Mattheus-Moerman/BodyParts3D/f0eeb6e843380cfe6b83797cf8c3e1af74de5e61/assets/BodyParts3D_data/stl/FMA38640.stl",
+            "sha256": "99d4d6f1835668f6141704684f8f5a2a470997f07f7a13d80701d091ac0ed3f6",
+            "sourceFaces": 12768
+          },
+          "displayCut": null
+        },
+        {
+          "name": "flexor-digitorum-profundus",
+          "source": {
+            "url": "https://raw.githubusercontent.com/Kevin-Mattheus-Moerman/BodyParts3D/f0eeb6e843380cfe6b83797cf8c3e1af74de5e61/assets/BodyParts3D_data/stl/FMA38479.stl",
+            "sha256": "fe247eb3cf81286795bb7b88818c56edda9480f0a73764fd94c9ade434cc9ab0",
+            "sourceFaces": 71294
+          },
+          "displayCut": null
+        },
+        {
+          "name": "flexor-digitorum-profundus-tendon-material",
+          "source": {
+            "url": "https://raw.githubusercontent.com/Kevin-Mattheus-Moerman/BodyParts3D/f0eeb6e843380cfe6b83797cf8c3e1af74de5e61/assets/BodyParts3D_data/stl/FMA38479.stl",
+            "sha256": "fe247eb3cf81286795bb7b88818c56edda9480f0a73764fd94c9ade434cc9ab0",
+            "sourceFaces": 71294
+          },
+          "displayCut": null
+        },
+        {
+          "name": "palmaris-longus",
+          "source": {
+            "url": "https://raw.githubusercontent.com/Kevin-Mattheus-Moerman/BodyParts3D/f0eeb6e843380cfe6b83797cf8c3e1af74de5e61/assets/BodyParts3D_data/stl/FMA38463.stl",
+            "sha256": "336863bb3a1eee6f75ad743232c03445efb48c28c1fe240e5f582faac1c01664",
+            "sourceFaces": 44410
+          },
+          "displayCut": null
+        },
+        {
+          "name": "palmaris-longus-tendon-material",
+          "source": {
+            "url": "https://raw.githubusercontent.com/Kevin-Mattheus-Moerman/BodyParts3D/f0eeb6e843380cfe6b83797cf8c3e1af74de5e61/assets/BodyParts3D_data/stl/FMA38463.stl",
+            "sha256": "336863bb3a1eee6f75ad743232c03445efb48c28c1fe240e5f582faac1c01664",
+            "sourceFaces": 44410
+          },
+          "displayCut": null
+        },
+        {
+          "name": "extensor-carpi-radialis-longus",
+          "source": {
+            "url": "https://raw.githubusercontent.com/Kevin-Mattheus-Moerman/BodyParts3D/f0eeb6e843380cfe6b83797cf8c3e1af74de5e61/assets/BodyParts3D_data/stl/FMA38495.stl",
+            "sha256": "981e5182dfe1f33d759f24c7a27503c95caa56e69ab6e209ec76197150e22398",
+            "sourceFaces": 37140
+          },
+          "displayCut": null
+        },
+        {
+          "name": "extensor-carpi-radialis-longus-tendon-material",
+          "source": {
+            "url": "https://raw.githubusercontent.com/Kevin-Mattheus-Moerman/BodyParts3D/f0eeb6e843380cfe6b83797cf8c3e1af74de5e61/assets/BodyParts3D_data/stl/FMA38495.stl",
+            "sha256": "981e5182dfe1f33d759f24c7a27503c95caa56e69ab6e209ec76197150e22398",
+            "sourceFaces": 37140
+          },
+          "displayCut": null
+        },
+        {
+          "name": "extensor-carpi-radialis-brevis",
+          "source": {
+            "url": "https://raw.githubusercontent.com/Kevin-Mattheus-Moerman/BodyParts3D/f0eeb6e843380cfe6b83797cf8c3e1af74de5e61/assets/BodyParts3D_data/stl/FMA38498.stl",
+            "sha256": "660ec157f7e9695c66896a7661da180e64a6b90e4f4b8fcf1269ba6b6af2f99b",
+            "sourceFaces": 31496
+          },
+          "displayCut": null
+        },
+        {
+          "name": "extensor-carpi-radialis-brevis-tendon-material",
+          "source": {
+            "url": "https://raw.githubusercontent.com/Kevin-Mattheus-Moerman/BodyParts3D/f0eeb6e843380cfe6b83797cf8c3e1af74de5e61/assets/BodyParts3D_data/stl/FMA38498.stl",
+            "sha256": "660ec157f7e9695c66896a7661da180e64a6b90e4f4b8fcf1269ba6b6af2f99b",
+            "sourceFaces": 31496
+          },
+          "displayCut": null
+        },
+        {
+          "name": "extensor-digitorum",
+          "source": {
+            "url": "https://raw.githubusercontent.com/Kevin-Mattheus-Moerman/BodyParts3D/f0eeb6e843380cfe6b83797cf8c3e1af74de5e61/assets/BodyParts3D_data/stl/FMA38501.stl",
+            "sha256": "f646030a212132b87c341b0b712c8bd2f70e4c1f9be5d36a944290a7e540aa75",
+            "sourceFaces": 64444
+          },
+          "displayCut": null
+        },
+        {
+          "name": "extensor-digitorum-tendon-material",
+          "source": {
+            "url": "https://raw.githubusercontent.com/Kevin-Mattheus-Moerman/BodyParts3D/f0eeb6e843380cfe6b83797cf8c3e1af74de5e61/assets/BodyParts3D_data/stl/FMA38501.stl",
+            "sha256": "f646030a212132b87c341b0b712c8bd2f70e4c1f9be5d36a944290a7e540aa75",
+            "sourceFaces": 64444
+          },
+          "displayCut": null
+        },
+        {
+          "name": "pronator-teres-humeral",
+          "source": {
+            "url": "https://raw.githubusercontent.com/Kevin-Mattheus-Moerman/BodyParts3D/f0eeb6e843380cfe6b83797cf8c3e1af74de5e61/assets/BodyParts3D_data/stl/FMA38560.stl",
+            "sha256": "e9364adad6d2967a4603bb79a29abb0b1ceef3bbd14c535b1b0925941065ec7f",
+            "sourceFaces": 25978
+          },
+          "displayCut": null
+        },
+        {
+          "name": "pronator-teres-ulnar",
+          "source": {
+            "url": "https://raw.githubusercontent.com/Kevin-Mattheus-Moerman/BodyParts3D/f0eeb6e843380cfe6b83797cf8c3e1af74de5e61/assets/BodyParts3D_data/stl/FMA38562.stl",
+            "sha256": "ac1686a00c28f3a10d2d1d615597ac94affcea2d2090523e45bbbc1b64c66dad",
+            "sourceFaces": 11374
+          },
+          "displayCut": null
+        },
+        {
+          "name": "supinator",
+          "source": {
+            "url": "https://raw.githubusercontent.com/Kevin-Mattheus-Moerman/BodyParts3D/f0eeb6e843380cfe6b83797cf8c3e1af74de5e61/assets/BodyParts3D_data/stl/FMA38513.stl",
+            "sha256": "2b814e510ffc4e7bbb69ef5f75418d06ce217254cd4332471eda32571bdd0a5e",
+            "sourceFaces": 27650
+          },
+          "displayCut": null
+        },
+        {
+          "name": "pronator-quadratus",
+          "source": {
+            "url": "https://raw.githubusercontent.com/Kevin-Mattheus-Moerman/BodyParts3D/f0eeb6e843380cfe6b83797cf8c3e1af74de5e61/assets/BodyParts3D_data/stl/FMA38454.stl",
+            "sha256": "636419c6c3f66a82aa71e4a42c8720c2231d1ebcdb81185a85a8426d081871f2",
+            "sourceFaces": 14666
+          },
+          "displayCut": null
+        },
+        {
+          "name": "trapezoid",
+          "source": {
+            "url": "https://raw.githubusercontent.com/Kevin-Mattheus-Moerman/BodyParts3D/f0eeb6e843380cfe6b83797cf8c3e1af74de5e61/assets/BodyParts3D_data/stl/FMA23725.stl",
+            "sha256": "db19cf9ed7c2e97266255c03615458913b8c970d3b6e44eb015a756e4c839e5c",
+            "sourceFaces": 616
+          },
+          "displayCut": null
+        },
+        {
+          "name": "scaphoid",
+          "source": {
+            "url": "https://raw.githubusercontent.com/Kevin-Mattheus-Moerman/BodyParts3D/f0eeb6e843380cfe6b83797cf8c3e1af74de5e61/assets/BodyParts3D_data/stl/FMA24435.stl",
+            "sha256": "106d5be5a72229257a9ba41a543a4f42d18eae0513b45e0cd21e8e34d62518b6",
+            "sourceFaces": 1074
+          },
+          "displayCut": null
+        },
+        {
+          "name": "lunate",
+          "source": {
+            "url": "https://raw.githubusercontent.com/Kevin-Mattheus-Moerman/BodyParts3D/f0eeb6e843380cfe6b83797cf8c3e1af74de5e61/assets/BodyParts3D_data/stl/FMA24437.stl",
+            "sha256": "4b35077cf6a5711e1dfdd39a07734d792f0c84ce19b3b8cc942e2ad4838ef8ea",
+            "sourceFaces": 864
+          },
+          "displayCut": null
+        },
+        {
+          "name": "triquetral",
+          "source": {
+            "url": "https://raw.githubusercontent.com/Kevin-Mattheus-Moerman/BodyParts3D/f0eeb6e843380cfe6b83797cf8c3e1af74de5e61/assets/BodyParts3D_data/stl/FMA24439.stl",
+            "sha256": "bb2139a7289e784de0ff2db5e1adcc9bd8f5c9c0d4418c0b885d379c97e8e319",
+            "sourceFaces": 704
+          },
+          "displayCut": null
+        },
+        {
+          "name": "pisiform",
+          "source": {
+            "url": "https://raw.githubusercontent.com/Kevin-Mattheus-Moerman/BodyParts3D/f0eeb6e843380cfe6b83797cf8c3e1af74de5e61/assets/BodyParts3D_data/stl/FMA24441.stl",
+            "sha256": "1357a32fd5fc1bb826a122dc67f5c795644516300ce53aae6e9b106da1997a19",
+            "sourceFaces": 396
+          },
+          "displayCut": null
+        },
+        {
+          "name": "trapezium",
+          "source": {
+            "url": "https://raw.githubusercontent.com/Kevin-Mattheus-Moerman/BodyParts3D/f0eeb6e843380cfe6b83797cf8c3e1af74de5e61/assets/BodyParts3D_data/stl/FMA24443.stl",
+            "sha256": "c28bb9f078fa7e1f164e549449c8025201a31965c47df0546476c84bb13cffaf",
+            "sourceFaces": 1026
+          },
+          "displayCut": null
+        },
+        {
+          "name": "capitate",
+          "source": {
+            "url": "https://raw.githubusercontent.com/Kevin-Mattheus-Moerman/BodyParts3D/f0eeb6e843380cfe6b83797cf8c3e1af74de5e61/assets/BodyParts3D_data/stl/FMA24446.stl",
+            "sha256": "4f717f2fba9b0cb432da64921d7aeaab2709d97129f39b6538c6ea147e68977d",
+            "sourceFaces": 1284
+          },
+          "displayCut": null
+        },
+        {
+          "name": "hamate",
+          "source": {
+            "url": "https://raw.githubusercontent.com/Kevin-Mattheus-Moerman/BodyParts3D/f0eeb6e843380cfe6b83797cf8c3e1af74de5e61/assets/BodyParts3D_data/stl/FMA24448.stl",
+            "sha256": "28fc3501dc45884187c91738d368194820d0fa8fc5c421cc40525e0c71665e7d",
+            "sourceFaces": 1150
+          },
+          "displayCut": null
+        },
+        {
+          "name": "proximal phalanx of thumb",
+          "source": {
+            "url": "https://raw.githubusercontent.com/Kevin-Mattheus-Moerman/BodyParts3D/f0eeb6e843380cfe6b83797cf8c3e1af74de5e61/assets/BodyParts3D_data/stl/FMA24450.stl",
+            "sha256": "12066c799d3468b5d697a87b6fcf0b35e71c68df5e030053ecdd3d39c2259dec",
+            "sourceFaces": 1368
+          },
+          "displayCut": null
+        },
+        {
+          "name": "proximal phalanx of index finger",
+          "source": {
+            "url": "https://raw.githubusercontent.com/Kevin-Mattheus-Moerman/BodyParts3D/f0eeb6e843380cfe6b83797cf8c3e1af74de5e61/assets/BodyParts3D_data/stl/FMA24451.stl",
+            "sha256": "29ac3a5b3459b99e81e4da835f4aa909b647f1fbb187423e53aa3e57315253ff",
+            "sourceFaces": 1664
+          },
+          "displayCut": null
+        },
+        {
+          "name": "proximal phalanx of middle finger",
+          "source": {
+            "url": "https://raw.githubusercontent.com/Kevin-Mattheus-Moerman/BodyParts3D/f0eeb6e843380cfe6b83797cf8c3e1af74de5e61/assets/BodyParts3D_data/stl/FMA24452.stl",
+            "sha256": "648823478862684fe11a5c647b02ae7892f634a3d56ff402c71b89e91aed33ec",
+            "sourceFaces": 1968
+          },
+          "displayCut": null
+        },
+        {
+          "name": "proximal phalanx of ring finger",
+          "source": {
+            "url": "https://raw.githubusercontent.com/Kevin-Mattheus-Moerman/BodyParts3D/f0eeb6e843380cfe6b83797cf8c3e1af74de5e61/assets/BodyParts3D_data/stl/FMA24453.stl",
+            "sha256": "3f36cfec72db8d90f89069910d0a1981c0e22b621fd4a7f9c6ad5d1517d2e15e",
+            "sourceFaces": 1620
+          },
+          "displayCut": null
+        },
+        {
+          "name": "proximal phalanx of little finger",
+          "source": {
+            "url": "https://raw.githubusercontent.com/Kevin-Mattheus-Moerman/BodyParts3D/f0eeb6e843380cfe6b83797cf8c3e1af74de5e61/assets/BodyParts3D_data/stl/FMA24454.stl",
+            "sha256": "bf7d8f3cd4dcc1bef6487551a87d703e5a6b2b5ce856bc8c941edd5e90519bc9",
+            "sourceFaces": 1208
+          },
+          "displayCut": null
+        },
+        {
+          "name": "middle phalanx of index finger",
+          "source": {
+            "url": "https://raw.githubusercontent.com/Kevin-Mattheus-Moerman/BodyParts3D/f0eeb6e843380cfe6b83797cf8c3e1af74de5e61/assets/BodyParts3D_data/stl/FMA24455.stl",
+            "sha256": "b44a016e7a7798587ad694405a65275931c904e3cf2d55dd64061cbecbabe2ab",
+            "sourceFaces": 1140
+          },
+          "displayCut": null
+        },
+        {
+          "name": "middle phalanx of middle finger",
+          "source": {
+            "url": "https://raw.githubusercontent.com/Kevin-Mattheus-Moerman/BodyParts3D/f0eeb6e843380cfe6b83797cf8c3e1af74de5e61/assets/BodyParts3D_data/stl/FMA24456.stl",
+            "sha256": "43d9601a373cf165c2e2bd604638186eda9ccded8f4418cc4aa382183cd5c2c2",
+            "sourceFaces": 1476
+          },
+          "displayCut": null
+        },
+        {
+          "name": "middle phalanx of ring finger",
+          "source": {
+            "url": "https://raw.githubusercontent.com/Kevin-Mattheus-Moerman/BodyParts3D/f0eeb6e843380cfe6b83797cf8c3e1af74de5e61/assets/BodyParts3D_data/stl/FMA24457.stl",
+            "sha256": "929519bef218c8e53a80751a46fa69ef3ac301b8dd278e3156d7600431618e85",
+            "sourceFaces": 1350
+          },
+          "displayCut": null
+        },
+        {
+          "name": "middle phalanx of little finger",
+          "source": {
+            "url": "https://raw.githubusercontent.com/Kevin-Mattheus-Moerman/BodyParts3D/f0eeb6e843380cfe6b83797cf8c3e1af74de5e61/assets/BodyParts3D_data/stl/FMA24458.stl",
+            "sha256": "d67f25f614d977663d141628d01bdefcd55b0624dc90b3aee91dc96abac1942f",
+            "sourceFaces": 900
+          },
+          "displayCut": null
+        },
+        {
+          "name": "distal phalanx of thumb",
+          "source": {
+            "url": "https://raw.githubusercontent.com/Kevin-Mattheus-Moerman/BodyParts3D/f0eeb6e843380cfe6b83797cf8c3e1af74de5e61/assets/BodyParts3D_data/stl/FMA24459.stl",
+            "sha256": "a9aa0c6acb7269cc5a81632a00b06ceb8a33cd2fe078634239da5a7f53ea1602",
+            "sourceFaces": 1040
+          },
+          "displayCut": null
+        },
+        {
+          "name": "distal phalanx of index finger",
+          "source": {
+            "url": "https://raw.githubusercontent.com/Kevin-Mattheus-Moerman/BodyParts3D/f0eeb6e843380cfe6b83797cf8c3e1af74de5e61/assets/BodyParts3D_data/stl/FMA24460.stl",
+            "sha256": "7f5f76eb2982eb79bbf51ed626f722abe0d8ceb6e678e433d6732a71187b61db",
+            "sourceFaces": 656
+          },
+          "displayCut": null
+        },
+        {
+          "name": "distal phalanx of middle finger",
+          "source": {
+            "url": "https://raw.githubusercontent.com/Kevin-Mattheus-Moerman/BodyParts3D/f0eeb6e843380cfe6b83797cf8c3e1af74de5e61/assets/BodyParts3D_data/stl/FMA24461.stl",
+            "sha256": "5a2321e130f03d57b18e6cc725c9129b8e8398385f06403d8e6228a3f959756a",
+            "sourceFaces": 640
+          },
+          "displayCut": null
+        },
+        {
+          "name": "distal phalanx of ring finger",
+          "source": {
+            "url": "https://raw.githubusercontent.com/Kevin-Mattheus-Moerman/BodyParts3D/f0eeb6e843380cfe6b83797cf8c3e1af74de5e61/assets/BodyParts3D_data/stl/FMA24462.stl",
+            "sha256": "9e14b18953b97f741d9ab5a0b05f786d6474cda29a13f06072d188b3ff978291",
+            "sourceFaces": 452
+          },
+          "displayCut": null
+        },
+        {
+          "name": "distal phalanx of little finger",
+          "source": {
+            "url": "https://raw.githubusercontent.com/Kevin-Mattheus-Moerman/BodyParts3D/f0eeb6e843380cfe6b83797cf8c3e1af74de5e61/assets/BodyParts3D_data/stl/FMA24463.stl",
+            "sha256": "520090dc80d537f973295acd49e070f3e094c4d5a48ef708e36a2b98a351d0d7",
+            "sourceFaces": 466
+          },
+          "displayCut": null
+        },
+        {
+          "name": "first metacarpal bone",
+          "source": {
+            "url": "https://raw.githubusercontent.com/Kevin-Mattheus-Moerman/BodyParts3D/f0eeb6e843380cfe6b83797cf8c3e1af74de5e61/assets/BodyParts3D_data/stl/FMA24464.stl",
+            "sha256": "5bca353b5b387b71fd6a9b3a588b08303a32cbf924a9c0bc7dc700024808624c",
+            "sourceFaces": 2434
+          },
+          "displayCut": null
+        },
+        {
+          "name": "second metacarpal bone",
+          "source": {
+            "url": "https://raw.githubusercontent.com/Kevin-Mattheus-Moerman/BodyParts3D/f0eeb6e843380cfe6b83797cf8c3e1af74de5e61/assets/BodyParts3D_data/stl/FMA24466.stl",
+            "sha256": "3541c67a2864e4e72f56fe2a0c01aaa5d87346e55864e92a0360b32991892fe7",
+            "sourceFaces": 3218
+          },
+          "displayCut": null
+        },
+        {
+          "name": "third metacarpal bone",
+          "source": {
+            "url": "https://raw.githubusercontent.com/Kevin-Mattheus-Moerman/BodyParts3D/f0eeb6e843380cfe6b83797cf8c3e1af74de5e61/assets/BodyParts3D_data/stl/FMA24468.stl",
+            "sha256": "f8d96b418c20308dc76868621875a3b029f9d6f072621efa37045dceb2730d5e",
+            "sourceFaces": 3018
+          },
+          "displayCut": null
+        },
+        {
+          "name": "fourth metacarpal bone",
+          "source": {
+            "url": "https://raw.githubusercontent.com/Kevin-Mattheus-Moerman/BodyParts3D/f0eeb6e843380cfe6b83797cf8c3e1af74de5e61/assets/BodyParts3D_data/stl/FMA24470.stl",
+            "sha256": "5b9338a2d75680e92abbdc2c539d36ae8dd6f634ea3a026f2a6b33c071fb8e35",
+            "sourceFaces": 2306
+          },
+          "displayCut": null
+        },
+        {
+          "name": "fifth metacarpal bone",
+          "source": {
+            "url": "https://raw.githubusercontent.com/Kevin-Mattheus-Moerman/BodyParts3D/f0eeb6e843380cfe6b83797cf8c3e1af74de5e61/assets/BodyParts3D_data/stl/FMA24472.stl",
+            "sha256": "4359ea925a821e599ed8f65bd02f3d6754144718f8724ef155177c38b9b79480",
+            "sourceFaces": 2178
+          },
+          "displayCut": null
+        },
+        {
+          "name": "extensor-carpi-ulnaris-humeral",
+          "source": {
+            "url": "https://raw.githubusercontent.com/Kevin-Mattheus-Moerman/BodyParts3D/f0eeb6e843380cfe6b83797cf8c3e1af74de5e61/assets/BodyParts3D_data/stl/BP45.stl",
+            "sha256": "05136156af80a46094f36e054626e6ea8a48fec5b27e51f9469bd3794aaa8078",
+            "sourceFaces": 31644
+          },
+          "displayCut": null
+        },
+        {
+          "name": "extensor-carpi-ulnaris-humeral-tendon-material",
+          "source": {
+            "url": "https://raw.githubusercontent.com/Kevin-Mattheus-Moerman/BodyParts3D/f0eeb6e843380cfe6b83797cf8c3e1af74de5e61/assets/BodyParts3D_data/stl/BP45.stl",
+            "sha256": "05136156af80a46094f36e054626e6ea8a48fec5b27e51f9469bd3794aaa8078",
+            "sourceFaces": 31644
+          },
+          "displayCut": null
+        },
+        {
+          "name": "extensor-carpi-ulnaris-ulnar",
+          "source": {
+            "url": "https://raw.githubusercontent.com/Kevin-Mattheus-Moerman/BodyParts3D/f0eeb6e843380cfe6b83797cf8c3e1af74de5e61/assets/BodyParts3D_data/stl/BP47.stl",
+            "sha256": "84c8c8801f59f49a41452c0adea06f0402f8e9b1c56d20907b6aca480429ad02",
+            "sourceFaces": 17208
+          },
+          "displayCut": null
+        },
+        {
+          "name": "extensor-carpi-ulnaris-ulnar-tendon-material",
+          "source": {
+            "url": "https://raw.githubusercontent.com/Kevin-Mattheus-Moerman/BodyParts3D/f0eeb6e843380cfe6b83797cf8c3e1af74de5e61/assets/BodyParts3D_data/stl/BP47.stl",
+            "sha256": "84c8c8801f59f49a41452c0adea06f0402f8e9b1c56d20907b6aca480429ad02",
+            "sourceFaces": 17208
+          },
+          "displayCut": null
+        },
+        {
+          "name": "biceps-long",
+          "source": {
+            "url": "https://raw.githubusercontent.com/Kevin-Mattheus-Moerman/BodyParts3D/f0eeb6e843380cfe6b83797cf8c3e1af74de5e61/assets/BodyParts3D_data/stl/FMA37695.stl",
+            "sha256": "1a92c34f2891072488e55f65b9bed1560b473f36b6a4b996a2ccab6681b4c3ea",
+            "sourceFaces": 26880
+          },
+          "displayCut": -122.34632260081412
+        },
+        {
+          "name": "biceps-short",
+          "source": {
+            "url": "https://raw.githubusercontent.com/Kevin-Mattheus-Moerman/BodyParts3D/f0eeb6e843380cfe6b83797cf8c3e1af74de5e61/assets/BodyParts3D_data/stl/FMA37697.stl",
+            "sha256": "c875ced0ecedde0637edf88b27e9a2086fd80088d9f89252664f49e981a8f855",
+            "sourceFaces": 36312
+          },
+          "displayCut": -122.34632260081412
+        },
+        {
+          "name": "brachialis",
+          "source": {
+            "url": "https://raw.githubusercontent.com/Kevin-Mattheus-Moerman/BodyParts3D/f0eeb6e843380cfe6b83797cf8c3e1af74de5e61/assets/BodyParts3D_data/stl/FMA37699.stl",
+            "sha256": "1ed7dd3d76fe3b6c89a6998e4cbd908ae22a545c4779a54e4cb720dc0e571a9f",
+            "sourceFaces": 39514
+          },
+          "displayCut": -122.34632260081412
+        },
+        {
+          "name": "triceps-long",
+          "source": {
+            "url": "https://raw.githubusercontent.com/Kevin-Mattheus-Moerman/BodyParts3D/f0eeb6e843380cfe6b83797cf8c3e1af74de5e61/assets/BodyParts3D_data/stl/FMA37684.stl",
+            "sha256": "254c2b9528925155b360d919be825040fd6fb46f9fcf006a9969f25d738a50b0",
+            "sourceFaces": 27840
+          },
+          "displayCut": -122.34632260081412
+        },
+        {
+          "name": "triceps-lateral",
+          "source": {
+            "url": "https://raw.githubusercontent.com/Kevin-Mattheus-Moerman/BodyParts3D/f0eeb6e843380cfe6b83797cf8c3e1af74de5e61/assets/BodyParts3D_data/stl/FMA37686.stl",
+            "sha256": "1ceb9b9892b4cfe905d108cd096a24c9ea0c20bbe182364d748852e1eaeab344",
+            "sourceFaces": 32266
+          },
+          "displayCut": -122.34632260081412
+        },
+        {
+          "name": "triceps-medial",
+          "source": {
+            "url": "https://raw.githubusercontent.com/Kevin-Mattheus-Moerman/BodyParts3D/f0eeb6e843380cfe6b83797cf8c3e1af74de5e61/assets/BodyParts3D_data/stl/FMA37668.stl",
+            "sha256": "2eb8019befa2c5f67e138757b0b4b52bef9bedba735e6bde1596becca8388b19",
+            "sourceFaces": 34988
+          },
+          "displayCut": -122.34632260081412
+        }
+      ]
+    },
+    {
+      "region": "forearm",
+      "view": "back",
+      "yaw": 180,
+      "labels": [
+        "상완요골근",
+        "굽힘근군",
+        "폄근군",
+        "원회내근"
+      ],
+      "coverage": [
+        1553,
+        2556,
+        4528,
+        2358,
+        510,
+        17,
+        0,
+        3725,
+        172,
+        10556,
+        697,
+        643,
+        1,
+        0,
+        0,
+        899,
+        141,
+        129,
+        1941,
+        7562,
+        749,
+        2473,
+        973,
+        11282,
+        9416,
+        0,
+        0,
+        296,
+        794,
+        160,
+        215,
+        214,
+        204,
+        1,
+        259,
+        324,
+        213,
+        973,
+        967,
+        979,
+        804,
+        600,
+        444,
+        676,
+        557,
+        362,
+        431,
+        211,
+        211,
+        85,
+        198,
+        1611,
+        1483,
+        1435,
+        906,
+        890,
+        6821,
+        1518,
+        345,
+        119,
+        1966,
+        7629,
+        11298,
+        0,
+        0,
+        796
+      ],
+      "parts": [
+        {
+          "name": "humerus",
+          "source": {
+            "url": "https://raw.githubusercontent.com/Kevin-Mattheus-Moerman/BodyParts3D/f0eeb6e843380cfe6b83797cf8c3e1af74de5e61/assets/BodyParts3D_data/stl/FMA23130.stl",
+            "sha256": "6e26ad2b9794b136000abe2cc0b54cade989b943214e2149732cc2db2e337dce",
+            "sourceFaces": 16268
+          },
+          "displayCut": -122.34632260081412
+        },
+        {
+          "name": "radius",
+          "source": {
+            "url": "https://raw.githubusercontent.com/Kevin-Mattheus-Moerman/BodyParts3D/f0eeb6e843380cfe6b83797cf8c3e1af74de5e61/assets/BodyParts3D_data/stl/FMA23464.stl",
+            "sha256": "23eed49ade9f558406782b47decee325d12ee9e1d5ef661a051a0516a142dfa3",
+            "sourceFaces": 2804
+          },
+          "displayCut": null
+        },
+        {
+          "name": "ulna",
+          "source": {
+            "url": "https://raw.githubusercontent.com/Kevin-Mattheus-Moerman/BodyParts3D/f0eeb6e843380cfe6b83797cf8c3e1af74de5e61/assets/BodyParts3D_data/stl/FMA23467.stl",
+            "sha256": "c6074d69a2ccbcef6db2fb8bf758b44a5f6438b035da3399d6efb41b9d759a03",
+            "sourceFaces": 3592
+          },
+          "displayCut": null
+        },
+        {
+          "name": "brachioradialis",
+          "source": {
+            "url": "https://raw.githubusercontent.com/Kevin-Mattheus-Moerman/BodyParts3D/f0eeb6e843380cfe6b83797cf8c3e1af74de5e61/assets/BodyParts3D_data/stl/FMA38486.stl",
+            "sha256": "40398de8e866a88962d98480a3c5a4487e61f0d5ac99c5064b1fdd3f6340f1f4",
+            "sourceFaces": 73160
+          },
+          "displayCut": null
+        },
+        {
+          "name": "brachioradialis-tendon-material",
+          "source": {
+            "url": "https://raw.githubusercontent.com/Kevin-Mattheus-Moerman/BodyParts3D/f0eeb6e843380cfe6b83797cf8c3e1af74de5e61/assets/BodyParts3D_data/stl/FMA38486.stl",
+            "sha256": "40398de8e866a88962d98480a3c5a4487e61f0d5ac99c5064b1fdd3f6340f1f4",
+            "sourceFaces": 73160
+          },
+          "displayCut": null
+        },
+        {
+          "name": "flexor-carpi-radialis",
+          "source": {
+            "url": "https://raw.githubusercontent.com/Kevin-Mattheus-Moerman/BodyParts3D/f0eeb6e843380cfe6b83797cf8c3e1af74de5e61/assets/BodyParts3D_data/stl/FMA38460.stl",
+            "sha256": "b042d3e4b44b0cf11da4d9fe041e94d84f0fff433e628cb124feb8df526ea3df",
+            "sourceFaces": 16722
+          },
+          "displayCut": null
+        },
+        {
+          "name": "flexor-carpi-radialis-tendon-material",
+          "source": {
+            "url": "https://raw.githubusercontent.com/Kevin-Mattheus-Moerman/BodyParts3D/f0eeb6e843380cfe6b83797cf8c3e1af74de5e61/assets/BodyParts3D_data/stl/FMA38460.stl",
+            "sha256": "b042d3e4b44b0cf11da4d9fe041e94d84f0fff433e628cb124feb8df526ea3df",
+            "sourceFaces": 16722
+          },
+          "displayCut": null
+        },
+        {
+          "name": "flexor-carpi-ulnaris-humeral",
+          "source": {
+            "url": "https://raw.githubusercontent.com/Kevin-Mattheus-Moerman/BodyParts3D/f0eeb6e843380cfe6b83797cf8c3e1af74de5e61/assets/BodyParts3D_data/stl/FMA38617.stl",
+            "sha256": "52c118d24fa6a756c2dc30f6facad1f50c6c458815d5bf7a70f66eb26dd76644",
+            "sourceFaces": 39130
+          },
+          "displayCut": null
+        },
+        {
+          "name": "flexor-carpi-ulnaris-humeral-tendon-material",
+          "source": {
+            "url": "https://raw.githubusercontent.com/Kevin-Mattheus-Moerman/BodyParts3D/f0eeb6e843380cfe6b83797cf8c3e1af74de5e61/assets/BodyParts3D_data/stl/FMA38617.stl",
+            "sha256": "52c118d24fa6a756c2dc30f6facad1f50c6c458815d5bf7a70f66eb26dd76644",
+            "sourceFaces": 39130
+          },
+          "displayCut": null
+        },
+        {
+          "name": "flexor-carpi-ulnaris-ulnar",
+          "source": {
+            "url": "https://raw.githubusercontent.com/Kevin-Mattheus-Moerman/BodyParts3D/f0eeb6e843380cfe6b83797cf8c3e1af74de5e61/assets/BodyParts3D_data/stl/FMA38619.stl",
+            "sha256": "587d7310268c5ef9e6ae2d4798a759c25eb30cfa3c64a22458772ba123bde25f",
+            "sourceFaces": 15216
+          },
+          "displayCut": null
+        },
+        {
+          "name": "flexor-carpi-ulnaris-ulnar-tendon-material",
+          "source": {
+            "url": "https://raw.githubusercontent.com/Kevin-Mattheus-Moerman/BodyParts3D/f0eeb6e843380cfe6b83797cf8c3e1af74de5e61/assets/BodyParts3D_data/stl/FMA38619.stl",
+            "sha256": "587d7310268c5ef9e6ae2d4798a759c25eb30cfa3c64a22458772ba123bde25f",
+            "sourceFaces": 15216
+          },
+          "displayCut": null
+        },
+        {
+          "name": "flexor-digitorum-superficialis-humeroulnar",
+          "source": {
+            "url": "https://raw.githubusercontent.com/Kevin-Mattheus-Moerman/BodyParts3D/f0eeb6e843380cfe6b83797cf8c3e1af74de5e61/assets/BodyParts3D_data/stl/FMA38638.stl",
+            "sha256": "4194a008246d158149e6f7bd0aeb5db3c56e6116e746c893a101f77bd968fe25",
+            "sourceFaces": 128150
+          },
+          "displayCut": null
+        },
+        {
+          "name": "flexor-digitorum-superficialis-humeroulnar-tendon-material",
+          "source": {
+            "url": "https://raw.githubusercontent.com/Kevin-Mattheus-Moerman/BodyParts3D/f0eeb6e843380cfe6b83797cf8c3e1af74de5e61/assets/BodyParts3D_data/stl/FMA38638.stl",
+            "sha256": "4194a008246d158149e6f7bd0aeb5db3c56e6116e746c893a101f77bd968fe25",
+            "sourceFaces": 128150
+          },
+          "displayCut": null
+        },
+        {
+          "name": "flexor-digitorum-superficialis-radial",
+          "source": {
+            "url": "https://raw.githubusercontent.com/Kevin-Mattheus-Moerman/BodyParts3D/f0eeb6e843380cfe6b83797cf8c3e1af74de5e61/assets/BodyParts3D_data/stl/FMA38640.stl",
+            "sha256": "99d4d6f1835668f6141704684f8f5a2a470997f07f7a13d80701d091ac0ed3f6",
+            "sourceFaces": 12768
+          },
+          "displayCut": null
+        },
+        {
+          "name": "flexor-digitorum-superficialis-radial-tendon-material",
+          "source": {
+            "url": "https://raw.githubusercontent.com/Kevin-Mattheus-Moerman/BodyParts3D/f0eeb6e843380cfe6b83797cf8c3e1af74de5e61/assets/BodyParts3D_data/stl/FMA38640.stl",
+            "sha256": "99d4d6f1835668f6141704684f8f5a2a470997f07f7a13d80701d091ac0ed3f6",
+            "sourceFaces": 12768
+          },
+          "displayCut": null
+        },
+        {
+          "name": "flexor-digitorum-profundus",
+          "source": {
+            "url": "https://raw.githubusercontent.com/Kevin-Mattheus-Moerman/BodyParts3D/f0eeb6e843380cfe6b83797cf8c3e1af74de5e61/assets/BodyParts3D_data/stl/FMA38479.stl",
+            "sha256": "fe247eb3cf81286795bb7b88818c56edda9480f0a73764fd94c9ade434cc9ab0",
+            "sourceFaces": 71294
+          },
+          "displayCut": null
+        },
+        {
+          "name": "flexor-digitorum-profundus-tendon-material",
+          "source": {
+            "url": "https://raw.githubusercontent.com/Kevin-Mattheus-Moerman/BodyParts3D/f0eeb6e843380cfe6b83797cf8c3e1af74de5e61/assets/BodyParts3D_data/stl/FMA38479.stl",
+            "sha256": "fe247eb3cf81286795bb7b88818c56edda9480f0a73764fd94c9ade434cc9ab0",
+            "sourceFaces": 71294
+          },
+          "displayCut": null
+        },
+        {
+          "name": "palmaris-longus",
+          "source": {
+            "url": "https://raw.githubusercontent.com/Kevin-Mattheus-Moerman/BodyParts3D/f0eeb6e843380cfe6b83797cf8c3e1af74de5e61/assets/BodyParts3D_data/stl/FMA38463.stl",
+            "sha256": "336863bb3a1eee6f75ad743232c03445efb48c28c1fe240e5f582faac1c01664",
+            "sourceFaces": 44410
+          },
+          "displayCut": null
+        },
+        {
+          "name": "palmaris-longus-tendon-material",
+          "source": {
+            "url": "https://raw.githubusercontent.com/Kevin-Mattheus-Moerman/BodyParts3D/f0eeb6e843380cfe6b83797cf8c3e1af74de5e61/assets/BodyParts3D_data/stl/FMA38463.stl",
+            "sha256": "336863bb3a1eee6f75ad743232c03445efb48c28c1fe240e5f582faac1c01664",
+            "sourceFaces": 44410
+          },
+          "displayCut": null
+        },
+        {
+          "name": "extensor-carpi-radialis-longus",
+          "source": {
+            "url": "https://raw.githubusercontent.com/Kevin-Mattheus-Moerman/BodyParts3D/f0eeb6e843380cfe6b83797cf8c3e1af74de5e61/assets/BodyParts3D_data/stl/FMA38495.stl",
+            "sha256": "981e5182dfe1f33d759f24c7a27503c95caa56e69ab6e209ec76197150e22398",
+            "sourceFaces": 37140
+          },
+          "displayCut": null
+        },
+        {
+          "name": "extensor-carpi-radialis-longus-tendon-material",
+          "source": {
+            "url": "https://raw.githubusercontent.com/Kevin-Mattheus-Moerman/BodyParts3D/f0eeb6e843380cfe6b83797cf8c3e1af74de5e61/assets/BodyParts3D_data/stl/FMA38495.stl",
+            "sha256": "981e5182dfe1f33d759f24c7a27503c95caa56e69ab6e209ec76197150e22398",
+            "sourceFaces": 37140
+          },
+          "displayCut": null
+        },
+        {
+          "name": "extensor-carpi-radialis-brevis",
+          "source": {
+            "url": "https://raw.githubusercontent.com/Kevin-Mattheus-Moerman/BodyParts3D/f0eeb6e843380cfe6b83797cf8c3e1af74de5e61/assets/BodyParts3D_data/stl/FMA38498.stl",
+            "sha256": "660ec157f7e9695c66896a7661da180e64a6b90e4f4b8fcf1269ba6b6af2f99b",
+            "sourceFaces": 31496
+          },
+          "displayCut": null
+        },
+        {
+          "name": "extensor-carpi-radialis-brevis-tendon-material",
+          "source": {
+            "url": "https://raw.githubusercontent.com/Kevin-Mattheus-Moerman/BodyParts3D/f0eeb6e843380cfe6b83797cf8c3e1af74de5e61/assets/BodyParts3D_data/stl/FMA38498.stl",
+            "sha256": "660ec157f7e9695c66896a7661da180e64a6b90e4f4b8fcf1269ba6b6af2f99b",
+            "sourceFaces": 31496
+          },
+          "displayCut": null
+        },
+        {
+          "name": "extensor-digitorum",
+          "source": {
+            "url": "https://raw.githubusercontent.com/Kevin-Mattheus-Moerman/BodyParts3D/f0eeb6e843380cfe6b83797cf8c3e1af74de5e61/assets/BodyParts3D_data/stl/FMA38501.stl",
+            "sha256": "f646030a212132b87c341b0b712c8bd2f70e4c1f9be5d36a944290a7e540aa75",
+            "sourceFaces": 64444
+          },
+          "displayCut": null
+        },
+        {
+          "name": "extensor-digitorum-tendon-material",
+          "source": {
+            "url": "https://raw.githubusercontent.com/Kevin-Mattheus-Moerman/BodyParts3D/f0eeb6e843380cfe6b83797cf8c3e1af74de5e61/assets/BodyParts3D_data/stl/FMA38501.stl",
+            "sha256": "f646030a212132b87c341b0b712c8bd2f70e4c1f9be5d36a944290a7e540aa75",
+            "sourceFaces": 64444
+          },
+          "displayCut": null
+        },
+        {
+          "name": "pronator-teres-humeral",
+          "source": {
+            "url": "https://raw.githubusercontent.com/Kevin-Mattheus-Moerman/BodyParts3D/f0eeb6e843380cfe6b83797cf8c3e1af74de5e61/assets/BodyParts3D_data/stl/FMA38560.stl",
+            "sha256": "e9364adad6d2967a4603bb79a29abb0b1ceef3bbd14c535b1b0925941065ec7f",
+            "sourceFaces": 25978
+          },
+          "displayCut": null
+        },
+        {
+          "name": "pronator-teres-ulnar",
+          "source": {
+            "url": "https://raw.githubusercontent.com/Kevin-Mattheus-Moerman/BodyParts3D/f0eeb6e843380cfe6b83797cf8c3e1af74de5e61/assets/BodyParts3D_data/stl/FMA38562.stl",
+            "sha256": "ac1686a00c28f3a10d2d1d615597ac94affcea2d2090523e45bbbc1b64c66dad",
+            "sourceFaces": 11374
+          },
+          "displayCut": null
+        },
+        {
+          "name": "supinator",
+          "source": {
+            "url": "https://raw.githubusercontent.com/Kevin-Mattheus-Moerman/BodyParts3D/f0eeb6e843380cfe6b83797cf8c3e1af74de5e61/assets/BodyParts3D_data/stl/FMA38513.stl",
+            "sha256": "2b814e510ffc4e7bbb69ef5f75418d06ce217254cd4332471eda32571bdd0a5e",
+            "sourceFaces": 27650
+          },
+          "displayCut": null
+        },
+        {
+          "name": "pronator-quadratus",
+          "source": {
+            "url": "https://raw.githubusercontent.com/Kevin-Mattheus-Moerman/BodyParts3D/f0eeb6e843380cfe6b83797cf8c3e1af74de5e61/assets/BodyParts3D_data/stl/FMA38454.stl",
+            "sha256": "636419c6c3f66a82aa71e4a42c8720c2231d1ebcdb81185a85a8426d081871f2",
+            "sourceFaces": 14666
+          },
+          "displayCut": null
+        },
+        {
+          "name": "trapezoid",
+          "source": {
+            "url": "https://raw.githubusercontent.com/Kevin-Mattheus-Moerman/BodyParts3D/f0eeb6e843380cfe6b83797cf8c3e1af74de5e61/assets/BodyParts3D_data/stl/FMA23725.stl",
+            "sha256": "db19cf9ed7c2e97266255c03615458913b8c970d3b6e44eb015a756e4c839e5c",
+            "sourceFaces": 616
+          },
+          "displayCut": null
+        },
+        {
+          "name": "scaphoid",
+          "source": {
+            "url": "https://raw.githubusercontent.com/Kevin-Mattheus-Moerman/BodyParts3D/f0eeb6e843380cfe6b83797cf8c3e1af74de5e61/assets/BodyParts3D_data/stl/FMA24435.stl",
+            "sha256": "106d5be5a72229257a9ba41a543a4f42d18eae0513b45e0cd21e8e34d62518b6",
+            "sourceFaces": 1074
+          },
+          "displayCut": null
+        },
+        {
+          "name": "lunate",
+          "source": {
+            "url": "https://raw.githubusercontent.com/Kevin-Mattheus-Moerman/BodyParts3D/f0eeb6e843380cfe6b83797cf8c3e1af74de5e61/assets/BodyParts3D_data/stl/FMA24437.stl",
+            "sha256": "4b35077cf6a5711e1dfdd39a07734d792f0c84ce19b3b8cc942e2ad4838ef8ea",
+            "sourceFaces": 864
+          },
+          "displayCut": null
+        },
+        {
+          "name": "triquetral",
+          "source": {
+            "url": "https://raw.githubusercontent.com/Kevin-Mattheus-Moerman/BodyParts3D/f0eeb6e843380cfe6b83797cf8c3e1af74de5e61/assets/BodyParts3D_data/stl/FMA24439.stl",
+            "sha256": "bb2139a7289e784de0ff2db5e1adcc9bd8f5c9c0d4418c0b885d379c97e8e319",
+            "sourceFaces": 704
+          },
+          "displayCut": null
+        },
+        {
+          "name": "pisiform",
+          "source": {
+            "url": "https://raw.githubusercontent.com/Kevin-Mattheus-Moerman/BodyParts3D/f0eeb6e843380cfe6b83797cf8c3e1af74de5e61/assets/BodyParts3D_data/stl/FMA24441.stl",
+            "sha256": "1357a32fd5fc1bb826a122dc67f5c795644516300ce53aae6e9b106da1997a19",
+            "sourceFaces": 396
+          },
+          "displayCut": null
+        },
+        {
+          "name": "trapezium",
+          "source": {
+            "url": "https://raw.githubusercontent.com/Kevin-Mattheus-Moerman/BodyParts3D/f0eeb6e843380cfe6b83797cf8c3e1af74de5e61/assets/BodyParts3D_data/stl/FMA24443.stl",
+            "sha256": "c28bb9f078fa7e1f164e549449c8025201a31965c47df0546476c84bb13cffaf",
+            "sourceFaces": 1026
+          },
+          "displayCut": null
+        },
+        {
+          "name": "capitate",
+          "source": {
+            "url": "https://raw.githubusercontent.com/Kevin-Mattheus-Moerman/BodyParts3D/f0eeb6e843380cfe6b83797cf8c3e1af74de5e61/assets/BodyParts3D_data/stl/FMA24446.stl",
+            "sha256": "4f717f2fba9b0cb432da64921d7aeaab2709d97129f39b6538c6ea147e68977d",
+            "sourceFaces": 1284
+          },
+          "displayCut": null
+        },
+        {
+          "name": "hamate",
+          "source": {
+            "url": "https://raw.githubusercontent.com/Kevin-Mattheus-Moerman/BodyParts3D/f0eeb6e843380cfe6b83797cf8c3e1af74de5e61/assets/BodyParts3D_data/stl/FMA24448.stl",
+            "sha256": "28fc3501dc45884187c91738d368194820d0fa8fc5c421cc40525e0c71665e7d",
+            "sourceFaces": 1150
+          },
+          "displayCut": null
+        },
+        {
+          "name": "proximal phalanx of thumb",
+          "source": {
+            "url": "https://raw.githubusercontent.com/Kevin-Mattheus-Moerman/BodyParts3D/f0eeb6e843380cfe6b83797cf8c3e1af74de5e61/assets/BodyParts3D_data/stl/FMA24450.stl",
+            "sha256": "12066c799d3468b5d697a87b6fcf0b35e71c68df5e030053ecdd3d39c2259dec",
+            "sourceFaces": 1368
+          },
+          "displayCut": null
+        },
+        {
+          "name": "proximal phalanx of index finger",
+          "source": {
+            "url": "https://raw.githubusercontent.com/Kevin-Mattheus-Moerman/BodyParts3D/f0eeb6e843380cfe6b83797cf8c3e1af74de5e61/assets/BodyParts3D_data/stl/FMA24451.stl",
+            "sha256": "29ac3a5b3459b99e81e4da835f4aa909b647f1fbb187423e53aa3e57315253ff",
+            "sourceFaces": 1664
+          },
+          "displayCut": null
+        },
+        {
+          "name": "proximal phalanx of middle finger",
+          "source": {
+            "url": "https://raw.githubusercontent.com/Kevin-Mattheus-Moerman/BodyParts3D/f0eeb6e843380cfe6b83797cf8c3e1af74de5e61/assets/BodyParts3D_data/stl/FMA24452.stl",
+            "sha256": "648823478862684fe11a5c647b02ae7892f634a3d56ff402c71b89e91aed33ec",
+            "sourceFaces": 1968
+          },
+          "displayCut": null
+        },
+        {
+          "name": "proximal phalanx of ring finger",
+          "source": {
+            "url": "https://raw.githubusercontent.com/Kevin-Mattheus-Moerman/BodyParts3D/f0eeb6e843380cfe6b83797cf8c3e1af74de5e61/assets/BodyParts3D_data/stl/FMA24453.stl",
+            "sha256": "3f36cfec72db8d90f89069910d0a1981c0e22b621fd4a7f9c6ad5d1517d2e15e",
+            "sourceFaces": 1620
+          },
+          "displayCut": null
+        },
+        {
+          "name": "proximal phalanx of little finger",
+          "source": {
+            "url": "https://raw.githubusercontent.com/Kevin-Mattheus-Moerman/BodyParts3D/f0eeb6e843380cfe6b83797cf8c3e1af74de5e61/assets/BodyParts3D_data/stl/FMA24454.stl",
+            "sha256": "bf7d8f3cd4dcc1bef6487551a87d703e5a6b2b5ce856bc8c941edd5e90519bc9",
+            "sourceFaces": 1208
+          },
+          "displayCut": null
+        },
+        {
+          "name": "middle phalanx of index finger",
+          "source": {
+            "url": "https://raw.githubusercontent.com/Kevin-Mattheus-Moerman/BodyParts3D/f0eeb6e843380cfe6b83797cf8c3e1af74de5e61/assets/BodyParts3D_data/stl/FMA24455.stl",
+            "sha256": "b44a016e7a7798587ad694405a65275931c904e3cf2d55dd64061cbecbabe2ab",
+            "sourceFaces": 1140
+          },
+          "displayCut": null
+        },
+        {
+          "name": "middle phalanx of middle finger",
+          "source": {
+            "url": "https://raw.githubusercontent.com/Kevin-Mattheus-Moerman/BodyParts3D/f0eeb6e843380cfe6b83797cf8c3e1af74de5e61/assets/BodyParts3D_data/stl/FMA24456.stl",
+            "sha256": "43d9601a373cf165c2e2bd604638186eda9ccded8f4418cc4aa382183cd5c2c2",
+            "sourceFaces": 1476
+          },
+          "displayCut": null
+        },
+        {
+          "name": "middle phalanx of ring finger",
+          "source": {
+            "url": "https://raw.githubusercontent.com/Kevin-Mattheus-Moerman/BodyParts3D/f0eeb6e843380cfe6b83797cf8c3e1af74de5e61/assets/BodyParts3D_data/stl/FMA24457.stl",
+            "sha256": "929519bef218c8e53a80751a46fa69ef3ac301b8dd278e3156d7600431618e85",
+            "sourceFaces": 1350
+          },
+          "displayCut": null
+        },
+        {
+          "name": "middle phalanx of little finger",
+          "source": {
+            "url": "https://raw.githubusercontent.com/Kevin-Mattheus-Moerman/BodyParts3D/f0eeb6e843380cfe6b83797cf8c3e1af74de5e61/assets/BodyParts3D_data/stl/FMA24458.stl",
+            "sha256": "d67f25f614d977663d141628d01bdefcd55b0624dc90b3aee91dc96abac1942f",
+            "sourceFaces": 900
+          },
+          "displayCut": null
+        },
+        {
+          "name": "distal phalanx of thumb",
+          "source": {
+            "url": "https://raw.githubusercontent.com/Kevin-Mattheus-Moerman/BodyParts3D/f0eeb6e843380cfe6b83797cf8c3e1af74de5e61/assets/BodyParts3D_data/stl/FMA24459.stl",
+            "sha256": "a9aa0c6acb7269cc5a81632a00b06ceb8a33cd2fe078634239da5a7f53ea1602",
+            "sourceFaces": 1040
+          },
+          "displayCut": null
+        },
+        {
+          "name": "distal phalanx of index finger",
+          "source": {
+            "url": "https://raw.githubusercontent.com/Kevin-Mattheus-Moerman/BodyParts3D/f0eeb6e843380cfe6b83797cf8c3e1af74de5e61/assets/BodyParts3D_data/stl/FMA24460.stl",
+            "sha256": "7f5f76eb2982eb79bbf51ed626f722abe0d8ceb6e678e433d6732a71187b61db",
+            "sourceFaces": 656
+          },
+          "displayCut": null
+        },
+        {
+          "name": "distal phalanx of middle finger",
+          "source": {
+            "url": "https://raw.githubusercontent.com/Kevin-Mattheus-Moerman/BodyParts3D/f0eeb6e843380cfe6b83797cf8c3e1af74de5e61/assets/BodyParts3D_data/stl/FMA24461.stl",
+            "sha256": "5a2321e130f03d57b18e6cc725c9129b8e8398385f06403d8e6228a3f959756a",
+            "sourceFaces": 640
+          },
+          "displayCut": null
+        },
+        {
+          "name": "distal phalanx of ring finger",
+          "source": {
+            "url": "https://raw.githubusercontent.com/Kevin-Mattheus-Moerman/BodyParts3D/f0eeb6e843380cfe6b83797cf8c3e1af74de5e61/assets/BodyParts3D_data/stl/FMA24462.stl",
+            "sha256": "9e14b18953b97f741d9ab5a0b05f786d6474cda29a13f06072d188b3ff978291",
+            "sourceFaces": 452
+          },
+          "displayCut": null
+        },
+        {
+          "name": "distal phalanx of little finger",
+          "source": {
+            "url": "https://raw.githubusercontent.com/Kevin-Mattheus-Moerman/BodyParts3D/f0eeb6e843380cfe6b83797cf8c3e1af74de5e61/assets/BodyParts3D_data/stl/FMA24463.stl",
+            "sha256": "520090dc80d537f973295acd49e070f3e094c4d5a48ef708e36a2b98a351d0d7",
+            "sourceFaces": 466
+          },
+          "displayCut": null
+        },
+        {
+          "name": "first metacarpal bone",
+          "source": {
+            "url": "https://raw.githubusercontent.com/Kevin-Mattheus-Moerman/BodyParts3D/f0eeb6e843380cfe6b83797cf8c3e1af74de5e61/assets/BodyParts3D_data/stl/FMA24464.stl",
+            "sha256": "5bca353b5b387b71fd6a9b3a588b08303a32cbf924a9c0bc7dc700024808624c",
+            "sourceFaces": 2434
+          },
+          "displayCut": null
+        },
+        {
+          "name": "second metacarpal bone",
+          "source": {
+            "url": "https://raw.githubusercontent.com/Kevin-Mattheus-Moerman/BodyParts3D/f0eeb6e843380cfe6b83797cf8c3e1af74de5e61/assets/BodyParts3D_data/stl/FMA24466.stl",
+            "sha256": "3541c67a2864e4e72f56fe2a0c01aaa5d87346e55864e92a0360b32991892fe7",
+            "sourceFaces": 3218
+          },
+          "displayCut": null
+        },
+        {
+          "name": "third metacarpal bone",
+          "source": {
+            "url": "https://raw.githubusercontent.com/Kevin-Mattheus-Moerman/BodyParts3D/f0eeb6e843380cfe6b83797cf8c3e1af74de5e61/assets/BodyParts3D_data/stl/FMA24468.stl",
+            "sha256": "f8d96b418c20308dc76868621875a3b029f9d6f072621efa37045dceb2730d5e",
+            "sourceFaces": 3018
+          },
+          "displayCut": null
+        },
+        {
+          "name": "fourth metacarpal bone",
+          "source": {
+            "url": "https://raw.githubusercontent.com/Kevin-Mattheus-Moerman/BodyParts3D/f0eeb6e843380cfe6b83797cf8c3e1af74de5e61/assets/BodyParts3D_data/stl/FMA24470.stl",
+            "sha256": "5b9338a2d75680e92abbdc2c539d36ae8dd6f634ea3a026f2a6b33c071fb8e35",
+            "sourceFaces": 2306
+          },
+          "displayCut": null
+        },
+        {
+          "name": "fifth metacarpal bone",
+          "source": {
+            "url": "https://raw.githubusercontent.com/Kevin-Mattheus-Moerman/BodyParts3D/f0eeb6e843380cfe6b83797cf8c3e1af74de5e61/assets/BodyParts3D_data/stl/FMA24472.stl",
+            "sha256": "4359ea925a821e599ed8f65bd02f3d6754144718f8724ef155177c38b9b79480",
+            "sourceFaces": 2178
+          },
+          "displayCut": null
+        },
+        {
+          "name": "extensor-carpi-ulnaris-humeral",
+          "source": {
+            "url": "https://raw.githubusercontent.com/Kevin-Mattheus-Moerman/BodyParts3D/f0eeb6e843380cfe6b83797cf8c3e1af74de5e61/assets/BodyParts3D_data/stl/BP45.stl",
+            "sha256": "05136156af80a46094f36e054626e6ea8a48fec5b27e51f9469bd3794aaa8078",
+            "sourceFaces": 31644
+          },
+          "displayCut": null
+        },
+        {
+          "name": "extensor-carpi-ulnaris-humeral-tendon-material",
+          "source": {
+            "url": "https://raw.githubusercontent.com/Kevin-Mattheus-Moerman/BodyParts3D/f0eeb6e843380cfe6b83797cf8c3e1af74de5e61/assets/BodyParts3D_data/stl/BP45.stl",
+            "sha256": "05136156af80a46094f36e054626e6ea8a48fec5b27e51f9469bd3794aaa8078",
+            "sourceFaces": 31644
+          },
+          "displayCut": null
+        },
+        {
+          "name": "extensor-carpi-ulnaris-ulnar",
+          "source": {
+            "url": "https://raw.githubusercontent.com/Kevin-Mattheus-Moerman/BodyParts3D/f0eeb6e843380cfe6b83797cf8c3e1af74de5e61/assets/BodyParts3D_data/stl/BP47.stl",
+            "sha256": "84c8c8801f59f49a41452c0adea06f0402f8e9b1c56d20907b6aca480429ad02",
+            "sourceFaces": 17208
+          },
+          "displayCut": null
+        },
+        {
+          "name": "extensor-carpi-ulnaris-ulnar-tendon-material",
+          "source": {
+            "url": "https://raw.githubusercontent.com/Kevin-Mattheus-Moerman/BodyParts3D/f0eeb6e843380cfe6b83797cf8c3e1af74de5e61/assets/BodyParts3D_data/stl/BP47.stl",
+            "sha256": "84c8c8801f59f49a41452c0adea06f0402f8e9b1c56d20907b6aca480429ad02",
+            "sourceFaces": 17208
+          },
+          "displayCut": null
+        },
+        {
+          "name": "biceps-long",
+          "source": {
+            "url": "https://raw.githubusercontent.com/Kevin-Mattheus-Moerman/BodyParts3D/f0eeb6e843380cfe6b83797cf8c3e1af74de5e61/assets/BodyParts3D_data/stl/FMA37695.stl",
+            "sha256": "1a92c34f2891072488e55f65b9bed1560b473f36b6a4b996a2ccab6681b4c3ea",
+            "sourceFaces": 26880
+          },
+          "displayCut": -122.34632260081412
+        },
+        {
+          "name": "biceps-short",
+          "source": {
+            "url": "https://raw.githubusercontent.com/Kevin-Mattheus-Moerman/BodyParts3D/f0eeb6e843380cfe6b83797cf8c3e1af74de5e61/assets/BodyParts3D_data/stl/FMA37697.stl",
+            "sha256": "c875ced0ecedde0637edf88b27e9a2086fd80088d9f89252664f49e981a8f855",
+            "sourceFaces": 36312
+          },
+          "displayCut": -122.34632260081412
+        },
+        {
+          "name": "brachialis",
+          "source": {
+            "url": "https://raw.githubusercontent.com/Kevin-Mattheus-Moerman/BodyParts3D/f0eeb6e843380cfe6b83797cf8c3e1af74de5e61/assets/BodyParts3D_data/stl/FMA37699.stl",
+            "sha256": "1ed7dd3d76fe3b6c89a6998e4cbd908ae22a545c4779a54e4cb720dc0e571a9f",
+            "sourceFaces": 39514
+          },
+          "displayCut": -122.34632260081412
+        },
+        {
+          "name": "triceps-long",
+          "source": {
+            "url": "https://raw.githubusercontent.com/Kevin-Mattheus-Moerman/BodyParts3D/f0eeb6e843380cfe6b83797cf8c3e1af74de5e61/assets/BodyParts3D_data/stl/FMA37684.stl",
+            "sha256": "254c2b9528925155b360d919be825040fd6fb46f9fcf006a9969f25d738a50b0",
+            "sourceFaces": 27840
+          },
+          "displayCut": -122.34632260081412
+        },
+        {
+          "name": "triceps-lateral",
+          "source": {
+            "url": "https://raw.githubusercontent.com/Kevin-Mattheus-Moerman/BodyParts3D/f0eeb6e843380cfe6b83797cf8c3e1af74de5e61/assets/BodyParts3D_data/stl/FMA37686.stl",
+            "sha256": "1ceb9b9892b4cfe905d108cd096a24c9ea0c20bbe182364d748852e1eaeab344",
+            "sourceFaces": 32266
+          },
+          "displayCut": -122.34632260081412
+        },
+        {
+          "name": "triceps-medial",
+          "source": {
+            "url": "https://raw.githubusercontent.com/Kevin-Mattheus-Moerman/BodyParts3D/f0eeb6e843380cfe6b83797cf8c3e1af74de5e61/assets/BodyParts3D_data/stl/FMA37668.stl",
+            "sha256": "2eb8019befa2c5f67e138757b0b4b52bef9bedba735e6bde1596becca8388b19",
+            "sourceFaces": 34988
+          },
+          "displayCut": -122.34632260081412
+        }
+      ]
+    },
+    {
+      "region": "thigh",
+      "view": "front",
+      "yaw": 32,
+      "labels": [
+        "대퇴직근",
+        "외측광근",
+        "내측광근",
+        "봉공근",
+        "내전근"
+      ],
+      "coverage": [
+        4509,
+        4886,
+        1949,
+        2198,
+        31610,
+        3435,
+        22940,
+        902,
+        9889,
+        2,
+        7,
+        15,
+        1818,
+        923,
+        1429,
+        254,
+        0,
+        152,
+        0,
+        294,
+        14474,
+        1404,
+        5936,
+        11170
+      ],
+      "parts": [
+        {
+          "name": "femur",
+          "source": {
+            "url": "https://raw.githubusercontent.com/Kevin-Mattheus-Moerman/BodyParts3D/f0eeb6e843380cfe6b83797cf8c3e1af74de5e61/assets/BodyParts3D_data/stl/FMA24474.stl",
+            "sha256": "a47d03f9a1064bab3db90876e05729924e8c4667c78c1e6373fb42d191cd5563",
+            "sourceFaces": 12990
+          },
+          "displayCut": null
+        },
+        {
+          "name": "tibia",
+          "source": {
+            "url": "https://raw.githubusercontent.com/Kevin-Mattheus-Moerman/BodyParts3D/f0eeb6e843380cfe6b83797cf8c3e1af74de5e61/assets/BodyParts3D_data/stl/FMA24477.stl",
+            "sha256": "93c9c1b04dff757fc170e7e6bdd682f94816579c18c2fe0aa2170371c24635c2",
+            "sourceFaces": 6850
+          },
+          "displayCut": 502.7450539257357
+        },
+        {
+          "name": "fibula",
+          "source": {
+            "url": "https://raw.githubusercontent.com/Kevin-Mattheus-Moerman/BodyParts3D/f0eeb6e843380cfe6b83797cf8c3e1af74de5e61/assets/BodyParts3D_data/stl/FMA24480.stl",
+            "sha256": "972e74cb7f9d774c8dbf477542414acba7d02358fb090726a1ec2ffa57a44357",
+            "sourceFaces": 4622
+          },
+          "displayCut": 502.7450539257357
+        },
+        {
+          "name": "patella",
+          "source": {
+            "url": "https://raw.githubusercontent.com/Kevin-Mattheus-Moerman/BodyParts3D/f0eeb6e843380cfe6b83797cf8c3e1af74de5e61/assets/BodyParts3D_data/stl/FMA24486.stl",
+            "sha256": "bf7bcd3d2b546a06e5d5be1cec4540a2a228c28501d50397b2f72e5a4e543aab",
+            "sourceFaces": 1334
+          },
+          "displayCut": null
+        },
+        {
+          "name": "rectus-femoris",
+          "source": {
+            "url": "https://raw.githubusercontent.com/Kevin-Mattheus-Moerman/BodyParts3D/f0eeb6e843380cfe6b83797cf8c3e1af74de5e61/assets/BodyParts3D_data/stl/FMA38928.stl",
+            "sha256": "dab3b087a283dc43e3a86197ffb1cc659db2f988200823cf59c00717b41cc92a",
+            "sourceFaces": 82990
+          },
+          "displayCut": null
+        },
+        {
+          "name": "rectus-femoris-tendon-material",
+          "source": {
+            "url": "https://raw.githubusercontent.com/Kevin-Mattheus-Moerman/BodyParts3D/f0eeb6e843380cfe6b83797cf8c3e1af74de5e61/assets/BodyParts3D_data/stl/FMA38928.stl",
+            "sha256": "dab3b087a283dc43e3a86197ffb1cc659db2f988200823cf59c00717b41cc92a",
+            "sourceFaces": 82990
+          },
+          "displayCut": null
+        },
+        {
+          "name": "vastus-lateralis",
+          "source": {
+            "url": "https://raw.githubusercontent.com/Kevin-Mattheus-Moerman/BodyParts3D/f0eeb6e843380cfe6b83797cf8c3e1af74de5e61/assets/BodyParts3D_data/stl/FMA38930.stl",
+            "sha256": "467dde9b811db7efe83c2fb1574375fac31db65eeee88e5dd82ad889d50e95f2",
+            "sourceFaces": 95564
+          },
+          "displayCut": null
+        },
+        {
+          "name": "vastus-lateralis-tendon-material",
+          "source": {
+            "url": "https://raw.githubusercontent.com/Kevin-Mattheus-Moerman/BodyParts3D/f0eeb6e843380cfe6b83797cf8c3e1af74de5e61/assets/BodyParts3D_data/stl/FMA38930.stl",
+            "sha256": "467dde9b811db7efe83c2fb1574375fac31db65eeee88e5dd82ad889d50e95f2",
+            "sourceFaces": 95564
+          },
+          "displayCut": null
+        },
+        {
+          "name": "vastus-medialis",
+          "source": {
+            "url": "https://raw.githubusercontent.com/Kevin-Mattheus-Moerman/BodyParts3D/f0eeb6e843380cfe6b83797cf8c3e1af74de5e61/assets/BodyParts3D_data/stl/FMA38932.stl",
+            "sha256": "8268d45660fc3b77fe5c0e1905f8063eb5cd805b54eafc38b7e019d265d65864",
+            "sourceFaces": 65814
+          },
+          "displayCut": null
+        },
+        {
+          "name": "vastus-medialis-tendon-material",
+          "source": {
+            "url": "https://raw.githubusercontent.com/Kevin-Mattheus-Moerman/BodyParts3D/f0eeb6e843380cfe6b83797cf8c3e1af74de5e61/assets/BodyParts3D_data/stl/FMA38932.stl",
+            "sha256": "8268d45660fc3b77fe5c0e1905f8063eb5cd805b54eafc38b7e019d265d65864",
+            "sourceFaces": 65814
+          },
+          "displayCut": null
+        },
+        {
+          "name": "vastus-intermedius",
+          "source": {
+            "url": "https://raw.githubusercontent.com/Kevin-Mattheus-Moerman/BodyParts3D/f0eeb6e843380cfe6b83797cf8c3e1af74de5e61/assets/BodyParts3D_data/stl/FMA38934.stl",
+            "sha256": "830283fc458a70c27b286355fba1782e5d06e6d4cebf8aaa98584122cd689e15",
+            "sourceFaces": 61866
+          },
+          "displayCut": null
+        },
+        {
+          "name": "vastus-intermedius-tendon-material",
+          "source": {
+            "url": "https://raw.githubusercontent.com/Kevin-Mattheus-Moerman/BodyParts3D/f0eeb6e843380cfe6b83797cf8c3e1af74de5e61/assets/BodyParts3D_data/stl/FMA38934.stl",
+            "sha256": "830283fc458a70c27b286355fba1782e5d06e6d4cebf8aaa98584122cd689e15",
+            "sourceFaces": 61866
+          },
+          "displayCut": null
+        },
+        {
+          "name": "biceps-femoris-long",
+          "source": {
+            "url": "https://raw.githubusercontent.com/Kevin-Mattheus-Moerman/BodyParts3D/f0eeb6e843380cfe6b83797cf8c3e1af74de5e61/assets/BodyParts3D_data/stl/FMA45888.stl",
+            "sha256": "d734d977a353f3df56178ba8dafe82c305150f88efb0ad8bee21c02e6617d651",
+            "sourceFaces": 73098
+          },
+          "displayCut": null
+        },
+        {
+          "name": "biceps-femoris-long-tendon-material",
+          "source": {
+            "url": "https://raw.githubusercontent.com/Kevin-Mattheus-Moerman/BodyParts3D/f0eeb6e843380cfe6b83797cf8c3e1af74de5e61/assets/BodyParts3D_data/stl/FMA45888.stl",
+            "sha256": "d734d977a353f3df56178ba8dafe82c305150f88efb0ad8bee21c02e6617d651",
+            "sourceFaces": 73098
+          },
+          "displayCut": null
+        },
+        {
+          "name": "biceps-femoris-short",
+          "source": {
+            "url": "https://raw.githubusercontent.com/Kevin-Mattheus-Moerman/BodyParts3D/f0eeb6e843380cfe6b83797cf8c3e1af74de5e61/assets/BodyParts3D_data/stl/FMA45891.stl",
+            "sha256": "e6cfe0c9e9d5a06b2f740f9a52e2c75ab10947de4990b992605503074816fff4",
+            "sourceFaces": 25478
+          },
+          "displayCut": null
+        },
+        {
+          "name": "biceps-femoris-short-tendon-material",
+          "source": {
+            "url": "https://raw.githubusercontent.com/Kevin-Mattheus-Moerman/BodyParts3D/f0eeb6e843380cfe6b83797cf8c3e1af74de5e61/assets/BodyParts3D_data/stl/FMA45891.stl",
+            "sha256": "e6cfe0c9e9d5a06b2f740f9a52e2c75ab10947de4990b992605503074816fff4",
+            "sourceFaces": 25478
+          },
+          "displayCut": null
+        },
+        {
+          "name": "semitendinosus",
+          "source": {
+            "url": "https://raw.githubusercontent.com/Kevin-Mattheus-Moerman/BodyParts3D/f0eeb6e843380cfe6b83797cf8c3e1af74de5e61/assets/BodyParts3D_data/stl/FMA22358.stl",
+            "sha256": "45cb0e13457ff55778d0f87d5b25295cdcb02cbbe7f3418bf28ef432f48535c2",
+            "sourceFaces": 43550
+          },
+          "displayCut": null
+        },
+        {
+          "name": "semitendinosus-tendon-material",
+          "source": {
+            "url": "https://raw.githubusercontent.com/Kevin-Mattheus-Moerman/BodyParts3D/f0eeb6e843380cfe6b83797cf8c3e1af74de5e61/assets/BodyParts3D_data/stl/FMA22358.stl",
+            "sha256": "45cb0e13457ff55778d0f87d5b25295cdcb02cbbe7f3418bf28ef432f48535c2",
+            "sourceFaces": 43550
+          },
+          "displayCut": null
+        },
+        {
+          "name": "semimembranosus",
+          "source": {
+            "url": "https://raw.githubusercontent.com/Kevin-Mattheus-Moerman/BodyParts3D/f0eeb6e843380cfe6b83797cf8c3e1af74de5e61/assets/BodyParts3D_data/stl/FMA22448.stl",
+            "sha256": "8e28d070c137c8f270072ec0b036c74d09dac92a8e024f0752654806a8b75ce5",
+            "sourceFaces": 74564
+          },
+          "displayCut": null
+        },
+        {
+          "name": "semimembranosus-tendon-material",
+          "source": {
+            "url": "https://raw.githubusercontent.com/Kevin-Mattheus-Moerman/BodyParts3D/f0eeb6e843380cfe6b83797cf8c3e1af74de5e61/assets/BodyParts3D_data/stl/FMA22448.stl",
+            "sha256": "8e28d070c137c8f270072ec0b036c74d09dac92a8e024f0752654806a8b75ce5",
+            "sourceFaces": 74564
+          },
+          "displayCut": null
+        },
+        {
+          "name": "sartorius",
+          "source": {
+            "url": "https://raw.githubusercontent.com/Kevin-Mattheus-Moerman/BodyParts3D/f0eeb6e843380cfe6b83797cf8c3e1af74de5e61/assets/BodyParts3D_data/stl/FMA22354.stl",
+            "sha256": "9f689d0e9220612d9a42e401b58b21f74b30b4f3c1c3ce799c2a58bec7156b34",
+            "sourceFaces": 52418
+          },
+          "displayCut": null
+        },
+        {
+          "name": "sartorius-tendon-material",
+          "source": {
+            "url": "https://raw.githubusercontent.com/Kevin-Mattheus-Moerman/BodyParts3D/f0eeb6e843380cfe6b83797cf8c3e1af74de5e61/assets/BodyParts3D_data/stl/FMA22354.stl",
+            "sha256": "9f689d0e9220612d9a42e401b58b21f74b30b4f3c1c3ce799c2a58bec7156b34",
+            "sourceFaces": 52418
+          },
+          "displayCut": null
+        },
+        {
+          "name": "adductor-longus",
+          "source": {
+            "url": "https://raw.githubusercontent.com/Kevin-Mattheus-Moerman/BodyParts3D/f0eeb6e843380cfe6b83797cf8c3e1af74de5e61/assets/BodyParts3D_data/stl/FMA22456.stl",
+            "sha256": "53bab2385e2f43629ed0d567936514a8823e6e239f4d1d38fff573230f34c377",
+            "sourceFaces": 37142
+          },
+          "displayCut": null
+        },
+        {
+          "name": "hip",
+          "source": {
+            "url": "https://raw.githubusercontent.com/Kevin-Mattheus-Moerman/BodyParts3D/f0eeb6e843380cfe6b83797cf8c3e1af74de5e61/assets/BodyParts3D_data/stl/FMA16587.stl",
+            "sha256": "456552349a088b72f8e1b06660b93e005b7ffcebe713a0e38ea88f806535dbc7",
+            "sourceFaces": 9470
+          },
+          "displayCut": null
+        }
+      ]
+    },
+    {
+      "region": "thigh",
+      "view": "side",
+      "yaw": 90,
+      "labels": [
+        "외측광근",
+        "대퇴이두근 장두",
+        "봉공근"
+      ],
+      "coverage": [
+        9164,
+        5376,
+        1923,
+        784,
+        17016,
+        773,
+        40534,
+        886,
+        48,
+        15,
+        0,
+        5,
+        21738,
+        2008,
+        3310,
+        71,
+        1007,
+        676,
+        1546,
+        94,
+        3489,
+        88,
+        277,
+        26566
+      ],
+      "parts": [
+        {
+          "name": "femur",
+          "source": {
+            "url": "https://raw.githubusercontent.com/Kevin-Mattheus-Moerman/BodyParts3D/f0eeb6e843380cfe6b83797cf8c3e1af74de5e61/assets/BodyParts3D_data/stl/FMA24474.stl",
+            "sha256": "a47d03f9a1064bab3db90876e05729924e8c4667c78c1e6373fb42d191cd5563",
+            "sourceFaces": 12990
+          },
+          "displayCut": null
+        },
+        {
+          "name": "tibia",
+          "source": {
+            "url": "https://raw.githubusercontent.com/Kevin-Mattheus-Moerman/BodyParts3D/f0eeb6e843380cfe6b83797cf8c3e1af74de5e61/assets/BodyParts3D_data/stl/FMA24477.stl",
+            "sha256": "93c9c1b04dff757fc170e7e6bdd682f94816579c18c2fe0aa2170371c24635c2",
+            "sourceFaces": 6850
+          },
+          "displayCut": 502.7450539257357
+        },
+        {
+          "name": "fibula",
+          "source": {
+            "url": "https://raw.githubusercontent.com/Kevin-Mattheus-Moerman/BodyParts3D/f0eeb6e843380cfe6b83797cf8c3e1af74de5e61/assets/BodyParts3D_data/stl/FMA24480.stl",
+            "sha256": "972e74cb7f9d774c8dbf477542414acba7d02358fb090726a1ec2ffa57a44357",
+            "sourceFaces": 4622
+          },
+          "displayCut": 502.7450539257357
+        },
+        {
+          "name": "patella",
+          "source": {
+            "url": "https://raw.githubusercontent.com/Kevin-Mattheus-Moerman/BodyParts3D/f0eeb6e843380cfe6b83797cf8c3e1af74de5e61/assets/BodyParts3D_data/stl/FMA24486.stl",
+            "sha256": "bf7bcd3d2b546a06e5d5be1cec4540a2a228c28501d50397b2f72e5a4e543aab",
+            "sourceFaces": 1334
+          },
+          "displayCut": null
+        },
+        {
+          "name": "rectus-femoris",
+          "source": {
+            "url": "https://raw.githubusercontent.com/Kevin-Mattheus-Moerman/BodyParts3D/f0eeb6e843380cfe6b83797cf8c3e1af74de5e61/assets/BodyParts3D_data/stl/FMA38928.stl",
+            "sha256": "dab3b087a283dc43e3a86197ffb1cc659db2f988200823cf59c00717b41cc92a",
+            "sourceFaces": 82990
+          },
+          "displayCut": null
+        },
+        {
+          "name": "rectus-femoris-tendon-material",
+          "source": {
+            "url": "https://raw.githubusercontent.com/Kevin-Mattheus-Moerman/BodyParts3D/f0eeb6e843380cfe6b83797cf8c3e1af74de5e61/assets/BodyParts3D_data/stl/FMA38928.stl",
+            "sha256": "dab3b087a283dc43e3a86197ffb1cc659db2f988200823cf59c00717b41cc92a",
+            "sourceFaces": 82990
+          },
+          "displayCut": null
+        },
+        {
+          "name": "vastus-lateralis",
+          "source": {
+            "url": "https://raw.githubusercontent.com/Kevin-Mattheus-Moerman/BodyParts3D/f0eeb6e843380cfe6b83797cf8c3e1af74de5e61/assets/BodyParts3D_data/stl/FMA38930.stl",
+            "sha256": "467dde9b811db7efe83c2fb1574375fac31db65eeee88e5dd82ad889d50e95f2",
+            "sourceFaces": 95564
+          },
+          "displayCut": null
+        },
+        {
+          "name": "vastus-lateralis-tendon-material",
+          "source": {
+            "url": "https://raw.githubusercontent.com/Kevin-Mattheus-Moerman/BodyParts3D/f0eeb6e843380cfe6b83797cf8c3e1af74de5e61/assets/BodyParts3D_data/stl/FMA38930.stl",
+            "sha256": "467dde9b811db7efe83c2fb1574375fac31db65eeee88e5dd82ad889d50e95f2",
+            "sourceFaces": 95564
+          },
+          "displayCut": null
+        },
+        {
+          "name": "vastus-medialis",
+          "source": {
+            "url": "https://raw.githubusercontent.com/Kevin-Mattheus-Moerman/BodyParts3D/f0eeb6e843380cfe6b83797cf8c3e1af74de5e61/assets/BodyParts3D_data/stl/FMA38932.stl",
+            "sha256": "8268d45660fc3b77fe5c0e1905f8063eb5cd805b54eafc38b7e019d265d65864",
+            "sourceFaces": 65814
+          },
+          "displayCut": null
+        },
+        {
+          "name": "vastus-medialis-tendon-material",
+          "source": {
+            "url": "https://raw.githubusercontent.com/Kevin-Mattheus-Moerman/BodyParts3D/f0eeb6e843380cfe6b83797cf8c3e1af74de5e61/assets/BodyParts3D_data/stl/FMA38932.stl",
+            "sha256": "8268d45660fc3b77fe5c0e1905f8063eb5cd805b54eafc38b7e019d265d65864",
+            "sourceFaces": 65814
+          },
+          "displayCut": null
+        },
+        {
+          "name": "vastus-intermedius",
+          "source": {
+            "url": "https://raw.githubusercontent.com/Kevin-Mattheus-Moerman/BodyParts3D/f0eeb6e843380cfe6b83797cf8c3e1af74de5e61/assets/BodyParts3D_data/stl/FMA38934.stl",
+            "sha256": "830283fc458a70c27b286355fba1782e5d06e6d4cebf8aaa98584122cd689e15",
+            "sourceFaces": 61866
+          },
+          "displayCut": null
+        },
+        {
+          "name": "vastus-intermedius-tendon-material",
+          "source": {
+            "url": "https://raw.githubusercontent.com/Kevin-Mattheus-Moerman/BodyParts3D/f0eeb6e843380cfe6b83797cf8c3e1af74de5e61/assets/BodyParts3D_data/stl/FMA38934.stl",
+            "sha256": "830283fc458a70c27b286355fba1782e5d06e6d4cebf8aaa98584122cd689e15",
+            "sourceFaces": 61866
+          },
+          "displayCut": null
+        },
+        {
+          "name": "biceps-femoris-long",
+          "source": {
+            "url": "https://raw.githubusercontent.com/Kevin-Mattheus-Moerman/BodyParts3D/f0eeb6e843380cfe6b83797cf8c3e1af74de5e61/assets/BodyParts3D_data/stl/FMA45888.stl",
+            "sha256": "d734d977a353f3df56178ba8dafe82c305150f88efb0ad8bee21c02e6617d651",
+            "sourceFaces": 73098
+          },
+          "displayCut": null
+        },
+        {
+          "name": "biceps-femoris-long-tendon-material",
+          "source": {
+            "url": "https://raw.githubusercontent.com/Kevin-Mattheus-Moerman/BodyParts3D/f0eeb6e843380cfe6b83797cf8c3e1af74de5e61/assets/BodyParts3D_data/stl/FMA45888.stl",
+            "sha256": "d734d977a353f3df56178ba8dafe82c305150f88efb0ad8bee21c02e6617d651",
+            "sourceFaces": 73098
+          },
+          "displayCut": null
+        },
+        {
+          "name": "biceps-femoris-short",
+          "source": {
+            "url": "https://raw.githubusercontent.com/Kevin-Mattheus-Moerman/BodyParts3D/f0eeb6e843380cfe6b83797cf8c3e1af74de5e61/assets/BodyParts3D_data/stl/FMA45891.stl",
+            "sha256": "e6cfe0c9e9d5a06b2f740f9a52e2c75ab10947de4990b992605503074816fff4",
+            "sourceFaces": 25478
+          },
+          "displayCut": null
+        },
+        {
+          "name": "biceps-femoris-short-tendon-material",
+          "source": {
+            "url": "https://raw.githubusercontent.com/Kevin-Mattheus-Moerman/BodyParts3D/f0eeb6e843380cfe6b83797cf8c3e1af74de5e61/assets/BodyParts3D_data/stl/FMA45891.stl",
+            "sha256": "e6cfe0c9e9d5a06b2f740f9a52e2c75ab10947de4990b992605503074816fff4",
+            "sourceFaces": 25478
+          },
+          "displayCut": null
+        },
+        {
+          "name": "semitendinosus",
+          "source": {
+            "url": "https://raw.githubusercontent.com/Kevin-Mattheus-Moerman/BodyParts3D/f0eeb6e843380cfe6b83797cf8c3e1af74de5e61/assets/BodyParts3D_data/stl/FMA22358.stl",
+            "sha256": "45cb0e13457ff55778d0f87d5b25295cdcb02cbbe7f3418bf28ef432f48535c2",
+            "sourceFaces": 43550
+          },
+          "displayCut": null
+        },
+        {
+          "name": "semitendinosus-tendon-material",
+          "source": {
+            "url": "https://raw.githubusercontent.com/Kevin-Mattheus-Moerman/BodyParts3D/f0eeb6e843380cfe6b83797cf8c3e1af74de5e61/assets/BodyParts3D_data/stl/FMA22358.stl",
+            "sha256": "45cb0e13457ff55778d0f87d5b25295cdcb02cbbe7f3418bf28ef432f48535c2",
+            "sourceFaces": 43550
+          },
+          "displayCut": null
+        },
+        {
+          "name": "semimembranosus",
+          "source": {
+            "url": "https://raw.githubusercontent.com/Kevin-Mattheus-Moerman/BodyParts3D/f0eeb6e843380cfe6b83797cf8c3e1af74de5e61/assets/BodyParts3D_data/stl/FMA22448.stl",
+            "sha256": "8e28d070c137c8f270072ec0b036c74d09dac92a8e024f0752654806a8b75ce5",
+            "sourceFaces": 74564
+          },
+          "displayCut": null
+        },
+        {
+          "name": "semimembranosus-tendon-material",
+          "source": {
+            "url": "https://raw.githubusercontent.com/Kevin-Mattheus-Moerman/BodyParts3D/f0eeb6e843380cfe6b83797cf8c3e1af74de5e61/assets/BodyParts3D_data/stl/FMA22448.stl",
+            "sha256": "8e28d070c137c8f270072ec0b036c74d09dac92a8e024f0752654806a8b75ce5",
+            "sourceFaces": 74564
+          },
+          "displayCut": null
+        },
+        {
+          "name": "sartorius",
+          "source": {
+            "url": "https://raw.githubusercontent.com/Kevin-Mattheus-Moerman/BodyParts3D/f0eeb6e843380cfe6b83797cf8c3e1af74de5e61/assets/BodyParts3D_data/stl/FMA22354.stl",
+            "sha256": "9f689d0e9220612d9a42e401b58b21f74b30b4f3c1c3ce799c2a58bec7156b34",
+            "sourceFaces": 52418
+          },
+          "displayCut": null
+        },
+        {
+          "name": "sartorius-tendon-material",
+          "source": {
+            "url": "https://raw.githubusercontent.com/Kevin-Mattheus-Moerman/BodyParts3D/f0eeb6e843380cfe6b83797cf8c3e1af74de5e61/assets/BodyParts3D_data/stl/FMA22354.stl",
+            "sha256": "9f689d0e9220612d9a42e401b58b21f74b30b4f3c1c3ce799c2a58bec7156b34",
+            "sourceFaces": 52418
+          },
+          "displayCut": null
+        },
+        {
+          "name": "adductor-longus",
+          "source": {
+            "url": "https://raw.githubusercontent.com/Kevin-Mattheus-Moerman/BodyParts3D/f0eeb6e843380cfe6b83797cf8c3e1af74de5e61/assets/BodyParts3D_data/stl/FMA22456.stl",
+            "sha256": "53bab2385e2f43629ed0d567936514a8823e6e239f4d1d38fff573230f34c377",
+            "sourceFaces": 37142
+          },
+          "displayCut": null
+        },
+        {
+          "name": "hip",
+          "source": {
+            "url": "https://raw.githubusercontent.com/Kevin-Mattheus-Moerman/BodyParts3D/f0eeb6e843380cfe6b83797cf8c3e1af74de5e61/assets/BodyParts3D_data/stl/FMA16587.stl",
+            "sha256": "456552349a088b72f8e1b06660b93e005b7ffcebe713a0e38ea88f806535dbc7",
+            "sourceFaces": 9470
+          },
+          "displayCut": null
+        }
+      ]
+    },
+    {
+      "region": "thigh",
+      "view": "back",
+      "yaw": 148,
+      "labels": [
+        "대퇴이두근 장두",
+        "대퇴이두근 단두",
+        "반힘줄근",
+        "반막근"
+      ],
+      "coverage": [
+        16408,
+        6071,
+        1796,
+        222,
+        4814,
+        128,
+        34008,
+        121,
+        299,
+        137,
+        0,
+        0,
+        29939,
+        1863,
+        456,
+        61,
+        12406,
+        2507,
+        6307,
+        545,
+        1188,
+        188,
+        3191,
+        31118
+      ],
+      "parts": [
+        {
+          "name": "femur",
+          "source": {
+            "url": "https://raw.githubusercontent.com/Kevin-Mattheus-Moerman/BodyParts3D/f0eeb6e843380cfe6b83797cf8c3e1af74de5e61/assets/BodyParts3D_data/stl/FMA24474.stl",
+            "sha256": "a47d03f9a1064bab3db90876e05729924e8c4667c78c1e6373fb42d191cd5563",
+            "sourceFaces": 12990
+          },
+          "displayCut": null
+        },
+        {
+          "name": "tibia",
+          "source": {
+            "url": "https://raw.githubusercontent.com/Kevin-Mattheus-Moerman/BodyParts3D/f0eeb6e843380cfe6b83797cf8c3e1af74de5e61/assets/BodyParts3D_data/stl/FMA24477.stl",
+            "sha256": "93c9c1b04dff757fc170e7e6bdd682f94816579c18c2fe0aa2170371c24635c2",
+            "sourceFaces": 6850
+          },
+          "displayCut": 502.7450539257357
+        },
+        {
+          "name": "fibula",
+          "source": {
+            "url": "https://raw.githubusercontent.com/Kevin-Mattheus-Moerman/BodyParts3D/f0eeb6e843380cfe6b83797cf8c3e1af74de5e61/assets/BodyParts3D_data/stl/FMA24480.stl",
+            "sha256": "972e74cb7f9d774c8dbf477542414acba7d02358fb090726a1ec2ffa57a44357",
+            "sourceFaces": 4622
+          },
+          "displayCut": 502.7450539257357
+        },
+        {
+          "name": "patella",
+          "source": {
+            "url": "https://raw.githubusercontent.com/Kevin-Mattheus-Moerman/BodyParts3D/f0eeb6e843380cfe6b83797cf8c3e1af74de5e61/assets/BodyParts3D_data/stl/FMA24486.stl",
+            "sha256": "bf7bcd3d2b546a06e5d5be1cec4540a2a228c28501d50397b2f72e5a4e543aab",
+            "sourceFaces": 1334
+          },
+          "displayCut": null
+        },
+        {
+          "name": "rectus-femoris",
+          "source": {
+            "url": "https://raw.githubusercontent.com/Kevin-Mattheus-Moerman/BodyParts3D/f0eeb6e843380cfe6b83797cf8c3e1af74de5e61/assets/BodyParts3D_data/stl/FMA38928.stl",
+            "sha256": "dab3b087a283dc43e3a86197ffb1cc659db2f988200823cf59c00717b41cc92a",
+            "sourceFaces": 82990
+          },
+          "displayCut": null
+        },
+        {
+          "name": "rectus-femoris-tendon-material",
+          "source": {
+            "url": "https://raw.githubusercontent.com/Kevin-Mattheus-Moerman/BodyParts3D/f0eeb6e843380cfe6b83797cf8c3e1af74de5e61/assets/BodyParts3D_data/stl/FMA38928.stl",
+            "sha256": "dab3b087a283dc43e3a86197ffb1cc659db2f988200823cf59c00717b41cc92a",
+            "sourceFaces": 82990
+          },
+          "displayCut": null
+        },
+        {
+          "name": "vastus-lateralis",
+          "source": {
+            "url": "https://raw.githubusercontent.com/Kevin-Mattheus-Moerman/BodyParts3D/f0eeb6e843380cfe6b83797cf8c3e1af74de5e61/assets/BodyParts3D_data/stl/FMA38930.stl",
+            "sha256": "467dde9b811db7efe83c2fb1574375fac31db65eeee88e5dd82ad889d50e95f2",
+            "sourceFaces": 95564
+          },
+          "displayCut": null
+        },
+        {
+          "name": "vastus-lateralis-tendon-material",
+          "source": {
+            "url": "https://raw.githubusercontent.com/Kevin-Mattheus-Moerman/BodyParts3D/f0eeb6e843380cfe6b83797cf8c3e1af74de5e61/assets/BodyParts3D_data/stl/FMA38930.stl",
+            "sha256": "467dde9b811db7efe83c2fb1574375fac31db65eeee88e5dd82ad889d50e95f2",
+            "sourceFaces": 95564
+          },
+          "displayCut": null
+        },
+        {
+          "name": "vastus-medialis",
+          "source": {
+            "url": "https://raw.githubusercontent.com/Kevin-Mattheus-Moerman/BodyParts3D/f0eeb6e843380cfe6b83797cf8c3e1af74de5e61/assets/BodyParts3D_data/stl/FMA38932.stl",
+            "sha256": "8268d45660fc3b77fe5c0e1905f8063eb5cd805b54eafc38b7e019d265d65864",
+            "sourceFaces": 65814
+          },
+          "displayCut": null
+        },
+        {
+          "name": "vastus-medialis-tendon-material",
+          "source": {
+            "url": "https://raw.githubusercontent.com/Kevin-Mattheus-Moerman/BodyParts3D/f0eeb6e843380cfe6b83797cf8c3e1af74de5e61/assets/BodyParts3D_data/stl/FMA38932.stl",
+            "sha256": "8268d45660fc3b77fe5c0e1905f8063eb5cd805b54eafc38b7e019d265d65864",
+            "sourceFaces": 65814
+          },
+          "displayCut": null
+        },
+        {
+          "name": "vastus-intermedius",
+          "source": {
+            "url": "https://raw.githubusercontent.com/Kevin-Mattheus-Moerman/BodyParts3D/f0eeb6e843380cfe6b83797cf8c3e1af74de5e61/assets/BodyParts3D_data/stl/FMA38934.stl",
+            "sha256": "830283fc458a70c27b286355fba1782e5d06e6d4cebf8aaa98584122cd689e15",
+            "sourceFaces": 61866
+          },
+          "displayCut": null
+        },
+        {
+          "name": "vastus-intermedius-tendon-material",
+          "source": {
+            "url": "https://raw.githubusercontent.com/Kevin-Mattheus-Moerman/BodyParts3D/f0eeb6e843380cfe6b83797cf8c3e1af74de5e61/assets/BodyParts3D_data/stl/FMA38934.stl",
+            "sha256": "830283fc458a70c27b286355fba1782e5d06e6d4cebf8aaa98584122cd689e15",
+            "sourceFaces": 61866
+          },
+          "displayCut": null
+        },
+        {
+          "name": "biceps-femoris-long",
+          "source": {
+            "url": "https://raw.githubusercontent.com/Kevin-Mattheus-Moerman/BodyParts3D/f0eeb6e843380cfe6b83797cf8c3e1af74de5e61/assets/BodyParts3D_data/stl/FMA45888.stl",
+            "sha256": "d734d977a353f3df56178ba8dafe82c305150f88efb0ad8bee21c02e6617d651",
+            "sourceFaces": 73098
+          },
+          "displayCut": null
+        },
+        {
+          "name": "biceps-femoris-long-tendon-material",
+          "source": {
+            "url": "https://raw.githubusercontent.com/Kevin-Mattheus-Moerman/BodyParts3D/f0eeb6e843380cfe6b83797cf8c3e1af74de5e61/assets/BodyParts3D_data/stl/FMA45888.stl",
+            "sha256": "d734d977a353f3df56178ba8dafe82c305150f88efb0ad8bee21c02e6617d651",
+            "sourceFaces": 73098
+          },
+          "displayCut": null
+        },
+        {
+          "name": "biceps-femoris-short",
+          "source": {
+            "url": "https://raw.githubusercontent.com/Kevin-Mattheus-Moerman/BodyParts3D/f0eeb6e843380cfe6b83797cf8c3e1af74de5e61/assets/BodyParts3D_data/stl/FMA45891.stl",
+            "sha256": "e6cfe0c9e9d5a06b2f740f9a52e2c75ab10947de4990b992605503074816fff4",
+            "sourceFaces": 25478
+          },
+          "displayCut": null
+        },
+        {
+          "name": "biceps-femoris-short-tendon-material",
+          "source": {
+            "url": "https://raw.githubusercontent.com/Kevin-Mattheus-Moerman/BodyParts3D/f0eeb6e843380cfe6b83797cf8c3e1af74de5e61/assets/BodyParts3D_data/stl/FMA45891.stl",
+            "sha256": "e6cfe0c9e9d5a06b2f740f9a52e2c75ab10947de4990b992605503074816fff4",
+            "sourceFaces": 25478
+          },
+          "displayCut": null
+        },
+        {
+          "name": "semitendinosus",
+          "source": {
+            "url": "https://raw.githubusercontent.com/Kevin-Mattheus-Moerman/BodyParts3D/f0eeb6e843380cfe6b83797cf8c3e1af74de5e61/assets/BodyParts3D_data/stl/FMA22358.stl",
+            "sha256": "45cb0e13457ff55778d0f87d5b25295cdcb02cbbe7f3418bf28ef432f48535c2",
+            "sourceFaces": 43550
+          },
+          "displayCut": null
+        },
+        {
+          "name": "semitendinosus-tendon-material",
+          "source": {
+            "url": "https://raw.githubusercontent.com/Kevin-Mattheus-Moerman/BodyParts3D/f0eeb6e843380cfe6b83797cf8c3e1af74de5e61/assets/BodyParts3D_data/stl/FMA22358.stl",
+            "sha256": "45cb0e13457ff55778d0f87d5b25295cdcb02cbbe7f3418bf28ef432f48535c2",
+            "sourceFaces": 43550
+          },
+          "displayCut": null
+        },
+        {
+          "name": "semimembranosus",
+          "source": {
+            "url": "https://raw.githubusercontent.com/Kevin-Mattheus-Moerman/BodyParts3D/f0eeb6e843380cfe6b83797cf8c3e1af74de5e61/assets/BodyParts3D_data/stl/FMA22448.stl",
+            "sha256": "8e28d070c137c8f270072ec0b036c74d09dac92a8e024f0752654806a8b75ce5",
+            "sourceFaces": 74564
+          },
+          "displayCut": null
+        },
+        {
+          "name": "semimembranosus-tendon-material",
+          "source": {
+            "url": "https://raw.githubusercontent.com/Kevin-Mattheus-Moerman/BodyParts3D/f0eeb6e843380cfe6b83797cf8c3e1af74de5e61/assets/BodyParts3D_data/stl/FMA22448.stl",
+            "sha256": "8e28d070c137c8f270072ec0b036c74d09dac92a8e024f0752654806a8b75ce5",
+            "sourceFaces": 74564
+          },
+          "displayCut": null
+        },
+        {
+          "name": "sartorius",
+          "source": {
+            "url": "https://raw.githubusercontent.com/Kevin-Mattheus-Moerman/BodyParts3D/f0eeb6e843380cfe6b83797cf8c3e1af74de5e61/assets/BodyParts3D_data/stl/FMA22354.stl",
+            "sha256": "9f689d0e9220612d9a42e401b58b21f74b30b4f3c1c3ce799c2a58bec7156b34",
+            "sourceFaces": 52418
+          },
+          "displayCut": null
+        },
+        {
+          "name": "sartorius-tendon-material",
+          "source": {
+            "url": "https://raw.githubusercontent.com/Kevin-Mattheus-Moerman/BodyParts3D/f0eeb6e843380cfe6b83797cf8c3e1af74de5e61/assets/BodyParts3D_data/stl/FMA22354.stl",
+            "sha256": "9f689d0e9220612d9a42e401b58b21f74b30b4f3c1c3ce799c2a58bec7156b34",
+            "sourceFaces": 52418
+          },
+          "displayCut": null
+        },
+        {
+          "name": "adductor-longus",
+          "source": {
+            "url": "https://raw.githubusercontent.com/Kevin-Mattheus-Moerman/BodyParts3D/f0eeb6e843380cfe6b83797cf8c3e1af74de5e61/assets/BodyParts3D_data/stl/FMA22456.stl",
+            "sha256": "53bab2385e2f43629ed0d567936514a8823e6e239f4d1d38fff573230f34c377",
+            "sourceFaces": 37142
+          },
+          "displayCut": null
+        },
+        {
+          "name": "hip",
+          "source": {
+            "url": "https://raw.githubusercontent.com/Kevin-Mattheus-Moerman/BodyParts3D/f0eeb6e843380cfe6b83797cf8c3e1af74de5e61/assets/BodyParts3D_data/stl/FMA16587.stl",
+            "sha256": "456552349a088b72f8e1b06660b93e005b7ffcebe713a0e38ea88f806535dbc7",
+            "sourceFaces": 9470
+          },
+          "displayCut": null
+        }
+      ]
+    }
+  ],
+  "source": "BodyParts3D 3.0 © 2008 DBCLS; CC BY-SA 2.1 Japan; STL Kevin Mattheus Moerman",
+  "poses": {
+    "forearm": {
+      "forearmRotation": -80,
+      "description": "기존 회외 자세 · 원본 표면 정지 시안",
+      "cameraYaw": [
+        0,
+        90,
+        180
+      ]
+    },
+    "thigh": {
+      "kneeFlexion": 0,
+      "description": "기존 무릎 폄 자세 · 무릎 아래 짧은 골격",
+      "cameraYaw": [
+        32,
+        90,
+        148
+      ],
+      "kneeY": 430.7450539257357,
+      "lowerLegCut": 502.7450539257357
+    }
+  },
+  "mobileGallery": {
+    "widths": [
+      390,
+      320
+    ],
+    "loadedViews": 12,
+    "horizontalOverflow": false,
+    "javascriptErrors": []
+  },
+  "sourceModelsChecked": true,
+  "originalApplicationUnchanged": true
+}
