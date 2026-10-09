@@ -1445,8 +1445,9 @@ function AbdominalMuscleSurfaces({profile,radius,frontZ,backZ,spineZ}){
   const saOrigin=ribs.slice(0,4).map(r=>costal(r,view==='front'?.28:.83)).concat(seam);
   const eoOrigin=seam.concat(ribs.slice(8,12).map((r,i)=>view==='front'?posteriorCostal(r,.96-.04*i):costal(r,.22-.025*i)));
   // Upper/middle slips attach along the medial border. Inferior slips have
-  // a much narrower insertion around the inferior angle, producing a fan.
-  const saInsert=[.1,.3,.47,.62,.94,.965,.985,1].map(t=>{const u=1-t;if(view==='front'){const p=C.girdle(35).S([89*u*u+170*u*t+109*t*t,165*u*u+424*u*t+291*t*t]);return [p[0],p[1],backZ(...p)+4];}return [65,1.24*(177*u*u+416*u*t+265*t*t)-39,-34*u*u-116*u*t-49*t*t];});
+  // a finite insertion near the inferior angle. The attachment parameters
+  // adapt the drawn medial border; they are not measured anatomical ratios.
+  const saInsert=[.1,.3,.47,.62,.86,.91,.955,1].map(t=>{const u=1-t;if(view==='front'){const p=C.girdle(35).S([89*u*u+170*u*t+109*t*t,165*u*u+424*u*t+291*t*t]);return [p[0],p[1],backZ(...p)+4];}return [65,1.24*(177*u*u+416*u*t+265*t*t)-39,-34*u*u-116*u*t-49*t*t];});
   const eoEdge=[[47,313],[49,337],[51,362],[53,388],[58,413],[69,426],[80,424],[84,418]];
   const eoInsert=view==='front'?eoEdge.map((p,i)=>[p[0],p[1],i<5?frontZ(...p):mix([frontZ(...p)],[backZ(...p)],(i-4)/3)[0]]):[[65,302],[65,322],[61,345],[53,368],[36,389],[12,390],[-22,384],[-41,386]].map(p=>{const y=1.24*p[1]-39,[c,d]=profile(y);return [radius(y)*Math.sqrt(Math.max(.02,1-((p[0]-c)/d)**2)),y,p[0]];});
   const latOrigin=view==='front'?[[10,289],[12,356],[20,419],[86,419]].map(p=>[p[0],p[1],backZ(...p)]):[[16,1.24*255-39,-60],[18,1.24*312-39,-48],[22,1.24*383-39,-51],[86,1.24*380-39,-12]];
@@ -1458,10 +1459,10 @@ function AbdominalMuscleSurfaces({profile,radius,frontZ,backZ,spineZ}){
   if((id==='serratus'||id==='external-oblique')&&k>=0&&k<=3){
    const ps=sources[view].serratus.origin.slice(4),i=Math.min(2,Math.floor(k)),t=k-i,p=mix(ps[i],ps[i+1],t);
    // Shared chevron between rib slips. Independent notches cannot open gaps.
-   const tooth=Math.sin(Math.PI*t)**2,dy=ps[i+1][1]-ps[i][1],shift=24*tooth;
+   const tooth=Math.sin(Math.PI*t)**2,dy=ps[i+1][1]-ps[i][1],shift=14*tooth;
    p[1]-=dy*.15*tooth;
    if(view==='front'&&tooth>1e-8){
-    const angle=q=>Math.atan2(q[2]-profile(q[1])[0],q[0]*profile(q[1])[1]/radius(q[1])),a=angle(ps[i])+(angle(ps[i+1])-angle(ps[i]))*t-.38*tooth,[c,d]=profile(p[1]);
+    const angle=q=>Math.atan2(q[2]-profile(q[1])[0],q[0]*profile(q[1])[1]/radius(q[1])),a=angle(ps[i])+(angle(ps[i+1])-angle(ps[i]))*t-.23*tooth,[c,d]=profile(p[1]);
     const radial=q=>{const [qc,qd]=profile(q[1]);return Math.hypot(q[0]/radius(q[1]),(q[2]-qc)/qd);},r=radial(ps[i])+(radial(ps[i+1])-radial(ps[i]))*t;
     p[0]=radius(p[1])*r*Math.cos(a);p[2]=c+d*r*Math.sin(a);
    }else if(view==='side'&&tooth>1e-8){p[2]-=shift;const [c,d]=profile(p[1]);p[0]=radius(p[1])*Math.sqrt(Math.max(.02,1-((p[2]-c)/d)**2));}
@@ -1478,10 +1479,9 @@ function AbdominalMuscleSurfaces({profile,radius,frontZ,backZ,spineZ}){
  }
  function alongWall(o,e,u,id,v){
   if(u===0)return o.slice();if(u===1)return e.slice();
-  // Inferior fascicles sweep superiorly while wrapping posteriorly, so their
-  // convergence is visible on the flank before disappearing beneath scapula.
-  const bow=id==='serratus'?-clamp(v-3)*(5+5*clamp((v-4)/3))*Math.sin(Math.PI*u):0;
-  const y=o[1]+(e[1]-o[1])*u+bow,[c,d]=profile(y),rx=radius(y);
+  // Attachment heights define the fascicle slope. Wrapping comes from the
+  // costal surface, not an added vertical bow to manufacture a visible fan.
+  const y=o[1]+(e[1]-o[1])*u,[c,d]=profile(y),rx=radius(y);
   const angle=p=>Math.atan2(p[2]-profile(p[1])[0],p[0]*profile(p[1])[1]/radius(p[1]));
   let ao=angle(o),ae=angle(e);while(ae-ao>Math.PI)ae-=2*Math.PI;while(ae-ao< -Math.PI)ae+=2*Math.PI;
   const a=ao+(ae-ao)*u+(id==='latissimus'?.12*Math.sin(Math.PI*u)*(v/3)**2:0),clearance=id==='latissimus'?4:2.5;
@@ -1820,7 +1820,9 @@ function AbdomenFlexion(host) {
   return a.slice(1).map((n,k)=>{k++;const m0=(b[k]-left[k])/(b[0]-left[0]),m1=(right[k]-a[k])/(right[0]-a[0]);return (2*t**3-3*t*t+1)*n+(t**3-2*t*t+t)*h*m0+(-2*t**3+3*t*t)*b[k]+(t**3-t*t)*h*m1;});
  };
  const profile=y=>interpolateProfile(depthProfile,y);
- const widthProfile=[[80,70],[155,75],[195,96],[245,106],[300,106],[340,98],[380,93],[420,97],[460,97],[520,85]];
+ // Upper costal envelope follows the taper of the authored rib cage.
+ // A generic shoulder-width ellipse inflated SA just beyond its rib origins.
+ const widthProfile=[[80,45],[155,61],...C.ribs.slice(0,8).map(r=>[r.y+10,r.extent*C.proportions.axialWidth]),[340,98],[380,93],[420,97],[460,97],[520,85]];
  const radius=y=>interpolateProfile(widthProfile,y)[0];
  const spineStations=S.vertebrae.map(v=>[1.24*v.center[1]-39,v.center[0]]).concat([[515,-5]]);
  const spineZ=y=>{let i=0;while(i<spineStations.length-2&&y>spineStations[i+1][0])i++;const a=spineStations[i],b=spineStations[i+1],t=Math.max(0,Math.min(1,(y-a[0])/(b[0]-a[0])));return a[1]+(b[1]-a[1])*t;};

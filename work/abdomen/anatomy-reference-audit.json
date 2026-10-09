@@ -101,6 +101,30 @@
       "Duplicate clamped edge fiber strokes removed without changing the palette or UI."
     ],
     "verification": "23 poses, existing attachment/contact/clearance/strain/opacity/mobile checks; additional convergence and displayed near-flank direction criteria at both yaw endpoints; no coincident rendered SA fibers.",
-    "limits": "Illustrative projected fan and separate coronal/lateral landmark adapters; no clinical fiber angle, measured muscle volume or physiological strain claim."
+    "limits": "Illustrative projected fan and separate coronal/lateral landmark adapters; no clinical fiber angle, measured muscle volume or physiological strain claim.",
+    "status": "Historical implementation, superseded by attachment_based_serratus_correction"
+  },
+  "attachment_based_serratus_correction": {
+    "review_date": "2026-10-09",
+    "primary_evidence": [
+      "OpenStax m46495 table: ribs 1–8/1–9 to anterior surface of vertebral scapular border.",
+      "OpenStax 11.18 actual anatomy plate: wrapping thoracic slips and scapular direction.",
+      "OpenStax 11.12 and m46485: SA/EO interdigitation; EO inferomedial fibers and anterior aponeurosis."
+    ],
+    "rejected_choices": [
+      "Additional superior sine bow of 5–10 drawing units to force the displayed fan.",
+      "An arbitrarily required insertion/origin span ratio below 0.3 and projected direction spread above 25 degrees.",
+      "Generic upper thoracic envelope wider than the authored costal skeleton."
+    ],
+    "changes": [
+      "Remove the additional vertical SA bow.",
+      "Spread inferior insertions along a finite region of the existing lower medial scapular border.",
+      "Reduce depth of the shared costal interdigitations.",
+      "Generate upper thoracic width stations from actual authored rib extents/heights."
+    ],
+    "anatomical_measurement_claim": false,
+    "generated_images_used_as_evidence": false,
+    "validation_artifacts": "/workspace/artifacts/serratus-attachment-review/",
+    "limits": "Attachment coordinates, insertion spread and tooth depth remain illustrative adapters. Anatomy plates support topology and direction, not measured coordinates, patient-specific deformation or clinical 60-degree ROM. Local curvature does not uniformly decrease across all fibers."
   }
 }

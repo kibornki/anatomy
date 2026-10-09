@@ -175,7 +175,9 @@ function AbdomenFlexion(host) {
   return a.slice(1).map((n,k)=>{k++;const m0=(b[k]-left[k])/(b[0]-left[0]),m1=(right[k]-a[k])/(right[0]-a[0]);return (2*t**3-3*t*t+1)*n+(t**3-2*t*t+t)*h*m0+(-2*t**3+3*t*t)*b[k]+(t**3-t*t)*h*m1;});
  };
  const profile=y=>interpolateProfile(depthProfile,y);
- const widthProfile=[[80,70],[155,75],[195,96],[245,106],[300,106],[340,98],[380,93],[420,97],[460,97],[520,85]];
+ // Upper costal envelope follows the taper of the authored rib cage.
+ // A generic shoulder-width ellipse inflated SA just beyond its rib origins.
+ const widthProfile=[[80,45],[155,61],...C.ribs.slice(0,8).map(r=>[r.y+10,r.extent*C.proportions.axialWidth]),[340,98],[380,93],[420,97],[460,97],[520,85]];
  const radius=y=>interpolateProfile(widthProfile,y)[0];
  const spineStations=S.vertebrae.map(v=>[1.24*v.center[1]-39,v.center[0]]).concat([[515,-5]]);
  const spineZ=y=>{let i=0;while(i<spineStations.length-2&&y>spineStations[i+1][0])i++;const a=spineStations[i],b=spineStations[i+1],t=Math.max(0,Math.min(1,(y-a[0])/(b[0]-a[0])));return a[1]+(b[1]-a[1])*t;};
