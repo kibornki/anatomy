@@ -1,0 +1,1615 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="referrer" content="no-referrer"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline'; img-src data:; object-src 'none'; base-uri 'none'"><title>복부 근육과 몸통 굽힘</title><style>:root {
+  color-scheme: light dark;
+  background-color: var(
+    --background,
+    var(--color-background-primary, light-dark(rgb(255 255 255), rgb(24 24 24)))
+  ) !important;
+
+  /* Agent-facing contract; keep in sync with SKILL.md. */
+  --background: var(
+    --color-background-primary,
+    light-dark(rgb(255 255 255), rgb(24 24 24))
+  );
+  --foreground: var(
+    --color-text-primary,
+    light-dark(rgb(26 28 31), rgb(255 255 255))
+  );
+  --card: color-mix(in oklab, var(--foreground) 5%, var(--background));
+  --card-foreground: var(
+    --color-text-primary,
+    light-dark(rgb(26 28 31), rgb(255 255 255))
+  );
+  --popover: var(
+    --color-background-secondary,
+    light-dark(rgb(255 255 255), rgb(45 45 45))
+  );
+  --popover-foreground: var(
+    --color-text-primary,
+    light-dark(rgb(26 28 31), rgb(255 255 255))
+  );
+  --primary: var(
+    --color-text-info,
+    light-dark(rgb(51 156 255), rgb(131 195 255))
+  );
+  --primary-foreground: var(
+    --color-text-inverse,
+    light-dark(rgb(255 255 255), rgb(13 13 13))
+  );
+  --secondary: var(
+    --color-background-secondary,
+    light-dark(rgb(255 255 255 / 96%), rgb(54 54 54 / 96%))
+  );
+  --secondary-foreground: var(
+    --color-text-primary,
+    light-dark(rgb(26 28 31), rgb(255 255 255))
+  );
+  --muted: color-mix(in srgb, var(--foreground) 10%, transparent);
+  --muted-foreground: var(
+    --color-text-secondary,
+    light-dark(rgb(26 28 31 / 49.4%), rgb(255 255 255 / 49.8%))
+  );
+  --accent: var(
+    --color-background-info,
+    light-dark(rgb(229 242 255), rgb(13 39 63))
+  );
+  --accent-foreground: var(
+    --color-text-info,
+    light-dark(rgb(51 156 255), rgb(131 195 255))
+  );
+  --destructive: var(
+    --color-text-warning,
+    light-dark(rgb(226 85 7), rgb(255 133 73))
+  );
+  --border: var(
+    --color-border-secondary,
+    light-dark(rgb(26 28 31 / 8%), rgb(255 255 255 / 8.2%))
+  );
+  --input: var(
+    --color-border-primary,
+    light-dark(
+      rgb(26 28 31 / 11.8%),
+      color-mix(in oklab, rgb(0 0 0) 10%, transparent)
+    )
+  );
+  --ring: var(
+    --color-ring-primary,
+    light-dark(rgb(51 156 255), rgb(131 195 255 / 76%))
+  );
+  --font-size-base: var(--font-text-md-size, 14px);
+  --blue: light-dark(rgb(51 156 255), rgb(51 156 255));
+  --orange: light-dark(rgb(226 85 7), rgb(251 106 34));
+  --green: light-dark(rgb(0 162 64), rgb(64 201 119));
+  --red: light-dark(rgb(224 46 42), rgb(255 103 100));
+  --purple: light-dark(rgb(146 79 247), rgb(173 123 249));
+  --yellow: light-dark(rgb(255 195 0), rgb(255 210 64));
+  --viz-series-1: var(--primary);
+  --viz-series-2: light-dark(rgb(243 136 59), rgb(245 154 86));
+  --viz-series-3: light-dark(rgb(93 201 119), rgb(116 213 139));
+  --viz-series-4: light-dark(rgb(235 119 177), rgb(240 143 192));
+  --viz-series-5: light-dark(rgb(155 121 236), rgb(170 145 239));
+  --viz-series-6: light-dark(rgb(58 185 177), rgb(90 203 194));
+
+  /* Internal implementation variables; not part of the agent contract. */
+  --font-sans: -apple-system, system-ui, "Segoe UI", sans-serif;
+  --font-mono:
+    ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, "Liberation Mono",
+    monospace;
+  --font-size-normal: max(11px, var(--font-size-base));
+  --font-size-tooltip: calc(var(--font-size-base) - 1px);
+  --font-size-small: max(11px, calc(var(--font-size-base) - 2px));
+  --font-size-h1: calc(var(--font-size-normal) * 1.7142857143);
+  --font-size-h2: calc(var(--font-size-normal) * 1.4285714286);
+  --font-size-h3: calc(var(--font-size-normal) * 1.2857142857);
+  --font-weight-normal: 430;
+  --font-weight-medium: 500;
+  --icon-size: 16px;
+  --line-height-normal: calc(var(--font-size-normal) * 1.5);
+  --line-height-tooltip: calc(var(--font-size-tooltip) * 1.4285714286);
+  --line-height-small: calc(var(--font-size-small) + 4px);
+  --corner-shape: round;
+  --radius: var(--border-radius-lg, 10px);
+  --radius-sm: calc(var(--radius) * 0.6);
+  --radius-md: calc(var(--radius) * 0.8);
+  --radius-lg: var(--radius);
+  --radius-2xl: calc(var(--radius) * 1.6);
+  --radius-full: 9999px;
+  --shadow-sm: 0 1px 2px -1px rgb(0 0 0 / 8%);
+  --checkmark-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 17 17'%3E%3Cpath d='M12.8961 3.64101C13.1297 3.41418 13.4984 3.37523 13.7779 3.56581C14.0571 3.75635 14.1554 4.11331 14.0299 4.41347L13.9615 4.53847L7.71151 13.7045C7.59411 13.8767 7.4063 13.9877 7.19881 14.0072C6.99136 14.0267 6.78564 13.9533 6.63826 13.806L2.88826 10.056L2.79842 9.9457C2.6192 9.67407 2.64927 9.30496 2.88826 9.06581C3.12738 8.82669 3.49647 8.79676 3.76815 8.97597L3.8785 9.06581L7.03084 12.2182L12.8053 3.74941L12.8961 3.64101Z'/%3E%3C/svg%3E");
+
+  /* Legacy aliases; not part of the current agent contract. */
+  --viz-bg: transparent;
+  --viz-panel: var(--card);
+  --viz-border: var(--border);
+  --viz-text: var(--foreground);
+  --viz-muted: var(--muted-foreground);
+  --viz-accent: var(--primary);
+  --viz-accent-text: var(--primary-foreground);
+  --viz-accent-bg: var(--accent);
+  --viz-font-size: var(--font-size-base);
+  --viz-warning: var(--destructive);
+}
+
+:root[data-theme="light"] {
+  color-scheme: light;
+}
+
+:root[data-theme="dark"] {
+  color-scheme: dark;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html > body {
+  /* Preserve MCP aliases for older inline renderers without creating :root cycles. */
+  --color-background-primary: var(
+    --background,
+    light-dark(rgb(255 255 255), rgb(24 24 24))
+  );
+  --color-text-primary: var(
+    --foreground,
+    light-dark(rgb(26 28 31), rgb(255 255 255))
+  );
+  --color-border-secondary: var(
+    --border,
+    light-dark(rgb(26 28 31 / 8%), rgb(255 255 255 / 8.2%))
+  );
+
+  margin: 0;
+  padding: var(--visualize-paint-gutter, 0px);
+  color: var(--foreground);
+  background: transparent !important;
+  font-family: var(--font-sans) !important;
+  font-size: var(--font-size-normal);
+  font-weight: var(--font-weight-normal);
+  line-height: var(--line-height-normal);
+}
+
+.cursor-interaction {
+  cursor: var(--cursor-interaction, pointer);
+}
+
+a {
+  color: color-mix(in srgb, var(--viz-accent) 80%, var(--viz-text) 20%);
+  cursor: var(--cursor-interaction, pointer);
+  font-weight: var(--font-weight-medium, 500);
+  text-decoration: none;
+  text-underline-offset: 2px;
+}
+
+a:is(:hover, :focus-visible) {
+  text-decoration-line: underline;
+  text-decoration-style: dashed;
+  text-decoration-thickness: 0.5px;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p {
+  margin-block: 0;
+}
+
+h1 {
+  font-size: var(--font-size-h1);
+  font-weight: var(--font-weight-medium);
+  line-height: 1.25;
+}
+
+h2 {
+  font-size: var(--font-size-h2);
+  font-weight: var(--font-weight-medium);
+  line-height: 1.25;
+}
+
+h3,
+h4,
+h5,
+h6 {
+  font-size: var(--font-size-h3);
+  font-weight: var(--font-weight-medium);
+  line-height: 1.3;
+}
+
+b,
+strong,
+th {
+  font-weight: var(--font-weight-medium);
+}
+
+code:not(pre code) {
+  display: inline;
+  padding: 1px 6px;
+  border-radius: var(--radius-sm);
+  corner-shape: var(--corner-shape);
+  background: var(--muted);
+  font-family: var(--font-mono);
+  font-size: 0.92em;
+  overflow-wrap: anywhere;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+  word-break: break-word;
+}
+
+.table-responsive {
+  width: 100%;
+  overflow-x: auto;
+  scrollbar-width: thin;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  color: var(--foreground);
+  font: inherit;
+  text-align: start;
+}
+
+.table :is(th, td) {
+  padding-block: 10px;
+  padding-inline: 0 24px;
+  overflow-wrap: anywhere;
+  border-bottom: 1px solid var(--border);
+  text-align: start;
+  vertical-align: top;
+}
+
+.table-responsive > .table :is(th, td) {
+  overflow-wrap: break-word;
+}
+
+.table :is(th, td):last-child {
+  padding-inline-end: 0;
+}
+
+.table :is(caption, thead th) {
+  font-weight: 600;
+}
+
+.table thead th {
+  padding-block: 8px;
+  border-bottom-color: color-mix(in srgb, var(--foreground) 16%, transparent);
+}
+
+.table tbody tr:last-child :is(th, td) {
+  border-bottom: 0;
+}
+
+.table.table-sm :is(th, td) {
+  padding-block: 6px;
+}
+
+.table.table-sm :is(th, td):not(:last-child) {
+  padding-inline-end: 16px;
+}
+
+.table :is(.text-end, [align="right"]) {
+  text-align: end;
+  font-variant-numeric: tabular-nums;
+}
+
+.table :is(.text-center, [align="center"]) {
+  text-align: center;
+}
+
+.table .text-nowrap {
+  white-space: nowrap;
+}
+
+#widget {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 100%;
+  padding: 0;
+  background: transparent !important;
+}
+
+.card {
+  min-width: 0;
+  padding: 12px;
+  overflow: hidden;
+  overflow-wrap: break-word;
+  border-radius: var(--radius-2xl);
+  corner-shape: var(--corner-shape);
+  color: var(--card-foreground);
+  background: var(--card);
+}
+
+.widget {
+  min-width: 0;
+  overflow: hidden;
+  border: 0;
+  border-radius: var(--radius-lg);
+  corner-shape: var(--corner-shape);
+  box-shadow: 0 0 0 0.5px var(--border-strong, var(--border));
+  color: var(--foreground);
+  background: var(--background);
+}
+
+#widget > :not(.card, .widget, .progress) {
+  width: 100% !important;
+  max-width: none !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+.tooltip {
+  position: fixed;
+  z-index: 50;
+  top: 0;
+  left: 0;
+  width: max-content;
+  max-width: min(
+    20rem,
+    var(--tooltip-available-width, calc(100vw - 10px)),
+    calc(100vw - 10px)
+  );
+  max-height: min(
+    var(--tooltip-available-height, calc(100vh - 10px)),
+    calc(100vh - 10px)
+  );
+  padding: 4px 8px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  corner-shape: var(--corner-shape);
+  color: var(--popover-foreground);
+  background: var(--popover);
+  box-shadow: none;
+  font-size: var(--font-size-tooltip);
+  line-height: var(--line-height-tooltip);
+  overflow-wrap: break-word;
+  white-space: normal;
+  pointer-events: none;
+  user-select: none;
+}
+
+.viz-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(max(180px, 24%), 1fr));
+  gap: 10px;
+}
+
+.viz-stat {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.viz-stat-value {
+  font-size: var(--font-size-h2);
+  font-weight: var(--font-weight-medium);
+  line-height: 1.25;
+}
+
+.viz-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+}
+
+hr {
+  width: 100%;
+  height: 1px;
+  margin-block: 6px;
+  border: 0;
+  background: var(--border);
+}
+
+.nav {
+  display: flex;
+  min-width: 0;
+  align-items: center;
+  gap: 4px;
+}
+
+.progress {
+  display: flex;
+  height: 8px;
+  margin-block: calc((var(--line-height-normal, 1.5em) - 8px) / 2);
+  overflow: hidden;
+  border: 0;
+  border-radius: var(--radius-full);
+  background: var(--muted);
+}
+
+.progress-bar:only-child {
+  border-radius: var(--radius-full);
+}
+
+.progress-bar {
+  height: 100%;
+  flex-shrink: 0;
+  border: 0;
+  background: var(--viz-series-1);
+}
+
+.viz-badge {
+  padding: 3px 8px;
+  border-radius: var(--radius-full);
+  color: var(--accent-foreground);
+  background: var(--accent);
+  font-weight: var(--font-weight-medium);
+}
+
+small,
+.text-small,
+.viz-badge {
+  font-size: var(--font-size-small);
+  line-height: var(--line-height-small);
+}
+
+.text-muted {
+  color: var(--muted-foreground);
+}
+
+.tabular-nums {
+  font-variant-numeric: tabular-nums;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.viz-controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+}
+
+.viz-controls > .form-label {
+  display: grid;
+  min-width: min(100%, 260px);
+  flex: 1 1 280px;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: baseline;
+  gap: 2px 12px;
+  margin-bottom: 0;
+}
+
+.viz-controls > .form-label > :is(.form-control, .form-range, .form-select) {
+  grid-column: 1 / -1;
+}
+
+.btn,
+.nav-link,
+.form-check-input,
+.form-control,
+.form-range,
+.form-select {
+  font: inherit;
+}
+
+.btn,
+.nav-link {
+  appearance: button;
+  display: inline-flex;
+  inline-size: fit-content;
+  max-inline-size: 100%;
+  min-height: 28px;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  margin: 0;
+  padding: 0 8px;
+  -webkit-app-region: no-drag;
+  border: 1px solid var(--input);
+  border-radius: var(--radius-lg);
+  corner-shape: var(--corner-shape);
+  color: var(--secondary-foreground);
+  background: var(--secondary);
+  cursor: var(--cursor-interaction, pointer);
+  text-align: center;
+  text-decoration: none;
+  white-space: nowrap;
+  user-select: none;
+  -webkit-font-smoothing: antialiased;
+}
+
+.btn:is(.btn-block, .viz-tile) {
+  inline-size: 100%;
+}
+
+.btn.viz-tile {
+  min-width: 0;
+  overflow-wrap: anywhere;
+  white-space: normal;
+}
+
+a.btn {
+  cursor: var(--cursor-interaction, pointer);
+  text-decoration: none;
+}
+
+.btn:not(:disabled):hover,
+.nav-link:not(:disabled):not([aria-disabled="true"]):hover {
+  background: color-mix(in srgb, var(--foreground) 6%, var(--secondary));
+}
+
+.btn-primary {
+  border-color: transparent;
+  color: var(--primary-foreground);
+  background: var(--foreground);
+  background-clip: padding-box;
+}
+
+.btn-primary .text-muted {
+  color: color-mix(in srgb, var(--primary-foreground) 50%, transparent);
+}
+
+.btn-primary:not(:disabled):hover {
+  background: color-mix(in srgb, var(--foreground) 80%, transparent);
+  background-clip: padding-box;
+}
+
+.btn-ghost {
+  border-color: transparent;
+  color: var(--muted-foreground);
+  background: transparent;
+}
+
+.btn-ghost:not(:disabled):hover {
+  color: var(--foreground);
+  background: color-mix(in srgb, var(--foreground) 6%, var(--secondary));
+}
+
+.nav-pills .nav-link {
+  min-width: 0;
+  border-color: transparent;
+  color: var(--muted-foreground);
+  background: transparent;
+}
+
+.nav-justified .nav-link {
+  flex: 1 1 0;
+  overflow-wrap: anywhere;
+  white-space: normal;
+}
+
+.nav-pills .nav-link.active {
+  color: var(--foreground);
+  background: var(--muted);
+}
+
+/* Shared preview chrome; product styles stay inside each variant. */
+.viz-dotted-background {
+  background-image: radial-gradient(
+    circle,
+    color-mix(in srgb, var(--foreground) 14%, transparent) 0.8px,
+    transparent 0.8px
+  );
+  background-position: center;
+  background-size: 16px 16px;
+}
+
+.viz-carousel {
+  position: relative;
+  min-width: 0;
+}
+
+.viz-carousel:has(> .viz-carousel-controls) {
+  min-height: calc(60px + var(--viz-carousel-picker-height, 0px));
+  padding-bottom: 60px;
+}
+
+.viz-carousel > [data-variant][hidden] {
+  display: none !important;
+}
+
+.viz-carousel > [data-variant] {
+  isolation: isolate;
+}
+
+.viz-carousel-controls {
+  --viz-carousel-hover: light-dark(
+    color-mix(in srgb, var(--foreground) 5.4%, transparent),
+    color-mix(in srgb, var(--foreground) 7.8%, transparent)
+  );
+  position: absolute;
+  z-index: 2;
+  bottom: 8px;
+  left: 50%;
+  display: flex;
+  width: max-content;
+  /* Leave room for the host's design-controls launcher at the trailing edge. */
+  max-width: calc(100% - 96px);
+  align-items: center;
+  gap: 0;
+  padding: 0;
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  color: var(--foreground);
+  background: var(--background);
+  font-family: var(--font-sans);
+  /* Match the settings dropdown chrome independently of the content font size. */
+  font-size: 13px;
+  font-weight: var(--font-weight-normal);
+  line-height: 18px;
+  transform: translateX(-50%);
+  user-select: none;
+}
+
+/* Keep authored mockup button styles out of the shared carousel chrome. */
+.viz-carousel-controls button,
+.viz-carousel-picker > summary {
+  display: flex !important;
+  height: auto !important;
+  min-height: 30px;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 4px;
+  padding: 0 6px !important;
+  -webkit-app-region: no-drag;
+  border: 0 !important;
+  border-radius: 14px !important;
+  color: inherit !important;
+  background: transparent !important;
+  font: inherit !important;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.viz-carousel-controls > button,
+.viz-carousel-picker > summary {
+  position: relative;
+  isolation: isolate;
+}
+
+.viz-carousel-controls > button {
+  --icon-size: 16px;
+  width: 30px !important;
+  padding: 0 !important;
+}
+
+.viz-carousel-picker > summary {
+  padding-inline: 12px !important;
+}
+
+.viz-carousel-controls .viz-carousel-caret {
+  width: 14px;
+  height: 14px;
+  flex: none;
+  margin: 0;
+  color: inherit;
+  transform: rotate(180deg);
+}
+
+.viz-carousel-controls > button > svg,
+.viz-carousel-controls .viz-carousel-caret,
+.viz-carousel-count {
+  opacity: 0.5;
+}
+
+.viz-carousel-controls > button::before,
+.viz-carousel-picker > summary::before {
+  position: absolute;
+  z-index: -1;
+  inset: 3px;
+  border-radius: 12px;
+  content: "";
+  pointer-events: none;
+}
+
+.viz-carousel-controls > button:hover::before,
+.viz-carousel-picker > summary:hover::before {
+  background: var(--viz-carousel-hover);
+}
+
+.viz-carousel-controls > button,
+.viz-carousel-controls [data-lucide],
+.viz-carousel-controls .lucide {
+  flex-shrink: 0;
+}
+
+.viz-carousel-picker {
+  min-width: 0;
+}
+
+.viz-carousel-picker > summary {
+  min-width: 0;
+  list-style: none;
+}
+
+.viz-carousel-picker > summary::-webkit-details-marker {
+  display: none;
+}
+
+.viz-carousel-count {
+  flex-shrink: 0;
+  white-space: nowrap;
+}
+
+.viz-carousel-name {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.viz-carousel-options {
+  position: absolute;
+  right: 0;
+  bottom: calc(100% + 4px);
+  left: 0;
+  display: flex;
+  max-height: 240px;
+  flex-direction: column;
+  gap: 2px;
+  overflow: auto;
+  padding: 4px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  background: var(--background);
+  box-shadow: 0 4px 12px light-dark(rgb(0 0 0 / 6%), rgb(0 0 0 / 25%));
+}
+
+.viz-carousel-options > button {
+  border-radius: max(0px, calc(var(--radius-lg) - 5px)) !important;
+  width: 100% !important;
+  min-height: 28px;
+  justify-content: flex-start !important;
+  padding: 4px 8px !important;
+  font-size: var(--font-size-small) !important;
+  text-align: start;
+  white-space: normal;
+  overflow-wrap: anywhere;
+}
+
+.viz-carousel-options > [aria-current="true"],
+.viz-carousel-options > button:hover {
+  background: var(--viz-carousel-hover) !important;
+}
+
+.btn:disabled,
+.nav-link:disabled,
+.nav-link[aria-disabled="true"] {
+  cursor: not-allowed;
+  opacity: 0.4;
+}
+
+[data-lucide] {
+  stroke-width: 1.6;
+}
+
+.form-label {
+  display: block;
+  margin-bottom: 6px;
+  color: var(--foreground);
+}
+
+.form-control {
+  display: block;
+  width: 100%;
+  min-height: 28px;
+  padding: 0 8px;
+  outline: none;
+  border: 1px solid var(--input);
+  border-radius: var(--radius-lg);
+  corner-shape: var(--corner-shape);
+  color: var(--foreground);
+  background: var(--secondary);
+}
+
+.form-control::placeholder {
+  color: var(--muted-foreground);
+}
+
+.form-control[type="file"] {
+  padding: 0;
+  overflow: hidden;
+  cursor: var(--cursor-interaction, pointer);
+}
+
+.form-control[type="file"]::file-selector-button {
+  min-height: 26px;
+  margin-right: 8px;
+  padding: 0 8px;
+  border: 0;
+  border-right: 1px solid var(--input);
+  color: var(--secondary-foreground);
+  background: var(--secondary);
+  cursor: inherit;
+  font: inherit;
+}
+
+.form-control[type="file"]:not(:disabled):hover::file-selector-button {
+  background: color-mix(in srgb, var(--foreground) 6%, var(--secondary));
+}
+
+.form-control-color[type="color"] {
+  width: 40px;
+  height: 28px;
+  padding: 3px;
+  cursor: var(--cursor-interaction, pointer);
+}
+
+.form-control-color[type="color"]::-webkit-color-swatch-wrapper {
+  padding: 0;
+}
+
+.form-control-color[type="color"]::-webkit-color-swatch {
+  border: 0;
+  border-radius: calc(var(--radius-lg) - 4px);
+  corner-shape: var(--corner-shape);
+}
+
+textarea.form-control {
+  height: auto;
+  min-height: 72px;
+  padding: 8px 10px;
+  resize: vertical;
+}
+
+.form-control:focus-visible {
+  border-color: var(--ring);
+  box-shadow: inset 0 0 0 1px var(--ring);
+}
+
+.form-control:disabled,
+.form-select:disabled {
+  cursor: not-allowed;
+  opacity: 0.4;
+}
+
+.form-select {
+  appearance: none;
+  display: block;
+  width: 100%;
+  min-height: 28px;
+  margin: 0;
+  padding: 0 32px 0 8px;
+  outline: none;
+  border: 1px solid var(--input);
+  border-radius: var(--radius-lg);
+  corner-shape: var(--corner-shape);
+  color: var(--foreground);
+  background-color: var(--secondary);
+  background-image:
+    linear-gradient(45deg, transparent 50%, var(--muted-foreground) 50%),
+    linear-gradient(135deg, var(--muted-foreground) 50%, transparent 50%);
+  background-position:
+    calc(100% - 14px) 50%,
+    calc(100% - 10px) 50%;
+  background-repeat: no-repeat;
+  background-size: 4px 4px;
+  cursor: var(--cursor-interaction, default);
+}
+
+.form-select:not(:disabled):hover {
+  background-color: color-mix(in srgb, var(--foreground) 6%, var(--secondary));
+}
+
+.form-select:focus-visible {
+  border-color: var(--ring);
+  box-shadow: inset 0 0 0 1px var(--ring);
+}
+
+.form-check {
+  display: flex;
+  min-height: 20px;
+  align-items: center;
+  gap: 6px;
+}
+
+.form-check-input {
+  appearance: none;
+  width: 14px;
+  height: 14px;
+  flex: 0 0 auto;
+  margin: 0;
+  border: 1px solid var(--input);
+  color: var(--primary-foreground);
+  background-color: transparent;
+  cursor: var(--cursor-interaction, default);
+  transition:
+    background-color 150ms,
+    border-color 150ms,
+    box-shadow 150ms;
+}
+
+.form-check:not(.form-switch) .form-check-input[type="checkbox"] {
+  border-color: var(--input);
+  border-radius: var(--radius-sm);
+  corner-shape: var(--corner-shape);
+  background-color: var(--secondary);
+  box-shadow: var(--shadow-sm);
+}
+
+.form-check:not(.form-switch)
+  .form-check-input:not(:disabled):not(:checked):hover {
+  background-color: var(--card);
+}
+
+.form-check:not(.form-switch) .form-check-input[type="checkbox"]:checked {
+  border-color: var(--primary);
+  background-color: var(--primary);
+}
+
+.form-check:not(.form-switch)
+  .form-check-input[type="checkbox"]:checked::before {
+  display: block;
+  width: 100%;
+  height: 100%;
+  background: var(--primary-foreground);
+  content: "";
+  mask: var(--checkmark-image) center / 12px 12px no-repeat;
+}
+
+.form-check-input[type="radio"] {
+  width: 14px;
+  height: 14px;
+  border-radius: var(--radius-full);
+}
+
+.form-check-input[type="radio"]:checked {
+  border: 2px solid var(--primary);
+  background:
+    radial-gradient(circle, var(--primary-foreground) 0 2.5px, transparent 3px),
+    var(--primary);
+}
+
+.form-check:not(.form-switch) .form-check-input:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 2px;
+}
+
+.form-check:not(.form-switch) .form-check-input:disabled {
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+.form-check:not(.form-switch) .form-check-input:disabled + .form-check-label {
+  cursor: not-allowed;
+}
+
+.form-switch .form-check-input:disabled,
+.form-switch .form-check-input:disabled + .form-check-label {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.form-check-label {
+  color: var(--foreground);
+  cursor: var(--cursor-interaction, default);
+}
+
+.form-switch .form-check-input {
+  position: relative;
+  width: 32px;
+  height: 20px;
+  border: 0;
+  border-radius: var(--radius-full);
+  background: var(--muted);
+  box-shadow: none;
+  transition: background-color 200ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+.form-switch .form-check-input::before {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 16px;
+  height: 16px;
+  box-sizing: border-box;
+  border: 1px solid light-dark(var(--primary-foreground), var(--foreground));
+  border-radius: var(--radius-full);
+  background: light-dark(var(--primary-foreground), var(--foreground));
+  box-shadow: var(--shadow-sm);
+  content: "";
+  transform: translate(2px, -50%);
+  transition: transform 200ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+.form-switch .form-check-input:checked {
+  background: var(--primary);
+}
+
+.form-switch .form-check-input:checked::before {
+  transform: translate(14px, -50%);
+}
+
+.form-switch .form-check-input:focus-visible {
+  box-shadow: 0 0 0 2px var(--ring);
+}
+
+.form-range {
+  appearance: none;
+  display: block;
+  width: 100%;
+  height: 28px;
+  flex: 1;
+  margin: 0;
+  padding: 0;
+  outline: none;
+  border: 0;
+  accent-color: var(--primary);
+  background: linear-gradient(
+      color-mix(in srgb, var(--foreground) 7%, transparent),
+      color-mix(in srgb, var(--foreground) 7%, transparent)
+    )
+    center / 100% 2px no-repeat;
+}
+
+.form-range::-webkit-slider-runnable-track {
+  height: 28px;
+  background: transparent;
+}
+
+.form-range::-webkit-slider-thumb {
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  margin-top: 4px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-full);
+  background: light-dark(var(--primary-foreground), var(--foreground));
+}
+
+.form-range:focus-visible::-webkit-slider-thumb {
+  border-color: var(--ring);
+  box-shadow: inset 0 0 0 1px var(--ring);
+}
+
+.form-range::-moz-range-track {
+  height: 28px;
+  background: transparent;
+}
+
+.form-range::-moz-range-thumb {
+  width: 20px;
+  height: 20px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-full);
+  background: light-dark(var(--primary-foreground), var(--foreground));
+}
+
+.form-range:focus-visible::-moz-range-thumb {
+  border-color: var(--ring);
+  box-shadow: inset 0 0 0 1px var(--ring);
+}
+
+.form-range:disabled {
+  cursor: not-allowed;
+  opacity: 0.4;
+}
+
+.btn:not(.btn-primary, .viz-tile):is(
+  [aria-pressed="true"],
+  [aria-selected="true"],
+  .is-selected
+) {
+  border-color: var(--primary);
+  color: var(--primary-foreground);
+  background: var(--primary);
+}
+
+.btn.viz-tile:is([aria-pressed="true"], [aria-selected="true"], .is-selected) {
+  border-color: var(--primary);
+  box-shadow: inset 0 0 0 1px var(--primary);
+}
+
+.btn:focus-visible,
+.nav-link:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 2px;
+}
+
+.viz-carousel-controls :is(button, summary):focus-visible {
+  outline: 2px solid var(--ring) !important;
+  outline-offset: 2px !important;
+}
+
+@media (pointer: coarse) {
+  .viz-carousel:has(> .viz-carousel-controls) {
+    min-height: calc(76px + var(--viz-carousel-picker-height, 0px));
+    padding-bottom: 76px;
+  }
+
+  .btn,
+  .nav-link,
+  .viz-carousel-controls button,
+  .viz-carousel-picker > summary,
+  .form-control,
+  .form-select {
+    min-width: 44px;
+    min-height: 44px;
+  }
+
+  /* Keep small-screen WebKit from zooming when a text field receives focus. */
+  .form-control,
+  .form-select {
+    font-size: max(16px, var(--font-size-normal));
+  }
+
+  .form-control[type="file"]::file-selector-button {
+    min-width: 44px;
+    min-height: 44px;
+  }
+
+  .form-control-color[type="color"] {
+    width: 44px;
+    height: 44px;
+  }
+
+  .form-control:is(
+    [type="date"],
+    [type="datetime-local"],
+    [type="month"],
+    [type="time"],
+    [type="week"]
+  ) {
+    min-width: 0;
+    max-width: 100%;
+    padding-block: 8px;
+  }
+
+  .form-check {
+    min-height: 44px;
+    padding-inline: 15px;
+  }
+
+  .form-check-input {
+    position: relative;
+  }
+
+  .form-check-input::after {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 44px;
+    height: 44px;
+    content: "";
+    transform: translate(-50%, -50%);
+  }
+
+  .form-check-label {
+    display: inline-flex;
+    min-width: 44px;
+    min-height: 44px;
+    align-items: center;
+  }
+
+  .form-range {
+    height: 44px;
+    touch-action: pan-y;
+  }
+
+  .form-range::-webkit-slider-runnable-track {
+    height: 44px;
+  }
+
+  .form-range::-moz-range-track {
+    height: 44px;
+  }
+
+  .form-range::-webkit-slider-thumb {
+    margin-top: 12px;
+  }
+}
+
+svg {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+#widget > svg {
+  width: 100%;
+}
+
+/* Model-authored chart rules can otherwise stretch icons after these styles load. */
+svg.lucide {
+  display: block;
+  width: var(--icon-size) !important;
+  height: var(--icon-size) !important;
+  flex: none;
+  margin: 0 !important;
+  stroke-width: 1.6;
+}
+
+.text-warning,
+.text-destructive {
+  color: var(--destructive);
+}
+
+html>body{padding:0}
+
+html{color-scheme:light;background:white!important}:root{--background:#fff;--foreground:#202b3b;--muted-foreground:#728095;--font-sans:"Malgun Gothic",system-ui,sans-serif}body{padding:16px!important;overflow-x:hidden}
+.diagram{margin:0 auto;max-width:100%;color:var(--foreground)}.diagram h2{font-size:20px;line-height:1.4;margin-bottom:4px}.diagram-scene{display:block;width:100%;margin:8px 0 10px}
+.diagram-legend{display:flex;flex-wrap:wrap;gap:8px 16px;justify-content:center}.diagram-legend span{display:inline-flex;align-items:center;gap:6px}.diagram-legend i{width:10px;height:10px;border-radius:50%}
+.diagram-controls{display:grid;gap:12px;margin:18px 0 12px}.diagram-top{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}.diagram-views{display:flex;gap:4px;margin-left:auto}.diagram-views .btn{padding:5px 12px;border:1px solid color-mix(in srgb,var(--muted-foreground) 30%,var(--background));color:var(--foreground);background:var(--background)}.diagram-views .btn[aria-pressed=true]{background:var(--foreground);color:var(--background);border-color:var(--foreground)}.diagram .form-label{display:flex;justify-content:space-between}.diagram-note{color:var(--muted-foreground)}button,input{accent-color:#2675db}
+.diagram .bone{fill:var(--muted);stroke:var(--foreground);stroke-width:1.25;stroke-linejoin:round}.diagram .muscle{stroke:var(--foreground);stroke-opacity:.65;stroke-width:1.1;stroke-linejoin:round}.diagram .tendon{fill:var(--background);stroke:var(--foreground);stroke-width:1.1}.diagram .fiber{fill:none;stroke:var(--foreground);stroke-opacity:.32;stroke-width:.75}
+.diagram .red{fill:color-mix(in srgb,var(--red) 65%,var(--background))}.diagram .blue{fill:color-mix(in srgb,var(--blue) 62%,var(--background))}.diagram .green{fill:color-mix(in srgb,var(--green) 65%,var(--background))}.diagram .purple{fill:color-mix(in srgb,var(--purple) 57%,var(--background))}.diagram .orange{fill:color-mix(in srgb,var(--orange) 65%,var(--background))}.diagram .yellow{fill:color-mix(in srgb,var(--yellow) 68%,var(--background))}.diagram .teal{fill:color-mix(in srgb,var(--blue) 35%,var(--green))}.diagram .neutral{fill:color-mix(in srgb,var(--muted-foreground) 30%,var(--background))}
+.diagram .red-key{background:var(--red)}.diagram .blue-key{background:var(--blue)}.diagram .green-key{background:var(--green)}.diagram .purple-key{background:var(--purple)}.diagram .orange-key{background:var(--orange)}.diagram .yellow-key{background:var(--yellow)}.diagram .teal-key{background:color-mix(in srgb,var(--blue) 55%,var(--green))}
+.diagram-labels{fill:var(--foreground)}.diagram-labels text{font-size:12px}.diagram-labels path{fill:none;stroke:var(--muted-foreground);stroke-width:.9}.diagram.transparent .muscle{fill-opacity:.30}.diagram.transparent .tendon{fill-opacity:.6}.diagram.no-fibers .fibers{display:none}
+
+
+.diagram{width:min(760px,100%)}
+.diagram .bone{fill:var(--muted);stroke:var(--foreground);stroke-width:1.25;stroke-linejoin:round}
+.diagram .bone-detail{fill:none;stroke:var(--muted-foreground);stroke-width:.9}
+.diagram .rib{fill:var(--muted);stroke:var(--muted-foreground);stroke-width:1.1}
+.diagram .rib-outline{fill:none;stroke:var(--muted-foreground);stroke-width:6;stroke-linecap:round}
+.diagram .cartilage{fill:var(--background);stroke:var(--muted-foreground);stroke-width:1}
+.diagram .torso-context,.diagram .thorax-mass{fill:var(--muted);fill-opacity:.13;stroke:var(--muted-foreground);stroke-opacity:.45;stroke-width:.9}
+.diagram .muscle{stroke:var(--foreground);stroke-opacity:.65;stroke-width:1.1;stroke-linejoin:round}
+.diagram .fiber{stroke-width:.65;stroke-opacity:.34}
+.diagram .fiber-highlight{fill:none;stroke:white;stroke-opacity:.36;stroke-width:.65}
+.diagram .aponeurosis{fill:var(--background);stroke:var(--muted-foreground);stroke-width:.8}
+.diagram .aponeurosis-fiber{fill:none;stroke:var(--muted-foreground);stroke-width:.45;stroke-opacity:.28}
+.diagram .intersection{fill:var(--background);stroke:var(--muted-foreground);stroke-width:.65}
+.diagram .section-edge{fill:none;stroke:var(--foreground);stroke-opacity:.7;stroke-width:1.1}
+.diagram .context-muscle{fill:color-mix(in srgb,var(--foreground) 9%,var(--background));stroke:var(--muted-foreground);stroke-opacity:.65;stroke-width:.8}
+.diagram .context-muscle .fiber{stroke-opacity:.13}
+.diagram:not(.transparent) [data-part="coronal-vertebrae"]{visibility:hidden}
+.diagram.transparent .muscle-layers{opacity:.35}
+.diagram.transparent .muscle{fill-opacity:1}
+.diagram.transparent .intersection,.diagram.transparent .aponeurosis{fill-opacity:1}
+.diagram.no-fibers .fibers{display:none}
+.diagram .diagram-labels text{font-size:12px}
+
+</style></head><body><div id="abdomen" class="diagram"><h2>복부 근육과 몸통 굽힘</h2><div class="text-small diagram-caption">전거근·외복사근·내복사근·복직근</div><svg class="diagram-scene" role="img" aria-labelledby="abdomen-title abdomen-desc"><title id="abdomen-title">복부 근육과 몸통 굽힘</title><desc id="abdomen-desc">골반을 고정하고 허리와 흉곽을 말았다 펴는 복부 도해. 정면은 16도 사선, 측면은 90도입니다. 전거근은 흉곽 옆, 외복사근은 표층, 내복사근은 그 아래층입니다. 왼쪽 외복사근 일부를 걷어 내복사근을 표시합니다. 근육 변형은 작화용 근사입니다.</desc><defs></defs><g class="diagram-volumes"></g><g class="diagram-labels"></g></svg><div class="diagram-legend text-small"></div><div class="diagram-controls"><div class="diagram-top"><div class="viz-row"><button type="button" class="btn btn-primary" id="abdomen-play" aria-pressed="false">재생</button><label class="form-check"><input type="checkbox" class="form-check-input" id="abdomen-fibers" checked><span class="form-check-label">근섬유</span></label><label class="form-check"><input type="checkbox" class="form-check-input" id="abdomen-transparent"><span class="form-check-label">근육 반투명</span></label></div><div class="diagram-views" role="group" aria-label="보기 방향"><button type="button" class="btn" id="abdomen-front" aria-pressed="true">정면</button><button type="button" class="btn" id="abdomen-side" aria-pressed="false">측면</button></div></div><label class="form-label" for="abdomen-angle">몸통 굽힘<output id="abdomen-value" class="tabular-nums">0°</output></label><input type="range" class="form-range" id="abdomen-angle" min="-10" max="45" value="0" step="1" aria-label="몸통 굽힘"></div><div class="text-small diagram-note">0°: 바르게 폄 · 45°: 말기 · 곡선 절개창으로 내복사근 표시</div></div><script>/* Original coronal drawing landmarks. OpenStax A&P 2e 7.3/7.4/8.3/11.5
+   informs connections, not measured body proportions or clinical kinematics. */
+const ClassicCoronalAnatomy=(()=>{
+ // Width corrections are relative to textbook drawings, not clinical norms.
+ // Rib width/height was 1.239; 0.77 gives ~0.95. Keep arm rotation rigid.
+ const proportions={axialWidth:.77,girdleWidth:.70,pelvisWidth:.86,humerusLength:1.18};
+ const body=p=>[p[0]*proportions.axialWidth,p[1]];
+ const vertebrae=[...Array.from({length:7},(_,i)=>({id:'C'+(i+1),region:'cervical',y:83+i*12,w:9})),...Array.from({length:12},(_,i)=>({id:'T'+(i+1),region:'thoracic',y:173+i*16,w:11+i*.15})),...Array.from({length:5},(_,i)=>({id:'L'+(i+1),region:'lumbar',y:373+i*18,w:15+i*.4}))];
+ const extents=[88,103,117,128,134,137,138,135,127,115,93,70];
+ const anterior=[[49,191],[55,216],[61,235],[67,253],[73,272],[79,288],[85,302],[96,321],[100,342],[98,363],[67,377],[49,386]];
+ const sternumY=[178,202,220,237,253,269,283];
+ const ribs=vertebrae.filter(v=>v.region==='thoracic').map((v,i)=>({number:i+1,type:i<7?'true':i<10?'false':'floating',y:v.y,extent:extents[i],end:anterior[i],cartilageEnd:i<7?[i===0?17:12,sternumY[i]]:i<10?anterior[i-1]:null}));
+ const ribPoint=(r,t)=>{const u=1-t,a=[r.extent,r.y+10],b=[r.extent+3,r.y+27],c=[r.end[0]+18,r.end[1]-4],d=r.end;return [0,1].map(k=>u*u*u*a[k]+3*u*u*t*b[k]+3*u*t*t*c[k]+t*t*t*d[k]);};
+ const serratusOrigins=ribs.slice(0,8).map(r=>body(ribPoint(r,.2)));
+ function girdle(angle){
+  const lift=(angle-15)/105,up=30*lift,r=-up*Math.PI/180;
+  const S=p=>{const x=p[0]-112,y=(p[1]-190)*.9;return [(112+x*Math.cos(r)-y*Math.sin(r)+5*lift)*proportions.girdleWidth,190+x*Math.sin(r)+y*Math.cos(r)-12*lift];};
+  const a=angle*Math.PI/180,d=[Math.sin(a),Math.cos(a)],n=[Math.cos(a),-Math.sin(a)],g=S([165,176]);
+  const H=[g[0]+13*n[0],g[1]+13*n[1]],at=(s,o=0)=>[H[0]+s*proportions.humerusLength*d[0]+o*n[0],H[1]+s*proportions.humerusLength*d[1]+o*n[1]];
+  return {lift,up,S,H,at,scapTransform:`scale(${proportions.girdleWidth} 1) translate(${5*lift} ${-12*lift}) rotate(${-up} 112 190) translate(0 19) scale(1 .9)`};
+ }
+ function draw(axial,el,path,view){
+  axial.setAttribute('transform',`scale(${proportions.axialWidth} 1)`);
+  const context=el('g',{'data-part':'coronal-torso-context'},axial);
+  path('M -78,157 Q -127,166 -138,235 Q -148,297 -113,357 Q -108,389 -105,413 Q -128,432 -127,460 L -90,485 Q -46,469 0,474 Q 46,469 90,485 L 127,460 Q 128,432 105,413 Q 108,389 113,357 Q 148,297 138,235 Q 127,166 78,157 Z','torso-context',context);
+  const column=el('g',{'data-part':'coronal-vertebrae'},axial);
+  for(const v of vertebrae){
+   const g=el('g',{'data-vertebra':v.id,'data-region':v.region},column),{w,y}=v;
+   path(`M ${-w},${y} Q 0,${y-3} ${w},${y} L ${w+2},${y+8} Q 0,${y+13} ${-w-2},${y+8} Z`,'bone',g);
+   if(view==='back')path(`M -3,${y+3} L 3,${y+3} L 4,${y+12} L 0,${y+15} L -4,${y+12} Z`,'bone',g);
+  }
+  for(const sign of [-1,1]){
+   const side=el('g',{transform:`scale(${sign} 1)`,'data-side':sign},axial);
+   for(const r of ribs){
+    const g=el('g',{'data-rib':r.number,'data-rib-type':r.type},side),{y,extent:x,end:e}=r;
+    // Open rib arc, with a separate anterior end. The small floating ribs
+    // finish laterally, without adding them to the anterior costal arch.
+    const curve=`M 13,${y} C 51,${y-13} ${x-10},${y-17} ${x},${y+10} C ${x+3},${y+27} ${e[0]+18},${e[1]-4} ${e[0]},${e[1]}`;
+    if(view==='front')path(curve,'rib-outline',g);
+    const bone=path(curve,'rib',g);
+    if(view==='front')bone.setAttribute('style','fill:none;stroke:color-mix(in srgb,var(--foreground) 10%,var(--background));stroke-width:4;stroke-linecap:round');
+    if(view==='front'&&r.cartilageEnd){const c=r.cartilageEnd;
+     const p=path(`M ${e[0]},${e[1]} Q ${(e[0]+c[0])/2},${e[1]-4} ${c[0]},${c[1]} L ${c[0]},${c[1]+6} Q ${(e[0]+c[0])/2},${e[1]+3} ${e[0]-2},${e[1]+6} Z`,'cartilage',g);
+     p.setAttribute('data-connects-to',r.number<=7?'sternum':'rib-'+(r.number-1));
+    }
+   }
+   const pelvis=el('g',{'data-part':'coronal-hip-bone',transform:`scale(${proportions.pelvisWidth/proportions.axialWidth} 1)`},side);
+   const hip=view==='front'?'M 25,442 Q 20,425 39,420 Q 75,400 106,420 Q 124,433 113,446 L 99,457 Q 104,464 91,471 Q 86,476 88,487 Q 90,508 66,515 Q 49,511 4,495 L 4,479 Q 35,480 58,468 Q 65,454 45,447 Q 30,456 25,442 Z M 47,482 Q 62,469 73,483 Q 76,499 63,503 Q 48,500 37,491 Q 36,484 47,482 Z':'M 20,440 Q 28,422 49,416 Q 80,401 103,416 Q 115,425 108,441 L 91,452 Q 83,459 86,471 L 92,490 Q 87,506 66,510 Q 47,505 32,491 L 26,478 Q 39,467 44,456 L 29,449 Z M 47,479 Q 62,470 72,482 Q 74,495 61,498 Q 47,496 44,486 Z';
+   path(hip,'bone',pelvis).setAttribute('fill-rule','evenodd');
+   path('M 33,430 Q 74,409 103,430','bone-detail',pelvis);
+   if(view==='front')path('M 94,459 Q 82,461 85,475','bone-detail',pelvis);
+  }
+  const sacrum=path(view==='front'?'M -20,449 Q 0,441 20,449 L 22,457 Q 18,474 0,486 Q -18,474 -22,457 Z':'M -18,445 Q 0,439 18,445 L 22,459 Q 17,485 0,497 Q -17,485 -22,459 Z','bone',axial);sacrum.setAttribute('data-part','coronal-sacrum');sacrum.setAttribute('transform',`scale(${view==='front'?1.4:1.2} 1)`);
+  path(view==='front'?'M -3,485 Q 3,490 0,495':'M -3,496 Q 3,501 0,508','bone-detail',axial);
+  if(view==='front'){
+   path('M -4,479 L 4,479 L 4,495 L -4,495 Z','cartilage',axial).setAttribute('data-part','coronal-pubic-symphysis');
+   const g=el('g',{'data-part':'coronal-sternum'},axial);
+   path('M -17,148 Q -10,144 -7,153 L 7,153 Q 10,144 17,148 L 20,177 L 12,196 L 11,277 Q 12,286 5,290 L 0,300 L -5,290 Q -12,286 -11,277 L -12,196 L -20,177 Z','bone',g);
+   path('M -12,196 L 12,196 M -10,219 L 10,219 M -10,240 L 10,240 M -9,261 L 9,261','bone-detail',g);
+  }else{
+   const fascia=path('M -9,347 L 9,347 Q 27,377 23,427 L 15,456 L 0,474 L -15,456 L -23,427 Q -27,377 -9,347 Z','fascia',axial);
+   axial.insertBefore(fascia,column);
+  }
+ }
+ // Keep leaders inside their muscle as the humeral attachment moves.
+ function anchor(shape){
+  const b=shape.getBBox(),screen=shape.getScreenCTM(),local=shape.getCTM(),points=[];
+  for(let row=0;row<13;row++)for(let col=0;col<13;col++)points.push(new DOMPoint(b.x+b.width*(col+.5)/13,b.y+b.height*(row+.5)/13));
+  points.sort((a,c)=>Math.hypot(a.x-b.x-b.width/2,a.y-b.y-b.height/2)-Math.hypot(c.x-b.x-b.width/2,c.y-b.y-b.height/2));
+  let fallback=null;
+  for(const p of points){if(!shape.isPointInFill(p))continue;fallback??=p;
+   const q=p.matrixTransform(screen),hit=document.elementFromPoint(q.x,q.y);
+   if(hit===shape||hit?.closest('[clip-path]')?.getAttribute('clip-path')===`url(#${shape.id}-clip)`){const s=p.matrixTransform(local);return {point:[s.x,s.y],visible:true};}
+  }
+  if(fallback){const s=fallback.matrixTransform(local);return {point:[s.x,s.y],visible:false};}
+  return null;
+ }
+ return {vertebrae,ribs,ribPoint,serratusOrigins,girdle,draw,anchor,body,proportions};
+})();
+
+/* Qualitative lateral landmarks based on OpenStax A&P 2e, chapters 7.3/7.4.
+   x is anterior, y is inferior. Drawing units are not measured millimetres.
+   These are right-side ribs, not 12 repeated complete elliptical rings. */
+const ClassicSideAnatomy=(()=>{
+ const cervical=[[-7,101],[-2,110.5],[2,120],[2,129.5],[-2,139],[-9,148.5],[-16,158]];
+ const thoracic=[[-22,171],[-29,183],[-35,195],[-40,207],[-44,219],[-45,231],[-44,243],[-39,255],[-34,267],[-27,279],[-19,291],[-12,303]];
+ const lumbar=[[-6,322],[1,339],[6,356],[6,373],[0,390]];
+ const vertebrae=[...cervical.map((center,i)=>({id:'C'+(i+1),region:'cervical',center,rx:7.5+i*.3,ry:3})),...thoracic.map((center,i)=>({id:'T'+(i+1),region:'thoracic',center,rx:9+i*.2,ry:4.7})),...lumbar.map((center,i)=>({id:'L'+(i+1),region:'lumbar',center,rx:12+i*.4,ry:6.4}))];
+ // Vertebral bodies follow the local column tangent rather than a stack
+ // of horizontal blocks. This drawing angle is not a measured Cobb angle.
+ vertebrae.forEach((v,i)=>{const a=vertebrae[Math.max(0,i-1)].center,b=vertebrae[Math.min(vertebrae.length-1,i+1)].center;v.tilt=-Math.atan2(b[0]-a[0],b[1]-a[1])*180/Math.PI;});
+ const sternum=[[45,177],[55,205],[60,224],[66,243],[71,261],[74,276],[73,286]];
+ const ribs=thoracic.map((v,i)=>{
+  const n=i+1,start=[v[0]-2,v[1]+1],angle=[v[0]-17,v[1]+12],attachment=n<=7?sternum[i]:n<=10?[[65,302],[49,315],[30,323]][i-7]:[[24,320],[15,326]][i-10];
+  const end=n<=7?[attachment[0]-10,attachment[1]+3]:n<=10?[attachment[0]-9,attachment[1]-1]:attachment;
+  const c1=[angle[0]+14,angle[1]+18],c2=[end[0]-32,end[1]+7];
+  const cartilageEnd=n<=7?attachment:n===8?[sternum[6][0]-10,sternum[6][1]+3]:n===9?[56,301]:n===10?[40,314]:null;
+  return {id:'rib-'+n,number:n,cartilageEnd,type:n<=7?'true':n<=10?'false':'floating',start,angle,c1,c2,end,attachment};
+ });
+ const spinous=v=>[v.center[0]-v.rx-16,v.center[1]+(v.region==='thoracic'?10:v.region==='cervical'?3:2)];
+ const cubic=(r,t)=>{const u=1-t;return [0,1].map(k=>u*u*u*r.angle[k]+3*u*u*t*r.c1[k]+3*u*t*t*r.c2[k]+t*t*t*r.end[k]);};
+ // Surface origins follow their corresponding rib, rather than a horizontal grid.
+ const serratusOrigins=ribs.slice(0,8).map(r=>cubic(r,.76));
+ const thoraxContour='M -22,166 Q 7,160 45,177 C 65,197 80,242 78,280 Q 71,314 30,334 Q 2,343 -13,318 C -31,304 -52,268 -60,233 Q -61,193 -22,166 Z';
+ const sacrum='M -12,400 Q 4,397 7,410 Q 4,430 -5,450 L -2,459 Q -8,463 -16,454 Q -27,439 -26,420 Z';
+ const pelvis='M -49,397 Q -49,374 -24,368 Q 0,367 26,382 Q 47,392 61,408 L 64,416 L 46,430 Q 51,437 62,438 L 66,451 Q 51,457 36,457 L 6,475 Q -10,485 -23,474 L -27,455 Q -16,438 -24,420 Z M 33,439 Q 50,440 48,451 Q 39,462 13,466 Q 8,454 19,446 Z';
+ function girdle(angle){const lift=(angle-15)/105,r=30*lift*Math.PI/180;
+  const scapular=p=>[p[0]+5*lift,186+(p[1]-186)*Math.cos(r)-(p[2]||0)*Math.sin(r)-8*lift];
+  const shoulder=scapular([-3,174,48]);
+  // Arm projection stays illustrative, while all humeral/scapular attachments
+  // share these same transforms. The axial skeleton does not flex with the arm.
+  const a=angle*Math.PI/180,arm=(s,o=0)=>[shoulder[0]+Math.sin(a)*s*.2+Math.cos(a)*o,shoulder[1]+Math.cos(a)*s-Math.sin(a)*o];
+  return {lift,scapular,shoulder,arm};
+ }
+ return {vertebrae,cervical,thoracic,lumbar,sternum,ribs,spinous,cubic,serratusOrigins,thoraxContour,sacrum,pelvis,girdle};
+})();
+
+function drawSideSkeleton(drawing,el,path){const A=ClassicSideAnatomy,f=n=>Math.round(n*100)/100,xy=p=>p.map(f).join(','),mix=(a,b,t)=>a.map((v,i)=>v+(b[i]-v)*t);
+ const axial=el('g',{'data-part':'side-axial-skeleton'},drawing);
+ path(A.thoraxContour,'thorax-mass',axial);
+ for(const v of A.vertebrae){
+  const g=el('g',{'data-vertebra':v.id,'data-region':v.region},axial),[x,y]=v.center,rx=v.rx,ry=v.ry;
+  path(`M ${x-rx},${y-ry} Q ${x},${y-ry-1} ${x+rx},${y-ry+1} L ${x+rx},${y+ry} Q ${x},${y+ry+2} ${x-rx},${y+ry-1} Z`,'bone',g).setAttribute('transform',`rotate(${f(v.tilt)} ${x} ${y})`);
+  const drop=v.region==='thoracic'?10:v.region==='cervical'?3:2;
+  const theta=v.tilt*Math.PI/180,back=o=>[x-rx*Math.cos(theta)-o*Math.sin(theta),y-rx*Math.sin(theta)+o*Math.cos(theta)];
+  path(`M ${xy(back(-2))} Q ${x-rx-6},${y-5} ${x-rx-10},${y+2} L ${x-rx-16},${y+drop} L ${x-rx-10},${y+drop+2} L ${xy(back(4))}`,'bone',g);
+ }
+ // Open, oblique rib ribbons: upper short, middle broad, lower diminishing.
+ for(const r of A.ribs){
+  const g=el('g',{'data-rib':r.number,'data-rib-type':r.type},axial),thick=r.number<=2?3:4;
+  const q=p=>[p[0],p[1]+thick];
+  path(`M ${xy(r.start)} Q ${xy([r.angle[0]-5,r.angle[1]-14])} ${xy(r.angle)} C ${xy(r.c1)} ${xy(r.c2)} ${xy(r.end)} L ${xy(q(r.end))} C ${xy(q(r.c2))} ${xy(q(r.c1))} ${xy(q(r.angle))} Q ${xy([r.angle[0]-3,r.angle[1]-8])} ${xy(q(r.start))} Z`,'rib',g);
+  if(r.type!=='floating'){
+   const end=r.cartilageEnd,c=r.type==='true'?mix(r.end,end,.5):[end[0]-2,r.end[1]-2];
+   path(`M ${xy(r.end)} Q ${xy(c)} ${xy(end)} L ${xy(q(end))} Q ${xy(q(c))} ${xy(q(r.end))} Z`,'cartilage',g);
+  }
+ }
+ path('M 42,174 Q 48,174 50,183 L 58,203 L 54,209 L 48,199 Z','bone',axial);
+ path('M 54,205 L 60,204 Q 72,237 78,273 L 77,282 L 71,282 Q 66,238 54,205 Z','bone',axial);
+ path('M 72,282 L 77,282 L 74,299 L 68,290 Z','bone',axial);
+ // Align vertical torso landmarks with the coronal plate, then reduce the
+ // previously oversized lateral pelvic height without stretching the rim.
+ const pelvic=(d,cls)=>path(d.replace(/(-?\d+(?:\.\d+)?),(-?\d+(?:\.\d+)?)/g,(_,x,y)=>`${x},${f(+y>390?390+(+y-390)*.6:+y)}`),cls,axial);
+ pelvic(A.sacrum,'bone');pelvic('M -9,454 Q -3,470 6,470 Q 12,472 8,475 Q -3,474 -13,460 Z','bone');
+ pelvic(A.pelvis,'bone pelvis').setAttribute('fill-rule','evenodd');
+ pelvic('M -42,395 Q -26,384 -11,386 M -19,405 Q -15,412 -21,419 M 7,425 Q 30,412 38,433 Q 34,450 15,446 Q 5,440 7,425','bone-detail');
+
+return axial;}
+
+/* Original abdomen plate, in the coordinate system of the reviewed upper body.
+   Costal and pelvic paths are reused verbatim. Fiber curves depict direction,
+   not measured strain, activation, or a subject-specific muscle volume. */
+function AbdomenDraft(host) {
+ const svg=host.querySelector('svg'),defs=svg.querySelector('defs'),drawing=host.querySelector('.diagram-volumes'),labels=host.querySelector('.diagram-labels'),NS='http://www.w3.org/2000/svg';
+ const el=(tag,attrs,parent)=>{const n=document.createElementNS(NS,tag);for(const [k,v] of Object.entries(attrs))n.setAttribute(k,v);parent.appendChild(n);return n;};
+ const path=(d,cls,g)=>el('path',{d,class:cls},g),xy=p=>p.map(v=>+v.toFixed(3)).join(','),mix=(a,b,t)=>a.map((v,i)=>v+(b[i]-v)*t);
+ const plates={},masks=[];let serial=0;
+ labels.setAttribute('pointer-events','none');
+ function region(g,d,color,id) {
+  const layer=el('g',{'data-muscle':id},g),shape=path(d,'muscle '+color,layer);shape.id='draft-'+id+'-'+serial++;
+  const clip=el('clipPath',{id:shape.id+'-clip',clipPathUnits:'userSpaceOnUse'},defs);el('use',{href:'#'+shape.id},clip);
+  const fg=el('g',{class:'fibers','clip-path':`url(#${shape.id}-clip)`},layer);
+  return {layer,shape,fg};
+ }
+ function fibers(r,curves) {for(const d of curves){path(d,'fiber',r.fg);}}
+ function bone(g,d,cls='bone'){return path(d,cls,g);}
+ const C=ClassicCoronalAnatomy,S=ClassicSideAnatomy,B=C.body;
+ function buildFront(){
+  const g=el('g',{'data-view':'front'},drawing),axial=el('g',{},g);C.draw(axial,el,path,'front');
+  const G=C.girdle(35),at=G.at;
+  const humerus='M -13,-12 C -30,-9 -31,10 -20,23 C -14,34 -12,54 -10,83 L -8,139 C -8,150 -19,158 -17,167 Q -14,175 -6,171 Q 0,176 8,170 Q 21,172 21,163 C 20,154 10,149 10,139 L 12,72 Q 12,41 22,20 C 32,1 13,-23 -2,-20 Q -9,-20 -13,-12 Z';
+  const scapula='M 147,159 Q 127,145 89,165 Q 85,212 109,291 Q 121,298 130,277 L 163,190 Q 177,180 166,161 L 160,154 Q 164,144 151,143 L 135,146 Q 128,151 139,155 Z';
+  for(const sign of [-1,1]){
+   const side=el('g',{transform:`scale(${sign} 1)`,'data-part':'shoulder-skeleton'},g);
+   bone(side,scapula).setAttribute('transform',G.scapTransform);
+   bone(side,`M ${xy(B([18,151]))} Q ${xy(B([61,139]))} ${xy(G.S([170,163]))} L ${xy(mix(G.S([170,163]),[G.S([170,163])[0],G.S([170,163])[1]+7],1))} Q ${xy(B([67,151]))} ${xy(B([18,160]))} Z`);
+   const arm=el('g',{transform:`translate(${xy(G.H)}) rotate(-35) scale(1 1.18)`},side);bone(arm,humerus);
+   bone(arm,'M -20,19 Q -1,29 18,13 M 1,35 Q 5,83 2,138 M -7,160 Q 1,151 11,161','bone-detail');
+  }
+  const muscles=el('g',{class:'muscle-layers'},g);
+  // Broad white aponeuroses continue to the linea alba and pubic attachments.
+  for(const sign of [-1,1]){
+   const side=el('g',{transform:`scale(${sign} 1)`},muscles);
+   path('M 32,302 Q 58,303 65,346 Q 65,396 80,423 Q 58,450 12,491 L 3,491 L 3,304 Z','aponeurosis',side);
+   const af=el('g',{class:'fibers'},side);
+   for(let i=0;i<20;i++){const t=i/19;path(`M ${xy([45+29*t,338+84*t])} Q ${xy([29+17*t,374+76*t])} ${xy([3,400+87*t])}`,'aponeurosis-fiber',af);}
+   // One oblique sheet, with costal digitations rather than rectangular panels.
+   const eoD='M 82,254 Q 90,259 94,264 L 84,271 Q 96,273 97,281 L 81,290 Q 92,293 93,302 L 78,312 Q 89,317 90,325 L 79,329 Q 91,338 86,346 L 68,363 Q 80,371 76,380 Q 83,397 91,417 Q 82,427 72,431 Q 54,438 39,427 C 36,398 32,371 35,342 Q 37,312 57,286 Q 66,269 82,254 Z';
+   const eo=region(side,eoD,'blue','external-oblique');
+   const eoFibers=[];
+   for(let i=0;i<44;i++){const t=i/43,o=[98-24*Math.pow(t,1.9),253+126*t],e=[35+36*t,323+108*t];eoFibers.push(`M ${xy(o)} C ${xy([o[0]-6,o[1]+27])} ${xy([e[0]+14,e[1]-18])} ${xy(e)}`);}
+   fibers(eo,eoFibers);
+   // Connected serratus fan: posterior insertion and eight costal slips.
+   const origins=[[82,195],[76,213],[78,235],[82,254],[84,271],[81,290],[78,312],[79,329]],insert=t=>[104-5*t,210+76*t];
+   const d='M 82,192 Q 103,220 106,249 Q 108,276 100,300 Q 96,324 85,339 L 79,329 Q 88,319 84,314 L 78,312 Q 90,300 87,292 L 81,290 Q 95,280 91,274 L 84,271 Q 96,262 90,257 L 82,254 Q 91,245 85,238 L 78,235 Q 84,222 77,215 L 73,212 Q 76,200 82,192 Z';
+   const sa=region(side,d,'orange','serratus');
+   const wall=el('clipPath',{id:'front-wall-'+sign},defs),wallShape=path('M 45,154 Q 102,163 107,237 Q 112,290 91,334 L 72,345 L 45,305 Z','',wall);
+   sa.layer.setAttribute('clip-path',`url(#front-wall-${sign})`);masks.push({view:'front',n:wallShape,sign});
+   fibers(sa,Array.from({length:40},(_,j)=>{const i=Math.floor(j/5),t=(j%5+1)/6,o=[origins[i][0]+5*t,origins[i][1]+t*6],e=insert((i+t)/8),c=mix(o,e,.55);c[1]+=3;return `M ${xy(o)} Q ${xy(c)} ${xy(e)}`;}));
+   // Pectoral context follows the existing upperbody outline and covers the
+   // upper serratus, as in the supplied superficial-anatomy reference.
+   const p=at(34,-8),q=at(72,-8);
+   path(`M ${xy(B([22,153]))} Q ${xy(B([53,151]))} ${xy(B([88,153]))} Q ${xy(mix(B([88,153]),q,.55))} ${xy(q)} L ${xy(p)} Q ${xy([p[0]-35,(p[1]+277)/2+9])} ${xy(B([55,276]))} Q ${xy(B([27,286]))} ${xy(B([19,263]))} L ${xy(B([17,185]))} Z`,'context-muscle',side);
+  }
+  // On the near side, an organic peeled section exposes the intermediate layer.
+  const ioD='M 78,350 Q 88,359 86,378 Q 83,397 87,414 Q 66,425 53,416 Q 43,401 45,382 Q 50,364 62,359 Q 73,358 78,350 Z';
+  const io=region(muscles,ioD,'green','internal-oblique');
+  fibers(io,Array.from({length:30},(_,i)=>{const t=i/29,o=[48+39*t,420-7*t],e=[40+44*t,374-37*t];return `M ${xy(o)} C ${xy([o[0]-12,397-22*t])} ${xy([e[0]+7,e[1]+12])} ${xy(e)}`;}));
+  path('M 78,350 Q 88,359 86,378 Q 83,397 87,414','section-edge',muscles);
+  // Rectus is a paired continuous muscle. Three thin intersections subdivide
+  // the upper belly; the long inferior portion tapers to the pubic crest.
+  for(const sign of [-1,1]){
+   const side=el('g',{transform:`scale(${sign} 1)`},muscles);
+   const ra=region(side,'M 4,289 Q 16,281 33,269 Q 42,293 36,317 Q 33,338 35,360 Q 37,384 33,408 Q 31,443 20,470 L 13,489 L 5,488 Q 3,449 4,408 Q 5,365 4,332 Z','red','rectus');
+   fibers(ra,Array.from({length:22},(_,i)=>{const t=(i+1)/23;return `M ${xy([5+28*t,288-16*t])} C ${xy([6+30*t,346])} ${xy([7+28*t,415])} ${xy([5+8*t,487])}`;}));
+   const bands=el('g',{'clip-path':`url(#${ra.shape.id}-clip)`},ra.layer);
+   for(const y of [314,350,386])path(`M 4,${y} Q 19,${y+4} 36,${y-1} L 36,${y+2} Q 18,${y+7} 4,${y+3} Z`,'intersection',bands);
+  }
+  path('M -3,290 Q 0,288 3,290 L 3,488 L -3,488 Z','aponeurosis',muscles);
+  // Umbilicus is a location cue, not another tendinous intersection.
+  path('M -2,405 Q 0,408 2,405','bone-detail',muscles);
+  return {g,anchors:{serratus:[96,290],external:[-63,359],internal:[66,383],rectus:[19,366]},ys:[244,350,410,475]};
+ }
+ function buildSide(){
+  const g=el('g',{'data-view':'side'},drawing),skeleton=el('g',{},g);drawSideSkeleton(skeleton,el,path);
+  const muscles=el('g',{class:'muscle-layers'},g),ribs=S.ribs;
+  // Iliac crest, costal margin, and anterior abdominal wall establish the fan.
+  path('M 44,293 Q 69,319 56,347 Q 58,369 53,389 L 32,424 Q 49,403 56,373 Q 65,335 44,293 Z','aponeurosis',muscles);
+  const eo=region(muscles,'M 12,235 Q 22,246 31,250 L 22,260 Q 39,261 46,271 L 32,281 Q 51,284 54,294 L 38,304 Q 48,311 43,322 L 25,328 Q 36,338 32,348 L 14,350 Q 14,368 28,385 Q 40,394 48,395 Q 28,407 7,392 Q -6,381 -32,381 Q -49,384 -51,392 Q -47,366 -50,337 Q -51,309 -53,278 Q -32,252 12,235 Z','blue','external-oblique');
+  const ef=[];
+  for(let i=0;i<58;i++){
+   const t=i/57,y=188+210*t,o=[-63,y],e=[68,y+121];
+   // Upper-anterior fibers descend medially into the white aponeurosis;
+   // posterior fibers descend almost vertically into the iliac crest.
+   ef.push(`M ${xy(o)} C ${xy([-43,y+38])} ${xy([24,y+95])} ${xy(e)}`);
+  }
+  fibers(eo,ef);
+  // Upper ribs fan toward the medial border on the costal scapular surface.
+  const origins=ribs.slice(0,9).map(r=>S.cubic(r,.82));
+  const insert=t=>t<.48?mix([-45,188],[-50,236],t/.48):mix([-50,244],[-47,263],(t-.48)/.52);
+  let sd=`M ${xy(origins[0])}`;
+  origins.forEach((o,i)=>{const next=i<8?origins[i+1]:[o[0]-8,o[1]+11];sd+=` Q ${xy([o[0]+7,o[1]+2])} ${xy([o[0]+4,o[1]+7])} Q ${xy([o[0]-8,o[1]+10])} ${xy(next)}`;});
+  sd+=` Q 13,320 ${xy(insert(1))} Q -56,224 ${xy(insert(0))} Q -12,170 ${xy(origins[0])} Z`;
+  const sa=region(muscles,sd,'orange','serratus');
+  fibers(sa,Array.from({length:54},(_,j)=>{const i=Math.floor(j/6),t=(j%6+1)/7,o=[origins[i][0]+1,origins[i][1]+t*8],e=insert((i+t)/9),c=mix(o,e,.55);c[1]+=4+7*i/8;return `M ${xy(o)} Q ${xy(c)} ${xy(e)}`;}));
+  // Each slip retains a curved seam from its costal origin to the shared fan.
+  for(let i=2;i<9;i++){const o=origins[i],e=insert((i+.1)/9),c=mix(o,e,.55);c[1]+=6;path(`M ${xy([o[0]+3,o[1]+7])} Q ${xy(c)} ${xy(e)}`,'fiber',sa.layer);}
+  // The intermediate layer is shown through a curved opening in EO, while
+  // the outer sheet keeps its costal and iliac continuity around the opening.
+  const io=region(muscles,'M -10,347 Q 3,330 21,337 Q 29,342 24,353 Q 24,364 30,371 Q 21,384 9,382 Q -4,375 -16,376 Q -19,358 -10,347 Z','green','internal-oblique');
+  fibers(io,Array.from({length:32},(_,i)=>{const t=i/31,o=[-24+49*t,377+5*t],e=[8+24*t,334+30*t];return `M ${xy(o)} C ${xy([o[0]-2,361])} ${xy([e[0]-7,e[1]+13])} ${xy(e)}`;}));
+  path('M -10,347 Q 3,330 21,337 Q 29,342 24,353 Q 24,364 30,371','section-edge',muscles);
+  // A narrow sagittal projection of the paired rectus, from costal cartilage
+  // and xiphoid to the pubis. It follows the abdominal convexity.
+  const ra=region(muscles,'M 69,268 Q 77,280 73,298 Q 68,321 62,342 Q 58,373 51,393 Q 43,414 32,424 L 27,420 Q 39,398 45,379 Q 49,353 52,331 Q 57,304 58,288 Q 60,278 69,268 Z','red','rectus');
+  fibers(ra,Array.from({length:12},(_,i)=>{const t=(i+1)/13;return `M ${xy([59+12*t,288-10*t])} C ${xy([62+8*t,318])} ${xy([45+9*t,374])} ${xy([27+5*t,420])}`;}));
+  const bands=el('g',{'clip-path':`url(#${ra.shape.id}-clip)`},ra.layer);
+  for(const [x,y] of [[57,285],[53,314],[48,343]])path(`M ${x},${y} Q ${x+8},${y+2} ${x+18},${y+5} L ${x+18},${y+7} Q ${x+6},${y+4} ${x},${y+2} Z`,'intersection',bands);
+  // Subdued shoulder context, reused scapular outline. It conceals the
+  // serratus insertion rather than letting the fan float behind the back.
+  path('M -34,177 Q -58,208 -49,265 Q -34,251 -7,174 Q -15,164 -34,177 Z','bone',g);
+  path('M -49,191 Q -26,178 -7,171 M -47,257 L -51,203','bone-detail',g);
+  path('M 44,169 Q 21,156 -7,168 L -7,175 Q 20,164 46,176 Z','bone',g);
+  path('M -2,170 Q 15,170 16,188 L 12,252 Q 10,265 0,266 L -10,263 Q -18,258 -13,247 L -14,190 Q -18,179 -2,170 Z','bone',g);
+  path('M -10,186 Q 1,195 12,183 M -5,210 L -3,246','bone-detail',g);
+  path('M 44,174 Q 61,189 69,221 Q 78,249 67,278 Q 43,257 13,215 L 14,192 Q 27,176 44,174 Z','context-muscle',g);
+  return {g,anchors:{serratus:[36,270],external:[-41,327],internal:[7,353],rectus:[58,335]},ys:[200,320,377,429]};
+ }
+ plates.front=buildFront();plates.side=buildSide();
+
+ // Sample native Bezier paths, preserving subpaths and pelvic holes. This
+ // deforms bones and muscles in a shared frame, never redraws the ribs as tubes.
+ function samples(d){
+  const ts=d.match(/[MLQCZ]|[-+]?(?:\d*\.\d+|\d+)(?:e[-+]?\d+)?/gi)||[];let i=0,cmd,p=[0,0],first=p;const out=[];
+  const pt=()=>[+ts[i++],+ts[i++]];
+  while(i<ts.length){if(/[a-z]/i.test(ts[i]))cmd=ts[i++].toUpperCase();
+   if(cmd==='Z'){out.push({cmd:'Z'});p=first;cmd=null;continue;}
+   if(cmd==='M'){p=pt();first=p;out.push({cmd:'M',p});cmd='L';}
+   else if(cmd==='L'){p=pt();out.push({cmd:'L',p});}
+   else if(cmd==='Q'||cmd==='C'){
+    const start=p,c1=pt(),c2=cmd==='C'?pt():null,end=pt();
+    for(let j=1;j<=18;j++){const t=j/18,u=1-t,q=[0,1].map(k=>cmd==='Q'?u*u*start[k]+2*u*t*c1[k]+t*t*end[k]:u*u*u*start[k]+3*u*u*t*c1[k]+3*u*t*t*c2[k]+t*t*t*end[k]);out.push({cmd:'L',p:q});}p=end;
+   }else throw new Error('Unsupported path command '+cmd);
+  }return out;
+ }
+ const depthProfile=[[80,0,24],[155,4,46],[195,7,64],[245,7,73],[290,7,72],[340,6,62],[390,13,50],[420,15,47],[460,10,50],[520,5,39]];
+ const profile=y=>{let i=0;while(i<depthProfile.length-2&&y>depthProfile[i+1][0])i++;const a=depthProfile[i],b=depthProfile[i+1],t=Math.max(0,Math.min(1,(y-a[0])/(b[0]-a[0])));return [a[1]+(b[1]-a[1])*t,a[2]+(b[2]-a[2])*t];};
+ const spineStations=S.vertebrae.map(v=>[1.24*v.center[1]-39,v.center[0]]).concat([[515,-5]]);
+ const spineZ=y=>{let i=0;while(i<spineStations.length-2&&y>spineStations[i+1][0])i++;const a=spineStations[i],b=spineStations[i+1],t=Math.max(0,Math.min(1,(y-a[0])/(b[0]-a[0])));return a[1]+(b[1]-a[1])*t;};
+ const frontZ=(x,y)=>{const [c,r]=profile(y),rx=y<170?75:y<345?106:y<410?93:97;return c+r*Math.sqrt(Math.max(0,1-(x/rx)**2));};
+ for(const [view,plate] of Object.entries(plates)){
+  plate.paths=Array.from(plate.g.querySelectorAll('path')).map(n=>{
+   const matrix=n.getCTM(),gMatrix=plate.g.getCTM(),local=gMatrix.inverse().multiply(matrix);
+   const pelvis=!!n.closest('[data-part="coronal-hip-bone"],[data-part="coronal-sacrum"],[data-part="coronal-pubic-symphysis"]')||(view==='side'&&(/pelvis/.test(n.classList.value)||n.getAttribute('d')?.includes('475')));
+   const posterior=!!n.closest('[data-part="coronal-vertebrae"]');
+   const points=samples(n.getAttribute('d')).map(q=>{if(!q.p)return q;const p=new DOMPoint(...q.p).matrixTransform(local);return {...q,xyz:view==='side'?[0,1.24*p.y-39,p.x]:[p.x,p.y,posterior?spineZ(p.y):frontZ(p.x,p.y)]};});
+   const rigid=!!n.closest('[data-rib],[data-part="coronal-sternum"],[data-part="shoulder-skeleton"]');
+   return {n,points,pelvis,rigid};
+  });
+  for(const m of masks.filter(m=>m.view===view))plate.paths.push({n:m.n,pelvis:false,points:samples(m.n.getAttribute('d')).map(q=>q.p?{...q,xyz:[m.sign*q.p[0],q.p[1],frontZ(m.sign*q.p[0],q.p[1])]}:q)});
+  // Coordinates have been baked; remove the neutral transforms afterwards.
+  plate.g.querySelectorAll('[transform]').forEach(n=>n.removeAttribute('transform'));
+ }
+ const smooth=t=>{t=Math.max(0,Math.min(1,t));return t*t*(3-2*t);};
+ function frame(angle){
+  const rad=angle*Math.PI/180,alpha=y=>rad*smooth((430-y)/65),centers=new Map();let cy=430,cz=spineZ(430);centers.set(430,[cy,cz]);
+  for(let y=429;y>=60;y--){const a=alpha(y+.5),dy=-1,dz=spineZ(y)-spineZ(y+1);cy+=dy*Math.cos(a)+dz*Math.sin(a);cz+=-dy*Math.sin(a)+dz*Math.cos(a);centers.set(y,[cy,cz]);}
+  function deform([x,y,z],fixed=false){if(fixed||y>=430)return [x,y,z];const lo=Math.floor(y),t=y-lo,a=alpha(y),ca=centers.get(lo)||centers.get(60),cb=centers.get(lo+1)||ca,c=mix(ca,cb,t),dz=z-spineZ(y);return [x,c[0]+dz*Math.sin(a),c[1]+dz*Math.cos(a)];}
+  function rigid([x,y,z]){const c=centers.get(365),dy=y-365,dz=z-spineZ(365);return [x,c[0]+dy*Math.cos(rad)+dz*Math.sin(rad),c[1]-dy*Math.sin(rad)+dz*Math.cos(rad)];}
+  return {deform,rigid,alpha};
+ }
+ const nodes=['serratus','external','internal','rectus'].map((id,i)=>{const group=el('g',{'data-label':id},labels),line=path('','',group),text=el('text',{},group);text.textContent=['전거근','외복사근','내복사근','복직근'][i];return {line,text};});
+ function render(angle,view){
+  const f=frame(angle),plate=plates[view],yaw=16*Math.PI/180,project=p=>view==='side'?[p[2],p[1]]:[p[0]*Math.cos(yaw)+p[2]*Math.sin(yaw),p[1]];
+  for(const [v,p] of Object.entries(plates))p.g.style.display=v===view?'':'none';
+  for(const p of plate.paths)p.n.setAttribute('d',p.points.map(q=>q.cmd==='Z'?'Z':q.cmd+' '+xy(project(p.rigid?f.rigid(q.xyz):f.deform(q.xyz,p.pelvis)))).join(' '));
+  const center=view==='side'?325:310,scale=1.04,top=-42;
+  drawing.setAttribute('transform',`translate(${center} ${top}) scale(${scale})`);
+  // Labels use the same point deformation as the fibers and attachments.
+  nodes.forEach((n,i)=>{const key=['serratus','external','internal','rectus'][i],p=plate.anchors[key],xyz=view==='side'?[0,1.24*p[1]-39,p[0]]:[p[0],p[1],frontZ(...p)],q=project(f.deform(xyz)),left=i===1||i===3,x=left?14:626,y=100+i*105;
+   n.text.style.fontSize=(12*640/host.clientWidth)+'px';n.line.style.strokeWidth=640/host.clientWidth;
+   n.text.setAttribute('x',x);n.text.setAttribute('y',y);n.text.setAttribute('text-anchor',left?'start':'end');n.line.setAttribute('d',`M ${x},${y+5} L ${xy([center+q[0]*scale,top+q[1]*scale])}`);
+  });
+  // Select a visible painted point on the intended layer, including cutaways.
+  // Reuse the reviewed upperbody hit-test rather than aiming at hidden fibers.
+  nodes.forEach((n,i)=>{const key=['serratus','external-oblique','internal-oblique','rectus'][i],targets=Array.from(plate.g.querySelectorAll(`[data-muscle="${key}"] > .muscle`));
+   for(const target of (i===1||i===3?targets:targets.reverse())){const a=C.anchor(target);if(a?.visible){const q=new DOMPoint(...a.point).matrixTransform(svg.getCTM().inverse()),current=n.line.getAttribute('d').split(' L ')[0];n.line.setAttribute('d',current+' L '+xy([q.x,q.y]));break;}}
+  });
+  svg.setAttribute('viewBox','0 0 640 515');svg.setAttribute('height',host.clientWidth*515/640);
+  host.dataset.angle=angle;host.dataset.view=view;host.dataset.cameraYaw=view==='front'?'16':'90';
+ }
+ return {render,frame,plates,frontZ,profile,source:'shared-classic-skeleton-abdominal-flow-draft'};
+}
+
+(()=>{
+ const root=document.getElementById('abdomen'),model=AbdomenDraft(root),by=id=>document.getElementById('abdomen-'+id);let angle=0,view='front',playing=false,phase=0,last=0;
+ const legend=root.querySelector('.diagram-legend');
+ for(const [name,color] of [['전거근','orange'],['외복사근','blue'],['내복사근','green'],['복직근','red']]){const span=document.createElement('span'),dot=document.createElement('i');dot.className=color+'-key';span.append(dot,document.createTextNode(name));legend.append(span);}
+ function render(){model.render(angle,view);by('angle').value=angle;by('value').textContent=Math.round(angle)+'°';by('angle').setAttribute('aria-valuetext',Math.round(angle)+'도');for(const v of ['front','side'])by(v).setAttribute('aria-pressed',view===v);}
+ function play(on){playing=on;by('play').textContent=on?'일시정지':'재생';by('play').setAttribute('aria-pressed',on);last=0;}
+ by('angle').addEventListener('input',()=>{play(false);angle=+by('angle').value;render();});
+ by('play').addEventListener('click',()=>{if(!playing)phase=Math.acos(Math.max(-1,Math.min(1,1-2*(angle+10)/55)));play(!playing);});
+ for(const v of ['front','side'])by(v).addEventListener('click',()=>{view=v;render();});
+ by('fibers').addEventListener('change',()=>root.classList.toggle('no-fibers',!by('fibers').checked));
+ by('transparent').addEventListener('change',()=>root.classList.toggle('transparent',by('transparent').checked));
+ new ResizeObserver(render).observe(root);
+ function tick(t){if(playing){if(last)phase+=(t-last)*.00085;angle=-10+55*(1-Math.cos(phase))/2;render();}last=t;requestAnimationFrame(tick);}requestAnimationFrame(tick);
+ window.abdomenDraft={model,root,setPose(a,v=view){play(false);angle=a;view=v;render();}};render();
+})();
+</script></body></html>

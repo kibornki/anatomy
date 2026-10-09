@@ -1,0 +1,22 @@
+.diagram{width:min(760px,100%)}
+.diagram .bone{fill:var(--muted);stroke:var(--foreground);stroke-width:1.25;stroke-linejoin:round}
+.diagram .bone-detail{fill:none;stroke:var(--muted-foreground);stroke-width:.9}
+.diagram .rib{fill:var(--muted);stroke:var(--muted-foreground);stroke-width:1.1}
+.diagram .rib-outline{fill:none;stroke:var(--muted-foreground);stroke-width:6;stroke-linecap:round}
+.diagram .cartilage{fill:var(--background);stroke:var(--muted-foreground);stroke-width:1}
+.diagram .torso-context,.diagram .thorax-mass{fill:var(--muted);fill-opacity:.13;stroke:var(--muted-foreground);stroke-opacity:.45;stroke-width:.9}
+.diagram .muscle{stroke:var(--foreground);stroke-opacity:.65;stroke-width:1.1;stroke-linejoin:round}
+.diagram .fiber{stroke-width:.65;stroke-opacity:.34}
+.diagram .fiber-highlight{fill:none;stroke:white;stroke-opacity:.36;stroke-width:.65}
+.diagram .aponeurosis{fill:var(--background);stroke:var(--muted-foreground);stroke-width:.8}
+.diagram .aponeurosis-fiber{fill:none;stroke:var(--muted-foreground);stroke-width:.45;stroke-opacity:.28}
+.diagram .intersection{fill:var(--background);stroke:var(--muted-foreground);stroke-width:.65}
+.diagram .section-edge{fill:none;stroke:var(--foreground);stroke-opacity:.7;stroke-width:1.1}
+.diagram .context-muscle{fill:color-mix(in srgb,var(--foreground) 9%,var(--background));stroke:var(--muted-foreground);stroke-opacity:.65;stroke-width:.8}
+.diagram .context-muscle .fiber{stroke-opacity:.13}
+.diagram:not(.transparent) [data-part="coronal-vertebrae"]{visibility:hidden}
+.diagram.transparent .muscle-layers{opacity:.35}
+.diagram.transparent .muscle{fill-opacity:1}
+.diagram.transparent .intersection,.diagram.transparent .aponeurosis{fill-opacity:1}
+.diagram.no-fibers .fibers{display:none}
+.diagram .diagram-labels text{font-size:12px}
