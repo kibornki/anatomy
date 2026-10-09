@@ -13,45 +13,37 @@ function ArmBoneCollision(atlas,forearm){
   return ((a*(1-ty)+b*ty)*(1-tx)+(c*(1-ty)+d*ty)*tx)/f.units;
  }
  const distance=(f,p)=>distanceXYZ(f,...p);
- let lastAngle=null,rotationAngle=NaN,ca=1,sa=0,envelope=null;
- function prepare(angle){if(lastAngle===angle)return;lastAngle=angle;rotationAngle=angle;ca=Math.cos(angle*Math.PI/180);sa=Math.sin(angle*Math.PI/180);
-  const bones=atlas.parts.filter(p=>['humerus','radius','ulna'].includes(p.name)),posed=bones.map(b=>b.v.map(p=>b.forearm?forearm(p,angle):p));
-  const all=posed.flat(),step=.8,x0=Math.floor(Math.min(...all.map(p=>p[0]))/step)*step,y0=Math.floor(Math.min(...all.map(p=>p[1]))/step)*step,w=Math.ceil((Math.max(...all.map(p=>p[0]))-x0)/step)+2,h=Math.ceil((Math.max(...all.map(p=>p[1]))-y0)/step)+2,front=new Float32Array(w*h).fill(-Infinity);
-  bones.forEach((b,i)=>b.f.forEach(f=>{const [a,c,d]=f.map(j=>posed[i][j]),den=(c[1]-d[1])*(a[0]-d[0])+(d[0]-c[0])*(a[1]-d[1]);if(Math.abs(den)<1e-7)return;
-   const loX=Math.max(0,Math.ceil((Math.min(a[0],c[0],d[0])-x0)/step)),hiX=Math.min(w-1,Math.floor((Math.max(a[0],c[0],d[0])-x0)/step)),loY=Math.max(0,Math.ceil((Math.min(a[1],c[1],d[1])-y0)/step)),hiY=Math.min(h-1,Math.floor((Math.max(a[1],c[1],d[1])-y0)/step));
-   for(let y=loY;y<=hiY;y++)for(let x=loX;x<=hiX;x++){const px=x0+x*step,py=y0+y*step,u=((c[1]-d[1])*(px-d[0])+(d[0]-c[0])*(py-d[1]))/den,v=((d[1]-a[1])*(px-d[0])+(a[0]-d[0])*(py-d[1]))/den,t=1-u-v;if(u>=0&&v>=0&&t>=0){const k=y*w+x,z=u*a[2]+v*c[2]+t*d[2];front[k]=Math.max(front[k],z);}}
-  }));envelope={step,x0,y0,w,h,front};
- }
- function anteriorDepth(x,y,angle){prepare(angle);const e=envelope,qx=(x-e.x0)/e.step,qy=(y-e.y0)/e.step,ix=Math.floor(qx),iy=Math.floor(qy);if(ix<0||iy<0||ix>=e.w-1||iy>=e.h-1)return -Infinity;
-  let sum=0,total=0;for(let dx=0;dx<=1;dx++)for(let dy=0;dy<=1;dy++){const z=e.front[(iy+dy)*e.w+ix+dx],w=(dx?qx-ix:1-qx+ix)*(dy?qy-iy:1-qy+iy);if(Number.isFinite(z)){sum+=z*w;total+=w;}}return total>.01?sum/total:-Infinity;
- }
+ let rotationAngle=NaN,ca=1,sa=0;
  const normalize=p=>{const n=Math.hypot(...p);return n>1e-8?p.map(v=>v/n):null;};
  function constrain(point,part,angle){
-  let p=point.slice();const triceps=part.name.startsWith('triceps'),anterior=part.name.startsWith('biceps')||part.name==='brachialis',clearance=3;
-  // Flexor inner surfaces must stay on the anterior envelope, including
-  // points already outside the posterior cortex. Local nearest escapes can
-  // otherwise fold a connected triangle through the shaft.
-  if(anterior)p[2]=Math.max(p[2],anteriorDepth(p[0],p[1],angle)+clearance);
-  for(let pass=0;pass<5;pass++){
+  let p=point.slice();const clearance=3;
+  // Correct locally along the actual cortex normal. Never escape along
+  // the forearm shaft: that creates long distal needles at deep flexion.
+  const original=p.slice();
+  for(let pass=0;pass<4;pass++){
    let changed=false;
    for(const f of fields){let q=f.moving?forearm(p,-angle):p.slice();
-    for(let iteration=0;iteration<48;iteration++){
+    for(let iteration=0;iteration<8;iteration++){
      const d=distance(f,q);if(d>=clearance-.02)break;
-     const h=.8,gradient=q.map((_,axis)=>{const a=q.slice(),b=q.slice();a[axis]+=h;b[axis]-=h;return (distance(f,a)-distance(f,b))/(2*h);});
-     let normal=normalize(gradient),preferred=triceps?[0,0,-1]:anterior?[0,0,1]:normal||[0,0,-1];
-     if(!normal)normal=preferred;
-     // Keep extensors on the posterior route and flexors anterior. A nearest
-     // point escape through the opposite cortex can swap anatomical sides.
-     let direction=normal;
-     if(triceps){const t=angle*Math.PI/360*(f.moving?-1:1);direction=[0,Math.sin(t),-Math.cos(t)];}
-     if(anterior){const t=f.moving?-angle*Math.PI/180:0;direction=[0,-Math.sin(t),Math.cos(t)];}
-     const projection=Math.max(.25,normal.reduce((s,v,i)=>s+v*direction[i],0)),amount=Math.min(5,Math.max(.3,(clearance-d)/projection));
-     q=q.map((v,i)=>v+direction[i]*amount);changed=true;
-    }
-    p=f.moving?forearm(q,angle):q;
-   }
-   if(!changed)break;
+     const h=.8,gradient=q.map((_,axis)=>{const a=q.slice(),b=q.slice();a[axis]+=h;b[axis]-=h;return(distance(f,a)-distance(f,b))/(2*h);}),normal=normalize(gradient);if(!normal)break;
+     q=q.map((v,i)=>v+normal[i]*Math.min(3,clearance-d+.1));changed=true;
+    }p=f.moving?forearm(q,angle):q;
+   }if(!changed)break;
   }
+  // Adjacent cortices can make sequential normals push a point back into
+  // the preceding bone. Find the nearest local escape from their union;
+  // every candidate remains within the same 12-unit neighborhood.
+  if(minimum(p,angle)<clearance-.02){
+   const directions=[];for(let i=0;i<24;i++){const a=i*Math.PI/12;directions.push([Math.cos(a),0,Math.sin(a)]);}
+   for(const y of [-1,1])for(let i=0;i<8;i++){const a=i*Math.PI/4;directions.push([Math.cos(a)/Math.sqrt(2),y/Math.sqrt(2),Math.sin(a)/Math.sqrt(2)]);}
+   let best=12.01,bestPoint=null;
+   for(const dir of directions)for(let r=1;r<=Math.min(12,Math.ceil(best));r++){
+    const q=original.map((v,j)=>v+dir[j]*r);if(minimum(q,angle)<clearance)continue;
+    let lo=r-1,hi=r;for(let k=0;k<5;k++){const mid=(lo+hi)/2,test=original.map((v,j)=>v+dir[j]*mid);if(minimum(test,angle)>=clearance)hi=mid;else lo=mid;}
+    if(hi<best){best=hi;bestPoint=original.map((v,j)=>v+dir[j]*hi);}break;
+   }if(bestPoint)p=bestPoint;
+  }
+  const delta=p.map((v,i)=>v-original[i]),travel=Math.hypot(...delta);if(travel>12)p=original.map((v,i)=>v+delta[i]*12/travel);
   return p;
  }
  function minimumXYZ(x,y,z,angle){

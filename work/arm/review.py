@@ -2,6 +2,7 @@
 from pathlib import Path
 import json,re,subprocess,os
 import numpy as np
+from scipy.ndimage import binary_fill_holes,label
 from playwright.sync_api import sync_playwright
 w=Path(__file__).parent;repo=w.parents[1];out=Path('/workspace/artifacts/arm-implementation');out.mkdir(parents=True,exist_ok=True)
 base=os.environ.get('ANATOMY_REVIEW_BASE','http://127.0.0.1:8767/')
@@ -13,13 +14,13 @@ assert [parts[n]['color'] for n in ['biceps-long','biceps-short']]==['red','blue
 assert [parts[n]['color'] for n in ['triceps-long','triceps-lateral','triceps-medial']]==['red','blue','green']
 assert len(parts['triceps-aponeurosis']['f'])>1000
 assert not any(p['authored'] if 'authored' in p else False for p in atlas['parts'] if p['kind']=='bone')
-for name in ['ulna','radius']:assert max(v[1] for v in parts[name]['v'])==330
+for name in ['ulna','radius']:assert max(v[1] for v in parts[name]['v'])==350
 # The build replaces the arm payload only.
 current=(repo/'index.html').read_text();previous=subprocess.check_output(['git','show','HEAD:index.html'],cwd=repo,text=True)
 parse=lambda t:json.loads(re.search(r'<script type="application/json" id="anatomy-data">(.*?)</script>',t,re.S)[1])
 a,b=parse(previous),parse(current)
 for key in a:
- if key not in ['arm','thigh']:assert a[key]==b[key],key
+ if key!='arm':assert a[key]==b[key],key
 assert b['arm']['document'].replace('<body><script type="application/json" id="hub-config">__HUB_CONFIG__</script>','<body>',1)==(repo/'arm.html').read_text()
 errors=[];metrics=[]
 with sync_playwright() as pw:
@@ -42,6 +43,11 @@ with sync_playwright() as pw:
     assert page.locator('[data-atlas-part="triceps-long"]').evaluate('n=>getComputedStyle(n).opacity')==('0.32' if transparent else '1')
     assert page.locator('[data-atlas-part="triceps-long"] .atlas-fill').evaluate('n=>getComputedStyle(n).fillOpacity')=='1'
     assert page.evaluate('''()=>[...document.querySelectorAll('[data-kind="bone"] .atlas-fill')].every(p=>{const b=p.getBBox();return b.x>=0&&b.y>=0&&b.x+b.width<=640&&b.y+b.height<=430;})'''),(view,angle,'clip')
+    if view=='back' and not transparent:
+     plate=page.evaluate('''()=>{const m=armAtlas.model,v=m.visibility,id=m.atlas.parts.findIndex(p=>p.name==='triceps-aponeurosis');return {w:v.w,h:v.h,mask:Array.from(v.owners,n=>n===id?1:0)};}''')
+     mask=np.array(plate['mask'],dtype=bool).reshape(plate['h'],plate['w']);holes=binary_fill_holes(mask)&~mask;components,_=label(holes)
+     # Allow isolated raster cells; reject the reported visible colored holes.
+     assert np.bincount(components.ravel())[1:].max(initial=0)<=4,(angle,'aponeurosis hole')
     metrics.append({'view':view,'angle':angle,'transparent':transparent,'duration':data['duration']})
     if not transparent and angle in [0,90,135]:page.screenshot(path=str(out/f'{view}-{angle}.png'))
  page.locator('#arm-transparent').uncheck();page.evaluate('armAtlas.setPose(0,"back")')
@@ -57,7 +63,7 @@ with sync_playwright() as pw:
  page.goto(base);page.locator('#tab-arm').click();page.frame_locator('#anatomy-frame').locator('#arm-value').wait_for();frame=page.locator('#anatomy-frame').element_handle().content_frame();frame.evaluate('armAtlas.setPose(68,"back")');frame.locator('#arm-transparent').check();page.wait_for_timeout(150)
  page.locator('#tab-abdomen').click();page.frame_locator('#anatomy-frame').locator('#abdomen').wait_for();page.locator('#tab-arm').click();page.frame_locator('#anatomy-frame').locator('#arm-value').wait_for();frame=page.locator('#anatomy-frame').element_handle().content_frame()
  assert frame.locator('#arm-value').inner_text()=='68°';assert frame.locator('#arm-back').get_attribute('aria-pressed')=='true';assert frame.locator('#arm-transparent').is_checked()
- frame.locator('#arm-transparent').uncheck();frame.evaluate('armAtlas.setPose(0,"back")');page.screenshot(path=str(out/'hub-mobile.png'),full_page=True)
+ frame.locator('#arm-transparent').uncheck();frame.evaluate('armAtlas.setPose(0,"back")');frame.wait_for_function('()=>armAtlas.root.clientWidth>120 && armAtlas.root.querySelector("svg").getBoundingClientRect().height>80');page.screenshot(path=str(out/'hub-mobile.png'),full_page=True)
  assert not errors,errors;browser.close()
-(w/'validation.json').write_text(json.dumps({'poses':metrics,'pageErrors':errors,'checks':['rigid bones','fixed shoulder','neutral bones preserved; atlas muscle surfaces constrained','visible label targets','head colors','opacity','view bounds','fascicle visibility','animation','state migration','mobile','hub arm and thigh only'],'limitations':'UI/geometry invariants, not anatomical or physiological certification.'},indent=2))
+(w/'validation.json').write_text(json.dumps({'poses':metrics,'pageErrors':errors,'checks':['rigid bones','fixed shoulder','neutral bones preserved; atlas muscle surfaces constrained','visible label targets','head colors','posterior aponeurosis holes','opacity','view bounds','fascicle visibility','animation','state migration','mobile','hub arm only'],'limitations':'UI/geometry invariants, not anatomical or physiological certification.'},indent=2))
 print('Passed: 24 poses, rigid bones, labels, fibers, opacity, controls, persistence, mobile, hub isolation and restoration.')

@@ -1,0 +1,149 @@
+{
+  "angles": 136,
+  "correctionMax": 11.623416571809866,
+  "vertexMin": 2.980004319132572,
+  "distalRadiusMax": 47.92761925022259,
+  "bellyMeasurements": [
+    {
+      "name": "triceps-long",
+      "angle": 0,
+      "length": 1,
+      "radius": 1,
+      "localVolumeRatio": 1
+    },
+    {
+      "name": "triceps-long",
+      "angle": 45,
+      "length": 1.1215523116428041,
+      "radius": 0.9541110254124767,
+      "localVolumeRatio": 1.0207541375318498
+    },
+    {
+      "name": "triceps-long",
+      "angle": 90,
+      "length": 1.2232657641385278,
+      "radius": 0.9183070232879231,
+      "localVolumeRatio": 1.0311368845634787
+    },
+    {
+      "name": "triceps-long",
+      "angle": 135,
+      "length": 1.3234458478861788,
+      "radius": 0.8876872621510223,
+      "localVolumeRatio": 1.04221625940143
+    },
+    {
+      "name": "triceps-lateral",
+      "angle": 0,
+      "length": 1,
+      "radius": 1,
+      "localVolumeRatio": 1
+    },
+    {
+      "name": "triceps-lateral",
+      "angle": 45,
+      "length": 1.107798864481709,
+      "radius": 0.9541110254124803,
+      "localVolumeRatio": 1.008162629334894
+    },
+    {
+      "name": "triceps-lateral",
+      "angle": 90,
+      "length": 1.2013737690545905,
+      "radius": 0.9183070232879231,
+      "localVolumeRatio": 1.0124739640576534
+    },
+    {
+      "name": "triceps-lateral",
+      "angle": 135,
+      "length": 1.2909637854335048,
+      "radius": 0.8876872621510259,
+      "localVolumeRatio": 1.0164724533389367
+    },
+    {
+      "name": "biceps-long",
+      "angle": 0,
+      "length": 1,
+      "radius": 1,
+      "localVolumeRatio": 1
+    },
+    {
+      "name": "biceps-long",
+      "angle": 45,
+      "length": 0.9526940433049816,
+      "radius": 1.0238163791878456,
+      "localVolumeRatio": 0.9986089806790971
+    },
+    {
+      "name": "biceps-long",
+      "angle": 90,
+      "length": 0.8639774255953895,
+      "radius": 1.0748808254886058,
+      "localVolumeRatio": 0.9981423176459868
+    },
+    {
+      "name": "biceps-long",
+      "angle": 135,
+      "length": 0.7674346344876335,
+      "radius": 1.1398573550152022,
+      "localVolumeRatio": 0.9969203927690382
+    },
+    {
+      "name": "biceps-short",
+      "angle": 0,
+      "length": 1,
+      "radius": 1,
+      "localVolumeRatio": 1
+    },
+    {
+      "name": "biceps-short",
+      "angle": 45,
+      "length": 0.9552693310433218,
+      "radius": 1.023816379187842,
+      "localVolumeRatio": 1.0013080699120254
+    },
+    {
+      "name": "biceps-short",
+      "angle": 90,
+      "length": 0.8667867423799666,
+      "radius": 1.0748808254886093,
+      "localVolumeRatio": 1.0013873173797672
+    },
+    {
+      "name": "biceps-short",
+      "angle": 135,
+      "length": 0.7709946112927022,
+      "radius": 1.1398573550151987,
+      "localVolumeRatio": 1.0015453201974445
+    },
+    {
+      "name": "brachialis",
+      "angle": 0,
+      "length": 1,
+      "radius": 1,
+      "localVolumeRatio": 1
+    },
+    {
+      "name": "brachialis",
+      "angle": 45,
+      "length": 0.927417083847963,
+      "radius": 1.0382666580713433,
+      "localVolumeRatio": 0.9997534350725835
+    },
+    {
+      "name": "brachialis",
+      "angle": 90,
+      "length": 0.8300117709381614,
+      "radius": 1.0973522663916704,
+      "localVolumeRatio": 0.9994455494991591
+    },
+    {
+      "name": "brachialis",
+      "angle": 135,
+      "length": 0.7058052779213977,
+      "radius": 1.1899347619824283,
+      "localVolumeRatio": 0.9989650439829159
+    }
+  ],
+  "limits": "Local belly Jacobians before bone correction; not total muscle volume, activation or measured fascicle strain."
+}

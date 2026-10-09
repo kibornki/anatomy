@@ -33,7 +33,7 @@ for y in np.linspace(levels[0],levels[-1],45):
  for t in np.linspace(-1,1,19):
   theta=-np.pi/2+t*width(y);q=posterior(y,theta)
   if q is None:row.append(None);continue
-  q+=np.array([np.cos(theta),0,np.sin(theta)])*.55
+  q+=np.array([np.cos(theta),0,np.sin(theta)]) * 1.5
   row.append(len(patch['v']));patch['v'].append(q.round(4).tolist())
  rows.append(row)
 for a,b in zip(rows,rows[1:]):
@@ -77,7 +77,7 @@ for p in triceps:
   if len(line)>3:p['fibers'].append(line)
 # Context stops a short distance below the elbow. Clip in neutral bone
 # coordinates so the cut follows the forearm's rigid rotation.
-def crop_bone(part,limit=330):
+def crop_bone(part,limit=350):
  old=np.array(part['v']);verts=[];faces=[];lookup={};segments=[]
  def index(p):
   key=tuple(np.round(p,6))
