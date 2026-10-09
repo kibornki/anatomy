@@ -20,6 +20,10 @@
     {
       "source": "https://github.com/openstax/osbooks-anatomy-physiology/blob/5ae32b3f4bc24ed003e91dc38bf47dba80751044/media/1118_Muscles_that_Position_the_Pectoral_Girdle.jpg",
       "sha256": "4c15f7e808efeca26f4ba5e79ba1439c55bb3715569a6c5f97148483ef9c4999"
+    },
+    {
+      "source": "https://github.com/openstax/osbooks-anatomy-physiology/blob/5ae32b3f4bc24ed003e91dc38bf47dba80751044/media/1119_Muscles_that_Move_the_Humerus.jpg",
+      "sha256": "22f8d9e34a35c2819f3cf9fe7244f81136c5d8b20c6f6210248a1209b0d8318d"
     }
   ],
   "findings": {
@@ -28,12 +32,12 @@
     "internal_oblique": "Intermediate layer; fibers predominantly superior and medial; displayed through a cutaway.",
     "serratus_anterior": "Costal slips on ribs 1–8 or 1–9 converge toward the costal surface of the medial scapular border. Upper slips are partly covered by pectoral context.",
     "rectus_abdominis": "Paired muscle from pubic crest/symphysis toward xiphoid and upper costal cartilages; linea alba and three tendinous intersections.",
-    "latissimus_dorsi": "Broad posterior lower thoracic/lumbar/iliac origin, narrowing toward the humeral insertion. Humerus is omitted; the insertion is covered by shoulder context, not attached to scapula."
+    "latissimus_dorsi": "Broad posterior lower thoracic/lumbar/iliac origin, narrowing toward the humeral insertion. Humerus is omitted; the insertion is covered by shoulder context, not attached to scapula. In the lateral plate, the superficial posterior sheet overlays the posterior external-oblique edge and remains behind serratus."
   },
   "illustrative_choices": {
-    "yaw_total_degrees": 40,
+    "yaw_total_degrees": 60,
     "yaw_lumbar_degrees": 5,
-    "yaw_thoracic_degrees": 35,
+    "yaw_thoracic_degrees": 55,
     "curl_lumbar_degrees": 30,
     "curl_thoracic_degrees": 30,
     "clinical_range_claim": false,

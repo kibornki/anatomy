@@ -353,7 +353,7 @@ OpenStax A&P 2e의 고정 커밋 `5ae32b3f4bc24ed003e91dc38bf47dba80751044`에�
 
 OpenStax [복부 근육](https://github.com/openstax/osbooks-anatomy-physiology/blob/5ae32b3f4bc24ed003e91dc38bf47dba80751044/modules/m46485/index.cnxml), [전거근·광배근](https://github.com/openstax/osbooks-anatomy-physiology/blob/5ae32b3f4bc24ed003e91dc38bf47dba80751044/modules/m46495/index.cnxml), [척추 관절](https://github.com/openstax/osbooks-anatomy-physiology/blob/5ae32b3f4bc24ed003e91dc38bf47dba80751044/modules/m46377/index.cnxml)을 검토했습니다. 자료의 요추 관절 설명은 회전이 크게 제한됨을 명시합니다. 실제 자료·해시와 판단 범위는 [참조 기록](work/abdomen/anatomy-reference-audit.json)에 있습니다. 생성 이미지를 해부학 근거로 사용하지 않습니다.
 
-골반과 카메라를 고정하고 비틀기를 ±40°로 제한합니다. 최대값에서 요추에 5°, 흉추에 35°를 여러 구간에 나눕니다. 말기는 요추·흉추에 각각 30°씩 나눕니다. 이 각도는 도해의 보수적인 설정이며 OpenStax가 규정한 정상 가동범위가 아닙니다. 뼈의 크기를 유지하고, 연골의 양 끝을 해당 늑골과 흉골 또는 위 늑골의 움직임에 연결합니다.
+골반과 카메라를 고정하고 비틀기를 ±60°로 제한합니다. 최대값에서 요추에 5°, 흉추에 55°를 여러 구간에 나눕니다. 말기는 요추·흉추에 각각 30°씩 나눕니다. 이 각도는 도해의 설정이며 OpenStax가 규정한 정상 가동범위가 아닙니다. 뼈의 크기를 유지하고, 연골의 양 끝을 해당 늑골과 흉골 또는 위 늑골의 움직임에 연결합니다.
 
 근육 반투명은 면·섬유·건획을 한 그룹으로 옅게 표시하며 뼈는 유지합니다. SVG 겹침 순서로 층을 표현합니다. 근육의 실제 미끄러짐·섬유 수축률·복압·개인별 비율·늑골 관절 접촉은 계산하지 않습니다. 임상 검증이나 정확한 3D 해부 표본을 대신하지 않습니다.
 

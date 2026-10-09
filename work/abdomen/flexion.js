@@ -32,6 +32,7 @@ function AbdomenFlexion(host) {
   for(const sign of [-1,1]){
    const side=el('g',{transform:`scale(${sign} 1)`,'data-depth':'posterior'},muscles);
    const lat=region(side,'M 9,282 Q 45,285 76,262 Q 94,239 100,217 L 106,231 Q 103,247 105,276 Q 114,312 110,350 Q 108,387 94,418 Q 64,437 29,451 L 9,453 Q 18,403 10,350 Z','purple','latissimus');
+   lat.layer.setAttribute('data-surface','posterior-latissimus');
    fibers(lat,Array.from({length:44},(_,i)=>{const t=i/43,o=t<.45?[10,285+157*t/.45]:[10+83*(t-.45)/.55,453-34*(t-.45)/.55],e=[100+5*t,220+11*t];return `M ${xy(o)} C ${xy([o[0]+35,o[1]-9])} ${xy([102,270+38*t])} ${xy(e)}`;}));
   }
   // A solid front wall prevents the broad posterior sheet from showing through
@@ -90,6 +91,7 @@ function AbdomenFlexion(host) {
   const g=el('g',{'data-view':'side'},drawing),skeleton=el('g',{},g);drawSideSkeleton(skeleton,el,path);
   const muscles=el('g',{class:'muscle-layers'},g),ribs=S.ribs;
   const lat=region(muscles,'M -54,238 Q -39,214 -24,191 L -13,184 L -10,197 Q -30,229 -29,253 Q -37,278 -34,315 Q -29,348 -24,368 Q -38,368 -51,392 Q -57,361 -57,321 Q -62,275 -54,238 Z','purple','latissimus');
+  lat.layer.setAttribute('data-surface','posterior-latissimus');
   fibers(lat,Array.from({length:35},(_,i)=>{const t=i/34,o=[-55+29*t,387-17*t],e=[-23+10*t,191+5*t];return `M ${xy(o)} C ${xy([-62+25*t,338])} ${xy([-48+21*t,258])} ${xy(e)}`;}));
   // Iliac crest, costal margin, and anterior abdominal wall establish the fan.
   path('M 44,293 Q 69,319 56,347 Q 58,369 53,389 L 32,424 Q 49,403 56,373 Q 65,335 44,293 Z','aponeurosis',muscles);
@@ -102,6 +104,9 @@ function AbdomenFlexion(host) {
    ef.push(`M ${xy(o)} C ${xy([-43,y+38])} ${xy([24,y+95])} ${xy(e)}`);
   }
   fibers(eo,ef);
+  // Along the posterior flank, the superficial latissimus sheet overlaps
+  // the posterior EO edge. Keep SA and the anterior wall above it afterwards.
+  muscles.appendChild(lat.layer);
   // Upper ribs fan toward the medial border on the costal scapular surface.
   const origins=ribs.slice(0,9).map(r=>S.cubic(r,.82));
   const insert=t=>t<.48?mix([-45,188],[-50,236],t/.48):mix([-50,244],[-47,263],(t-.48)/.52);
@@ -213,20 +218,27 @@ function AbdomenFlexion(host) {
   const p=Math.max(0,Math.min(1,angle/100)),alpha=y=>p*Math.PI/180*(30*smooth((455-y)/85)+30*smooth((370-y)/180)),centers=new Map();let cy=455,cz=spineZ(455);centers.set(455,[cy,cz]);
   for(let y=454;y>=60;y--){const a=alpha(y+.5),dy=-1,dz=spineZ(y)-spineZ(y+1);cy+=dy*Math.cos(a)+dz*Math.sin(a);cz+=-dy*Math.sin(a)+dz*Math.cos(a);centers.set(y,[cy,cz]);}
   function center(y){const lo=Math.floor(y),t=y-lo,a=centers.get(lo)||centers.get(60),b=centers.get(lo+1)||a;return mix(a,b,t);}
-  function deform([x,y,z],pelvic=false){if(pelvic||y>=455)return [x,y,z];const c=center(y),a=alpha(y),dz=z-spineZ(y);return [x,c[0]+dz*Math.sin(a),c[1]+dz*Math.cos(a)];}
-  function segment([x,y,z],level){const c=center(level),a=alpha(level),dy=y-level,dz=z-spineZ(level);return [x,c[0]+dy*Math.cos(a)+dz*Math.sin(a),c[1]-dy*Math.sin(a)+dz*Math.cos(a)];}
+  function deform([x,y,z],pelvic=false){if(p===0||pelvic||y>=455)return [x,y,z];const c=center(y),a=alpha(y),dz=z-spineZ(y);return [x,c[0]+dz*Math.sin(a),c[1]+dz*Math.cos(a)];}
+  function segment([x,y,z],level){if(p===0)return [x,y,z];const c=center(level),a=alpha(level),dy=y-level,dz=z-spineZ(level);return [x,c[0]+dy*Math.cos(a)+dz*Math.sin(a),c[1]-dy*Math.sin(a)+dz*Math.cos(a)];}
   return {deform,segment,alpha,progress:p};
  }
  function yawFrame(degrees){
-  const a=Math.max(-40,Math.min(40,degrees))*Math.PI/180;
+  const a=Math.max(-60,Math.min(60,degrees))*Math.PI/180;
   // Small lumbar contribution; most axial rotation accumulates in the thorax.
   // The pelvis is stationary. All rotation acts about the spinal column in 3D,
   // before the fixed 16-degree camera projection, not on the final SVG image.
-  // 5 degrees across lumbar levels and 35 across thoracic levels at the
-  // illustrative endpoint. These are conservative model choices, not a
+  // 5 degrees across lumbar levels and 55 across thoracic levels at the
+  // illustrative endpoint. These are drawing model choices, not a
   // patient measurement or a textbook claim about exact regional limits.
-  const stations=[[80,1],[177,1],[193,.92045],[209,.84091],[225,.76136],[241,.68182],[257,.60227],[273,.52273],[289,.44318],[305,.36364],[321,.28409],[337,.20455],[353,.125],[377,.125],[395,.10],[413,.075],[431,.05],[449,.025],[455,0]];
-  const theta=y=>{if(y>=455)return 0;let i=0;while(i<stations.length-2&&y>stations[i+1][0])i++;const l=stations[i],r=stations[i+1],t=Math.max(0,Math.min(1,(y-l[0])/(r[0]-l[0])));return a*(l[1]+(r[1]-l[1])*t);};
+  // Retain the small lumbar contribution even when the user selects 60°.
+  const lumbar=a*5/60,thoracic=a-lumbar;
+  function theta(y){
+   if(y>=455)return 0;
+   if(y<=177)return a;
+   if(y<=353)return lumbar+thoracic*(353-y)/176;
+   if(y<=377)return lumbar;
+   return lumbar*(455-y)/78;
+  }
   function segment([x,y,z],level){if(level>=455)return [x,y,z];const t=theta(level),axis=spineZ(level),dz=z-axis;return [x*Math.cos(t)+dz*Math.sin(t),y,axis-x*Math.sin(t)+dz*Math.cos(t)];}
   return {deform(q,pelvic=false){return pelvic||q[1]>=455?q:segment(q,q[1]);},segment,alpha:theta,theta,degrees,spineZ};
  }
