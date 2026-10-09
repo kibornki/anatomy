@@ -1,0 +1,46 @@
+# 상체: 실제 BodyParts3D 표면 시안
+
+팔·복부와 같은 DBCLS BodyParts3D 3.0을 사용한다. 원본 STL 변환 배포는
+Kevin Mattheus Moerman, 고정 커밋 `f0eeb6e843380cfe6b83797cf8c3e1af74de5e61`.
+원본 해시·URL·축소 면 수는 `atlas-data.json`의 sources 및 기존 뼈 audit에 있다.
+라이선스: BodyParts3D © 2008 DBCLS, CC BY-SA 2.1 Japan.
+
+기존 2D 도형의 색/선만 고친 시안을 대체한다. 뼈와 근육의 도형 자체가
+동일 좌표계의 실제 아틀라스 표면이다. 늑골·늑연골·흉골·척추·쇄골·견갑골·
+상완골·팔꿈치 아래 요골/척골·골반을 표시한다. 좌표축 변환과 균일 .58 배율을
+사용하며 흉곽을 가로로 늘리지 않는다. 한쪽 아틀라스와 그 반사를 사용한
+좌우 대칭 도해다. 오른팔 원본을 좌측 뼈와 맞출 때 반사한 기록도 모델에 남긴다. C4 높이에서 목을 절단하고 머리는 제외한다.
+
+기존 상체의 선택 근육만 표시한다:
+대흉근 쇄골부·흉늑부·복부, 전거근, 승모근 상부·중부·하부,
+광배근, 극하근, 대원근, 소원근. 복직근·외복사근·삼각근 등을 추가하지 않는다.
+정면은 가슴·전거근, 후면은 기존 등 근육, 측면은 해당 표면의 깊이 가림을 보여준다.
+카메라는 기존 상체의 0° / 90° / 180°를 유지한다.
+
+팔 외전 60° 정지 시안이다. 어깨 변형은 도해용 설정이다:
+쇄골 회전 10°, 견갑골 상방 회전 20°와 상완골 강체 회전(원본 팔의 기울기를
+보정해 상완 축의 외전이 실제 60°가 되도록 함), 인접 원본 뼈와의
+거리 가중치로 근육을 이동한다. 정확한 인체 운동이나 부피 보존을 검증한
+생체역학 모델이라고 주장하지 않는다. 정적 출처가 검증된 아틀라스를
+검증된 동적 자세와 혼동하지 않는다.
+
+근섬유는 복부의 원본 표면 ray projection을 재사용한 작화 가이드다.
+측정된 근섬유가 아니다. 뼈·근육의 가림과 윤곽 추출은 복부의
+`AbdominalVisibility`와 `AtlasContour`를 그대로 공유한다.
+기존 팔의 중립 좌표 절단/단면 캡 함수를 재사용해 전완을 짧게 표시한다.
+
+준비: NumPy, SciPy, fast_simplification; 렌더: Playwright, Chromium.
+`prepare.py`는 캐시된 원본 STL을 읽고 모델을 한 번 만든다.
+새 등 근육 및 C4–C6 원본은 `/workspace/artifacts/upperbody-atlas-preview/source`,
+기존 흉곽·가슴 원본은 `/workspace/artifacts/independent-anatomy-review`,
+팔뼈 원본은 `/workspace/artifacts/arm-atlas-preview/source`에서 읽는다.
+다운로드 URL/해시는 모델에 저장했다.
+
+```sh
+python work/upperbody-atlas-preview/prepare.py
+python work/upperbody-atlas-preview/render.py
+```
+
+뼈 강체 거리, 11개 근육만 포함, 시점, 렌더 오류와 표시 라벨을 검사한다.
+각 시점 이미지와 모바일 검토 페이지를 `drafts/upperbody-atlas-review`에 만든다.
+앱·기존 상체·통합본은 수정하지 않은 적용 전 시안이다.
