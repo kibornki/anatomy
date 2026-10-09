@@ -1,0 +1,86 @@
+[
+  {
+    "id": "FMA23130",
+    "url": "https://raw.githubusercontent.com/Kevin-Mattheus-Moerman/BodyParts3D/f0eeb6e843380cfe6b83797cf8c3e1af74de5e61/assets/BodyParts3D_data/stl/FMA23130.stl",
+    "sha256": "6e26ad2b9794b136000abe2cc0b54cade989b943214e2149732cc2db2e337dce",
+    "bytes": 813484
+  },
+  {
+    "id": "FMA23464",
+    "url": "https://raw.githubusercontent.com/Kevin-Mattheus-Moerman/BodyParts3D/f0eeb6e843380cfe6b83797cf8c3e1af74de5e61/assets/BodyParts3D_data/stl/FMA23464.stl",
+    "sha256": "23eed49ade9f558406782b47decee325d12ee9e1d5ef661a051a0516a142dfa3",
+    "bytes": 140284
+  },
+  {
+    "id": "FMA23467",
+    "url": "https://raw.githubusercontent.com/Kevin-Mattheus-Moerman/BodyParts3D/f0eeb6e843380cfe6b83797cf8c3e1af74de5e61/assets/BodyParts3D_data/stl/FMA23467.stl",
+    "sha256": "c6074d69a2ccbcef6db2fb8bf758b44a5f6438b035da3399d6efb41b9d759a03",
+    "bytes": 179684
+  },
+  {
+    "id": "FMA13395",
+    "url": "https://raw.githubusercontent.com/Kevin-Mattheus-Moerman/BodyParts3D/f0eeb6e843380cfe6b83797cf8c3e1af74de5e61/assets/BodyParts3D_data/stl/FMA13395.stl",
+    "sha256": "c0a3afd469db1fec9527bb81ec1f0956876d3d64d3acbf3a083619d4e7ce297b",
+    "bytes": 5662884
+  },
+  {
+    "id": "FMA13322",
+    "url": "https://raw.githubusercontent.com/Kevin-Mattheus-Moerman/BodyParts3D/f0eeb6e843380cfe6b83797cf8c3e1af74de5e61/assets/BodyParts3D_data/stl/FMA13322.stl",
+    "sha256": "f340050375ea4397a85082fb7bd68ea553d52f4718656599804ecf8f4c7768be",
+    "bytes": 255684
+  },
+  {
+    "id": "FMA34680",
+    "url": "https://raw.githubusercontent.com/Kevin-Mattheus-Moerman/BodyParts3D/f0eeb6e843380cfe6b83797cf8c3e1af74de5e61/assets/BodyParts3D_data/stl/FMA34680.stl",
+    "sha256": "89f2568231a3f44d4de8119e8d3a5de8303ce18b607338be448e4de9169fcb9e",
+    "bytes": 1454184
+  },
+  {
+    "id": "FMA34682",
+    "url": "https://raw.githubusercontent.com/Kevin-Mattheus-Moerman/BodyParts3D/f0eeb6e843380cfe6b83797cf8c3e1af74de5e61/assets/BodyParts3D_data/stl/FMA34682.stl",
+    "sha256": "1d261c2d378ca98a352dca1511bb1c2aa005a0a4309b9f9998d23d8397d80d0b",
+    "bytes": 1484184
+  },
+  {
+    "id": "FMA34684",
+    "url": "https://raw.githubusercontent.com/Kevin-Mattheus-Moerman/BodyParts3D/f0eeb6e843380cfe6b83797cf8c3e1af74de5e61/assets/BodyParts3D_data/stl/FMA34684.stl",
+    "sha256": "685c2c3b8e24b7a31e2274749b5306d96880420feb035ea4ecce5fb2d0993ac0",
+    "bytes": 2200584
+  },
+  {
+    "id": "FMA37684",
+    "url": "https://raw.githubusercontent.com/Kevin-Mattheus-Moerman/BodyParts3D/f0eeb6e843380cfe6b83797cf8c3e1af74de5e61/assets/BodyParts3D_data/stl/FMA37684.stl",
+    "sha256": "254c2b9528925155b360d919be825040fd6fb46f9fcf006a9969f25d738a50b0",
+    "bytes": 1392084
+  },
+  {
+    "id": "FMA37686",
+    "url": "https://raw.githubusercontent.com/Kevin-Mattheus-Moerman/BodyParts3D/f0eeb6e843380cfe6b83797cf8c3e1af74de5e61/assets/BodyParts3D_data/stl/FMA37686.stl",
+    "sha256": "1ceb9b9892b4cfe905d108cd096a24c9ea0c20bbe182364d748852e1eaeab344",
+    "bytes": 1613384
+  },
+  {
+    "id": "FMA37695",
+    "url": "https://raw.githubusercontent.com/Kevin-Mattheus-Moerman/BodyParts3D/f0eeb6e843380cfe6b83797cf8c3e1af74de5e61/assets/BodyParts3D_data/stl/FMA37695.stl",
+    "sha256": "1a92c34f2891072488e55f65b9bed1560b473f36b6a4b996a2ccab6681b4c3ea",
+    "bytes": 1344084
+  },
+  {
+    "id": "FMA37697",
+    "url": "https://raw.githubusercontent.com/Kevin-Mattheus-Moerman/BodyParts3D/f0eeb6e843380cfe6b83797cf8c3e1af74de5e61/assets/BodyParts3D_data/stl/FMA37697.stl",
+    "sha256": "c875ced0ecedde0637edf88b27e9a2086fd80088d9f89252664f49e981a8f855",
+    "bytes": 1815684
+  },
+  {
+    "id": "FMA37699",
+    "url": "https://raw.githubusercontent.com/Kevin-Mattheus-Moerman/BodyParts3D/f0eeb6e843380cfe6b83797cf8c3e1af74de5e61/assets/BodyParts3D_data/stl/FMA37699.stl",
+    "sha256": "1ed7dd3d76fe3b6c89a6998e4cbd908ae22a545c4779a54e4cb720dc0e571a9f",
+    "bytes": 1975784
+  },
+  {
+    "id": "FMA37668",
+    "url": "https://raw.githubusercontent.com/Kevin-Mattheus-Moerman/BodyParts3D/f0eeb6e843380cfe6b83797cf8c3e1af74de5e61/assets/BodyParts3D_data/stl/FMA37668.stl",
+    "sha256": "2eb8019befa2c5f67e138757b0b4b52bef9bedba735e6bde1596becca8388b19",
+    "bytes": 1749484
+  }
+]

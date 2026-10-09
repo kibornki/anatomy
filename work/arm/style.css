@@ -1,0 +1,6 @@
+.diagram [data-atlas-part] .atlas-fill{stroke:none;fill-opacity:1}
+.diagram [data-atlas-part] .fiber{stroke-width:.65}
+.diagram [data-kind="tendon"] .fiber{stroke:var(--muted-foreground);stroke-width:.45}
+.diagram .atlas-credit{font-size:10px;color:var(--muted-foreground);margin-top:6px}
+.diagram .atlas-credit a{color:inherit}
+.diagram .diagram-labels text{font-size:12px}
