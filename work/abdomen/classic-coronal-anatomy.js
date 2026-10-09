@@ -63,13 +63,13 @@ const ClassicCoronalAnatomy=(()=>{
   }
  }
  // Keep leaders inside their muscle as the humeral attachment moves.
- function anchor(shape){
+ function anchor(shape,hitAt=(x,y)=>document.elementFromPoint(x,y)){
   const b=shape.getBBox(),screen=shape.getScreenCTM(),local=shape.getCTM(),points=[];
   for(let row=0;row<13;row++)for(let col=0;col<13;col++)points.push(new DOMPoint(b.x+b.width*(col+.5)/13,b.y+b.height*(row+.5)/13));
   points.sort((a,c)=>Math.hypot(a.x-b.x-b.width/2,a.y-b.y-b.height/2)-Math.hypot(c.x-b.x-b.width/2,c.y-b.y-b.height/2));
   let fallback=null;
   for(const p of points){if(!shape.isPointInFill(p))continue;fallback??=p;
-   const q=p.matrixTransform(screen),hit=document.elementFromPoint(q.x,q.y);
+   const q=p.matrixTransform(screen),hit=hitAt(q.x,q.y);
    if(hit===shape||hit?.closest('[clip-path]')?.getAttribute('clip-path')===`url(#${shape.id}-clip)`){const s=p.matrixTransform(local);return {point:[s.x,s.y],visible:true};}
   }
   if(fallback){const s=fallback.matrixTransform(local);return {point:[s.x,s.y],visible:false};}

@@ -14,8 +14,10 @@
 .diagram .section-edge{fill:none;stroke:var(--foreground);stroke-opacity:.7;stroke-width:1.1}
 .diagram .context-muscle{fill:color-mix(in srgb,var(--foreground) 9%,var(--background));stroke:var(--muted-foreground);stroke-opacity:.65;stroke-width:.8}
 .diagram .context-muscle .fiber{stroke-opacity:.13}
+.diagram .context-shape{stroke-linejoin:round}
 .diagram.transparent .muscle-layers{opacity:1}
 .diagram.transparent [data-muscle]{opacity:.32}
+.diagram.transparent [data-muscle="latissimus"]{mask:none}
 .diagram.transparent .context-muscle{opacity:.22}
 .diagram.transparent .muscle{fill-opacity:1}
 .diagram.transparent .intersection{fill-opacity:1}
