@@ -13,12 +13,15 @@ function AbdominalMuscleSurfaces({profile,radius,frontZ,backZ,spineZ}){
  for(const view of ['front','side']){
   const ribs=view==='front'?C.ribs:S.ribs,costal=view==='front'?frontCostal:sideCostal;
   const ribLevel=i=>view==='front'?C.vertebrae[7+i].y+4:1.24*S.vertebrae[7+i].center[1]-39;
-  // The contact runs obliquely from the anterior fifth rib toward the
-  // posterior eighth rib, not as a vertical stack along the anterior chest.
-  const seam=ribs.slice(4,8).map((r,i)=>view==='front'?(i===3?posteriorCostal(r,.98):frontCostal(r,[.62,.42,.19][i])):sideCostal(r,[.90,.78,.69,.60][i]));
+  // All inferior SA slips originate on the anterolateral costal wall. The
+  // former posterior eighth-rib point compressed their height range and
+  // made the lower fascicles read as parallel horizontal bands.
+  const seam=ribs.slice(4,8).map((r,i)=>view==='front'?frontCostal(r,[.62,.50,.38,.28][i]):sideCostal(r,[.90,.78,.69,.60][i]));
   const saOrigin=ribs.slice(0,4).map(r=>costal(r,view==='front'?.28:.83)).concat(seam);
   const eoOrigin=seam.concat(ribs.slice(8,12).map((r,i)=>view==='front'?posteriorCostal(r,.96-.04*i):costal(r,.22-.025*i)));
-  const saInsert=[.1,.3,.47,.62,.82,.94,.98,1].map(t=>{const u=1-t;if(view==='front'){const p=C.girdle(35).S([89*u*u+170*u*t+109*t*t,165*u*u+424*u*t+291*t*t]);return [p[0],p[1],backZ(...p)+4];}return [65,1.24*(177*u*u+416*u*t+265*t*t)-39,-34*u*u-116*u*t-49*t*t];});
+  // Upper/middle slips attach along the medial border. Inferior slips have
+  // a much narrower insertion around the inferior angle, producing a fan.
+  const saInsert=[.1,.3,.47,.62,.94,.965,.985,1].map(t=>{const u=1-t;if(view==='front'){const p=C.girdle(35).S([89*u*u+170*u*t+109*t*t,165*u*u+424*u*t+291*t*t]);return [p[0],p[1],backZ(...p)+4];}return [65,1.24*(177*u*u+416*u*t+265*t*t)-39,-34*u*u-116*u*t-49*t*t];});
   const eoEdge=[[47,313],[49,337],[51,362],[53,388],[58,413],[69,426],[80,424],[84,418]];
   const eoInsert=view==='front'?eoEdge.map((p,i)=>[p[0],p[1],i<5?frontZ(...p):mix([frontZ(...p)],[backZ(...p)],(i-4)/3)[0]]):[[65,302],[65,322],[61,345],[53,368],[36,389],[12,390],[-22,384],[-41,386]].map(p=>{const y=1.24*p[1]-39,[c,d]=profile(y);return [radius(y)*Math.sqrt(Math.max(.02,1-((p[0]-c)/d)**2)),y,p[0]];});
   const latOrigin=view==='front'?[[10,289],[12,356],[20,419],[86,419]].map(p=>[p[0],p[1],backZ(...p)]):[[16,1.24*255-39,-60],[18,1.24*312-39,-48],[22,1.24*383-39,-51],[86,1.24*380-39,-12]];
@@ -50,7 +53,10 @@ function AbdominalMuscleSurfaces({profile,radius,frontZ,backZ,spineZ}){
  }
  function alongWall(o,e,u,id,v){
   if(u===0)return o.slice();if(u===1)return e.slice();
-  const y=o[1]+(e[1]-o[1])*u,[c,d]=profile(y),rx=radius(y);
+  // Inferior fascicles sweep superiorly while wrapping posteriorly, so their
+  // convergence is visible on the flank before disappearing beneath scapula.
+  const bow=id==='serratus'?-clamp(v-3)*(5+5*clamp((v-4)/3))*Math.sin(Math.PI*u):0;
+  const y=o[1]+(e[1]-o[1])*u+bow,[c,d]=profile(y),rx=radius(y);
   const angle=p=>Math.atan2(p[2]-profile(p[1])[0],p[0]*profile(p[1])[1]/radius(p[1]));
   let ao=angle(o),ae=angle(e);while(ae-ao>Math.PI)ae-=2*Math.PI;while(ae-ao< -Math.PI)ae+=2*Math.PI;
   const a=ao+(ae-ao)*u+(id==='latissimus'?.12*Math.sin(Math.PI*u)*(v/3)**2:0),clearance=id==='latissimus'?4:2.5;

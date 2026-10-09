@@ -11,7 +11,7 @@
 - `review.py`: 23개 자세에서 공유 경계의 틈, 변형 후 흉곽 외피 여유, 깊이 가림, 부착, 뼈 크기·연골 연결, 섬유 안정성, 이름표, 반투명, 복원·재생과 모바일·터치를 검사한다. `AbdominalVisibility`의 별도 겹침 사례는 그리는 순서를 뒤집어도 앞쪽 뼈가 뒤쪽 근육을 가리는지 확인한다. 원래의 부착점 검사만으로 놓쳤던 전체 면·경계·가림을 구분해 검사한다.
 
 생성: 저장소 루트에서 `python work/abdomen/build.py --publish`.
-검사: 로컬 서버에서 `python work/abdomen/review.py`. 기본 주소는 `http://127.0.0.1:8767/`, `ANATOMY_REVIEW_BASE`로 변경한다. 캡처와 검사 수치는 `/workspace/artifacts/abdomen-fascicle-review/`에 저장한다. 갈래와 비틀기의 최근 수정 내역은 [FASCICLE_REVIEW.md](FASCICLE_REVIEW.md)에 있다.
+검사: 로컬 서버에서 `python work/abdomen/review.py`. 기본 주소는 `http://127.0.0.1:8767/`, `ANATOMY_REVIEW_BASE`로 변경한다. 캡처와 검사 수치는 `/workspace/artifacts/serratus-fan-review/`에 저장한다. 갈래와 비틀기의 최근 수정 내역은 [FASCICLE_REVIEW.md](FASCICLE_REVIEW.md)에 있다.
 
 전거근은 늑골에서 견갑골의 늑골면 안쪽 모서리로, 외복사근은 5–12번 늑골에서 앞쪽 건막·장골능으로 이어진다. 전거근의 아래 갈래와 외복사근의 위 갈래는 앞가쪽 흉곽에서 맞물린다. 측면 외복사근의 아래 늑골 기시는 더 뒤쪽에 위치하며, 뒤쪽 섬유는 장골능 방향으로 내려간다. 광배근은 하부 흉추·흉요근막·장골능의 넓은 면에서 뒤겨드랑이로 모이고 뒤쪽 전거근과 외복사근 일부를 덮는다. 팔뼈와 실제 상완골 정지 자체는 생략되어 있다.
 

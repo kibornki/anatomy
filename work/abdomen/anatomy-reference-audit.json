@@ -88,5 +88,19 @@
     "movement": "Actual attachment displacement corrections and angular interpolation; eased thoracic yaw; anterior fascia/rectus coupled to costal/xiphoid boundary above and fixed pelvic attachments below; body-derived envelope center and conservative outer smoothing.",
     "validation": "23 poses; original fiber stability upper bound 1.8 retained, measured maximum 1.755; actual rendered EO/sheath contact, upper anterior wall follows sternum, lower wall fixed; opacity/state/mobile/touch passed.",
     "limits": "Drawing geometry and illustrative motion distribution, not measured clinical ranges, volumetric anatomy or physiological strain."
+  },
+  "inferior_serratus_fan_recheck": {
+    "problem": "Inferior costal and scapular insertion heights had similar ranges, leaving nearly parallel horizontal stripes despite the previous strain checks.",
+    "anatomical_basis": "User dissection reference and existing OpenStax references: costal slips wrap to costal medial scapular border, inferior fibers converge around inferior angle.",
+    "approved_visual_guide_sha256": "35fee7e100a844bdf1d19304339572c8c27b348993bb24051623007b7862fcfa",
+    "generated_guide_is_anatomical_evidence": false,
+    "changes": [
+      "Anterolateral inferior costal origins with increasing heights; original posterior eighth-rib origin removed.",
+      "Narrower inferior-angle insertion range, retaining upper/middle medial-border insertions.",
+      "Shared muscle/fiber surface with superiorly curved inferior fascicles visible before posterior concealment.",
+      "Duplicate clamped edge fiber strokes removed without changing the palette or UI."
+    ],
+    "verification": "23 poses, existing attachment/contact/clearance/strain/opacity/mobile checks; additional convergence and displayed near-flank direction criteria at both yaw endpoints; no coincident rendered SA fibers.",
+    "limits": "Illustrative projected fan and separate coronal/lateral landmark adapters; no clinical fiber angle, measured muscle volume or physiological strain claim."
   }
 }

@@ -32,8 +32,12 @@ function AbdomenFlexion(host) {
   if(id==='serratus'){
    // Fiber bundles follow each rib slip, rather than a uniform rectangular
    // hatch across the full sheet. The posterior connection remains continuous.
+   const seen=new Set();
    for(let i=0;i<8;i++)for(let j=0;j<8;j++){
-    const v=Math.max(0,Math.min(7,i+(j-3.5)*.09));
+    // Keep texture inside the muscle outline and do not draw clamped edge
+    // fascicles four times: that made the fan's narrow end a dark knot.
+    const v=Math.max(.04,Math.min(6.96,i+(j-3.5)*.09)),key=v.toFixed(4);
+    if(seen.has(key))continue;seen.add(key);
     curves.push(`M 0,${v} C .32,${v} .68,${v} 1,${v}`);
    }
    for(let i=0;i<8;i++){

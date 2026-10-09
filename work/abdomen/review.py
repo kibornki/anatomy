@@ -4,7 +4,7 @@ from playwright.sync_api import sync_playwright
 import json, os, re, subprocess
 
 root=Path(__file__).resolve().parents[2]
-out=Path('/workspace/artifacts/abdomen-fascicle-review');out.mkdir(parents=True,exist_ok=True)
+out=Path('/workspace/artifacts/serratus-fan-review');out.mkdir(parents=True,exist_ok=True)
 base=os.environ.get('ANATOMY_REVIEW_BASE','http://127.0.0.1:8767/')
 errors=[];metrics=[]
 with sync_playwright() as p:
@@ -54,6 +54,28 @@ with sync_playwright() as p:
       const fibers=abdomenDraft.model.flexion.plates.side.paths.filter(p=>p.patch==='external-oblique'&&p.n.classList.contains('fiber')&&p.points[0].uv[1]<3.5);
       return fibers.length>20&&fibers.every(p=>{const qs=p.points.filter(q=>q.xyz),a=qs[0].xyz,b=qs.at(-1).xyz;return b[2]>a[2]&&b[1]>a[1];});
     }''')
+    # Inferior SA has a broad costal origin range and a narrower scapular
+    # inferior-angle insertion. Equal height ranges made parallel stripes.
+    assert page.evaluate('''()=>{
+      const s=abdomenDraft.model.flexion.surfaces.sources,span=ps=>Math.max(...ps.map(p=>p[1]))-Math.min(...ps.map(p=>p[1]));
+      return ['front','side'].every(view=>{const p=s[view].serratus,o=p.origin.slice(4),e=p.insertion.slice(4);return o.every((p,i)=>!i||p[1]>o[i-1][1])&&span(o)>35&&span(e)/span(o)<.3;});
+    }''')
+    # The displayed near flank must show distinct directions at BOTH yaw
+    # endpoints, rather than only tracing an unseen posterior convergence.
+    # This is a drawing-readability criterion, not a clinical fiber angle.
+    fan_metrics=[]
+    for angle in [-60,60]:
+        page.evaluate('a=>abdomenDraft.setPose(a,"twist")',angle)
+        fan=page.evaluate('''()=>{
+          const m=abdomenDraft.model.flexion,f=m.plates.front.poseFrame,yaw=16*Math.PI/180,sign=f.degrees>0?-1:1,proj=p=>[p[0]*Math.cos(yaw)+p[2]*Math.sin(yaw),p[1]];
+          const angles=[4,5,6,7].map(v=>{const a=proj(m.surfaces.transform('front','serratus',.1,v,sign,f)),b=proj(m.surfaces.transform('front','serratus',.35,v,sign,f));return Math.atan2(b[1]-a[1],Math.abs(b[0]-a[0]))*180/Math.PI;});
+          return {degrees:f.degrees,angles,spread:Math.max(...angles)-Math.min(...angles)};
+        }''')
+        assert fan['spread']>25,fan
+        assert page.evaluate('''()=>[...abdomenDraft.model.flexion.plates.front.g.querySelectorAll('[data-muscle="serratus"]')].every(g=>{
+          const ds=[...g.querySelectorAll('.fiber')].map(p=>p.getAttribute('d'));return new Set(ds).size===ds.length;
+        })'''), 'Coincident serratus fibers darken the narrow fan edge'
+        fan_metrics.append(fan)
     # The compact chest fans retain fibers and sort back-to-front at both yaw
     # endpoints; the old floating breastplate had no fan or depth ordering.
     for angle in [-60,60]:
@@ -209,5 +231,5 @@ old=data(subprocess.check_output(['git','show','HEAD:index.html'],cwd=root,text=
 assert all(old[k]==new[k] for k in old if k!='abdomen')
 for name in ['upperbody.html','arm.html','forearm.html','thigh.html']:
     assert (root/name).read_bytes()==subprocess.check_output(['git','show','HEAD:'+name],cwd=root)
-(out/'verification.json').write_text(json.dumps({'poses':metrics,'materials':'passed','sandbox_and_state_migration':'passed','mobile_and_touch':'passed','other_topics_unchanged':True,'errors':errors},indent=2)+'\n')
+(out/'verification.json').write_text(json.dumps({'poses':metrics,'inferior_serratus_fan':fan_metrics,'materials':'passed','sandbox_and_state_migration':'passed','mobile_and_touch':'passed','other_topics_unchanged':True,'errors':errors},indent=2)+'\n')
 print('PASS: 23 poses; shared SA/EO contact, posed-shell clearance, camera-depth occlusion, distributed rotation, rigid bones, cartilage continuity, attachment, fiber stability, visible labels, group transparency, migration/state/playback, mobile/touch; other topics unchanged.')
