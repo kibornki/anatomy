@@ -20,7 +20,7 @@ function AbdominalMuscleSurfaces({profile,radius,frontZ,backZ,spineZ}){
   const eoOrigin=seam.concat(ribs.slice(8,12).map((r,i)=>view==='front'?posteriorCostal(r,.96-.04*i):costal(r,.22-.025*i)));
   const saInsert=[.1,.3,.47,.62,.82,.94,.98,1].map(t=>{const u=1-t;if(view==='front'){const p=C.girdle(35).S([89*u*u+170*u*t+109*t*t,165*u*u+424*u*t+291*t*t]);return [p[0],p[1],backZ(...p)+4];}return [65,1.24*(177*u*u+416*u*t+265*t*t)-39,-34*u*u-116*u*t-49*t*t];});
   const eoEdge=[[47,313],[49,337],[51,362],[53,388],[58,413],[69,426],[80,424],[84,418]];
-  const eoInsert=view==='front'?eoEdge.map((p,i)=>[p[0],p[1],i<5?frontZ(...p):mix([frontZ(...p)],[backZ(...p)],(i-4)/3)[0]]):[[41,302],[43,322],[42,345],[35,368],[23,389],[1,390],[-22,384],[-41,386]].map(p=>{const y=1.24*p[1]-39,[c,d]=profile(y);return [radius(y)*Math.sqrt(Math.max(.02,1-((p[0]-c)/d)**2)),y,p[0]];});
+  const eoInsert=view==='front'?eoEdge.map((p,i)=>[p[0],p[1],i<5?frontZ(...p):mix([frontZ(...p)],[backZ(...p)],(i-4)/3)[0]]):[[65,302],[65,322],[61,345],[53,368],[36,389],[12,390],[-22,384],[-41,386]].map(p=>{const y=1.24*p[1]-39,[c,d]=profile(y);return [radius(y)*Math.sqrt(Math.max(.02,1-((p[0]-c)/d)**2)),y,p[0]];});
   const latOrigin=view==='front'?[[10,289],[12,356],[20,419],[86,419]].map(p=>[p[0],p[1],backZ(...p)]):[[16,1.24*255-39,-60],[18,1.24*312-39,-48],[22,1.24*383-39,-51],[86,1.24*380-39,-12]];
   const end=C.girdle(35).at(18,-5),latInsert=view==='front'?Array.from({length:4},(_,i)=>[end[0]-17+i*1.8,end[1]+15+i*2,-20+i*2]):Array.from({length:4},(_,i)=>[91+i*2,1.24*(201+i*2)-39,-15+i*2]);
   sources[view]={serratus:{origin:saOrigin,insertion:saInsert,levels:saOrigin.map((_,i)=>ribLevel(i)),target:'scapula',count:8},'external-oblique':{origin:eoOrigin,insertion:eoInsert,levels:eoOrigin.map((_,i)=>ribLevel(i+4)),target:'aponeurosis-ilium',count:8},latissimus:{origin:latOrigin,insertion:latInsert,target:'humeral-context',count:4}};
@@ -30,19 +30,25 @@ function AbdominalMuscleSurfaces({profile,radius,frontZ,backZ,spineZ}){
   if((id==='serratus'||id==='external-oblique')&&k>=0&&k<=3){
    const ps=sources[view].serratus.origin.slice(4),i=Math.min(2,Math.floor(k)),t=k-i,p=mix(ps[i],ps[i+1],t);
    // Shared chevron between rib slips. Independent notches cannot open gaps.
-   const tooth=Math.sin(Math.PI*t)**2,dy=ps[i+1][1]-ps[i][1],shift=(view==='front'?9:10)*tooth;
-   p[1]-=dy*.22*tooth;
+   const tooth=Math.sin(Math.PI*t)**2,dy=ps[i+1][1]-ps[i][1],shift=24*tooth;
+   p[1]-=dy*.15*tooth;
    if(view==='front'&&tooth>1e-8){
-    const angle=q=>Math.atan2(q[2]-profile(q[1])[0],q[0]*profile(q[1])[1]/radius(q[1])),a=angle(ps[i])+(angle(ps[i+1])-angle(ps[i]))*t+.20*tooth,[c,d]=profile(p[1]);
+    const angle=q=>Math.atan2(q[2]-profile(q[1])[0],q[0]*profile(q[1])[1]/radius(q[1])),a=angle(ps[i])+(angle(ps[i+1])-angle(ps[i]))*t-.38*tooth,[c,d]=profile(p[1]);
     const radial=q=>{const [qc,qd]=profile(q[1]);return Math.hypot(q[0]/radius(q[1]),(q[2]-qc)/qd);},r=radial(ps[i])+(radial(ps[i+1])-radial(ps[i]))*t;
     p[0]=radius(p[1])*r*Math.cos(a);p[2]=c+d*r*Math.sin(a);
-   }else if(view==='side'&&tooth>1e-8){p[2]+=shift;const [c,d]=profile(p[1]);p[0]=radius(p[1])*Math.sqrt(Math.max(.02,1-((p[2]-c)/d)**2));}
+   }else if(view==='side'&&tooth>1e-8){p[2]-=shift;const [c,d]=profile(p[1]);p[0]=radius(p[1])*Math.sqrt(Math.max(.02,1-((p[2]-c)/d)**2));}
    return p;
   }
-  return interpolate(patch.origin,v);
+  const origin=interpolate(patch.origin,v);
+  if(id==='serratus'&&v<4){
+   // The upper slips have actual rounded costal tips with recessed intervals.
+   // The lower four instead use the shared SA/EO interdigitating boundary.
+   const distance=Math.min(v%1,1-v%1),t=clamp((distance-.19)/.31),notch=.46*t*t*(3-2*t);
+   return alongWall(origin,interpolate(patch.insertion,v),notch,id,v);
+  }
+  return origin;
  }
- function point(view,id,u,v){
-  u=clamp(u);const patch=sources[view][id],o=costalBoundary(view,id,v),e=interpolate(patch.insertion,v);
+ function alongWall(o,e,u,id,v){
   if(u===0)return o.slice();if(u===1)return e.slice();
   const y=o[1]+(e[1]-o[1])*u,[c,d]=profile(y),rx=radius(y);
   const angle=p=>Math.atan2(p[2]-profile(p[1])[0],p[0]*profile(p[1])[1]/radius(p[1]));
@@ -54,13 +60,25 @@ function AbdominalMuscleSurfaces({profile,radius,frontZ,backZ,spineZ}){
   const wo=Math.exp(-u*22),we=Math.exp(-(1-u)*22),r=wo*radial(o)+we*radial(e)+(1-wo-we)*(1+clearance/Math.min(rx,d));
   return [rx*r*Math.cos(a),y,c+d*r*Math.sin(a)];
  }
- function binding(view,id,u,v,sign){const rest=point(view,id,u,v);rest[0]*=sign;const patch=sources[view][id];return {rest,u,v,id,view,sign,level:patch.levels&&interpolate(patch.levels.map(n=>[n]),v)[0],target:patch.target,originIliac:clamp(v-2),targetIliac:clamp((v-3)/2)};}
+ function point(view,id,u,v){u=clamp(u);return alongWall(costalBoundary(view,id,v),interpolate(sources[view][id].insertion,v),u,id,v);}
+ function binding(view,id,u,v,sign){const rest=point(view,id,u,v),origin=point(view,id,0,v),insertion=point(view,id,1,v);for(const q of [rest,origin,insertion])q[0]*=sign;const patch=sources[view][id];return {rest,origin,insertion,u,v,id,view,sign,level:patch.levels&&interpolate(patch.levels.map(n=>[n]),v)[0],target:patch.target,originIliac:clamp(v-2),targetIliac:clamp((v-3)/2)};}
  function move(b,f){
-  const q=b.rest,start=b.level?f.segment(q,b.level):mix(f.deform(q),q,b.originIliac),end=b.target==='scapula'||b.target==='humeral-context'?f.segment(q,175):mix(f.deform(q),q,b.targetIliac);
+  const q=b.rest,o=b.origin,e=b.insertion,ob=f.deform(o),eb=b.target==='aponeurosis-ilium'&&f.wall?f.wall(e):f.deform(e),start=b.level?f.segment(o,b.level):mix(ob,o,b.originIliac),end=b.target==='scapula'||b.target==='humeral-context'?f.segment(e,175):mix(eb,e,b.targetIliac);
   // Boundary corrections decay into the body field. Linear blending of two
   // rigid frames through the rib cage is avoided; both slips share the field.
-  const base=f.deform(q),wo=(1-b.u)**3,we=b.u**3;
-  const moved=base.map((n,i)=>n+(start[i]-n)*wo+(end[i]-n)*we);
+  let base=f.deform(q),sourceBase=ob,targetBase=eb;
+  if(f.rotate){
+   // Interpolate the rotations of the actual attachments along a fascicle.
+   // Using theta at each interior point's height instead imposed a second
+   // torsion field over the attachment corrections, kinking the short SA
+   // slips and the EO fibers. Angular interpolation keeps the wrapping arc;
+   // blending endpoint positions would cut a chord through the rib cage.
+   const angle=p=>Math.atan2(p[2]-f.axis,p[0]),phase=(a,z)=>{let t=angle(a)-angle(z);while(t>Math.PI)t-=2*Math.PI;while(t< -Math.PI)t+=2*Math.PI;return t;};
+   const a=phase(o,start),z=phase(e,end);
+   base=f.rotate(q,a+(z-a)*b.u);sourceBase=f.rotate(o,a);targetBase=f.rotate(e,z);
+  }
+  const wo=(1-b.u)**3,we=b.u**3;
+  const moved=base.map((n,i)=>n+(start[i]-sourceBase[i])*wo+(end[i]-targetBase[i])*we);
   if(!f.envelope||b.u===1||b.u===0)return moved;
   const outside=f.envelope.outside(moved,b.id==='latissimus'?4:3.5),weight=Math.min(1,b.u/.10,(1-b.u)/.10);
   return mix(moved,outside,weight);

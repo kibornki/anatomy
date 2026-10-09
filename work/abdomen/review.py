@@ -4,7 +4,7 @@ from playwright.sync_api import sync_playwright
 import json, os, re, subprocess
 
 root=Path(__file__).resolve().parents[2]
-out=Path('/workspace/artifacts/abdomen-contact-review');out.mkdir(parents=True,exist_ok=True)
+out=Path('/workspace/artifacts/abdomen-fascicle-review');out.mkdir(parents=True,exist_ok=True)
 base=os.environ.get('ANATOMY_REVIEW_BASE','http://127.0.0.1:8767/')
 errors=[];metrics=[]
 with sync_playwright() as p:
@@ -48,6 +48,12 @@ with sync_playwright() as p:
     # The lateral belly must connect to its anterior aponeurotic boundary;
     # all eight costal origins belong to ribs 5–12, rather than a hand-drawn strip.
     assert page.evaluate("()=>{const s=abdomenDraft.model.flexion.surfaces.sources;return ['front','side'].every(v=>s[v]['external-oblique'].origin.length===8&&s[v].serratus.origin.length===8)&&s.front['external-oblique'].insertion[3][0]<60&&s.front['external-oblique'].insertion[3][0]>40;}")
+    # Lateral upper EO fibers travel anteriorly toward the sheath and downward.
+    # The former narrow strip sent some of these fibers posteriorly.
+    assert page.evaluate('''()=>{
+      const fibers=abdomenDraft.model.flexion.plates.side.paths.filter(p=>p.patch==='external-oblique'&&p.n.classList.contains('fiber')&&p.points[0].uv[1]<3.5);
+      return fibers.length>20&&fibers.every(p=>{const qs=p.points.filter(q=>q.xyz),a=qs[0].xyz,b=qs.at(-1).xyz;return b[2]>a[2]&&b[1]>a[1];});
+    }''')
     # The compact chest fans retain fibers and sort back-to-front at both yaw
     # endpoints; the old floating breastplate had no fan or depth ordering.
     for angle in [-60,60]:
@@ -70,6 +76,25 @@ with sync_playwright() as p:
                 if(view==='twist'&&path.n.classList.contains('fiber')){const world=path.worldPoints.filter(Boolean),length=ps=>ps.slice(1).reduce((s,q,i)=>s+dist(q,ps[i]),0),ratio=length(world)/length(qs);minFiber=Math.min(minFiber,ratio);if(path.lat)maxLatFiber=Math.max(maxLatFiber,ratio);else maxFiber=Math.max(maxFiber,ratio);}
               }
               for(const path of plate.paths.filter(p=>p.lat&&p.n.classList.contains('fiber'))){const qs=path.points.filter(q=>q.xyz).map(q=>q.xyz),actual=path.worldPoints.filter(Boolean),last=qs.length-1;attachmentError=Math.max(attachmentError,dist(actual[last],f.segment(qs[last],175)));}
+              let wallAttachmentError=0,sheathContactError=0;
+              if(view==='twist'){
+               // Rendered rectus/fascia above the costal boundary must follow
+               // the actual sternal frame; lower pubic/iliac wall stays fixed.
+               for(const p of plate.paths.filter(p=>p.wall))p.points.forEach((q,i)=>{
+                if(!q.xyz)return;
+                if(q.xyz[1]<=300)wallAttachmentError=Math.max(wallAttachmentError,dist(p.worldPoints[i],f.segment(q.xyz,177)));
+                if(q.xyz[1]>=420)wallAttachmentError=Math.max(wallAttachmentError,dist(p.worldPoints[i],q.xyz));
+               });
+               // Compare EO insertion to the independently rendered white
+               // sheath, not just a second call to the muscle deformation.
+               for(const sign of [-1,1])for(let v=0;v<=3;v++){
+                const e=m.surfaces.point('front','external-oblique',1,v);e[0]*=sign;
+                const p=plate.paths.find(p=>p.n.dataset.part==='external-aponeurosis'&&p.points.some(q=>q.xyz&&dist(q.xyz,e)<1e-8));
+                if(!p)throw new Error('Missing EO/sheath contact landmark');
+                const i=p.points.findIndex(q=>q.xyz&&dist(q.xyz,e)<1e-8);
+                sheathContactError=Math.max(sheathContactError,dist(p.worldPoints[i],m.surfaces.transform('front','external-oblique',1,v,sign,f)));
+               }
+              }
               for(const path of plate.paths.filter(p=>p.pectoral)){const qs=path.points.filter(q=>q.xyz).map(q=>q.xyz),actual=rendered(path);for(let i=0;i<qs.length;i++)renderError=Math.max(renderError,dist(actual[i],proj(f.segment(qs[i],177))));}
               let costalError=0,pelvicAttachmentError=0,scapularError=0;
               const nearest=(q,ps)=>Math.min(...ps.slice(1).map((b,i)=>{const a=ps[i],d=b.map((n,k)=>n-a[k]),t=Math.max(0,Math.min(1,q.reduce((s,n,k)=>s+(n-a[k])*d[k],0)/d.reduce((s,n)=>s+n*n,0)));return dist(q,a.map((n,k)=>n+t*d[k]));}));
@@ -99,7 +124,7 @@ with sync_playwright() as p:
               }
               const s=m.yawFrame(60),theta=y=>s.theta(y)*180/Math.PI;
               const labels=[...document.querySelectorAll('.diagram-labels [data-label]')].filter(g=>g.style.display!=='none').map(g=>{const line=g.querySelector('path'),point=line.getPointAtLength(line.getTotalLength()),screen=point.matrixTransform(line.getScreenCTM()),hit=m.pickAt(screen.x,screen.y);return {id:g.dataset.label,hit:hit?.closest('[data-muscle]')?.dataset.muscle};});
-              return {view,angle:a,bones,boneError,renderError,seamError,contactGap,minShellClearance,minFiber,maxFiber,maxLatFiber,attachmentError,costalError,pelvicAttachmentError,scapularError,lumbar:theta(377),upper:theta(177),thoracicStep:theta(225)-theta(241),pelvisFixed:JSON.stringify(s.deform([40,475,15]))==='[40,475,15]',labels};
+              return {view,angle:a,bones,boneError,renderError,seamError,contactGap,minShellClearance,minFiber,maxFiber,maxLatFiber,attachmentError,wallAttachmentError,sheathContactError,costalError,pelvicAttachmentError,scapularError,lumbar:theta(377),upper:theta(177),thoracicStep:theta(225)-theta(241),pelvisFixed:JSON.stringify(s.deform([40,475,15]))==='[40,475,15]',labels};
             }''')
             assert result['boneError']<1e-8,result
             assert result['renderError']<.001,result
@@ -108,6 +133,7 @@ with sync_playwright() as p:
             assert abs(result['lumbar']-5)<1e-8 and abs(result['upper']-60)<1e-8,result
             assert 0<result['thoracicStep']<7.1 and result['pelvisFixed'],result
             assert result['attachmentError']<1e-8 and result['pelvicAttachmentError']<1e-8,result
+            assert result['wallAttachmentError']<1e-8 and result['sheathContactError']<1e-8,result
             assert result['costalError']<1.5 and result['scapularError']<4.5,result
             assert result['contactGap']<1e-8 and result['minShellClearance']>=3.49,result
             if view=='twist':

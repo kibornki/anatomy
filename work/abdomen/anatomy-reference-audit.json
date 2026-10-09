@@ -81,5 +81,12 @@
     ],
     "validation": "23 poses; continuous shared boundary; interior shell clearance; independent foreground-bone occlusion fixture with reversed drawing order; original attachment/bone/cartilage checks; opacity/state/mobile/touch. Numerical checks constrain this drawing and do not certify medical anatomy.",
     "limitations": "Coronal and lateral skeletal drawings remain separate landmark adapters. Muscle attachment bands, soft tissue sliding and actual humeral insertions are approximations. No measured volumetric anatomical model."
+  },
+  "fascicle_and_yaw_recheck": {
+    "visual_reference": "User-supplied lateral dissection and OpenStax 11.12; generated concepts are not anatomical evidence.",
+    "shape": "Rounded upper SA costal slips, posterior inter-rib recesses in the shared lower SA/upper EO boundary, broader lateral EO belly with anterior-inferior upper fibers.",
+    "movement": "Actual attachment displacement corrections and angular interpolation; eased thoracic yaw; anterior fascia/rectus coupled to costal/xiphoid boundary above and fixed pelvic attachments below; body-derived envelope center and conservative outer smoothing.",
+    "validation": "23 poses; original fiber stability upper bound 1.8 retained, measured maximum 1.755; actual rendered EO/sheath contact, upper anterior wall follows sternum, lower wall fixed; opacity/state/mobile/touch passed.",
+    "limits": "Drawing geometry and illustrative motion distribution, not measured clinical ranges, volumetric anatomy or physiological strain."
   }
 }

@@ -29,8 +29,24 @@ function AbdomenFlexion(host) {
   r.layer.setAttribute('clip-path',`url(#${clip.id})`);
   surfaceRegions.push({view,id,sign,layer:r.layer,n:visible,shape:r.shape,count});
   const curves=[];
-  for(let j=0;j<56;j++){
-   const v=(count-1)*(j+.5)/56;
+  if(id==='serratus'){
+   // Fiber bundles follow each rib slip, rather than a uniform rectangular
+   // hatch across the full sheet. The posterior connection remains continuous.
+   for(let i=0;i<8;i++)for(let j=0;j<8;j++){
+    const v=Math.max(0,Math.min(7,i+(j-3.5)*.09));
+    curves.push(`M 0,${v} C .32,${v} .68,${v} 1,${v}`);
+   }
+   for(let i=0;i<8;i++){
+    const lo=Math.max(0,i-.33),hi=Math.min(7,i+.33);
+    path(`M 0,${lo} L .25,${lo} L .6,${lo} L 1,${lo} L 1,${hi} L .6,${hi} L .25,${hi} L 0,${hi} Z`,'slip-shade',r.fg);
+   }
+   for(let i=0;i<7;i++){
+    const v=i+.5;
+    path(`M 0,${v} C .3,${v} .7,${v} 1,${v}`,'slip-edge',r.fg);
+    path(`M .06,${v-.07} C .32,${v-.07} .7,${v-.07} .98,${v-.07}`,'slip-highlight',r.fg);
+   }
+  }else for(let j=0;j<(id==='external-oblique'?80:56);j++){
+   const total=id==='external-oblique'?80:56,v=(count-1)*(j+.5)/total;
    curves.push(`M 0,${v} C .32,${v} .68,${v} 1,${v}`);
   }
   fibers(r,curves);return r;
@@ -61,7 +77,7 @@ function AbdomenFlexion(host) {
   // Broad white aponeuroses continue to the linea alba and pubic attachments.
   for(const sign of [-1,1]){
    const side=el('g',{transform:`scale(${sign} 1)`},muscles);
-   const sheath=path('M 47,313 Q 49,337 51,362 Q 52,388 58,413 Q 67,430 84,418 Q 48,453 13,491 L 3,491 L 3,304 Z','aponeurosis',side);sheath.setAttribute('data-part','external-aponeurosis');
+   const sheath=path('M 47,313 Q 48,325 49,337 Q 50,350 51,362 Q 52,375 53,388 Q 54,402 58,413 Q 62,422 69,426 Q 76,428 80,424 Q 83,422 84,418 Q 48,453 13,491 L 3,491 L 3,304 Z','aponeurosis',side);sheath.setAttribute('data-part','external-aponeurosis');
    const af=el('g',{class:'fibers'},side);
    for(let i=0;i<30;i++){const t=i/29;path(`M ${xy([55+18*t,320+104*t])} Q ${xy([35+12*t,362+91*t])} ${xy([3,395+92*t])}`,'aponeurosis-fiber',af);}
    // One oblique sheet, with costal digitations rather than rectangular panels.
@@ -101,7 +117,7 @@ function AbdomenFlexion(host) {
   const lat=patchRegion(muscles,'latissimus','purple','side');
   lat.layer.setAttribute('data-surface','posterior-latissimus');
   // Iliac crest, costal margin, and anterior abdominal wall establish the fan.
-  const sheath=path('M 29,293 Q 40,300 51,295 L 59,306 Q 58,339 53,368 Q 50,397 32,424 L 20,403 Q 32,387 18,367 Q 24,351 14,337 Q 19,317 29,293 Z','aponeurosis',muscles);sheath.setAttribute('data-part','external-aponeurosis');
+  const sheath=path('M 65,302 Q 68,312 65,322 Q 64,338 61,345 Q 59,357 53,368 Q 48,383 36,389 Q 24,394 12,390 L 20,403 Q 32,387 18,367 Q 24,351 14,337 Q 19,317 29,293 Z','aponeurosis',muscles);sheath.setAttribute('data-part','external-aponeurosis');
   const sf=el('g',{class:'fibers'},muscles);
   for(let i=0;i<26;i++){const t=i/25;path(`M ${xy([17+10*t,326+63*t])} Q ${xy([34+5*t,345+57*t])} ${xy([54-22*t,357+67*t])}`,'aponeurosis-fiber',sf);}
   patchRegion(muscles,'external-oblique','blue','side');
@@ -166,9 +182,9 @@ function AbdomenFlexion(host) {
   return {binding:surfaces.binding(view,id,u,v,sign)};
  }
  for(const r of surfaceRegions){
-  r.nu=16;r.nv=(r.count-1)*4;r.grid=[];
+  r.nu=r.id==='serratus'?12:16;r.nv=r.id==='serratus'?56:r.id==='external-oblique'?40:12;r.grid=[];
   for(let j=0;j<=r.nv;j++)for(let i=0;i<=r.nu;i++){
-   const v=(r.count-1)*j/r.nv,u=i/r.nu;
+   const v=r.id==='external-oblique'?(j<=24?j/8:3+(j-24)/4):(r.count-1)*j/r.nv,u=i/r.nu;
    r.grid.push(surfaceVertex(r.view,r.id,u,v,r.sign));
   }
  }
@@ -221,7 +237,8 @@ function AbdomenFlexion(host) {
     }
     cartilage={start,end,level,side:view==='side'};
    }
-   return {n,points,pelvis,shoulder,sternum,cartilage,lat,pectoral,patch,sign,rib:ribY,vertebra:vy};
+   const wall=!!n.closest('[data-muscle="rectus"],[data-muscle="internal-oblique"]')||n.matches('.aponeurosis,.aponeurosis-fiber,.section-edge');
+   return {n,points,pelvis,shoulder,sternum,cartilage,lat,pectoral,wall,patch,sign,rib:ribY,vertebra:vy};
   });
   // Coordinates have been baked; remove the neutral transforms afterwards.
   plate.g.querySelectorAll('[transform]').forEach(n=>n.removeAttribute('transform'));
@@ -239,10 +256,11 @@ function AbdomenFlexion(host) {
    if(p.cartilage){const {start,end,level,side}=p.cartilage,d=end.map((v,i)=>v-start[i]),x=side?q.xyz[2]:q.xyz[0],t=Math.max(0,Math.min(1,((x-start[0])*d[0]+(q.xyz[1]-start[1])*d[1])/(d[0]*d[0]+d[1]*d[1])));return mix(f.segment(q.xyz,p.rib),f.segment(q.xyz,level),t);}
    return f.segment(q.xyz,p.sternum?177:p.rib);
   }));
+  const body=[];
   for(let i=0;i<48;i++){
-   const a=i*Math.PI/24,ps=[];for(let y=155;y<=450;y+=5){const [c,d]=profile(y);ps.push(f.deform([radius(y)*Math.cos(a),y,c+d*Math.sin(a)]));}lines.push(ps);
+   const a=i*Math.PI/24,ps=[];for(let y=155;y<=450;y+=5){const [c,d]=profile(y);ps.push(f.deform([radius(y)*Math.cos(a),y,c+d*Math.sin(a)]));}lines.push(ps);body.push(ps);
   }
-  f.envelope=AbdominalEnvelope(lines);return f;
+  f.envelope=AbdominalEnvelope(lines,body);return f;
  }
  function frame(angle,camera='front'){
   // Only the spinal column curls: pelvis remains fixed, with no hip motion.
@@ -270,14 +288,27 @@ function AbdomenFlexion(host) {
    // Keep the upper rib cage/shoulder base together instead of shearing its
    // first four ribs against the sternum and scapular attachments.
    if(y<=225)return a;
-   if(y<=353)return lumbar+thoracic*(353-y)/128;
+   if(y<=353){
+    // Ease both junctions and keep the middle cage nearer the shoulder frame.
+    // A linear ramp imposed a large relative yaw across short inferior SA
+    // slips and an abrupt angular gradient at the upper cage. This remains
+    // an illustrative distribution, not measured segmental range of motion.
+    const t=(353-y)/128,turn=t*t*(4.5+t*(-5+1.5*t));
+    return lumbar+thoracic*turn;
+   }
    if(y<=377)return lumbar;
    return lumbar*(455-y)/78;
   }
   // The kyphotic column rotates about the pelvis' longitudinal axis too; do
   // not leave every vertebral center in its original sagittal plane.
-  function segment([x,y,z],level){if(level>=455)return [x,y,z];const t=theta(level),axis=spineZ(455),dz=z-axis;return [x*Math.cos(t)+dz*Math.sin(t),y,axis-x*Math.sin(t)+dz*Math.cos(t)];}
-  return withEnvelope({deform(q,pelvic=false){return pelvic||q[1]>=455?q:segment(q,q[1]);},segment,alpha:theta,theta,degrees,spineZ},'front');
+  const axis=spineZ(455);
+  function rotate([x,y,z],t){const dz=z-axis;return [x*Math.cos(t)+dz*Math.sin(t),y,axis-x*Math.sin(t)+dz*Math.cos(t)];}
+  function segment(q,level){return rotate(q,theta(level));}
+  // The anterior abdominal wall attaches to the costal/xiphoid boundary,
+  // which follows the sternum, rather than to a vertebra at the same height.
+  // Its upper attachment follows the chest; its iliac/pubis end stays fixed.
+  const wall=q=>rotate(q,a*(1-smooth((q[1]-300)/120)));
+  return withEnvelope({deform(q,pelvic=false){return pelvic||q[1]>=455?q:segment(q,q[1]);},wall,segment,rotate,axis,alpha:theta,theta,degrees,spineZ},'front');
  }
  const nodes=['serratus','external','internal','rectus','latissimus'].map((id,i)=>{const group=el('g',{'data-label':id},labels),line=path('','',group),text=el('text',{},group);text.textContent=['전거근','외복사근','내복사근','복직근','광배근'][i];return {line,text};});
  function paintedHit(x,y){
@@ -287,7 +318,7 @@ function AbdomenFlexion(host) {
   const camera=view==='twist'?'front':view,plate=plates[camera],poseKey=view+':'+angle,reuse=plate.poseKey===poseKey,f=reuse?plate.poseFrame:view==='twist'?yawFrame(angle):frame(angle,camera),yaw=16*Math.PI/180,project=p=>camera==='side'?[p[2],p[1]]:[p[0]*Math.cos(yaw)+p[2]*Math.sin(yaw),p[1]];
   plate.poseFrame=f;
   for(const [v,p] of Object.entries(plates))p.g.style.display=v===camera?'':'none';
-  function transform(q,p){if(p.pelvis)return q;if(p.cartilage){const {start,end,level,side}=p.cartilage,d=end.map((v,i)=>v-start[i]),x=side?q[2]:q[0],t=Math.max(0,Math.min(1,((x-start[0])*d[0]+(q[1]-start[1])*d[1])/(d[0]*d[0]+d[1]*d[1])));return mix(f.segment(q,p.rib),f.segment(q,level),t);}return p.sternum||p.pectoral?f.segment(q,177):p.rib?f.segment(q,p.rib):p.shoulder?f.segment(q,175):p.vertebra?f.segment(q,p.vertebra):f.deform(q);}
+  function transform(q,p){if(p.pelvis)return q;if(p.cartilage){const {start,end,level,side}=p.cartilage,d=end.map((v,i)=>v-start[i]),x=side?q[2]:q[0],t=Math.max(0,Math.min(1,((x-start[0])*d[0]+(q[1]-start[1])*d[1])/(d[0]*d[0]+d[1]*d[1])));return mix(f.segment(q,p.rib),f.segment(q,level),t);}return p.sternum||p.pectoral?f.segment(q,177):p.rib?f.segment(q,p.rib):p.shoulder?f.segment(q,175):p.vertebra?f.segment(q,p.vertebra):p.wall&&f.wall?f.wall(q):f.deform(q);}
   if(!reuse){
   plate.visibilityOccluders=[];
   for(const p of plate.paths){

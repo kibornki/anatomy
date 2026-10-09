@@ -9,6 +9,9 @@
 .diagram [data-anatomic-patch] > .muscle{stroke:none}
 .diagram .fiber{stroke-width:.65;stroke-opacity:.34}
 .diagram .fiber-highlight{fill:none;stroke:white;stroke-opacity:.36;stroke-width:.65}
+.diagram .slip-shade{fill:var(--foreground);fill-opacity:.055;stroke:none}
+.diagram .slip-edge{fill:none;stroke:var(--foreground);stroke-opacity:.4;stroke-width:.85}
+.diagram .slip-highlight{fill:none;stroke:white;stroke-opacity:.32;stroke-width:.85}
 .diagram .aponeurosis{fill:var(--background);stroke:var(--muted-foreground);stroke-width:.8}
 .diagram .aponeurosis-fiber{fill:none;stroke:var(--muted-foreground);stroke-width:.45;stroke-opacity:.28}
 .diagram .intersection{fill:var(--background);stroke:var(--muted-foreground);stroke-width:.65}
