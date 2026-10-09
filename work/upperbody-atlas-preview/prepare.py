@@ -2,6 +2,7 @@
 from pathlib import Path
 import numpy as np,json,hashlib
 from scipy.spatial import cKDTree
+import runpy
 import fast_simplification
 W=Path(__file__).parent;ROOT=W.parents[1];NEW=Path('/workspace/artifacts/upperbody-atlas-preview/source');OLD=Path('/workspace/artifacts/independent-anatomy-review');ARM=Path('/workspace/artifacts/arm-atlas-preview/source')
 SCALE=.58;PIN='f0eeb6e843380cfe6b83797cf8c3e1af74de5e61'
@@ -42,8 +43,12 @@ posed_axis=arm_pose([gh,distal]);assert abs(np.rad2deg(np.arctan2(*(posed_axis[1
 fixed=[p for p in parts if p['kind']!='muscle' and p['name'] not in ['scapula','clavicle','humerus','ulna','radius']]
 fixed_tree=cKDTree(np.concatenate([p['v'] for p in fixed]));scap_tree=cKDTree(scap['v']);clav_tree=cKDTree(clav['v']);hum_tree=cKDTree(hum['v'])
 identity=lambda ps:np.array(ps).copy()
+lat=next(p for p in muscles if p['name']=='latissimus')
+fit=runpy.run_path(str(W/'latissimus-pose.py'))['latissimus_fit']
+lat_pose,lat_audit=fit(lat['v'],lat['f'],arm_pose,np.concatenate([p['v'] for p in fixed if p['kind']=='rib']))
 def pose_soft(ps,name):
  ps=np.array(ps)
+ if name=='latissimus':return lat_pose(ps)
  if name=='serratus':bindings=[(fixed_tree,identity),(scap_tree,scap_pose)]
  elif name.startswith('trapezius'):bindings=[(fixed_tree,identity),(scap_tree,scap_pose),(clav_tree,clav_pose)]
  elif name in ['infraspinatus','teres-major','teres-minor']:bindings=[(scap_tree,scap_pose),(hum_tree,arm_pose)]
@@ -88,4 +93,5 @@ for p in parts:
 parts+=mirrored
 expected=set(name for _,name,_,_ in specs);assert {p['name'].removesuffix('-right') for p in parts if p['kind']=='muscle'}==expected
 out={'source':'BodyParts3D 3.0 © 2008 DBCLS; CC BY-SA 2.1 Japan; STL Kevin Mattheus Moerman','sourceCommit':PIN,'scale':SCALE,'pose':{'armAbduction':60,'humeralRotation':humeral_rotation,'neutralHumeralAbduction':neutral_abduction,'clavicleElevation':10,'scapularUpwardRotation':20,'cameraYaw':[0,90,180]},'neckTop':float(neck_top),'forearmCutNeutral':cut,'parts':parts,'sources':sources,'limitations':'Static proposal using real atlas shells. Shoulder pose, skinning and surface fibers are illustrative, not measured kinematics or fascicles.'}
-(W/'atlas-data.json').write_text(json.dumps(out,separators=(',',':')));print('Prepared',len(parts),'parts; muscles',sorted(expected),'neck',neck_top,'forearm cut',cut)
+out['latissimusPoseAudit']=lat_audit
+(W/'atlas-data.json').write_text(json.dumps(out,separators=(',',':')));print('Prepared',len(parts),'parts; muscles',sorted(expected),'neck',neck_top,'forearm cut',cut,'latissimus',lat_audit)
