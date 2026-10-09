@@ -23,9 +23,7 @@ function AbdomenFlexion(host) {
  }
  function patchRegion(g,id,color,view,sign=1){
   const count=id==='latissimus'?4:8;
-  let d='M 0,0';
-  for(let i=0;i<count-1;i++)d+=id==='latissimus'?` L 0,${i+1}`:` L 0,${i+.25} Q .13,${i+.5} 0,${i+.75} L 0,${i+1}`;
-  d+=` L 1,${count-1} L 1,0 Z`;
+  const d=`M 0,0 L 1,0 L 1,${count-1} L 0,${count-1} Z`;
   const r=region(g,d,color,id);r.layer.setAttribute('data-anatomic-patch',id);r.layer.setAttribute('data-hemisphere',sign);
   const clip=el('clipPath',{id:r.shape.id+'-visible',clipPathUnits:'userSpaceOnUse'},defs),visible=path('','',clip);
   r.layer.setAttribute('clip-path',`url(#${clip.id})`);
@@ -165,14 +163,12 @@ function AbdomenFlexion(host) {
  const backZ=(x,y)=>{const [c]=profile(y);return 2*c-frontZ(x,y)-3;};
  const surfaces=AbdominalMuscleSurfaces({profile,radius,frontZ,backZ,spineZ});
  function surfaceVertex(view,id,u,v,sign){
-  const binding=surfaces.binding(view,id,u,v,sign),rest=binding.rest,[c,d]=profile(rest[1]),rx=radius(rest[1]),normal=[rest[0]/(rx*rx),0,(rest[2]-c)/(d*d)];
-  if(view==='side')normal[0]=.01;
-  return {binding,offsetBinding:{...binding,rest:rest.map((n,i)=>n+normal[i])}};
+  return {binding:surfaces.binding(view,id,u,v,sign)};
  }
  for(const r of surfaceRegions){
   r.nu=16;r.nv=(r.count-1)*4;r.grid=[];
   for(let j=0;j<=r.nv;j++)for(let i=0;i<=r.nu;i++){
-   const v=(r.count-1)*j/r.nv,notch=r.id==='latissimus'?0:(r.id==='serratus'?.17:.12)*Math.sin(Math.PI*v)**2,u=notch+(1-notch)*i/r.nu;
+   const v=(r.count-1)*j/r.nv,u=i/r.nu;
    r.grid.push(surfaceVertex(r.view,r.id,u,v,r.sign));
   }
  }
@@ -204,7 +200,9 @@ function AbdomenFlexion(host) {
      const za=ribDepth(ribLandmark,start),zb=ribNumber<=7?frontZ(sign*end[0],end[1]):ribDepth(C.ribs[ribNumber-2],end);
      z=za+(zb-za)*t;
     }
-    return {...q,xyz:view==='side'?[0,1.24*p.y-39,p.x]:[p.x,p.y,z]};});
+    let sideX=0;
+    if(view==='side'&&n.closest('[data-part="shoulder-skeleton"]')){const yy=1.24*p.y-39,[c,d]=profile(yy);sideX=radius(yy)*Math.sqrt(Math.max(.02,1-((p.x-c)/d)**2))+7;}
+    return {...q,xyz:view==='side'?[sideX,1.24*p.y-39,p.x]:[p.x,p.y,z]};});
    const shoulder=!!n.closest('[data-part="shoulder-skeleton"]'),rib=+(n.closest('[data-rib]')?.dataset.rib||0);
    const rv=rib&&(view==='side'?S.vertebrae:C.vertebrae).filter(v=>v.region==='thoracic')[rib-1],ribY=rv&&(view==='side'?1.24*rv.center[1]-39:rv.y+4);
    const vertebra=n.closest('[data-vertebra]')?.dataset.vertebra;
@@ -236,7 +234,17 @@ function AbdomenFlexion(host) {
   plate.contexts=Array.from(plate.g.querySelectorAll('.context-muscle'));
  }
  const smooth=t=>{t=Math.max(0,Math.min(1,t));return t*t*(3-2*t);};
- function frame(angle){
+ function withEnvelope(f,camera){
+  const lines=plates[camera].paths.filter(p=>p.rib&&p.n.matches('.rib,.cartilage')||p.sternum&&p.n.matches('.bone')).map(p=>p.points.filter(q=>q.xyz).map(q=>{
+   if(p.cartilage){const {start,end,level,side}=p.cartilage,d=end.map((v,i)=>v-start[i]),x=side?q.xyz[2]:q.xyz[0],t=Math.max(0,Math.min(1,((x-start[0])*d[0]+(q.xyz[1]-start[1])*d[1])/(d[0]*d[0]+d[1]*d[1])));return mix(f.segment(q.xyz,p.rib),f.segment(q.xyz,level),t);}
+   return f.segment(q.xyz,p.sternum?177:p.rib);
+  }));
+  for(let i=0;i<48;i++){
+   const a=i*Math.PI/24,ps=[];for(let y=155;y<=450;y+=5){const [c,d]=profile(y);ps.push(f.deform([radius(y)*Math.cos(a),y,c+d*Math.sin(a)]));}lines.push(ps);
+  }
+  f.envelope=AbdominalEnvelope(lines);return f;
+ }
+ function frame(angle,camera='front'){
   // Only the spinal column curls: pelvis remains fixed, with no hip motion.
   // Distribute flexion through thoracic and lumbar levels rather than rotating
   // the complete rib cage about a single lower-back hinge.
@@ -245,7 +253,7 @@ function AbdomenFlexion(host) {
   function center(y){const lo=Math.floor(y),t=y-lo,a=centers.get(lo)||centers.get(60),b=centers.get(lo+1)||a;return mix(a,b,t);}
   function deform([x,y,z],pelvic=false){if(p===0||pelvic||y>=455)return [x,y,z];const c=center(y),a=alpha(y),dz=z-spineZ(y);return [x,c[0]+dz*Math.sin(a),c[1]+dz*Math.cos(a)];}
   function segment([x,y,z],level){if(p===0)return [x,y,z];const c=center(level),a=alpha(level),dy=y-level,dz=z-spineZ(level);return [x,c[0]+dy*Math.cos(a)+dz*Math.sin(a),c[1]-dy*Math.sin(a)+dz*Math.cos(a)];}
-  return {deform,segment,alpha,progress:p};
+  return withEnvelope({deform,segment,alpha,progress:p},camera);
  }
  function yawFrame(degrees){
   const a=Math.max(-60,Math.min(60,degrees))*Math.PI/180;
@@ -269,50 +277,59 @@ function AbdomenFlexion(host) {
   // The kyphotic column rotates about the pelvis' longitudinal axis too; do
   // not leave every vertebral center in its original sagittal plane.
   function segment([x,y,z],level){if(level>=455)return [x,y,z];const t=theta(level),axis=spineZ(455),dz=z-axis;return [x*Math.cos(t)+dz*Math.sin(t),y,axis-x*Math.sin(t)+dz*Math.cos(t)];}
-  return {deform(q,pelvic=false){return pelvic||q[1]>=455?q:segment(q,q[1]);},segment,alpha:theta,theta,degrees,spineZ};
+  return withEnvelope({deform(q,pelvic=false){return pelvic||q[1]>=455?q:segment(q,q[1]);},segment,alpha:theta,theta,degrees,spineZ},'front');
  }
  const nodes=['serratus','external','internal','rectus','latissimus'].map((id,i)=>{const group=el('g',{'data-label':id},labels),line=path('','',group),text=el('text',{},group);text.textContent=['전거근','외복사근','내복사근','복직근','광배근'][i];return {line,text};});
  function paintedHit(x,y){
   return document.elementsFromPoint(x,y).find(n=>n.tagName.toLowerCase()==='path')||null;
  }
  function render(angle,view){
-  const camera=view==='twist'?'front':view,f=view==='twist'?yawFrame(angle):frame(angle),plate=plates[camera],yaw=16*Math.PI/180,project=p=>camera==='side'?[p[2],p[1]]:[p[0]*Math.cos(yaw)+p[2]*Math.sin(yaw),p[1]];
+  const camera=view==='twist'?'front':view,plate=plates[camera],poseKey=view+':'+angle,reuse=plate.poseKey===poseKey,f=reuse?plate.poseFrame:view==='twist'?yawFrame(angle):frame(angle,camera),yaw=16*Math.PI/180,project=p=>camera==='side'?[p[2],p[1]]:[p[0]*Math.cos(yaw)+p[2]*Math.sin(yaw),p[1]];
+  plate.poseFrame=f;
   for(const [v,p] of Object.entries(plates))p.g.style.display=v===camera?'':'none';
   function transform(q,p){if(p.pelvis)return q;if(p.cartilage){const {start,end,level,side}=p.cartilage,d=end.map((v,i)=>v-start[i]),x=side?q[2]:q[0],t=Math.max(0,Math.min(1,((x-start[0])*d[0]+(q[1]-start[1])*d[1])/(d[0]*d[0]+d[1]*d[1])));return mix(f.segment(q,p.rib),f.segment(q,level),t);}return p.sternum||p.pectoral?f.segment(q,177):p.rib?f.segment(q,p.rib):p.shoulder?f.segment(q,175):p.vertebra?f.segment(q,p.vertebra):f.deform(q);}
-  const viewer=camera==='side'?[1,0,0]:[-Math.sin(yaw),0,Math.cos(yaw)];
-  function surfaceFacing(q,world){
-   const offset=surfaces.move(q.offsetBinding,f);return offset.reduce((s,n,i)=>s+(n-world[i])*viewer[i],0)>0;
-  }
+  if(!reuse){
+  plate.visibilityOccluders=[];
   for(const p of plate.paths){
    p.worldPoints=p.points.map(q=>q.xyz?(p.patch?surfaces.move(q.binding,f):transform(q.xyz,p)):null);
-   if(p.patch&&p.n.classList.contains('fiber')&&!host.classList.contains('transparent')){
-    let visible=false,d='';
-    p.points.forEach((q,i)=>{if(!q.uv)return;const facing=surfaceFacing(q,p.worldPoints[i]);if(facing)d+=(visible?' L ':' M ')+xy(project(p.worldPoints[i]));visible=facing;});
-    p.n.setAttribute('d',d);
-   }else p.n.setAttribute('d',p.points.map((q,i)=>q.cmd==='Z'?'Z':q.cmd+' '+xy(project(p.worldPoints[i]))).join(' '));
+   p.n.setAttribute('d',p.points.map((q,i)=>q.cmd==='Z'?'Z':q.cmd+' '+xy(project(p.worldPoints[i]))).join(' '));
   }
-  // Backface visibility is computed on the curved attachment surface, not a
-  // white silhouette that exposes the posterior sheet as an anterior strap.
-  for(const r of surfaceRegions.filter(r=>r.view===camera)){
-   const {nu,nv}=r,grid=r.grid.map(q=>{
-    const world=surfaces.move(q.binding,f),offset=surfaces.move(q.offsetBinding,f);
-    return {world,normal:offset.map((n,i)=>n-world[i])};
-   });
-   const dot=(a,b)=>a.reduce((s,n,i)=>s+n*b[i],0),viewer=camera==='side'?[1,0,0]:[-Math.sin(yaw),0,Math.cos(yaw)];
-   let d='',whole='';r.visibleCenters=[];
+  const depth=p=>camera==='side'?p[0]:-p[0]*Math.sin(yaw)+p[2]*Math.cos(yaw);
+  const visibility=AbdominalVisibility({project,depth}),activeRegions=surfaceRegions.filter(r=>r.view===camera);
+  // A slightly inset torso envelope occludes the far side even where no
+  // anterior muscle was drawn. It is not painted and does not change bones.
+  for(let y=155;y<430;y+=8)for(let j=0;j<48;j++){
+   const point=(yy,a)=>{const [c,d]=profile(yy);return f.deform([radius(yy)*.90*Math.cos(a),yy,c+d*.90*Math.sin(a)]);};
+   visibility.quad([point(y,j*Math.PI/24),point(y,(j+1)*Math.PI/24),point(y+8,(j+1)*Math.PI/24),point(y+8,j*Math.PI/24)],-1);
+  }
+  for(const p of plate.paths){
+   if(p.patch||p.n.classList.contains('fiber')||p.n.classList.contains('bone-detail')||p.n.classList.contains('torso-context')||p.n.classList.contains('thorax-mass')||p.n.classList.contains('front-wall-occluder')||p.pelvis)continue;
+   // The white aponeurosis continues the EO belly; it is not a separate
+   // foreground occluder cutting holes through that same abdominal sheet.
+   if(!p.n.matches('.bone,.rib,.cartilage,.context-shape,.muscle'))continue;
+   const qs=p.worldPoints.filter(Boolean);
+   const owner=-3-plate.visibilityOccluders.length;plate.visibilityOccluders.push(p);
+   if(p.n.classList.contains('rib')&&camera==='front')visibility.line(qs,4,owner);
+   else visibility.polygon(qs,owner);
+  }
+  for(const [owner,r] of activeRegions.entries()){
+   const {nu,nv}=r,grid=r.grid.map(q=>({world:surfaces.move(q.binding,f)}));
+   let whole='';r.visibleCenters=[];
    for(let j=0;j<nv;j++)for(let i=0;i<nu;i++){
     const k=j*(nu+1)+i,a=grid[k],b=grid[k+1],c=grid[k+nu+2],e=grid[k+nu+1];
     const ps=[a,b,c,e].map(q=>project(q.world)),area=ps.reduce((s,p,k)=>s+p[0]*ps[(k+1)%4][1]-p[1]*ps[(k+1)%4][0],0);
     if(area<0)ps.reverse();
     const quad='M '+ps.map(xy).join(' L ')+' Z ';
-    whole+=quad;if(dot(a.normal,viewer)>0){d+=quad;r.visibleCenters.push(ps.reduce((s,p)=>[s[0]+p[0]/4,s[1]+p[1]/4],[0,0]));}
+    whole+=quad;visibility.quad([a,b,c,e].map(q=>q.world),owner);
    }
-   r.n.setAttribute('d',d);
    r.shape.setAttribute('d',whole);
   }
+  const visible=visibility.solve(activeRegions.length);plate.visibility=visible;
+  activeRegions.forEach((r,i)=>{r.n.setAttribute('d',visible.clips[i]);r.visibleCenters=visible.centers[i];r.coverage=visible.coverage[i];});
   // At either yaw endpoint, the far pectoral must stay behind the near fan.
-  const depth=p=>-p[0]*Math.sin(yaw)+p[2]*Math.cos(yaw);
   plate.contexts.map(g=>{const p=plate.paths.find(p=>p.n.parentElement===g&&p.n.classList.contains('context-shape')),points=p.worldPoints.filter(Boolean);return {g,z:points.reduce((s,q)=>s+depth(q),0)/points.length};}).sort((a,b)=>a.z-b.z).forEach(p=>plate.g.appendChild(p.g));
+  plate.poseKey=poseKey;
+  }
   // Lock the camera as well as the pelvis, so playback visibly curls only
   // the upper body instead of moving or zooming the lower base.
   const scale=1.04,center=camera==='side'?250:310,top=-42;
@@ -326,8 +343,8 @@ function AbdomenFlexion(host) {
   // Reuse the reviewed upperbody hit-test rather than aiming at hidden fibers.
   nodes.forEach((n,i)=>{const key=['serratus','external-oblique','internal-oblique','rectus','latissimus'][i],targets=Array.from(plate.g.querySelectorAll(`[data-muscle="${key}"] > .muscle`));
    let found=false;for(const target of (i===1||i===3?targets:targets.reverse())){
-    let a=C.anchor(target,paintedHit);
-    if(!a?.visible){const r=surfaceRegions.find(r=>r.shape===target);for(const p of r?.visibleCenters||[]){const q=new DOMPoint(...p),screen=q.matrixTransform(target.getScreenCTM()),hit=paintedHit(screen.x,screen.y);if(hit===target||hit?.closest('[clip-path]')?.getAttribute('clip-path')===`url(#${target.id}-clip)`){const local=q.matrixTransform(target.getCTM());a={point:[local.x,local.y],visible:true};break;}}}
+    const region=surfaceRegions.find(r=>r.shape===target);let a=region?null:C.anchor(target,paintedHit);
+    if(region){const points=region.visibleCenters,center=points.reduce((s,p)=>[s[0]+p[0]/points.length,s[1]+p[1]/points.length],[0,0]),candidates=points.slice().sort((a,b)=>Math.hypot(a[0]-center[0],a[1]-center[1])-Math.hypot(b[0]-center[0],b[1]-center[1])),screenMatrix=target.getScreenCTM(),localMatrix=target.getCTM();for(const p of candidates){const q=new DOMPoint(...p),screen=q.matrixTransform(screenMatrix),hit=paintedHit(screen.x,screen.y);if(hit===target||hit?.closest('[clip-path]')?.getAttribute('clip-path')===`url(#${target.id}-clip)`){const local=q.matrixTransform(localMatrix);a={point:[local.x,local.y],visible:true};break;}}}
     if(a&&(a.visible||host.classList.contains('transparent'))){const q=new DOMPoint(...a.point).matrixTransform(svg.getCTM().inverse()),current=n.line.getAttribute('d').split(' L ')[0];n.line.setAttribute('d',current+' L '+xy([q.x,q.y]));found=true;break;}
    }n.line.parentElement.style.display=found?'':'none';
   });

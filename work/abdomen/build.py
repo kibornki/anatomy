@@ -10,7 +10,7 @@ head=head.replace('<label class="form-label" for="abdomen-angle">몸통 움직�
 head=head.replace('>측면</button></div>','>측면</button><button type="button" class="btn" id="abdomen-twist" aria-pressed="false">비틀기</button></div>')
 head=re.sub(r'<desc id="abdomen-desc">.*?</desc>','<desc id="abdomen-desc">복부와 광배근 도해. 정면과 측면의 상체 척추 C자 말기, 골반을 고정하고 척추 축을 따라 흉추에 주로 회전을 나누고 요추의 회전은 작게 유지하는 비틀기를 제공합니다. 비틀기는 정면과 같은 16도 사선 시점입니다. 근육 외형과 운동 분포는 작화용 근사입니다.</desc>',head)
 head=head.replace('</style>','\n'+(w/'style.css').read_text()+'\n</style>')
-scripts='\n'.join((w/name).read_text() for name in ['classic-coronal-anatomy.js','classic-side-anatomy.js','side-skeleton.js','muscle-surfaces.js','flexion.js','twist.js','controls.js'])
+scripts='\n'.join((w/name).read_text() for name in ['classic-coronal-anatomy.js','classic-side-anatomy.js','side-skeleton.js','muscle-surfaces.js','visibility.js','flexion.js','twist.js','controls.js'])
 document=head+'<script>'+scripts+'</script></body></html>'
 out=root/'drafts/abdomen-twist-reviewed.html';out.write_text(document);print(out)
 if '--publish' in sys.argv:

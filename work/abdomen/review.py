@@ -4,7 +4,7 @@ from playwright.sync_api import sync_playwright
 import json, os, re, subprocess
 
 root=Path(__file__).resolve().parents[2]
-out=Path('/workspace/artifacts/abdomen-attachment-review');out.mkdir(parents=True,exist_ok=True)
+out=Path('/workspace/artifacts/abdomen-contact-review');out.mkdir(parents=True,exist_ok=True)
 base=os.environ.get('ANATOMY_REVIEW_BASE','http://127.0.0.1:8767/')
 errors=[];metrics=[]
 with sync_playwright() as p:
@@ -15,6 +15,13 @@ with sync_playwright() as p:
     assert page.locator('#abdomen-value').inner_text()=='0%'
     assert page.locator('#abdomen-front').get_attribute('aria-pressed')=='true'
     assert page.locator('canvas').count()==0
+    # Foreground bones must hide a farther muscle irrespective of SVG paint
+    # order. Also check interpolated triangle depth, rather than group averages.
+    assert page.evaluate('''()=>{
+      const solve=reverse=>{const v=AbdominalVisibility({project:q=>q.slice(0,2),depth:q=>q[2],step:.5}),far=()=>v.quad([[0,0,1],[10,0,1],[10,10,1],[0,10,1]],0),bone=()=>v.quad([[3,0,4],[7,0,4],[7,10,4],[3,10,4]],-3);if(reverse){bone();far();}else{far();bone();}return v.solve(1);};
+      const a=solve(false),b=solve(true),at=(x,y)=>a.owners[Math.floor((y-a.y0)/a.step)*a.w+Math.floor((x-a.x0)/a.step)];
+      return JSON.stringify([...a.owners])===JSON.stringify([...b.owners])&&at(2,5)===0&&at(5,5)===-3&&at(8,5)===0;
+    }''')
     # Restored hub iframes can initialize while hidden. Their neutral geometry
     # must retain every authored bone/muscle transform, including both mirrors.
     neutral_geometry="()=>Object.fromEntries(Object.entries(abdomenDraft.model.flexion.plates).map(([v,p])=>[v,p.paths.map(p=>p.points.filter(q=>q.xyz).map(q=>q.xyz.map(n=>+n.toFixed(8))))]))"
@@ -30,7 +37,6 @@ with sync_playwright() as p:
     shared_lat=page.locator('.diagram-volumes [data-view="front"] [data-surface="posterior-latissimus"]').evaluate_all('ns=>ns.map(n=>n.innerHTML)')
     page.evaluate('abdomenDraft.setPose(0,"twist")')
     assert shared_lat==page.locator('.diagram-volumes [data-view="front"] [data-surface="posterior-latissimus"]').evaluate_all('ns=>ns.map(n=>n.innerHTML)')
-    assert page.evaluate("()=>{const m=abdomenDraft.model.flexion,p=m.plates.side.g,lat=p.querySelector('[data-muscle=latissimus]');return !!(p.querySelector('[data-muscle=external-oblique]').compareDocumentPosition(lat)&Node.DOCUMENT_POSITION_FOLLOWING)&&!!(p.querySelector('[data-muscle=serratus]').compareDocumentPosition(lat)&Node.DOCUMENT_POSITION_FOLLOWING);}")
     for view in ['front','side','twist']:
         page.evaluate('v=>abdomenDraft.setPose(0,v)',view)
         assert page.locator('.diagram-labels [data-label="latissimus"]').is_visible()
@@ -52,7 +58,7 @@ with sync_playwright() as p:
         for angle in angles:
             page.evaluate('([a,v])=>abdomenDraft.setPose(a,v)',[angle,view])
             result=page.evaluate('''()=>{
-              const m=abdomenDraft.model.flexion,r=abdomenDraft.root,view=r.dataset.view,plate=m.plates[view==='twist'?'front':view],a=+r.dataset.angle,f=view==='twist'?m.yawFrame(a):m.frame(a),camera=view==='side',yaw=16*Math.PI/180,proj=q=>camera?[q[2],q[1]]:[q[0]*Math.cos(yaw)+q[2]*Math.sin(yaw),q[1]],dist=(a,b)=>Math.hypot(...a.map((v,i)=>v-b[i]));
+              const m=abdomenDraft.model.flexion,r=abdomenDraft.root,view=r.dataset.view,plate=m.plates[view==='twist'?'front':view],a=+r.dataset.angle,f=plate.poseFrame,camera=view==='side',yaw=16*Math.PI/180,proj=q=>camera?[q[2],q[1]]:[q[0]*Math.cos(yaw)+q[2]*Math.sin(yaw),q[1]],dist=(a,b)=>Math.hypot(...a.map((v,i)=>v-b[i]));
               let boneError=0,renderError=0,bones=0,seamError=0,minFiber=9,maxFiber=0,maxLatFiber=0,attachmentError=0;
               const rendered=p=>[...p.n.getAttribute('d').matchAll(/[ML]\\s+([-\\d.]+),([-\\d.]+)/g)].map(q=>[+q[1],+q[2]]);
               for(const path of plate.paths){const qs=path.points.filter(q=>q.xyz).map(q=>q.xyz),actual=rendered(path);
@@ -79,9 +85,21 @@ with sync_playwright() as p:
                const u=id==='latissimus'?0:1,v=id==='latissimus'?3:7,q=m.surfaces.point(camera?'side':'front',id,u,v);q[0]*=sign;
                pelvicAttachmentError=Math.max(pelvicAttachmentError,dist(q,m.surfaces.transform(camera?'side':'front',id,u,v,sign,f)));
               }
+              let contactGap=0,minShellClearance=Infinity;
+              for(const sign of camera?[1]:[-1,1])for(let i=0;i<=60;i++){
+               const v=i/20,sa=m.surfaces.transform(camera?'side':'front','serratus',0,4+v,sign,f),eo=m.surfaces.transform(camera?'side':'front','external-oblique',0,v,sign,f);
+               contactGap=Math.max(contactGap,dist(sa,eo));
+              }
+              // Test the deformed mesh interiors against the posed cage shell,
+              // not only the rest pose or the origin/insertion endpoints.
+              for(const region of m.surfaceRegions.filter(r=>r.view===(camera?'side':'front')))for(const q of region.grid){
+               if(q.binding.u<.125||q.binding.u>.875)continue;
+               const p=m.surfaces.move(q.binding,f),edge=f.envelope.boundary(p);
+               if(edge)minShellClearance=Math.min(minShellClearance,edge.length-edge.distance);
+              }
               const s=m.yawFrame(60),theta=y=>s.theta(y)*180/Math.PI;
               const labels=[...document.querySelectorAll('.diagram-labels [data-label]')].filter(g=>g.style.display!=='none').map(g=>{const line=g.querySelector('path'),point=line.getPointAtLength(line.getTotalLength()),screen=point.matrixTransform(line.getScreenCTM()),hit=m.pickAt(screen.x,screen.y);return {id:g.dataset.label,hit:hit?.closest('[data-muscle]')?.dataset.muscle};});
-              return {view,angle:a,bones,boneError,renderError,seamError,minFiber,maxFiber,maxLatFiber,attachmentError,costalError,pelvicAttachmentError,scapularError,lumbar:theta(377),upper:theta(177),thoracicStep:theta(225)-theta(241),pelvisFixed:JSON.stringify(s.deform([40,475,15]))==='[40,475,15]',labels};
+              return {view,angle:a,bones,boneError,renderError,seamError,contactGap,minShellClearance,minFiber,maxFiber,maxLatFiber,attachmentError,costalError,pelvicAttachmentError,scapularError,lumbar:theta(377),upper:theta(177),thoracicStep:theta(225)-theta(241),pelvisFixed:JSON.stringify(s.deform([40,475,15]))==='[40,475,15]',labels};
             }''')
             assert result['boneError']<1e-8,result
             assert result['renderError']<.001,result
@@ -91,6 +109,7 @@ with sync_playwright() as p:
             assert 0<result['thoracicStep']<7.1 and result['pelvisFixed'],result
             assert result['attachmentError']<1e-8 and result['pelvicAttachmentError']<1e-8,result
             assert result['costalError']<1.5 and result['scapularError']<4.5,result
+            assert result['contactGap']<1e-8 and result['minShellClearance']>=3.49,result
             if view=='twist':
                 assert .35<result['minFiber']<=result['maxFiber']<1.8,result
                 assert result['maxLatFiber']<1.8,result
@@ -165,4 +184,4 @@ assert all(old[k]==new[k] for k in old if k!='abdomen')
 for name in ['upperbody.html','arm.html','forearm.html','thigh.html']:
     assert (root/name).read_bytes()==subprocess.check_output(['git','show','HEAD:'+name],cwd=root)
 (out/'verification.json').write_text(json.dumps({'poses':metrics,'materials':'passed','sandbox_and_state_migration':'passed','mobile_and_touch':'passed','other_topics_unchanged':True,'errors':errors},indent=2)+'\n')
-print('PASS: 23 poses; distributed rotation, rigid bones, cartilage continuity, costal/pelvic/axillary attachment, fiber length stability, visible labels, group transparency, migration/state/playback, mobile/touch; other topics unchanged.')
+print('PASS: 23 poses; shared SA/EO contact, posed-shell clearance, camera-depth occlusion, distributed rotation, rigid bones, cartilage continuity, attachment, fiber stability, visible labels, group transparency, migration/state/playback, mobile/touch; other topics unchanged.')

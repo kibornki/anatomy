@@ -32,7 +32,7 @@
     "internal_oblique": "Intermediate layer; fibers predominantly superior and medial; displayed through a cutaway.",
     "serratus_anterior": "Costal slips on ribs 1–8 or 1–9 converge toward the costal surface of the medial scapular border. Upper slips are partly covered by pectoral context.",
     "rectus_abdominis": "Paired muscle from pubic crest/symphysis toward xiphoid and upper costal cartilages; linea alba and three tendinous intersections.",
-    "latissimus_dorsi": "Broad posterior lower-thoracic/thoracolumbar-fascial/iliac origin converges to the posterior axillary fold and proximal humeral context. Humerus is omitted. The upper end is below the shoulder joint and the iliac origin is stationary. Opaque visibility is derived from the curved surface facing the camera; posterior serratus is partly overlapped.",
+    "latissimus_dorsi": "Broad posterior lower-thoracic/thoracolumbar-fascial/iliac sheet converges toward the posterior axillary fold; actual humerus is omitted. The superficial sheet wraps around the cage. Opaque visibility now compares camera depth against posed bones, pectoral context and other muscle surfaces, rather than backface orientation alone.",
     "pectoral_context": "Compact curved anterior chest fan with fibers converging to the anterior axillary fold/proximal humeral context. Sternum and pectoral context share a frame; near/far fans are sorted after deformation."
   },
   "illustrative_choices": {
@@ -69,5 +69,17 @@
       "Back-facing mesh cells and fiber segments are excluded from opaque rendering; transparent groups reveal the complete sheet"
     ],
     "verification_scope": "Attachment probes compare to actual rendered rib polylines, not just to the deformation function. Tests establish drawing consistency, not an anatomically validated volumetric model or clinical range of motion."
+  },
+  "contact_and_occlusion_recheck": {
+    "prior_failure": "Independent SA/EO patches and camera-facing clipping did not establish interdigitation, whole-surface clearance or foreground rib occlusion. Endpoint checks passed while these visible relationships remained wrong.",
+    "changes": [
+      "One interdigitating contact boundary for SA ribs 5–8 and EO ribs 5–8, shared through every pose.",
+      "Lateral contact descends obliquely; posterior EO origins on ribs 9–12 and latissimus lateral border complete the flank.",
+      "Radial wrapping replaces straight chords through the cage; posed cage/body cross-sections constrain interior surface points.",
+      "Per-sample camera depth supplies opaque SVG clips; transparency reveals complete muscle groups.",
+      "Lateral scapular depth places its costal SA insertion underneath the bone."
+    ],
+    "validation": "23 poses; continuous shared boundary; interior shell clearance; independent foreground-bone occlusion fixture with reversed drawing order; original attachment/bone/cartilage checks; opacity/state/mobile/touch. Numerical checks constrain this drawing and do not certify medical anatomy.",
+    "limitations": "Coronal and lateral skeletal drawings remain separate landmark adapters. Muscle attachment bands, soft tissue sliding and actual humeral insertions are approximations. No measured volumetric anatomical model."
   }
 }
