@@ -1,0 +1,21 @@
+"""Build the reviewed abdominal flexion and axial rotation page."""
+from pathlib import Path
+import re, json, sys
+w=Path(__file__).resolve().parent;root=w.parents[1]
+head=(w/'page-template.html').read_text().replace('몸통 굽힘','몸통 움직임')
+head=re.sub(r'<div class="text-small diagram-caption">.*?</div>','<div class="text-small diagram-caption">전거근·외복사근·내복사근·복직근·광배근</div>',head)
+head=re.sub(r'<div class="text-small diagram-note">.*?</div>','<div class="text-small diagram-note" id="abdomen-note">골반 고정 · 상체 좌우 비틀기 · 절개창: 내복사근</div>',head)
+head=head.replace('aria-pressed="true">일시정지','aria-pressed="false">재생').replace('min="-10" max="45" value="15"','min="-140" max="140" value="135"').replace('>15°</output>','>135°</output>')
+head=head.replace('<label class="form-label" for="abdomen-angle">몸통 움직임','<label class="form-label" for="abdomen-angle"><span id="abdomen-motion-label">척추 비틀기</span>')
+head=head.replace('id="abdomen-front" aria-pressed="true"','id="abdomen-front" aria-pressed="false"').replace('>측면</button></div>','>측면</button><button type="button" class="btn" id="abdomen-twist" aria-pressed="true">비틀기</button></div>')
+head=re.sub(r'<desc id="abdomen-desc">.*?</desc>','<desc id="abdomen-desc">복부와 광배근 도해. 정면과 측면의 상체 척추 C자 말기, 골반을 고정하고 척추 축을 따라 흉곽과 견갑대를 함께 돌리는 비틀기를 제공합니다. 비틀기는 정면과 같은 16도 사선 시점입니다. 근육과 최대 회전 자세는 작화용 근사입니다.</desc>',head)
+head=head.replace('</style>','\n'+(w/'style.css').read_text()+'\n</style>')
+scripts='\n'.join((w/name).read_text() for name in ['classic-coronal-anatomy.js','classic-side-anatomy.js','side-skeleton.js','flexion.js','depth-renderer.js','twist.js','controls.js'])
+document=head+'<script>'+scripts+'</script></body></html>'
+out=root/'drafts/abdomen-twist-reviewed.html';out.write_text(document);print(out)
+if '--publish' in sys.argv:
+ (root/'abdomen.html').write_text(document)
+ hub_path=root/'index.html';hub=hub_path.read_text();match=re.search(r'(<script type="application/json" id="anatomy-data">)(.*?)(</script>)',hub,re.S);data=json.loads(match[2])
+ config='<script type="application/json" id="hub-config">__HUB_CONFIG__</script>'
+ data['abdomen'].update(document=document.replace('<body>','<body>'+config,1),movement='말기 · 비틀기',views=['front','side','twist'],sourceFile='work/abdomen/twist.js')
+ payload=json.dumps(data,ensure_ascii=False).replace('<','\\u003c');hub=hub[:match.start(2)]+payload+hub[match.end(2):];hub=hub.replace('<span class="movement">몸통 말기</span>','<span class="movement">말기 · 비틀기</span>');hub_path.write_text(hub)
