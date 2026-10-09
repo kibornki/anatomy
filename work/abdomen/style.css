@@ -6,6 +6,7 @@
 .diagram .cartilage{fill:var(--background);stroke:var(--muted-foreground);stroke-width:1}
 .diagram .torso-context,.diagram .thorax-mass{fill:var(--muted);fill-opacity:.13;stroke:var(--muted-foreground);stroke-opacity:.45;stroke-width:.9}
 .diagram .muscle{stroke:var(--foreground);stroke-opacity:.65;stroke-width:1.1;stroke-linejoin:round}
+.diagram [data-anatomic-patch] > .muscle{stroke:none}
 .diagram .fiber{stroke-width:.65;stroke-opacity:.34}
 .diagram .fiber-highlight{fill:none;stroke:white;stroke-opacity:.36;stroke-width:.65}
 .diagram .aponeurosis{fill:var(--background);stroke:var(--muted-foreground);stroke-width:.8}
@@ -17,7 +18,7 @@
 .diagram .context-shape{stroke-linejoin:round}
 .diagram.transparent .muscle-layers{opacity:1}
 .diagram.transparent [data-muscle]{opacity:.32}
-.diagram.transparent [data-muscle="latissimus"]{mask:none}
+.diagram.transparent [data-anatomic-patch]{clip-path:none}
 .diagram.transparent .context-muscle{opacity:.22}
 .diagram.transparent .muscle{fill-opacity:1}
 .diagram.transparent .intersection{fill-opacity:1}

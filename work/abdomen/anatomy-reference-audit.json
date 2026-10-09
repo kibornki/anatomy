@@ -32,7 +32,7 @@
     "internal_oblique": "Intermediate layer; fibers predominantly superior and medial; displayed through a cutaway.",
     "serratus_anterior": "Costal slips on ribs 1–8 or 1–9 converge toward the costal surface of the medial scapular border. Upper slips are partly covered by pectoral context.",
     "rectus_abdominis": "Paired muscle from pubic crest/symphysis toward xiphoid and upper costal cartilages; linea alba and three tendinous intersections.",
-    "latissimus_dorsi": "Broad posterior lower thoracic/lumbar/iliac origin converges into the posterior axillary fold and humeral insertion. Humerus is omitted; the upper attachment follows the shoulder girdle, not the scapular medial border. The fold partially covers posterior serratus while anterior costal slips stay visible. Front/twist use one masked surface per side so opacity is applied once.",
+    "latissimus_dorsi": "Broad posterior lower-thoracic/thoracolumbar-fascial/iliac origin converges to the posterior axillary fold and proximal humeral context. Humerus is omitted. The upper end is below the shoulder joint and the iliac origin is stationary. Opaque visibility is derived from the curved surface facing the camera; posterior serratus is partly overlapped.",
     "pectoral_context": "Compact curved anterior chest fan with fibers converging to the anterior axillary fold/proximal humeral context. Sternum and pectoral context share a frame; near/far fans are sorted after deformation."
   },
   "illustrative_choices": {
@@ -42,10 +42,32 @@
     "curl_lumbar_degrees": 30,
     "curl_thoracic_degrees": 30,
     "clinical_range_claim": false,
-    "limits": "No subject-specific measurements, muscle sliding, activation, pressure or clinical joint/contact simulation. SVG layers depict anatomical overlap; this is not a volumetric dissection renderer."
+    "limits": "No subject-specific measurements, muscle sliding, activation, pressure or clinical joint/contact simulation. SVG layers depict anatomical overlap; this is not a volumetric dissection renderer.",
+    "upper_thorax_plateau": "T1–T4 shoulder/rib-cage block; remaining thoracic rotation distributed below; an illustrative coupling constraint, not clinical regional motion data",
+    "yaw_axis": "Fixed pelvic longitudinal axis; vertebral centerline curvature rotates with the torso"
   },
   "visual_guide": {
     "description": "User-approved colored concept in this chat guided the silhouette and separation of external-oblique belly/aponeurosis. The user supplied a separate dissection reference for that relationship. The generated concept is not used as anatomical ground truth.",
     "generated_concept_sha256": "933293e087cef66d0ab53b9d08abf5ca2cb5edf280c5e2cba4e24d16f532b53e"
+  },
+  "recheck": {
+    "reason": "Previous coordinate/opacity checks did not verify attachment topology or anatomical silhouettes. This recheck compares textbook figure 1112, 1118 and 1119 directly with the rendered front/lateral/yaw plates.",
+    "observed_errors": [
+      "EO drawn as a narrow lateral strip with unrelated costal teeth",
+      "SA front insertion assigned anterior depth instead of costal scapular surface",
+      "Latissimus modeled as a long strap ending at shoulder-joint height rather than proximal humeral context",
+      "Pectoral sternocostal origin cut off above lower costal cartilages",
+      "Generic height deformation let muscle origins move differently from corresponding rigid ribs",
+      "Torso width changed discontinuously at y=345 and y=410, producing fiber kinks"
+    ],
+    "corrections": [
+      "UV attachment patches wrap around a smooth torso width/depth profile",
+      "SA origins ribs 1–8 follow each rib; insertions follow costal medial scapular border",
+      "EO origins ribs 5–12 include posterior lower costal branches; anterior belly joins broad aponeurosis and posterior fibers approach iliac crest",
+      "Latissimus broad lower-thoracic/fascial/iliac origins converge to omitted proximal humeral context; iliac origin stays fixed",
+      "Pectoral fan includes inferior sternocostal extent and ends below shoulder joint",
+      "Back-facing mesh cells and fiber segments are excluded from opaque rendering; transparent groups reveal the complete sheet"
+    ],
+    "verification_scope": "Attachment probes compare to actual rendered rib polylines, not just to the deformation function. Tests establish drawing consistency, not an anatomically validated volumetric model or clinical range of motion."
   }
 }
