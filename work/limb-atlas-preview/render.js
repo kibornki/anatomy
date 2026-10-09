@@ -18,7 +18,7 @@ for(const [region,model]of Object.entries(data.models)){
   model.parts.forEach((part,id)=>{
    const outline=AtlasContour(visible,k=>visible.owners[k]===id,visible.bounds[id]);if(!outline)return;
    const bone=part.kind==='bone',clip=make('clipPath',{id:region+view+id},defs);make('path',{d:outline},clip);
-   const g=make('g',{'data-part':part.name,'data-kind':part.kind},surfaces);make('path',{d:outline,fill:bone?'#e8e9eb':part.material==='tendon'?'#fafafa':colors[part.color],stroke:'#89919e','stroke-width':bone?.9:.6,'stroke-opacity':bone?.85:.45},g);
+   const g=make('g',{'data-part':part.name,'data-kind':part.kind},surfaces);make('path',{d:outline,fill:bone?'#e8e9eb':part.material==='tendon'?'#fafafa':part.displayColor||colors[part.color],stroke:'#89919e','stroke-width':bone?.9:.6,'stroke-opacity':bone?.85:.45},g);
    if(bone)return;let path='',local=visible.ownerZ[id];
    for(const fiber of part.fibers){let segment=[];const flush=()=>{let len=0;for(let j=1;j<segment.length;j++)len+=Math.hypot(...segment[j].map((v,k)=>v-segment[j-1][k]));if(len>=5)path+=curve(segment);segment=[];};
     for(const p of fiber){const q=project(p),x=Math.floor((q[0]-visible.x0)/visible.step),y=Math.floor((q[1]-visible.y0)/visible.step),k=y*visible.w+x;
@@ -34,8 +34,9 @@ for(const [region,model]of Object.entries(data.models)){
    const l=labels.length%2===0,x=l?16:584,y=110+(l?left++:right++)*100;
    make('path',{d:`M${x},${y+5}L${target.join(',')}`,fill:'none',stroke:'#8593a6','stroke-width':.9},leaders);make('text',{x,y,'text-anchor':l?'start':'end'},leaders).textContent=text;labels.push(text);
   }
-  const groupLabels=region==='forearm'?[['blue','상완요골근'],['orange','굽힘근군'],['green','폄근군'],['pink','원회내근']]:[['red','대퇴사두근'],['blue','햄스트링'],['purple','봉공근·내전근']];
-  const legend=document.createElement('div');legend.className='legend';legend.innerHTML=groupLabels.map(([color,label])=>'<span><i style="background:'+colors[color]+'"></i>'+label+'</span>').join('');section.append(legend);
+  const labelByName={'brachioradialis':'상완요골근','flexor-carpi-radialis':'요측수근굴근','flexor-carpi-ulnaris-humeral':'척측수근굴근 상완두','flexor-carpi-ulnaris-ulnar':'척측수근굴근 척골두','flexor-digitorum-superficialis-humeroulnar':'천지굴근 상완척골두','flexor-digitorum-superficialis-radial':'천지굴근 요골두','flexor-digitorum-profundus':'심지굴근','palmaris-longus':'장장근','extensor-carpi-radialis-longus':'장요측수근신근','extensor-carpi-radialis-brevis':'단요측수근신근','extensor-digitorum':'총지신근','extensor-carpi-ulnaris-humeral':'척측수근신근 상완두','extensor-carpi-ulnaris-ulnar':'척측수근신근 척골두','pronator-teres-humeral':'원회내근 상완두','pronator-teres-ulnar':'원회내근 척골두','supinator':'회외근','pronator-quadratus':'방형회내근',...names.thigh,'vastus-intermedius':'중간광근','biceps-femoris-short':'대퇴이두근 단두','semimembranosus':'반막근'};
+  const groupLabels=model.parts.map((p,id)=>({p,id})).filter(({p,id})=>p.kind==='muscle'&&!p.material&&visible.coverage[id]>100);
+  const legend=document.createElement('div');legend.className='legend';legend.innerHTML=groupLabels.map(({p})=>'<span><i style="background:'+(p.displayColor||colors[p.color])+'"></i>'+(labelByName[p.name]||p.name)+'</span>').join('');section.append(legend);
   records.push({region,view,yaw,labels,coverage:visible.coverage,parts:model.parts.map(p=>({name:p.name,source:p.source,displayCut:p.displayCut}))});
  }
 }

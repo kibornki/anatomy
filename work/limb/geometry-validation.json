@@ -1,0 +1,86 @@
+{
+  "forearm": {
+    "testedBoneAngles": 161,
+    "rigidError": 3.623767952376511e-13,
+    "inverseError": 5.16696984581638e-13,
+    "firstDegreeMovement": 1.707274700032339,
+    "minGap": 1.0005059068075894,
+    "maxCorrection": 7.461681434462877,
+    "softSamples": 8631,
+    "metrics": {
+      "crossSectionRatio": 1,
+      "scope": "Longitudinal torsion, not measured contractile strain."
+    }
+  },
+  "thigh": {
+    "testedBoneAngles": 121,
+    "rigidError": 8.615330671091215e-14,
+    "inverseError": 7.791709393054201e-14,
+    "firstDegreeMovement": 1.426750334531626,
+    "minGap": 1.0301649565880027,
+    "maxCorrection": 9.24062608052132,
+    "softSamples": 2863,
+    "metrics": {
+      "rectus-femoris": {
+        "referencePathRatio": 1.1919792436874035,
+        "bellyLengthRatio": 1.1096505030244248,
+        "radialRatio": 0.9493074580073746,
+        "crossSectionRatio": 0.9011846498284233
+      },
+      "vastus-lateralis": {
+        "referencePathRatio": 1.3697663934923514,
+        "bellyLengthRatio": 1.1205976386380496,
+        "radialRatio": 0.9446591782681464,
+        "crossSectionRatio": 0.8923809630862497
+      },
+      "vastus-medialis": {
+        "referencePathRatio": 1.4360789657092878,
+        "bellyLengthRatio": 1.131394667271714,
+        "radialRatio": 0.9401408775029685,
+        "crossSectionRatio": 0.8838648695520513
+      },
+      "vastus-intermedius": {
+        "referencePathRatio": 1.4118086629273168,
+        "bellyLengthRatio": 1.1391931085492677,
+        "radialRatio": 0.936917445132721,
+        "crossSectionRatio": 0.8778142989940253
+      },
+      "biceps-femoris-long": {
+        "referencePathRatio": 0.8772279885460557,
+        "bellyLengthRatio": 0.8772279885460557,
+        "radialRatio": 1.067686521363362,
+        "crossSectionRatio": 1.1399545079009967
+      },
+      "biceps-femoris-short": {
+        "referencePathRatio": 0.7765369567855829,
+        "bellyLengthRatio": 0.7765369567855829,
+        "radialRatio": 1.134798976163148,
+        "crossSectionRatio": 1.287768716300929
+      },
+      "semitendinosus": {
+        "referencePathRatio": 0.8228913885856256,
+        "bellyLengthRatio": 0.8228913885856256,
+        "radialRatio": 1.1023734405198586,
+        "crossSectionRatio": 1.2152272023635904
+      },
+      "semimembranosus": {
+        "referencePathRatio": 0.8310243546108121,
+        "bellyLengthRatio": 0.8310243546108121,
+        "radialRatio": 1.0969658917153482,
+        "crossSectionRatio": 1.203334167586849
+      },
+      "sartorius": {
+        "referencePathRatio": 0.9491938629979897,
+        "bellyLengthRatio": 0.9491938629979897,
+        "radialRatio": 1.0264139341158527,
+        "crossSectionRatio": 1.053525564147182
+      },
+      "adductor-longus": {
+        "referencePathRatio": 1,
+        "bellyLengthRatio": 1,
+        "radialRatio": 1,
+        "crossSectionRatio": 1
+      }
+    }
+  }
+}

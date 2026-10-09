@@ -2812,16 +2812,5 @@
       "kneeY": 430.7450539257357,
       "lowerLegCut": 502.7450539257357
     }
-  },
-  "mobileGallery": {
-    "widths": [
-      390,
-      320
-    ],
-    "loadedViews": 12,
-    "horizontalOverflow": false,
-    "javascriptErrors": []
-  },
-  "sourceModelsChecked": true,
-  "originalApplicationUnchanged": true
+  }
 }

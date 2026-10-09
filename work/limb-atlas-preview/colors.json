@@ -1,0 +1,33 @@
+{
+  "forearm": {
+    "brachioradialis": "#e25507",
+    "flexor-carpi-radialis": "#e02e2a",
+    "flexor-carpi-ulnaris-humeral": "#00a240",
+    "flexor-carpi-ulnaris-ulnar": "#35b8b0",
+    "flexor-digitorum-superficialis-humeroulnar": "#339cff",
+    "flexor-digitorum-superficialis-radial": "#eb77b1",
+    "flexor-digitorum-profundus": "#924ff7",
+    "palmaris-longus": "#ffc300",
+    "extensor-carpi-radialis-longus": "#31579c",
+    "extensor-carpi-radialis-brevis": "#ad703c",
+    "extensor-digitorum": "#00a6bd",
+    "extensor-carpi-ulnaris-humeral": "#bb2682",
+    "extensor-carpi-ulnaris-ulnar": "#8b9a24",
+    "pronator-teres-humeral": "#f07853",
+    "pronator-teres-ulnar": "#006b64",
+    "supinator": "#6955b8",
+    "pronator-quadratus": "#43764b"
+  },
+  "thigh": {
+    "rectus-femoris": "#e02e2a",
+    "vastus-lateralis": "#339cff",
+    "vastus-medialis": "#00a240",
+    "vastus-intermedius": "#e25507",
+    "biceps-femoris-long": "#924ff7",
+    "biceps-femoris-short": "#eb77b1",
+    "semitendinosus": "#ffc300",
+    "semimembranosus": "#35b8b0",
+    "sartorius": "#ad703c",
+    "adductor-longus": "#31579c"
+  }
+}

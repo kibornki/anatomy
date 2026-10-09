@@ -7,6 +7,7 @@ W=Path(__file__).parent; ROOT=W.parents[1]
 CACHES=[Path('/workspace/artifacts/limb-atlas-preview/source'),Path('/workspace/artifacts/arm-atlas-preview/source'),Path('/workspace/artifacts/independent-anatomy-review')]
 PIN='f0eeb6e843380cfe6b83797cf8c3e1af74de5e61'
 specs=json.loads((W/'specs.json').read_text())
+display_colors=json.loads((W/'colors.json').read_text())
 def load(id,name,color):
     path=next(p/(id+'.stl') for p in CACHES if (p/(id+'.stl')).exists())
     b=path.read_bytes(); n=int.from_bytes(b[80:84],'little')
@@ -87,6 +88,7 @@ for region,sp in specs.items():
         groups={'red':['rectus','vastus'],'blue':['biceps','semim'],'purple':['sartorius','adductor']}
     radius_end=next((q['v'][:,1].max() for q in parts if q['name']=='radius'),None)
     for p in parts:
+        if p['name'] in display_colors[region]:p['displayColor']=display_colors[region][p['name']]
         if p['kind'] in ['muscle','context']:p['fibers']=fiber_guides(p)
         # Material cues on existing source faces, never new tendon geometry.
         # These are authored illustration boundaries, not atlas segmentation.

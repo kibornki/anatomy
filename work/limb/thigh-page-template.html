@@ -1,0 +1,1726 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="referrer" content="no-referrer"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline'; img-src data:; object-src 'none'; base-uri 'none'"><title>허벅지 근육과 무릎 굽힘</title><style>:root {
+  color-scheme: light dark;
+  background-color: var(
+    --background,
+    var(--color-background-primary, light-dark(rgb(255 255 255), rgb(24 24 24)))
+  ) !important;
+
+  /* Agent-facing contract; keep in sync with SKILL.md. */
+  --background: var(
+    --color-background-primary,
+    light-dark(rgb(255 255 255), rgb(24 24 24))
+  );
+  --foreground: var(
+    --color-text-primary,
+    light-dark(rgb(26 28 31), rgb(255 255 255))
+  );
+  --card: color-mix(in oklab, var(--foreground) 5%, var(--background));
+  --card-foreground: var(
+    --color-text-primary,
+    light-dark(rgb(26 28 31), rgb(255 255 255))
+  );
+  --popover: var(
+    --color-background-secondary,
+    light-dark(rgb(255 255 255), rgb(45 45 45))
+  );
+  --popover-foreground: var(
+    --color-text-primary,
+    light-dark(rgb(26 28 31), rgb(255 255 255))
+  );
+  --primary: var(
+    --color-text-info,
+    light-dark(rgb(51 156 255), rgb(131 195 255))
+  );
+  --primary-foreground: var(
+    --color-text-inverse,
+    light-dark(rgb(255 255 255), rgb(13 13 13))
+  );
+  --secondary: var(
+    --color-background-secondary,
+    light-dark(rgb(255 255 255 / 96%), rgb(54 54 54 / 96%))
+  );
+  --secondary-foreground: var(
+    --color-text-primary,
+    light-dark(rgb(26 28 31), rgb(255 255 255))
+  );
+  --muted: color-mix(in srgb, var(--foreground) 10%, transparent);
+  --muted-foreground: var(
+    --color-text-secondary,
+    light-dark(rgb(26 28 31 / 49.4%), rgb(255 255 255 / 49.8%))
+  );
+  --accent: var(
+    --color-background-info,
+    light-dark(rgb(229 242 255), rgb(13 39 63))
+  );
+  --accent-foreground: var(
+    --color-text-info,
+    light-dark(rgb(51 156 255), rgb(131 195 255))
+  );
+  --destructive: var(
+    --color-text-warning,
+    light-dark(rgb(226 85 7), rgb(255 133 73))
+  );
+  --border: var(
+    --color-border-secondary,
+    light-dark(rgb(26 28 31 / 8%), rgb(255 255 255 / 8.2%))
+  );
+  --input: var(
+    --color-border-primary,
+    light-dark(
+      rgb(26 28 31 / 11.8%),
+      color-mix(in oklab, rgb(0 0 0) 10%, transparent)
+    )
+  );
+  --ring: var(
+    --color-ring-primary,
+    light-dark(rgb(51 156 255), rgb(131 195 255 / 76%))
+  );
+  --font-size-base: var(--font-text-md-size, 14px);
+  --blue: light-dark(rgb(51 156 255), rgb(51 156 255));
+  --orange: light-dark(rgb(226 85 7), rgb(251 106 34));
+  --green: light-dark(rgb(0 162 64), rgb(64 201 119));
+  --red: light-dark(rgb(224 46 42), rgb(255 103 100));
+  --purple: light-dark(rgb(146 79 247), rgb(173 123 249));
+  --yellow: light-dark(rgb(255 195 0), rgb(255 210 64));
+  --viz-series-1: var(--primary);
+  --viz-series-2: light-dark(rgb(243 136 59), rgb(245 154 86));
+  --viz-series-3: light-dark(rgb(93 201 119), rgb(116 213 139));
+  --viz-series-4: light-dark(rgb(235 119 177), rgb(240 143 192));
+  --viz-series-5: light-dark(rgb(155 121 236), rgb(170 145 239));
+  --viz-series-6: light-dark(rgb(58 185 177), rgb(90 203 194));
+
+  /* Internal implementation variables; not part of the agent contract. */
+  --font-sans: -apple-system, system-ui, "Segoe UI", sans-serif;
+  --font-mono:
+    ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, "Liberation Mono",
+    monospace;
+  --font-size-normal: max(11px, var(--font-size-base));
+  --font-size-tooltip: calc(var(--font-size-base) - 1px);
+  --font-size-small: max(11px, calc(var(--font-size-base) - 2px));
+  --font-size-h1: calc(var(--font-size-normal) * 1.7142857143);
+  --font-size-h2: calc(var(--font-size-normal) * 1.4285714286);
+  --font-size-h3: calc(var(--font-size-normal) * 1.2857142857);
+  --font-weight-normal: 430;
+  --font-weight-medium: 500;
+  --icon-size: 16px;
+  --line-height-normal: calc(var(--font-size-normal) * 1.5);
+  --line-height-tooltip: calc(var(--font-size-tooltip) * 1.4285714286);
+  --line-height-small: calc(var(--font-size-small) + 4px);
+  --corner-shape: round;
+  --radius: var(--border-radius-lg, 10px);
+  --radius-sm: calc(var(--radius) * 0.6);
+  --radius-md: calc(var(--radius) * 0.8);
+  --radius-lg: var(--radius);
+  --radius-2xl: calc(var(--radius) * 1.6);
+  --radius-full: 9999px;
+  --shadow-sm: 0 1px 2px -1px rgb(0 0 0 / 8%);
+  --checkmark-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 17 17'%3E%3Cpath d='M12.8961 3.64101C13.1297 3.41418 13.4984 3.37523 13.7779 3.56581C14.0571 3.75635 14.1554 4.11331 14.0299 4.41347L13.9615 4.53847L7.71151 13.7045C7.59411 13.8767 7.4063 13.9877 7.19881 14.0072C6.99136 14.0267 6.78564 13.9533 6.63826 13.806L2.88826 10.056L2.79842 9.9457C2.6192 9.67407 2.64927 9.30496 2.88826 9.06581C3.12738 8.82669 3.49647 8.79676 3.76815 8.97597L3.8785 9.06581L7.03084 12.2182L12.8053 3.74941L12.8961 3.64101Z'/%3E%3C/svg%3E");
+
+  /* Legacy aliases; not part of the current agent contract. */
+  --viz-bg: transparent;
+  --viz-panel: var(--card);
+  --viz-border: var(--border);
+  --viz-text: var(--foreground);
+  --viz-muted: var(--muted-foreground);
+  --viz-accent: var(--primary);
+  --viz-accent-text: var(--primary-foreground);
+  --viz-accent-bg: var(--accent);
+  --viz-font-size: var(--font-size-base);
+  --viz-warning: var(--destructive);
+}
+
+:root[data-theme="light"] {
+  color-scheme: light;
+}
+
+:root[data-theme="dark"] {
+  color-scheme: dark;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html > body {
+  /* Preserve MCP aliases for older inline renderers without creating :root cycles. */
+  --color-background-primary: var(
+    --background,
+    light-dark(rgb(255 255 255), rgb(24 24 24))
+  );
+  --color-text-primary: var(
+    --foreground,
+    light-dark(rgb(26 28 31), rgb(255 255 255))
+  );
+  --color-border-secondary: var(
+    --border,
+    light-dark(rgb(26 28 31 / 8%), rgb(255 255 255 / 8.2%))
+  );
+
+  margin: 0;
+  padding: var(--visualize-paint-gutter, 0px);
+  color: var(--foreground);
+  background: transparent !important;
+  font-family: var(--font-sans) !important;
+  font-size: var(--font-size-normal);
+  font-weight: var(--font-weight-normal);
+  line-height: var(--line-height-normal);
+}
+
+.cursor-interaction {
+  cursor: var(--cursor-interaction, pointer);
+}
+
+a {
+  color: color-mix(in srgb, var(--viz-accent) 80%, var(--viz-text) 20%);
+  cursor: var(--cursor-interaction, pointer);
+  font-weight: var(--font-weight-medium, 500);
+  text-decoration: none;
+  text-underline-offset: 2px;
+}
+
+a:is(:hover, :focus-visible) {
+  text-decoration-line: underline;
+  text-decoration-style: dashed;
+  text-decoration-thickness: 0.5px;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p {
+  margin-block: 0;
+}
+
+h1 {
+  font-size: var(--font-size-h1);
+  font-weight: var(--font-weight-medium);
+  line-height: 1.25;
+}
+
+h2 {
+  font-size: var(--font-size-h2);
+  font-weight: var(--font-weight-medium);
+  line-height: 1.25;
+}
+
+h3,
+h4,
+h5,
+h6 {
+  font-size: var(--font-size-h3);
+  font-weight: var(--font-weight-medium);
+  line-height: 1.3;
+}
+
+b,
+strong,
+th {
+  font-weight: var(--font-weight-medium);
+}
+
+code:not(pre code) {
+  display: inline;
+  padding: 1px 6px;
+  border-radius: var(--radius-sm);
+  corner-shape: var(--corner-shape);
+  background: var(--muted);
+  font-family: var(--font-mono);
+  font-size: 0.92em;
+  overflow-wrap: anywhere;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+  word-break: break-word;
+}
+
+.table-responsive {
+  width: 100%;
+  overflow-x: auto;
+  scrollbar-width: thin;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  color: var(--foreground);
+  font: inherit;
+  text-align: start;
+}
+
+.table :is(th, td) {
+  padding-block: 10px;
+  padding-inline: 0 24px;
+  overflow-wrap: anywhere;
+  border-bottom: 1px solid var(--border);
+  text-align: start;
+  vertical-align: top;
+}
+
+.table-responsive > .table :is(th, td) {
+  overflow-wrap: break-word;
+}
+
+.table :is(th, td):last-child {
+  padding-inline-end: 0;
+}
+
+.table :is(caption, thead th) {
+  font-weight: 600;
+}
+
+.table thead th {
+  padding-block: 8px;
+  border-bottom-color: color-mix(in srgb, var(--foreground) 16%, transparent);
+}
+
+.table tbody tr:last-child :is(th, td) {
+  border-bottom: 0;
+}
+
+.table.table-sm :is(th, td) {
+  padding-block: 6px;
+}
+
+.table.table-sm :is(th, td):not(:last-child) {
+  padding-inline-end: 16px;
+}
+
+.table :is(.text-end, [align="right"]) {
+  text-align: end;
+  font-variant-numeric: tabular-nums;
+}
+
+.table :is(.text-center, [align="center"]) {
+  text-align: center;
+}
+
+.table .text-nowrap {
+  white-space: nowrap;
+}
+
+#widget {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 100%;
+  padding: 0;
+  background: transparent !important;
+}
+
+.card {
+  min-width: 0;
+  padding: 12px;
+  overflow: hidden;
+  overflow-wrap: break-word;
+  border-radius: var(--radius-2xl);
+  corner-shape: var(--corner-shape);
+  color: var(--card-foreground);
+  background: var(--card);
+}
+
+.widget {
+  min-width: 0;
+  overflow: hidden;
+  border: 0;
+  border-radius: var(--radius-lg);
+  corner-shape: var(--corner-shape);
+  box-shadow: 0 0 0 0.5px var(--border-strong, var(--border));
+  color: var(--foreground);
+  background: var(--background);
+}
+
+#widget > :not(.card, .widget, .progress) {
+  width: 100% !important;
+  max-width: none !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+.tooltip {
+  position: fixed;
+  z-index: 50;
+  top: 0;
+  left: 0;
+  width: max-content;
+  max-width: min(
+    20rem,
+    var(--tooltip-available-width, calc(100vw - 10px)),
+    calc(100vw - 10px)
+  );
+  max-height: min(
+    var(--tooltip-available-height, calc(100vh - 10px)),
+    calc(100vh - 10px)
+  );
+  padding: 4px 8px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  corner-shape: var(--corner-shape);
+  color: var(--popover-foreground);
+  background: var(--popover);
+  box-shadow: none;
+  font-size: var(--font-size-tooltip);
+  line-height: var(--line-height-tooltip);
+  overflow-wrap: break-word;
+  white-space: normal;
+  pointer-events: none;
+  user-select: none;
+}
+
+.viz-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(max(180px, 24%), 1fr));
+  gap: 10px;
+}
+
+.viz-stat {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.viz-stat-value {
+  font-size: var(--font-size-h2);
+  font-weight: var(--font-weight-medium);
+  line-height: 1.25;
+}
+
+.viz-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+}
+
+hr {
+  width: 100%;
+  height: 1px;
+  margin-block: 6px;
+  border: 0;
+  background: var(--border);
+}
+
+.nav {
+  display: flex;
+  min-width: 0;
+  align-items: center;
+  gap: 4px;
+}
+
+.progress {
+  display: flex;
+  height: 8px;
+  margin-block: calc((var(--line-height-normal, 1.5em) - 8px) / 2);
+  overflow: hidden;
+  border: 0;
+  border-radius: var(--radius-full);
+  background: var(--muted);
+}
+
+.progress-bar:only-child {
+  border-radius: var(--radius-full);
+}
+
+.progress-bar {
+  height: 100%;
+  flex-shrink: 0;
+  border: 0;
+  background: var(--viz-series-1);
+}
+
+.viz-badge {
+  padding: 3px 8px;
+  border-radius: var(--radius-full);
+  color: var(--accent-foreground);
+  background: var(--accent);
+  font-weight: var(--font-weight-medium);
+}
+
+small,
+.text-small,
+.viz-badge {
+  font-size: var(--font-size-small);
+  line-height: var(--line-height-small);
+}
+
+.text-muted {
+  color: var(--muted-foreground);
+}
+
+.tabular-nums {
+  font-variant-numeric: tabular-nums;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.viz-controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+}
+
+.viz-controls > .form-label {
+  display: grid;
+  min-width: min(100%, 260px);
+  flex: 1 1 280px;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: baseline;
+  gap: 2px 12px;
+  margin-bottom: 0;
+}
+
+.viz-controls > .form-label > :is(.form-control, .form-range, .form-select) {
+  grid-column: 1 / -1;
+}
+
+.btn,
+.nav-link,
+.form-check-input,
+.form-control,
+.form-range,
+.form-select {
+  font: inherit;
+}
+
+.btn,
+.nav-link {
+  appearance: button;
+  display: inline-flex;
+  inline-size: fit-content;
+  max-inline-size: 100%;
+  min-height: 28px;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  margin: 0;
+  padding: 0 8px;
+  -webkit-app-region: no-drag;
+  border: 1px solid var(--input);
+  border-radius: var(--radius-lg);
+  corner-shape: var(--corner-shape);
+  color: var(--secondary-foreground);
+  background: var(--secondary);
+  cursor: var(--cursor-interaction, pointer);
+  text-align: center;
+  text-decoration: none;
+  white-space: nowrap;
+  user-select: none;
+  -webkit-font-smoothing: antialiased;
+}
+
+.btn:is(.btn-block, .viz-tile) {
+  inline-size: 100%;
+}
+
+.btn.viz-tile {
+  min-width: 0;
+  overflow-wrap: anywhere;
+  white-space: normal;
+}
+
+a.btn {
+  cursor: var(--cursor-interaction, pointer);
+  text-decoration: none;
+}
+
+.btn:not(:disabled):hover,
+.nav-link:not(:disabled):not([aria-disabled="true"]):hover {
+  background: color-mix(in srgb, var(--foreground) 6%, var(--secondary));
+}
+
+.btn-primary {
+  border-color: transparent;
+  color: var(--primary-foreground);
+  background: var(--foreground);
+  background-clip: padding-box;
+}
+
+.btn-primary .text-muted {
+  color: color-mix(in srgb, var(--primary-foreground) 50%, transparent);
+}
+
+.btn-primary:not(:disabled):hover {
+  background: color-mix(in srgb, var(--foreground) 80%, transparent);
+  background-clip: padding-box;
+}
+
+.btn-ghost {
+  border-color: transparent;
+  color: var(--muted-foreground);
+  background: transparent;
+}
+
+.btn-ghost:not(:disabled):hover {
+  color: var(--foreground);
+  background: color-mix(in srgb, var(--foreground) 6%, var(--secondary));
+}
+
+.nav-pills .nav-link {
+  min-width: 0;
+  border-color: transparent;
+  color: var(--muted-foreground);
+  background: transparent;
+}
+
+.nav-justified .nav-link {
+  flex: 1 1 0;
+  overflow-wrap: anywhere;
+  white-space: normal;
+}
+
+.nav-pills .nav-link.active {
+  color: var(--foreground);
+  background: var(--muted);
+}
+
+/* Shared preview chrome; product styles stay inside each variant. */
+.viz-dotted-background {
+  background-image: radial-gradient(
+    circle,
+    color-mix(in srgb, var(--foreground) 14%, transparent) 0.8px,
+    transparent 0.8px
+  );
+  background-position: center;
+  background-size: 16px 16px;
+}
+
+.viz-carousel {
+  position: relative;
+  min-width: 0;
+}
+
+.viz-carousel:has(> .viz-carousel-controls) {
+  min-height: calc(60px + var(--viz-carousel-picker-height, 0px));
+  padding-bottom: 60px;
+}
+
+.viz-carousel > [data-variant][hidden] {
+  display: none !important;
+}
+
+.viz-carousel > [data-variant] {
+  isolation: isolate;
+}
+
+.viz-carousel-controls {
+  --viz-carousel-hover: light-dark(
+    color-mix(in srgb, var(--foreground) 5.4%, transparent),
+    color-mix(in srgb, var(--foreground) 7.8%, transparent)
+  );
+  position: absolute;
+  z-index: 2;
+  bottom: 8px;
+  left: 50%;
+  display: flex;
+  width: max-content;
+  /* Leave room for the host's design-controls launcher at the trailing edge. */
+  max-width: calc(100% - 96px);
+  align-items: center;
+  gap: 0;
+  padding: 0;
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  color: var(--foreground);
+  background: var(--background);
+  font-family: var(--font-sans);
+  /* Match the settings dropdown chrome independently of the content font size. */
+  font-size: 13px;
+  font-weight: var(--font-weight-normal);
+  line-height: 18px;
+  transform: translateX(-50%);
+  user-select: none;
+}
+
+/* Keep authored mockup button styles out of the shared carousel chrome. */
+.viz-carousel-controls button,
+.viz-carousel-picker > summary {
+  display: flex !important;
+  height: auto !important;
+  min-height: 30px;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 4px;
+  padding: 0 6px !important;
+  -webkit-app-region: no-drag;
+  border: 0 !important;
+  border-radius: 14px !important;
+  color: inherit !important;
+  background: transparent !important;
+  font: inherit !important;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.viz-carousel-controls > button,
+.viz-carousel-picker > summary {
+  position: relative;
+  isolation: isolate;
+}
+
+.viz-carousel-controls > button {
+  --icon-size: 16px;
+  width: 30px !important;
+  padding: 0 !important;
+}
+
+.viz-carousel-picker > summary {
+  padding-inline: 12px !important;
+}
+
+.viz-carousel-controls .viz-carousel-caret {
+  width: 14px;
+  height: 14px;
+  flex: none;
+  margin: 0;
+  color: inherit;
+  transform: rotate(180deg);
+}
+
+.viz-carousel-controls > button > svg,
+.viz-carousel-controls .viz-carousel-caret,
+.viz-carousel-count {
+  opacity: 0.5;
+}
+
+.viz-carousel-controls > button::before,
+.viz-carousel-picker > summary::before {
+  position: absolute;
+  z-index: -1;
+  inset: 3px;
+  border-radius: 12px;
+  content: "";
+  pointer-events: none;
+}
+
+.viz-carousel-controls > button:hover::before,
+.viz-carousel-picker > summary:hover::before {
+  background: var(--viz-carousel-hover);
+}
+
+.viz-carousel-controls > button,
+.viz-carousel-controls [data-lucide],
+.viz-carousel-controls .lucide {
+  flex-shrink: 0;
+}
+
+.viz-carousel-picker {
+  min-width: 0;
+}
+
+.viz-carousel-picker > summary {
+  min-width: 0;
+  list-style: none;
+}
+
+.viz-carousel-picker > summary::-webkit-details-marker {
+  display: none;
+}
+
+.viz-carousel-count {
+  flex-shrink: 0;
+  white-space: nowrap;
+}
+
+.viz-carousel-name {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.viz-carousel-options {
+  position: absolute;
+  right: 0;
+  bottom: calc(100% + 4px);
+  left: 0;
+  display: flex;
+  max-height: 240px;
+  flex-direction: column;
+  gap: 2px;
+  overflow: auto;
+  padding: 4px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  background: var(--background);
+  box-shadow: 0 4px 12px light-dark(rgb(0 0 0 / 6%), rgb(0 0 0 / 25%));
+}
+
+.viz-carousel-options > button {
+  border-radius: max(0px, calc(var(--radius-lg) - 5px)) !important;
+  width: 100% !important;
+  min-height: 28px;
+  justify-content: flex-start !important;
+  padding: 4px 8px !important;
+  font-size: var(--font-size-small) !important;
+  text-align: start;
+  white-space: normal;
+  overflow-wrap: anywhere;
+}
+
+.viz-carousel-options > [aria-current="true"],
+.viz-carousel-options > button:hover {
+  background: var(--viz-carousel-hover) !important;
+}
+
+.btn:disabled,
+.nav-link:disabled,
+.nav-link[aria-disabled="true"] {
+  cursor: not-allowed;
+  opacity: 0.4;
+}
+
+[data-lucide] {
+  stroke-width: 1.6;
+}
+
+.form-label {
+  display: block;
+  margin-bottom: 6px;
+  color: var(--foreground);
+}
+
+.form-control {
+  display: block;
+  width: 100%;
+  min-height: 28px;
+  padding: 0 8px;
+  outline: none;
+  border: 1px solid var(--input);
+  border-radius: var(--radius-lg);
+  corner-shape: var(--corner-shape);
+  color: var(--foreground);
+  background: var(--secondary);
+}
+
+.form-control::placeholder {
+  color: var(--muted-foreground);
+}
+
+.form-control[type="file"] {
+  padding: 0;
+  overflow: hidden;
+  cursor: var(--cursor-interaction, pointer);
+}
+
+.form-control[type="file"]::file-selector-button {
+  min-height: 26px;
+  margin-right: 8px;
+  padding: 0 8px;
+  border: 0;
+  border-right: 1px solid var(--input);
+  color: var(--secondary-foreground);
+  background: var(--secondary);
+  cursor: inherit;
+  font: inherit;
+}
+
+.form-control[type="file"]:not(:disabled):hover::file-selector-button {
+  background: color-mix(in srgb, var(--foreground) 6%, var(--secondary));
+}
+
+.form-control-color[type="color"] {
+  width: 40px;
+  height: 28px;
+  padding: 3px;
+  cursor: var(--cursor-interaction, pointer);
+}
+
+.form-control-color[type="color"]::-webkit-color-swatch-wrapper {
+  padding: 0;
+}
+
+.form-control-color[type="color"]::-webkit-color-swatch {
+  border: 0;
+  border-radius: calc(var(--radius-lg) - 4px);
+  corner-shape: var(--corner-shape);
+}
+
+textarea.form-control {
+  height: auto;
+  min-height: 72px;
+  padding: 8px 10px;
+  resize: vertical;
+}
+
+.form-control:focus-visible {
+  border-color: var(--ring);
+  box-shadow: inset 0 0 0 1px var(--ring);
+}
+
+.form-control:disabled,
+.form-select:disabled {
+  cursor: not-allowed;
+  opacity: 0.4;
+}
+
+.form-select {
+  appearance: none;
+  display: block;
+  width: 100%;
+  min-height: 28px;
+  margin: 0;
+  padding: 0 32px 0 8px;
+  outline: none;
+  border: 1px solid var(--input);
+  border-radius: var(--radius-lg);
+  corner-shape: var(--corner-shape);
+  color: var(--foreground);
+  background-color: var(--secondary);
+  background-image:
+    linear-gradient(45deg, transparent 50%, var(--muted-foreground) 50%),
+    linear-gradient(135deg, var(--muted-foreground) 50%, transparent 50%);
+  background-position:
+    calc(100% - 14px) 50%,
+    calc(100% - 10px) 50%;
+  background-repeat: no-repeat;
+  background-size: 4px 4px;
+  cursor: var(--cursor-interaction, default);
+}
+
+.form-select:not(:disabled):hover {
+  background-color: color-mix(in srgb, var(--foreground) 6%, var(--secondary));
+}
+
+.form-select:focus-visible {
+  border-color: var(--ring);
+  box-shadow: inset 0 0 0 1px var(--ring);
+}
+
+.form-check {
+  display: flex;
+  min-height: 20px;
+  align-items: center;
+  gap: 6px;
+}
+
+.form-check-input {
+  appearance: none;
+  width: 14px;
+  height: 14px;
+  flex: 0 0 auto;
+  margin: 0;
+  border: 1px solid var(--input);
+  color: var(--primary-foreground);
+  background-color: transparent;
+  cursor: var(--cursor-interaction, default);
+  transition:
+    background-color 150ms,
+    border-color 150ms,
+    box-shadow 150ms;
+}
+
+.form-check:not(.form-switch) .form-check-input[type="checkbox"] {
+  border-color: var(--input);
+  border-radius: var(--radius-sm);
+  corner-shape: var(--corner-shape);
+  background-color: var(--secondary);
+  box-shadow: var(--shadow-sm);
+}
+
+.form-check:not(.form-switch)
+  .form-check-input:not(:disabled):not(:checked):hover {
+  background-color: var(--card);
+}
+
+.form-check:not(.form-switch) .form-check-input[type="checkbox"]:checked {
+  border-color: var(--primary);
+  background-color: var(--primary);
+}
+
+.form-check:not(.form-switch)
+  .form-check-input[type="checkbox"]:checked::before {
+  display: block;
+  width: 100%;
+  height: 100%;
+  background: var(--primary-foreground);
+  content: "";
+  mask: var(--checkmark-image) center / 12px 12px no-repeat;
+}
+
+.form-check-input[type="radio"] {
+  width: 14px;
+  height: 14px;
+  border-radius: var(--radius-full);
+}
+
+.form-check-input[type="radio"]:checked {
+  border: 2px solid var(--primary);
+  background:
+    radial-gradient(circle, var(--primary-foreground) 0 2.5px, transparent 3px),
+    var(--primary);
+}
+
+.form-check:not(.form-switch) .form-check-input:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 2px;
+}
+
+.form-check:not(.form-switch) .form-check-input:disabled {
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+.form-check:not(.form-switch) .form-check-input:disabled + .form-check-label {
+  cursor: not-allowed;
+}
+
+.form-switch .form-check-input:disabled,
+.form-switch .form-check-input:disabled + .form-check-label {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.form-check-label {
+  color: var(--foreground);
+  cursor: var(--cursor-interaction, default);
+}
+
+.form-switch .form-check-input {
+  position: relative;
+  width: 32px;
+  height: 20px;
+  border: 0;
+  border-radius: var(--radius-full);
+  background: var(--muted);
+  box-shadow: none;
+  transition: background-color 200ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+.form-switch .form-check-input::before {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 16px;
+  height: 16px;
+  box-sizing: border-box;
+  border: 1px solid light-dark(var(--primary-foreground), var(--foreground));
+  border-radius: var(--radius-full);
+  background: light-dark(var(--primary-foreground), var(--foreground));
+  box-shadow: var(--shadow-sm);
+  content: "";
+  transform: translate(2px, -50%);
+  transition: transform 200ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+.form-switch .form-check-input:checked {
+  background: var(--primary);
+}
+
+.form-switch .form-check-input:checked::before {
+  transform: translate(14px, -50%);
+}
+
+.form-switch .form-check-input:focus-visible {
+  box-shadow: 0 0 0 2px var(--ring);
+}
+
+.form-range {
+  appearance: none;
+  display: block;
+  width: 100%;
+  height: 28px;
+  flex: 1;
+  margin: 0;
+  padding: 0;
+  outline: none;
+  border: 0;
+  accent-color: var(--primary);
+  background: linear-gradient(
+      color-mix(in srgb, var(--foreground) 7%, transparent),
+      color-mix(in srgb, var(--foreground) 7%, transparent)
+    )
+    center / 100% 2px no-repeat;
+}
+
+.form-range::-webkit-slider-runnable-track {
+  height: 28px;
+  background: transparent;
+}
+
+.form-range::-webkit-slider-thumb {
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  margin-top: 4px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-full);
+  background: light-dark(var(--primary-foreground), var(--foreground));
+}
+
+.form-range:focus-visible::-webkit-slider-thumb {
+  border-color: var(--ring);
+  box-shadow: inset 0 0 0 1px var(--ring);
+}
+
+.form-range::-moz-range-track {
+  height: 28px;
+  background: transparent;
+}
+
+.form-range::-moz-range-thumb {
+  width: 20px;
+  height: 20px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-full);
+  background: light-dark(var(--primary-foreground), var(--foreground));
+}
+
+.form-range:focus-visible::-moz-range-thumb {
+  border-color: var(--ring);
+  box-shadow: inset 0 0 0 1px var(--ring);
+}
+
+.form-range:disabled {
+  cursor: not-allowed;
+  opacity: 0.4;
+}
+
+.btn:not(.btn-primary, .viz-tile):is(
+  [aria-pressed="true"],
+  [aria-selected="true"],
+  .is-selected
+) {
+  border-color: var(--primary);
+  color: var(--primary-foreground);
+  background: var(--primary);
+}
+
+.btn.viz-tile:is([aria-pressed="true"], [aria-selected="true"], .is-selected) {
+  border-color: var(--primary);
+  box-shadow: inset 0 0 0 1px var(--primary);
+}
+
+.btn:focus-visible,
+.nav-link:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 2px;
+}
+
+.viz-carousel-controls :is(button, summary):focus-visible {
+  outline: 2px solid var(--ring) !important;
+  outline-offset: 2px !important;
+}
+
+@media (pointer: coarse) {
+  .viz-carousel:has(> .viz-carousel-controls) {
+    min-height: calc(76px + var(--viz-carousel-picker-height, 0px));
+    padding-bottom: 76px;
+  }
+
+  .btn,
+  .nav-link,
+  .viz-carousel-controls button,
+  .viz-carousel-picker > summary,
+  .form-control,
+  .form-select {
+    min-width: 44px;
+    min-height: 44px;
+  }
+
+  /* Keep small-screen WebKit from zooming when a text field receives focus. */
+  .form-control,
+  .form-select {
+    font-size: max(16px, var(--font-size-normal));
+  }
+
+  .form-control[type="file"]::file-selector-button {
+    min-width: 44px;
+    min-height: 44px;
+  }
+
+  .form-control-color[type="color"] {
+    width: 44px;
+    height: 44px;
+  }
+
+  .form-control:is(
+    [type="date"],
+    [type="datetime-local"],
+    [type="month"],
+    [type="time"],
+    [type="week"]
+  ) {
+    min-width: 0;
+    max-width: 100%;
+    padding-block: 8px;
+  }
+
+  .form-check {
+    min-height: 44px;
+    padding-inline: 15px;
+  }
+
+  .form-check-input {
+    position: relative;
+  }
+
+  .form-check-input::after {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 44px;
+    height: 44px;
+    content: "";
+    transform: translate(-50%, -50%);
+  }
+
+  .form-check-label {
+    display: inline-flex;
+    min-width: 44px;
+    min-height: 44px;
+    align-items: center;
+  }
+
+  .form-range {
+    height: 44px;
+    touch-action: pan-y;
+  }
+
+  .form-range::-webkit-slider-runnable-track {
+    height: 44px;
+  }
+
+  .form-range::-moz-range-track {
+    height: 44px;
+  }
+
+  .form-range::-webkit-slider-thumb {
+    margin-top: 12px;
+  }
+}
+
+svg {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+#widget > svg {
+  width: 100%;
+}
+
+/* Model-authored chart rules can otherwise stretch icons after these styles load. */
+svg.lucide {
+  display: block;
+  width: var(--icon-size) !important;
+  height: var(--icon-size) !important;
+  flex: none;
+  margin: 0 !important;
+  stroke-width: 1.6;
+}
+
+.text-warning,
+.text-destructive {
+  color: var(--destructive);
+}
+
+html>body{padding:0}
+
+html{color-scheme:light;background:white!important}
+:root{--background:#fff;--foreground:#202b3b;--muted-foreground:#728095;--font-sans:"Malgun Gothic",system-ui,sans-serif}
+body{padding:16px!important;overflow-x:hidden}
+#thigh-motion{margin:0 auto;max-width:100%}
+#thigh-motion h2{padding-right:0;font-size:20px;line-height:1.4}
+button,input{accent-color:#2675db}
+</style></head><body><div id="thigh-motion">
+  <h2>허벅지 근육과 무릎 굽힘</h2>
+  <div class="text-small" id="thigh-view-caption">정면에서 본 오른쪽 다리 · 고관절 고정 · 무릎 펴짐–굽힘 120°</div>
+  <svg class="thigh-scene" role="img" aria-labelledby="thigh-title thigh-desc">
+    <title id="thigh-title">무릎을 굽힐 때 허벅지 근육의 배열 변화</title>
+    <desc id="thigh-desc">고관절과 허벅지는 고정되고 무릎 아래가 회전하는 오른쪽 다리 도해입니다. 정면, 측면, 후면에서 대퇴사두근과 햄스트링을 살펴볼 수 있습니다. 굽힘에서는 햄스트링이 짧고 두꺼워지고 대퇴사두근이 길어지며, 폄에서는 반대로 대퇴사두근 경로가 짧아집니다. OpenSim 참조 모델의 근육·힘줄 경로 길이 변화를 바탕으로 외형을 단순화했습니다. 정확한 근복이나 근섬유 수축률, 근활성도, 힘을 재현하는 모델은 아닙니다.</desc>
+    <defs></defs>
+    <g class="thigh-drawing"><g class="thigh-volumes"></g></g>
+    <g class="thigh-labels"></g>
+  </svg>
+  <div class="thigh-legend text-small"><span><i class="quad-key"></i>대퇴사두근</span><span><i class="ham-key"></i>햄스트링</span><span><i class="deep-key"></i>봉공근·내전근</span></div>
+  <div class="thigh-controls">
+    <div class="thigh-control-top"><div class="viz-row">
+      <button type="button" class="btn btn-primary" id="thigh-play" aria-pressed="true">일시정지</button>
+      <label class="form-check"><input type="checkbox" class="form-check-input" id="thigh-fibers" checked><span class="form-check-label">근섬유</span></label>
+      <label class="form-check"><input type="checkbox" class="form-check-input" id="thigh-transparent"><span class="form-check-label">근육 반투명</span></label>
+    </div><div class="thigh-views" role="group" aria-label="보기 방향">
+      <button type="button" class="btn" id="thigh-front" aria-pressed="true">정면</button>
+      <button type="button" class="btn" id="thigh-side" aria-pressed="false">측면</button>
+      <button type="button" class="btn" id="thigh-back" aria-pressed="false">후면</button>
+    </div></div>
+    <label class="form-label" for="thigh-angle">무릎 굽힘 <output id="thigh-value" class="tabular-nums">펴짐 0°</output></label>
+    <input type="range" class="form-range" id="thigh-angle" min="0" max="120" value="0" step="1" aria-label="무릎 굽힘 각도, 0도는 펴진 상태">
+  </div>
+  <div class="text-small thigh-note">0°: 펴짐 · 120°: 굽힘 · 길이 변화·형상은 단순화 · 근활성도·힘 추정 아님</div>
+</div>
+<style>
+  #thigh-motion{color:var(--foreground);--quad:var(--red);--ham:var(--blue);--deep:var(--purple)}
+  #thigh-motion h2{margin-bottom:4px}
+  #thigh-motion .thigh-scene{display:block;width:100%;margin:8px 0 10px}
+  #thigh-motion .thigh-legend{display:flex;flex-wrap:wrap;gap:8px 16px;justify-content:center}
+  #thigh-motion .thigh-legend span{display:inline-flex;align-items:center;gap:6px}
+  #thigh-motion .thigh-legend i{width:10px;height:10px;border-radius:50%}
+  #thigh-motion .quad-key{background:var(--quad)}#thigh-motion .ham-key{background:var(--ham)}#thigh-motion .deep-key{background:var(--deep)}
+  #thigh-motion .thigh-controls{display:grid;gap:12px;margin:18px 0 12px}
+  #thigh-motion .thigh-control-top{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+  #thigh-motion .thigh-views{display:flex;gap:4px;margin-left:auto}
+  #thigh-motion .thigh-views .btn{padding:5px 12px;border:1px solid color-mix(in srgb,var(--muted-foreground) 30%,var(--background));color:var(--foreground);background:var(--background)}
+  #thigh-motion .thigh-views .btn[aria-pressed="true"]{background:var(--foreground);color:var(--background);border-color:var(--foreground)}
+  #thigh-motion .form-label{display:flex;justify-content:space-between}#thigh-motion .thigh-note{color:var(--muted-foreground)}
+  #thigh-motion .bone{fill:var(--muted);stroke:var(--foreground);stroke-width:1.25;stroke-linejoin:round}
+  #thigh-motion .muscle{stroke:var(--foreground);stroke-opacity:.65;stroke-width:1.1;stroke-linejoin:round}
+  #thigh-motion .quad{fill:color-mix(in srgb,var(--quad) 62%,var(--background))}
+  #thigh-motion .ham{fill:color-mix(in srgb,var(--ham) 60%,var(--background))}
+  #thigh-motion .aux{fill:color-mix(in srgb,var(--deep) 48%,var(--background))}
+  #thigh-motion .calf{fill:color-mix(in srgb,var(--green) 58%,var(--background))}
+  #thigh-motion .lower{fill:color-mix(in srgb,var(--muted-foreground) 32%,var(--background))}
+  #thigh-motion .tendon{fill:var(--background);stroke:var(--foreground);stroke-width:1.15}
+  #thigh-motion .fiber{fill:none;stroke:var(--foreground);stroke-opacity:.32;stroke-width:.75}
+  #thigh-motion .thigh-labels{fill:var(--foreground)}#thigh-motion .thigh-labels text{font-size:12px}#thigh-motion .thigh-labels path{fill:none;stroke:var(--muted-foreground);stroke-width:.9}
+  #thigh-motion.no-fibers .fibers{display:none}#thigh-motion.transparent .muscle{fill-opacity:.34}#thigh-motion.transparent .tendon{fill-opacity:.6}
+</style>
+<script>/* Generated from OpenSim 4.6, Gait2392, hip/ankle neutral.
+   Samples are musculotendon path lengths, NOT measured belly/fiber lengths.
+   See references/thigh-path-lengths.json and ANATOMY_REVIEW.md. */
+const ThighReference=(()=>{
+  const lengths={"rect_fem_r":[0.410323749,0.411189003,0.412049187,0.412904407,0.413754998,0.414601515,0.415444742,0.416285689,0.417125599,0.417965945,0.41880843,0.419654714,0.420505425,0.421360766,0.422220765,0.423085272,0.423953962,0.424826337,0.425701727,0.426579294,0.427458038,0.428337012,0.429215994,0.430094872,0.430973438,0.431851387,0.432728321,0.433603751,0.434477097,0.435347689,0.436214776,0.4370776,0.437935899,0.438789634,0.43963877,0.440483278,0.441323134,0.442158318,0.442988814,0.443814612,0.444635703,0.445452055,0.446263537,0.447069994,0.447871271,0.448667215,0.449457676,0.450242504,0.451021553,0.451794677,0.452561734,0.453322584,0.454077091,0.454825119,0.455566539,0.456301221,0.457029041,0.457749878,0.458463614,0.459170136,0.459869334,0.46056111,0.461245393,0.461922113,0.462591187,0.463252523,0.463906021,0.464551567,0.465189042,0.465818314,0.466439243,0.467051679,0.467655466,0.468250438,0.468836421,0.469413232,0.469980679,0.470538566,0.471086684,0.471624821,0.472152756,0.472670254,0.473177047,0.473672871,0.474166273,0.474654443,0.475139704,0.475621875,0.476100784,0.476576265,0.477048162,0.477516329,0.477980625,0.47844092,0.478897092,0.479349026,0.479796615,0.480239762,0.480678377,0.481112377,0.481541688,0.481966244,0.482385985,0.482800858,0.483210818,0.483615827,0.484015858,0.484410888,0.484800905,0.485185905,0.485565892,0.485940879,0.486310888,0.486675949,0.487036103,0.487391398,0.487741894,0.488087658,0.488428769,0.488765314,0.489097392],"vas_lat_r":[0.200184877,0.200929784,0.20167156,0.202410969,0.203148947,0.203886604,0.204625235,0.205366324,0.206111549,0.206862791,0.207622143,0.208391394,0.209170395,0.209958409,0.210754597,0.211558007,0.212367567,0.213182086,0.214000248,0.214820615,0.215641626,0.216461884,0.217281009,0.218098814,0.218915029,0.219729303,0.220541208,0.221350237,0.222155808,0.222957267,0.223753888,0.224544962,0.225330323,0.226110038,0.226884178,0.227652814,0.228416022,0.229173876,0.229926452,0.230673827,0.231416076,0.23215324,0.232885221,0.233611885,0.234333105,0.235048753,0.235758705,0.23646284,0.23716104,0.23785319,0.23853918,0.2392189,0.239892246,0.240559118,0.241219418,0.241873053,0.242519935,0.243159979,0.243793104,0.244419235,0.2450383,0.24565024,0.246255026,0.246852626,0.247442999,0.248026095,0.248601854,0.249170207,0.249731075,0.250284372,0.250833294,0.251381694,0.251929667,0.252476945,0.253023269,0.25356839,0.254112065,0.254654057,0.255194135,0.25573207,0.256267639,0.256800605,0.257330695,0.257857628,0.258381133,0.258900986,0.259417012,0.259929048,0.260436934,0.26094052,0.261439664,0.261934228,0.262424087,0.262909121,0.263389219,0.263864277,0.264334197,0.26479889,0.265258274,0.265712274,0.266160824,0.266603864,0.267041338,0.267473197,0.267899403,0.26831992,0.268734723,0.269143796,0.269547128,0.269944719,0.270336575,0.270736299,0.271130079,0.271522306,0.271912735,0.272301143,0.272687329,0.273071111,0.273452329,0.273830838,0.274206517],"vas_int_r":[0.182045369,0.182889412,0.183721474,0.184542477,0.185353498,0.186155777,0.186950716,0.187739889,0.18852504,0.18930809,0.190091141,0.190876126,0.191663643,0.192453824,0.19324666,0.194041985,0.194839483,0.195638676,0.196438929,0.197239447,0.198039278,0.198837571,0.19963435,0.200429778,0.201223912,0.202016701,0.202807988,0.203597511,0.204384906,0.205169707,0.205951351,0.206729248,0.207503231,0.208273331,0.209039583,0.209802028,0.210560711,0.211315681,0.212066992,0.2128147,0.213558863,0.214299514,0.215036567,0.21576991,0.216499433,0.217225023,0.217946571,0.21866397,0.219377111,0.22008589,0.220790203,0.221489947,0.222185022,0.222875331,0.223560777,0.224241266,0.224916708,0.225587014,0.226252099,0.226911879,0.227566274,0.228215216,0.228858665,0.229496576,0.230128897,0.230755563,0.231376498,0.231991615,0.232600818,0.233203999,0.23380104,0.234391815,0.234976186,0.235554008,0.236125125,0.236689373,0.237246579,0.237796559,0.238339123,0.238874072,0.239401198,0.239920281,0.240434367,0.240939225,0.241441875,0.24194206,0.242439584,0.24293426,0.243425913,0.243914378,0.244399498,0.244881128,0.245359133,0.245833391,0.246303785,0.24677021,0.24723257,0.247690776,0.248144752,0.248594426,0.249039739,0.249480639,0.24991708,0.250349027,0.250776452,0.251199336,0.251617668,0.252031448,0.252440683,0.252845392,0.253245601,0.253641348,0.254032677,0.254419646,0.254802321,0.255180779,0.255555106,0.2559254,0.256291771,0.256654337,0.257013229],"vas_med_r":[0.17226414,0.173069122,0.173868033,0.17466122,0.175449189,0.176232607,0.177012315,0.177789334,0.178564873,0.179340345,0.180117368,0.180897451,0.181680901,0.182467624,0.18325742,0.184049968,0.184844814,0.185641371,0.186438908,0.18723655,0.188033281,0.188828181,0.189621157,0.190412256,0.191201434,0.191988551,0.192773378,0.193555594,0.194334793,0.19511048,0.195882079,0.196649002,0.197411106,0.198168445,0.198921079,0.199669072,0.20041249,0.201151402,0.201885879,0.202615993,0.203341818,0.204063397,0.20478065,0.205493469,0.206201748,0.206905382,0.207604271,0.208298312,0.208987411,0.20967147,0.210350399,0.211024107,0.211692508,0.212355519,0.213013059,0.21366505,0.21431142,0.214952098,0.215587017,0.216216116,0.216839334,0.217456626,0.218067972,0.218673354,0.219272742,0.219866096,0.220453364,0.221034488,0.221609396,0.222178009,0.222745989,0.223313118,0.22387958,0.224445119,0.225009491,0.225572466,0.226133821,0.226693342,0.22725082,0.22780605,0.228358829,0.228908944,0.22945613,0.230000113,0.230540631,0.231077468,0.231610456,0.232139437,0.232664262,0.233184787,0.233700875,0.234212399,0.234719238,0.235221279,0.235718416,0.236210552,0.236697596,0.237179463,0.237656079,0.238127376,0.238593291,0.239053772,0.239532064,0.239984406,0.240436809,0.240888753,0.241339773,0.241789448,0.242237402,0.242683294,0.243126821,0.243567711,0.244005718,0.244440627,0.244872246,0.245300405,0.24572496,0.246145783,0.24656277,0.246975834,0.247384908],"bifemlh_r":[0.420196561,0.419712412,0.419220753,0.41872171,0.418215412,0.417701991,0.417181582,0.416654324,0.41612036,0.415579835,0.4150329,0.414479741,0.413920676,0.413356066,0.412786282,0.412211701,0.41163271,0.411049703,0.410463081,0.409873251,0.409280626,0.40868559,0.408088386,0.407489225,0.40688832,0.406285884,0.405682132,0.40507728,0.404471546,0.403865151,0.403258314,0.40265125,0.402044133,0.401437132,0.400830417,0.400224159,0.39961853,0.399013706,0.398409863,0.39780718,0.397205836,0.396606011,0.396007876,0.395411603,0.394817363,0.39422533,0.393635681,0.393048591,0.392464238,0.391882801,0.39130446,0.390729395,0.390157786,0.389589816,0.389025665,0.388465515,0.387909549,0.387357946,0.38681089,0.386268559,0.385731134,0.385198797,0.384671732,0.384150125,0.383634163,0.38312403,0.382619911,0.38212199,0.381630448,0.381145468,0.380667228,0.380195909,0.37973169,0.379274746,0.378825256,0.378383392,0.377949327,0.377523231,0.377105273,0.376695618,0.376294431,0.375901873,0.375518099,0.375143262,0.374777513,0.374420997,0.37407386,0.37373624,0.373408274,0.373090096,0.372781834,0.372483615,0.372195559,0.371917785,0.371650406,0.37139353,0.371147262,0.370911703,0.370686948,0.370473089,0.370270211,0.370078397,0.369897723,0.369728262,0.369570082,0.369423246,0.369287809,0.369163825,0.369051341,0.368950398,0.368861032,0.368783274,0.36871715,0.368662679,0.368619875,0.368588748,0.368569302,0.368561533,0.368565433,0.36858099,0.368608184],"bifemsh_r":[0.246250759,0.245890217,0.245519301,0.245137969,0.244746181,0.244343899,0.243931086,0.243507709,0.243073736,0.242629137,0.242173888,0.241708077,0.241232256,0.240747106,0.240253322,0.239751619,0.239242725,0.238727384,0.238206352,0.2376804,0.237150311,0.236616761,0.236079961,0.235540003,0.234996981,0.234450989,0.233902121,0.233350472,0.23279614,0.23223922,0.231679812,0.231118004,0.23055385,0.229987395,0.229418686,0.228847771,0.2282747,0.227699525,0.2271223,0.226543081,0.225961927,0.225378919,0.224794222,0.224208028,0.22362053,0.223031925,0.222442417,0.221852211,0.221261515,0.220670542,0.220079509,0.219488634,0.21889814,0.218308252,0.217719198,0.217131208,0.216544515,0.215959355,0.215375965,0.214794585,0.214215456,0.213638811,0.21306485,0.212493761,0.211925738,0.211360974,0.210799664,0.210242006,0.209688196,0.209138434,0.20859292,0.208051857,0.207515448,0.206983898,0.206457412,0.205936198,0.205420462,0.204910411,0.204406253,0.203908196,0.203416448,0.202931219,0.202452728,0.201981193,0.201516833,0.201059867,0.200610511,0.20016898,0.199735487,0.199310244,0.19889346,0.198485344,0.198086099,0.197695929,0.197315033,0.196943607,0.196581845,0.196229937,0.195888069,0.195556423,0.195235177,0.194924506,0.194624577,0.194335553,0.194057592,0.193790848,0.193535468,0.193291596,0.193059369,0.192838918,0.192630371,0.192433846,0.192249457,0.192077313,0.191917515,0.191770156,0.191635326,0.191513106,0.19140357,0.191306786,0.191222815],"semiten_r":[0.463234415,0.462557571,0.46187483,0.461186373,0.460492381,0.459793042,0.459088549,0.458379097,0.457664887,0.456946126,0.456223026,0.455495842,0.454765,0.454030973,0.453294241,0.45255529,0.451814612,0.451072706,0.450330071,0.449587211,0.448841599,0.448089793,0.447331673,0.44656747,0.445797418,0.445021754,0.444240714,0.443454539,0.44266347,0.441867751,0.441067626,0.440263333,0.439455074,0.438643042,0.437827432,0.437008444,0.436186276,0.435361133,0.434533221,0.433702746,0.432869922,0.432034961,0.431198084,0.430359514,0.429519478,0.428678209,0.42783594,0.426992911,0.426149363,0.425305542,0.424461695,0.423618073,0.422774932,0.421932527,0.421091117,0.420250964,0.419412332,0.418575486,0.417740694,0.416908225,0.41607835,0.41525134,0.414427468,0.413607007,0.412790231,0.411977415,0.411168836,0.410364771,0.409565497,0.408771294,0.40798244,0.407199215,0.406421901,0.405650779,0.40488613,0.404128236,0.403377379,0.402633838,0.401897893,0.401169825,0.400449912,0.39973843,0.399035657,0.398341865,0.397657328,0.396982315,0.396317095,0.395661933,0.395017092,0.394382833,0.393759412,0.393147083,0.392546097,0.3919567,0.391379136,0.390813643,0.390260456,0.389719804,0.389191914,0.388677005,0.388175294,0.387686989,0.387212296,0.386751414,0.386304536,0.385871851,0.385453538,0.385049774,0.384660727,0.384286557,0.38392742,0.383583463,0.383254826,0.382941643,0.382644038,0.382362131,0.38209603,0.381845837,0.381611647,0.381393546,0.381191611],"semimem_r":[0.414572176,0.414018354,0.413456758,0.412887521,0.41231078,0.411726676,0.411135352,0.410536957,0.409931643,0.409319564,0.408700882,0.408075803,0.407444706,0.406808023,0.406166195,0.40551967,0.404868905,0.404214366,0.403556522,0.402895851,0.402232837,0.401567921,0.40090137,0.400233406,0.399564252,0.398894133,0.398223277,0.397551912,0.396880268,0.396208579,0.395537076,0.394865986,0.394195498,0.39351728,0.392840909,0.392161388,0.391478884,0.390793565,0.390105602,0.389415167,0.388722435,0.388027584,0.387330794,0.38663225,0.38593214,0.385230655,0.384527989,0.383824338,0.383119904,0.382414888,0.381709496,0.381003935,0.380298415,0.37959315,0.378888352,0.378184239,0.377481029,0.376778942,0.376078199,0.375379022,0.374681637,0.373986268,0.37329314,0.37260248,0.371914513,0.371229468,0.370547573,0.369869058,0.36919415,0.368523082,0.367856083,0.367193384,0.366535217,0.365881815,0.365233409,0.364590233,0.363952519,0.363320497,0.362694399,0.362074455,0.361460895,0.360853947,0.36025384,0.359660798,0.359075048,0.358496811,0.35792631,0.357363763,0.356809388,0.356263401,0.355726013,0.355197435,0.354677875,0.354167537,0.353666624,0.353175332,0.352693859,0.352222395,0.351761128,0.351310244,0.350869922,0.350440339,0.350021668,0.349614076,0.349217728,0.348832782,0.348459394,0.348097712,0.347747881,0.347410041,0.347084325,0.346770863,0.346469779,0.346181189,0.345905205,0.345641935,0.345391478,0.345153929,0.344929375,0.344717899,0.344519575],"sar_r":[0.569220801,0.569244154,0.569260488,0.569269586,0.56927122,0.569265162,0.569251174,0.569229016,0.569198443,0.569159207,0.569111055,0.569053835,0.56898781,0.568913388,0.568831021,0.568741204,0.568644473,0.568541407,0.568432622,0.568318774,0.568200558,0.568078589,0.567953018,0.567823876,0.567691184,0.56755496,0.567415213,0.567271943,0.567125147,0.566974813,0.566820922,0.566663438,0.566502283,0.56633736,0.566168568,0.565995799,0.565818938,0.565637866,0.565452455,0.565262573,0.565068083,0.56486887,0.564664934,0.564456309,0.564243036,0.564025161,0.563802736,0.563575821,0.563344478,0.563108779,0.562868799,0.56262462,0.562376329,0.562124018,0.561867787,0.561607739,0.561343983,0.561076635,0.560805813,0.560531644,0.560254258,0.559973773,0.559690244,0.559403709,0.559114208,0.55882178,0.558526466,0.558228309,0.55792735,0.557623633,0.557317203,0.557008105,0.556696388,0.556382099,0.556065289,0.55574601,0.555424312,0.55510025,0.554773878,0.554445251,0.554114427,0.553781468,0.55344646,0.553109495,0.552770666,0.55243007,0.552087806,0.551743975,0.551398679,0.551052025,0.550704119,0.550355072,0.550004996,0.549654004,0.549302214,0.548949745,0.548596717,0.548243253,0.547889481,0.547535526,0.547181521,0.546827594,0.546473877,0.546120498,0.545767589,0.545415285,0.545063722,0.544713038,0.544363374,0.544014872,0.543667678,0.543321936,0.542977797,0.542635411,0.542294932,0.541956513,0.541620312,0.541286488,0.5409552,0.540626614,0.540300891],"med_gas_r":[0.450707231,0.450333344,0.449959289,0.449584705,0.449209211,0.448832404,0.448453858,0.448073129,0.447689754,0.447303248,0.44691311,0.446518949,0.446120902,0.44571934,0.445314745,0.444907709,0.444498935,0.444089232,0.443679513,0.443270795,0.442864194,0.442460745,0.442060824,0.441664614,0.441272272,0.440883928,0.440499689,0.440119636,0.439743824,0.439372285,0.439005024,0.438642018,0.438283185,0.437928415,0.437577579,0.437230526,0.436887088,0.436547078,0.43621029,0.435876502,0.435545477,0.435217019,0.434891163,0.43456801,0.434247674,0.433930278,0.433256579,0.43294404,0.432630407,0.432315839,0.432000504,0.43168458,0.431368254,0.431051724,0.430735194,0.430418877,0.430102995,0.429787775,0.429473452,0.429160267,0.428848467,0.42853827,0.428229757,0.427922977,0.427617972,0.427314786,0.427013457,0.426714024,0.426416521,0.426120982,0.425827439,0.42553592,0.425246454,0.424959066,0.424673781,0.424390619,0.424109603,0.423830749,0.423554074,0.423279595,0.423007324,0.422737282,0.422469527,0.422204123,0.421941134,0.421680622,0.421422647,0.421167268,0.420914542,0.420664523,0.420417265,0.420172816,0.419931225,0.419692536,0.419456793,0.419224033,0.418994294,0.418767608,0.418544005,0.418323511,0.418106148,0.417891933,0.417680872,0.417472965,0.417268208,0.417066593,0.416868108,0.416672736,0.416480457,0.416291244,0.41610507,0.415921898,0.415741691,0.415564403,0.415389985,0.415218385,0.415049543,0.414883395,0.414719871,0.414558898,0.414400394],"lat_gas_r":[0.447061722,0.446687208,0.446312403,0.445936948,0.445560461,0.445182537,0.444802754,0.444420666,0.44403581,0.443647703,0.443255844,0.442859841,0.442459834,0.442056192,0.441649397,0.441240044,0.440828834,0.440416578,0.440004189,0.439592685,0.439183181,0.438776713,0.438373659,0.437974201,0.437578497,0.437186679,0.436798855,0.436415105,0.436035486,0.435660032,0.435288749,0.434921612,0.434558544,0.434199435,0.433844156,0.433492559,0.433144476,0.432799721,0.432458091,0.432119365,0.431783306,0.431449721,0.431118646,0.430790183,0.430464447,0.430141565,0.429786304,0.429462869,0.429139361,0.428815943,0.428492787,0.428170075,0.427847999,0.427526759,0.427206563,0.426887627,0.426570175,0.426254438,0.425940652,0.425629061,0.425319912,0.425013424,0.424709682,0.424408732,0.424110618,0.423815383,0.423523065,0.4232337,0.422947323,0.422663966,0.422383656,0.422106421,0.421832285,0.421561272,0.4212934,0.421028688,0.420767152,0.420508805,0.420253658,0.420001721,0.419753001,0.419507513,0.419265306,0.41902644,0.418790968,0.418558947,0.418330427,0.418105459,0.41788409,0.417666365,0.417452327,0.417242016,0.417035469,0.41683272,0.416633799,0.416438734,0.41624755,0.416060267,0.4158769,0.415697465,0.415521968,0.415350414,0.415182794,0.415019093,0.414859293,0.414703371,0.414551299,0.414403044,0.414258571,0.414117837,0.413980796,0.413847397,0.413717584,0.413591296,0.413468465,0.413349021,0.413232886,0.413119978,0.41301021,0.412903488,0.412799714]};
+  const names={'rectus-femoris':'rect_fem_r','vastus-lateralis':'vas_lat_r','vastus-medialis':'vas_med_r','vastus-intermedius':'vas_int_r','biceps-femoris':'bifemlh_r','biceps-short':'bifemsh_r','semitendinosus':'semiten_r','semimembranosus':'semimem_r','sartorius':'sar_r'};
+  const length=(id,angle)=>{const v=lengths[names[id]],a=Math.max(0,Math.min(120,angle)),i=Math.floor(a),j=Math.min(120,i+1);return v[i]+(v[j]-v[i])*(a-i);};
+  return {length,delta:(id,angle)=>length(id,angle)-length(id,0),names,neutralKneeHeight:.39582069644835033};
+})();
+
+/* Artist anatomy: right thigh, fixed hip, knee flexion/extension.
+   X+: medial, Z+: anterior. Distal attachments rotate with tibia/fibula.
+   Belly shape is schematic; it is not a measured activation or force model. */
+const ThighModel = (() => {
+  const KNEE=270,N=24;
+  const add=(a,b)=>a.map((v,i)=>v+b[i]),sub=(a,b)=>a.map((v,i)=>v-b[i]);
+  const mul=(a,k)=>a.map(v=>v*k),mix=(a,b,t)=>add(mul(a,1-t),mul(b,t));
+  const cross=(a,b)=>[a[1]*b[2]-a[2]*b[1],a[2]*b[0]-a[0]*b[2],a[0]*b[1]-a[1]*b[0]];
+  const unit=p=>mul(p,1/(Math.hypot(...p)||1));
+  function lower(p,angle){
+    const t=angle*Math.PI/180,y=p[1]-KNEE;
+    return [p[0],KNEE+y*Math.cos(t)+p[2]*Math.sin(t),-y*Math.sin(t)+p[2]*Math.cos(t)];
+  }
+  function section(center,rx,rz,u=[1,0,0],v=[0,0,1]){
+    return {center,rx,rz,ring:Array.from({length:N},(_,i)=>add(center,add(mul(u,rx*Math.cos(i*2*Math.PI/N)),mul(v,rz*Math.sin(i*2*Math.PI/N)))))};
+  }
+  function tube(rows,transform=p=>p){
+    return rows.map(([y,x,z,rx,rz])=>{
+      const s=section([x,y,z],rx,rz);
+      return {...s,center:transform(s.center),ring:s.ring.map(transform)};
+    });
+  }
+  function sweep(points,radii){
+    return points.map((center,i)=>{
+      const tangent=unit(sub(points[Math.min(i+1,points.length-1)],points[Math.max(0,i-1)]));
+      const v=unit(cross([1,0,0],tangent)),u=unit(cross(tangent,v));
+      const [rx,rz]=Array.isArray(radii[i])?radii[i]:[radii[i],radii[i]];
+      return section(center,rx,rz,u,v);
+    });
+  }
+  function volume(rows){
+    let n=0;
+    for(let i=1;i<rows.length;i++)n+=(rows[i][0]-rows[i-1][0])*Math.PI*(rows[i][3]*rows[i][4]+rows[i-1][3]*rows[i-1][4])/2;
+    return n;
+  }
+  // Visual belly deformation follows reference path-length changes. This is
+  // an illustrative mapping, not a solved fiber/tendon equilibrium or a scan.
+  // Playback direction alone cannot establish activation or additional bulging.
+  function belly(id,kind,base,stretch,extra={}){
+    // Smooth muscle bellies between anatomical section stations.
+    const stations=base;
+    base=[];
+    for(let i=0;i<stations.length-1;i++)for(let j=0;j<4;j++){
+      const t=j/4,a=stations[Math.max(0,i-1)],b=stations[i],c=stations[i+1],d=stations[Math.min(stations.length-1,i+2)];
+      base.push(b.map((v,k)=>k===0?v+(c[k]-v)*t:.5*((2*v)+(-a[k]+c[k])*t+(2*a[k]-5*v+4*c[k]-d[k])*t*t+(-a[k]+3*v-3*c[k]+d[k])*t*t*t)));
+    }
+    base.push(stations.at(-1));
+    const y0=base[0][0];
+    const rows=base.map(([y,x,z,rx,rz])=>{
+      return [y0+(y-y0)*stretch,x,z,rx/Math.sqrt(stretch),rz/Math.sqrt(stretch)];
+    });
+    const normal=Math.sqrt(volume(base)/volume(rows));
+    rows.forEach(r=>{r[3]*=normal;r[4]*=normal;});
+    const sections=tube(rows);
+    return {id,kind,rows:sections,stretch,bellyLength:rows.at(-1)[0]-rows[0][0],bellyVolume:volume(rows),referenceLength:ThighReference.names[id]?ThighReference.length(id,extra.angle||0):null,...extra};
+  }
+  const rectus=[[3,-3,29,3,4],[33,-2,31,12,10],[85,-1,31,17,13],[139,0,30,17,13],[190,0,27,12,10],[221,0,25,3,4]];
+  const lateral=[[16,-20,8,8,7],[61,-29,11,14,18],[111,-31,12,22,21],[161,-29,14,23,21],[205,-21,17,17,16],[239,-10,19,4,5]];
+  const medial=[[42,13,4,4,6],[124,22,10,9,13],[171,26,12,13,17],[214,26,15,19,20],[240,19,18,16,15],[247,9,21,3,4]];
+  const biceps=[[23,-14,-25,3,4],[53,-20,-28,12,13],[99,-24,-29,19,18],[148,-25,-28,18,17],[199,-23,-24,11,12],[240,-23,-19,3,4]];
+  const semitendinosus=[[18,9,-27,3,4],[47,12,-29,10,12],[94,16,-30,15,16],[140,18,-29,14,15],[188,19,-26,9,10],[222,19,-22,3,4]];
+  // Semimembranosus is broad and flatter, deep to the slender semitendinosus.
+  const semimembranosus=[[42,11,-14,5,3],[91,15,-16,14,7],[139,20,-18,20,9],[180,21,-18,19,9],[217,19,-17,11,6],[243,17,-17,4,3]];
+  const bicepsShort=[[111,-22,-13,4,4],[145,-29,-17,9,7],[184,-33,-19,11,8],[222,-29,-18,8,7],[243,-24,-17,3,3]];
+  const adductor=[[-5,34,-3,4,6],[37,36,-4,12,15],[84,34,-5,17,18],[138,28,-5,15,16],[191,22,-3,9,10],[239,19,0,3,4]];
+  function frame(angle,drive=0){
+    angle=Math.max(0,Math.min(120,angle));drive=Math.max(-1,Math.min(1,drive));
+    const t=angle/120,turn=p=>lower(p,angle);
+    const phi=(-25+.7*angle)*Math.PI/180;
+    const patella=[0,KNEE+29*Math.sin(phi),29*Math.cos(phi)];
+    const tangent=[0,Math.cos(phi),-Math.sin(phi)],normal=[0,Math.sin(phi),Math.cos(phi)];
+    const patellaRows=[[-13,5,3],[-7,13,5],[3,15,5],[12,6,3]].map(([s,rx,rz])=>section(add(patella,mul(tangent,s)),rx,rz,[1,0,0],normal));
+    const bones=[
+      {id:'hip-socket',rows:tube([[-37,24,-3,24,13],[-20,25,-3,25,15],[-4,22,-4,15,10]])},
+      {id:'femoral-head',rows:tube([[-24,18,0,4,4],[-17,18,0,13,13],[-7,18,0,7,8]])},
+      {id:'femoral-neck',rows:sweep([[15,-10,0],[5,2,0],[-8,15,0]],[[9,9],[10,9],[10,10]])},
+      {id:'femur',rows:tube([[-1,-20,0,7,8],[16,-15,0,14,12],[47,-8,0,10,10],[103,-6,0,9,10],[172,-3,0,9,10],[223,0,0,12,13],[250,0,-1,21,19],[268,0,-1,25,20]])},
+      {id:'tibia',rows:tube([[272,3,-1,22,17],[285,3,-1,20,16],[307,4,0,12,12],[366,5,0,9,9],[444,4,0,7,8],[499,4,0,11,10]],turn)},
+      {id:'fibula',rows:tube([[280,-24,-4,7,8],[300,-22,-3,4,5],[365,-19,-3,3,4],[438,-17,-3,3,4],[503,-16,-3,6,7]],turn)},
+      {id:'patella',rows:patellaRows}
+    ];
+    const superior=add(patella,mul(tangent,-13)),inferior=add(patella,mul(tangent,12));
+    // Convert the model's change in whole musculotendon path length to drawing
+    // units. Keep quadriceps bellies proximal to the patellar tendon junction;
+    // the remaining path change belongs to the knee/tendon route. This mapping
+    // is deliberately labelled schematic, rather than a measured belly strain.
+    function shaped(id,kind,base,extra={}){
+      const y0=base[0][0],span=base.at(-1)[0]-y0;
+      let endpoint=base.at(-1)[0]+ThighReference.delta(id,angle)*KNEE/ThighReference.neutralKneeHeight;
+      if(kind==='quad')endpoint=Math.min(endpoint,superior[1]-7);
+      return belly(id,kind,base,(endpoint-y0)/span,{angle,...extra});
+    }
+    const muscles=[
+      shaped('rectus-femoris','quad',rectus),
+      shaped('vastus-lateralis','quad',lateral),
+      shaped('vastus-medialis','quad',medial),
+      shaped('biceps-femoris','ham',biceps),
+      shaped('biceps-short','ham',bicepsShort,{deep:true}),
+      shaped('semitendinosus','ham',semitendinosus),
+      shaped('semimembranosus','ham',semimembranosus,{deep:true}),
+      shaped('vastus-intermedius','quad',[[27,0,12,4,5],[73,0,14,14,12],[130,0,15,18,13],[186,0,16,15,11],[223,0,18,4,5]],{deep:true}),
+      belly('adductor','aux',adductor,1)
+    ];
+    // Sartorius: lateral ASIS → diagonal anterior thigh → medial pes anserinus.
+    const sartoriusEnd=turn([24,296,13]);
+    const sartoriusPath=[[-33,-8,24],[-27,28,36],[-13,77,44],[4,128,45],[21,180,40],[32,220,28],[28,250,17]];
+    const sartorius={id:'sartorius',kind:'aux',rows:sweep(sartoriusPath,[[2,2],[4,3],[4.5,3],[4.5,3],[4.5,3],[4,3],[2,2]])};
+    muscles.push(sartorius);
+    // Gastrocnemius is posterior; its femoral origin stays fixed while the
+    // belly and Achilles insertion follow the lower leg. It assists flexion.
+    for(const [id,x,size] of [['gastrocnemius-lateral',-12,11],['gastrocnemius-medial',13,14]]){
+      const path=[[x,258,-15],turn([x,294,-19]),turn([x,326,-23]),turn([x*.8,360,-22]),turn([x*.4,389,-14])];
+      muscles.push({id,kind:'calf',rows:sweep(path,[[3,3],[size*.7,9],[size,13],[size*.7,10],[2,3]])});
+    }
+    muscles.push({id:'tibialis-anterior',kind:'lower',rows:tube([[300,-7,13,3,4],[337,-7,16,8,7],[384,-7,15,7,6],[438,-6,12,5,5],[477,-4,10,2,3]],turn)});
+    const end=id=>muscles.find(m=>m.id===id).rows.at(-1).center;
+    const insertion={biceps:turn([-24,280,-4]),semitendinosus:turn([22,302,12]),semimembranosus:turn([19,282,-12]),sartorius:sartoriusEnd};
+    const tendons=[
+      {id:'quad-tendon',rows:sweep([end('rectus-femoris'),[0,244+14*t,30],superior],[[4,3],[7,3],[7,3]])},
+      {id:'lateral-quad-tendon',rows:sweep([end('vastus-lateralis'),mix(end('vastus-lateralis'),superior,.55),add(superior,[-6,0,0])],[[3,2],[3,2],[3,2]])},
+      {id:'medial-quad-tendon',rows:sweep([end('vastus-medialis'),mix(end('vastus-medialis'),superior,.55),add(superior,[6,0,0])],[[3,2],[3,2],[3,2]])},
+      {id:'patellar-tendon',rows:sweep([inferior,mix(inferior,turn([1,305,17]),.5),turn([1,305,17])],[[6,3],[5,3],[4,3]])},
+      {id:'biceps-origin',rows:sweep([[-5,-20,-23],[-10,4,-24],muscles.find(m=>m.id==='biceps-femoris').rows[0].center],[[3,2],[3,2],[3,2]])},
+      {id:'semitendinosus-origin',rows:sweep([[7,-20,-24],[8,1,-25],muscles.find(m=>m.id==='semitendinosus').rows[0].center],[[3,2],[3,2],[3,2]])},
+      {id:'biceps-tendon',rows:sweep([end('biceps-femoris'),[-27,250-9*t,-20],[-28,268,-12],insertion.biceps],[[3,2],[3,2],[3,2],[3,2]])},
+      {id:'biceps-short-tendon',rows:sweep([end('biceps-short'),[-28,260,-15],insertion.biceps],[[3,2],[3,2],[3,2]])},
+      {id:'semitendinosus-tendon',rows:sweep([end('semitendinosus'),[29,246-10*t,-18],[31,269,-1],insertion.semitendinosus],[[2,2],[2,2],[2,2],[2,2]])},
+      {id:'semimembranosus-tendon',rows:sweep([end('semimembranosus'),[20,255,-17],insertion.semimembranosus],[[4,2],[4,2],[4,2]])},
+      {id:'sartorius-tendon',rows:sweep([sartoriusPath.at(-1),[30,272,8],sartoriusEnd],[[2,2],[2,2],[2,2]])},
+      {id:'achilles-tendon',rows:sweep([turn([0,385,-16]),turn([0,439,-13]),turn([0,497,-12]),turn([0,514,-24])],[[4,3],[4,3],[3,3],[3,3]])}
+    ];
+    // Neutral foot: posterior heel, elevated midfoot arch and broader
+    // metatarsal region. Its scale follows the limb, not a tiny ankle marker.
+    const footProfiles=[[-26,516,3,3],[-18,514,14,14],[0,510,14,17],[22,514,13,11],[55,520,21,7],[80,520,26,8],[100,520,24,7]];
+    const foot=footProfiles.map(([z,y,rx,ry])=>{const s=section([0,y,z],rx,ry,[1,0,0],[0,1,0]);return {...s,center:turn(s.center),ring:s.ring.map(turn)};});
+    for(let i=0;i<5;i++)bones.push({id:'toe-'+i,rows:sweep([[20-i*10,520,96],[21-i*10,520,109],[22-i*10,520,[137,135,130,124,116][i]]].map(turn),[[i?4.5:6,5],[i?4:5.5,4],[3,3]])});
+    return {bones,muscles,tendons,foot,knee:[0,KNEE,0],patella,insertion,angle,drive};
+  }
+  const cameraCos=Math.cos(32*Math.PI/180),cameraSin=Math.sin(32*Math.PI/180);
+  const view=(p,camera)=>camera==='back'?[-p[0]*cameraCos+p[2]*cameraSin,p[1],-p[0]*cameraSin-p[2]*cameraCos]:camera==='side'?[p[2],p[1],-p[0]]:[p[0]*cameraCos+p[2]*cameraSin,p[1],-p[0]*cameraSin+p[2]*cameraCos];
+  function verify(){
+    let finite=true,femurFixed=true,kneeFixed=true,lowerLegRigid=true;
+    const initial=frame(0),fixed=JSON.stringify(initial.bones.find(b=>b.id==='femur').rows);
+    const ankle=initial.bones.find(b=>b.id==='tibia').rows.at(-1).center;
+    const length=Math.hypot(ankle[0],ankle[1]-KNEE,ankle[2]);
+    for(let a=0;a<=120;a++){
+      const m=frame(a),all=m.bones.concat(m.muscles,m.tendons).flatMap(x=>x.rows).flatMap(s=>s.ring);
+      finite&&=all.flat().every(Number.isFinite);
+      femurFixed&&=JSON.stringify(m.bones.find(b=>b.id==='femur').rows)===fixed;
+      kneeFixed&&=JSON.stringify(m.knee)===JSON.stringify(initial.knee);
+      const p=m.bones.find(b=>b.id==='tibia').rows.at(-1).center;
+      lowerLegRigid&&=Math.abs(Math.hypot(p[0],p[1]-KNEE,p[2])-length)<1e-8;
+    }
+    const a=frame(0),b=frame(120);
+    const muscle=(m,id)=>m.muscles.find(x=>x.id===id);
+    return {angles:121,cameraViews:3,finite,femurFixed,kneeFixed,lowerLegRigid,
+      hamstringsShorten:muscle(b,'biceps-femoris').bellyLength<muscle(a,'biceps-femoris').bellyLength,
+      quadricepsLengthen:muscle(b,'rectus-femoris').bellyLength>muscle(a,'rectus-femoris').bellyLength,
+      bellyVolumePreserved:['rectus-femoris','biceps-femoris','semitendinosus'].every(id=>Math.abs(muscle(a,id).bellyVolume/muscle(b,id).bellyVolume-1)<1e-8)};
+  }
+  return {frame,view,lower,verify};
+})();
+
+/* Local surface visibility from the actual projected tube mesh. A single
+   average depth cannot handle a folded calf crossing the thigh. */
+const ThighRenderer = (() => {
+  const STEP=1.7,X0=-310,Y0=-40,NX=285,NY=360;
+  const key=(x,y)=>y*(NX+1)+x;
+  const clamp=(v,min,max)=>Math.max(min,Math.min(max,v));
+  function simplify(points,tolerance=.65){
+    if(points.length<5)return points;
+    const keep=new Set([0,points.length-1]);
+    function visit(lo,hi){
+      const a=points[lo],b=points[hi],vx=b[0]-a[0],vy=b[1]-a[1],length=vx*vx+vy*vy;
+      let far=-1,max=tolerance*tolerance;
+      for(let i=lo+1;i<hi;i++){
+        const p=points[i],t=length?clamp(((p[0]-a[0])*vx+(p[1]-a[1])*vy)/length,0,1):0;
+        const d=(p[0]-a[0]-t*vx)**2+(p[1]-a[1]-t*vy)**2;
+        if(d>max){max=d;far=i;}
+      }
+      if(far>=0){keep.add(far);visit(lo,far);visit(far,hi);}
+    }
+    visit(0,points.length-1);return points.filter((_,i)=>keep.has(i));
+  }
+  function contours(owns,bounds){
+    const edges=new Map();
+    const add=(x1,y1,x2,y2)=>{const k=key(x1,y1);if(!edges.has(k))edges.set(k,[]);edges.get(k).push(key(x2,y2));};
+    for(let y=bounds.y0;y<=bounds.y1;y++)for(let x=bounds.x0;x<=bounds.x1;x++){
+      if(!owns(x,y))continue;
+      if(!owns(x,y-1))add(x,y,x+1,y);
+      if(!owns(x+1,y))add(x+1,y,x+1,y+1);
+      if(!owns(x,y+1))add(x+1,y+1,x,y+1);
+      if(!owns(x-1,y))add(x,y+1,x,y);
+    }
+    const loops=[];
+    while(edges.size){
+      const start=edges.keys().next().value;let p=start;const points=[];
+      do{
+        points.push([X0+(p%(NX+1))*STEP,Y0+Math.floor(p/(NX+1))*STEP,0]);
+        const next=edges.get(p);if(!next)break;
+        const q=next.pop();if(!next.length)edges.delete(p);p=q;
+      }while(p!==start&&points.length<30000);
+      if(points.length>4){
+        // Smooth the grid boundary before reducing vertices, preserving the
+        // established curved outlines instead of exposing raster stair steps.
+        const weights=[1,2,3,4,3,2,1],smooth=points.map((_,i)=>[0,1,2].map(axis=>weights.reduce((sum,w,j)=>sum+w*points[(i+j-3+points.length)%points.length][axis],0)/16));
+        const mid=Math.floor(smooth.length/2);
+        loops.push(simplify(smooth.slice(0,mid+1)).concat(simplify(smooth.slice(mid).concat([smooth[0]])).slice(1,-1)));
+      }
+    }
+    return loops;
+  }
+  function patch(loops){
+    return loops.map(points=>{
+      let twiceArea=0,x=0,y=0;
+      points.forEach((p,i)=>{const q=points[(i+1)%points.length],c=p[0]*q[1]-q[0]*p[1];twiceArea+=c;x+=(p[0]+q[0])*c;y+=(p[1]+q[1])*c;});
+      return {area:Math.abs(twiceArea)/2,anchor:Math.abs(twiceArea)>1e-8?[x/(3*twiceArea),y/(3*twiceArea),0]:points[0]};
+    }).sort((a,b)=>b.area-a.area)[0]||{area:0,anchor:[0,0,0]};
+  }
+  function render(model,camera,transparent){
+    const view=p=>ThighModel.view(p,camera);
+    // Keep the existing thigh geometry and knee mechanics. Only distal context
+    // is cut in the rigid lower-leg frame, so bending cannot bring feet back.
+    const limit=325,distal=new Set(['tibia','fibula','gastrocnemius-lateral','gastrocnemius-medial']);
+    const crop=x=>{if(!distal.has(x.id))return x;const rows=[];
+      for(let i=0;i<x.rows.length;i++){const r=x.rows[i],y=ThighModel.lower(r.center,-model.angle)[1];
+        if(y<=limit){rows.push(r);continue;}
+        const a=rows.at(-1);if(a){const ya=ThighModel.lower(a.center,-model.angle)[1],t=(limit-ya)/(y-ya),mix=(p,q)=>p.map((v,j)=>v+(q[j]-v)*t);rows.push({...r,center:mix(a.center,r.center),ring:r.ring.map((p,j)=>mix(a.ring[j],p))});}break;
+      }return {...x,rows};};
+    const raw=model.bones.filter(x=>!x.id.startsWith('toe-')).map(x=>crop({...x,kind:'bone'})).concat(model.muscles.filter(x=>x.id!=='tibialis-anterior').map(crop),model.tendons.filter(x=>x.id!=='achilles-tendon').map(x=>({...x,kind:'tendon'}))).filter(x=>x.rows.length>1);
+    const items=raw.map(x=>({...x,rows:x.rows.map(s=>({...s,center:view(s.center),ring:s.ring.map(view)}))}));
+    const depth=new Float32Array(NX*NY).fill(-Infinity),owner=new Int16Array(NX*NY).fill(-1);
+    function triangle(a,b,c,id,item){
+      const den=(b[1]-c[1])*(a[0]-c[0])+(c[0]-b[0])*(a[1]-c[1]);
+      if(Math.abs(den)<1e-8)return;
+      const xlo=clamp(Math.floor((Math.min(a[0],b[0],c[0])-X0)/STEP),0,NX-1),xhi=clamp(Math.floor((Math.max(a[0],b[0],c[0])-X0)/STEP),0,NX-1);
+      const ylo=clamp(Math.floor((Math.min(a[1],b[1],c[1])-Y0)/STEP),0,NY-1),yhi=clamp(Math.floor((Math.max(a[1],b[1],c[1])-Y0)/STEP),0,NY-1);
+      for(let y=ylo;y<=yhi;y++){
+        const py=Y0+(y+.5)*STEP;
+        for(let x=xlo;x<=xhi;x++){
+          const px=X0+(x+.5)*STEP;
+          const u=((b[1]-c[1])*(px-c[0])+(c[0]-b[0])*(py-c[1]))/den;
+          const v=((c[1]-a[1])*(px-c[0])+(a[0]-c[0])*(py-c[1]))/den,w=1-u-v;
+          if(u<-.000001||v<-.000001||w<-.000001)continue;
+          if(item.mask)item.mask[(y-item.bounds.y0)*item.maskWidth+x-item.bounds.x0]=1;
+          const z=u*a[2]+v*b[2]+w*c[2],index=y*NX+x;
+          if(z>depth[index]){depth[index]=z;owner[index]=id;}
+        }
+      }
+    }
+    items.forEach((item,id)=>{
+      const points=item.rows.flatMap(s=>s.ring),xs=points.map(p=>p[0]),ys=points.map(p=>p[1]);
+      item.bounds={x0:clamp(Math.floor((Math.min(...xs)-X0)/STEP),0,NX-1),x1:clamp(Math.floor((Math.max(...xs)-X0)/STEP),0,NX-1),y0:clamp(Math.floor((Math.min(...ys)-Y0)/STEP),0,NY-1),y1:clamp(Math.floor((Math.max(...ys)-Y0)/STEP),0,NY-1)};
+      item.maskWidth=item.bounds.x1-item.bounds.x0+1;
+      if(transparent)item.mask=new Uint8Array(item.maskWidth*(item.bounds.y1-item.bounds.y0+1));
+      const rows=item.rows,n=rows[0].ring.length;
+      for(let row=0;row<rows.length-1;row++)for(let j=0;j<n;j++){
+        const k=(j+1)%n,a=rows[row].ring[j],b=rows[row].ring[k],c=rows[row+1].ring[k],d=rows[row+1].ring[j];
+        triangle(a,b,c,id,item);triangle(a,c,d,id,item);
+      }
+      for(const row of [rows[0],rows.at(-1)])for(let j=0;j<n;j++)triangle(row.center,row.ring[j],row.ring[(j+1)%n],id,item);
+      item.depth=rows.reduce((s,r)=>s+r.center[2],0)/rows.length;
+    });
+    items.forEach((item,id)=>{
+      const owns=(x,y)=>x>=0&&x<NX&&y>=0&&y<NY&&owner[y*NX+x]===id;
+      item.visible=contours(owns,item.bounds);
+      if(transparent){
+        const b=item.bounds;
+        item.loops=contours((x,y)=>x>=b.x0&&x<=b.x1&&y>=b.y0&&y<=b.y1&&item.mask[(y-b.y0)*item.maskWidth+x-b.x0]===1,b);
+      }else item.loops=item.visible;
+      Object.assign(item,patch(item.loops));
+      // A concave visible patch can have its centroid under another muscle.
+      // Place its leader inside the actual visible region, with edge clearance.
+      if(!transparent&&item.area){
+        let best=null,distance=Infinity;
+        for(let y=item.bounds.y0+2;y<=item.bounds.y1-2;y++)for(let x=item.bounds.x0+2;x<=item.bounds.x1-2;x++){
+          if(!owns(x,y)||!owns(x-2,y)||!owns(x+2,y)||!owns(x,y-2)||!owns(x,y+2))continue;
+          const p=[X0+(x+.5)*STEP,Y0+(y+.5)*STEP,0],d=(p[0]-item.anchor[0])**2+(p[1]-item.anchor[1])**2;
+          if(d<distance){best=p;distance=d;}
+        }
+        if(best)item.anchor=best;
+      }
+      delete item.mask;
+    });
+    return items;
+  }
+  function fiber(rows,u){
+    return rows.map(row=>{
+      const p=row.ring,xs=p.map(v=>v[0]),x=Math.min(...xs)+(Math.max(...xs)-Math.min(...xs))*u;
+      let best=null;
+      for(let j=0;j<p.length;j++){
+        const a=p[j],b=p[(j+1)%p.length],dx=b[0]-a[0];
+        if(Math.abs(dx)<1e-8||x<Math.min(a[0],b[0])||x>Math.max(a[0],b[0]))continue;
+        const t=(x-a[0])/dx,q=[x,a[1]+(b[1]-a[1])*t,a[2]+(b[2]-a[2])*t];
+        if(!best||q[2]>best[2])best=q;
+      }
+      return best||p.reduce((a,b)=>a[2]>b[2]?a:b);
+    });
+  }
+  return {render,fiber};
+})();
+
+(() => {
+  const root=document.getElementById('thigh-motion'),svg=root.querySelector('svg');
+  const drawing=root.querySelector('.thigh-volumes'),labels=root.querySelector('.thigh-labels'),defs=svg.querySelector('defs');
+  const slider=root.querySelector('#thigh-angle'),value=root.querySelector('#thigh-value'),play=root.querySelector('#thigh-play');
+  const fibers=root.querySelector('#thigh-fibers'),transparent=root.querySelector('#thigh-transparent'),caption=root.querySelector('#thigh-view-caption');
+  const buttons=['front','side','back'].map(view=>[root.querySelector('#thigh-'+view),view]);
+  const NS='http://www.w3.org/2000/svg',store='artist-thigh-knee-v1';
+  const f=n=>Math.round(n*100)/100,P=p=>[300+p[0],45+p[1]],xy=p=>`${f(p[0])},${f(p[1])}`;
+  const el=(tag,attrs,parent)=>{const e=document.createElementNS(NS,tag);Object.entries(attrs).forEach(([k,v])=>e.setAttribute(k,v));parent.appendChild(e);return e;};
+  let angle=0,drive=0,camera='front',playing=!matchMedia('(prefers-reduced-motion: reduce)').matches;
+  let phase=0,last=0,lastDraw=0,width=560,scale=1,interacted=false;
+  const parts=new Map(),labelNodes=new Map();
+  function curve(points){
+    if(!points.length)return '';
+    let d='M '+xy(P(points[0]));
+    for(let i=0;i<points.length-1;i++){
+      const a=points[Math.max(0,i-1)],b=points[i],c=points[i+1],q=points[Math.min(points.length-1,i+2)];
+      d+=` C ${xy(P(b.map((v,j)=>v+(c[j]-a[j])/6)))} ${xy(P(c.map((v,j)=>v-(q[j]-b[j])/6)))} ${xy(P(c))}`;
+    }
+    return d;
+  }
+  function outline(loops){
+    return loops.map(points=>{
+      if(points.length<3)return '';
+      const mid=(a,b)=>a.map((v,i)=>(v+b[i])/2);
+      let d='M '+xy(P(mid(points.at(-1),points[0])));
+      points.forEach((p,i)=>d+=` Q ${xy(P(p))} ${xy(P(mid(p,points[(i+1)%points.length])))}`);
+      return d+' Z';
+    }).join(' ');
+  }
+  function part(item){
+    if(parts.has(item.id))return parts.get(item.id);
+    const group=el('g',{'data-muscle':item.id},drawing),id='thigh-'+item.id;
+    const shape=el('path',{id,class:item.kind==='bone'?'bone':item.kind==='tendon'?'tendon':'muscle '+item.kind,d:''},group);
+    const clip=el('clipPath',{id:id+'-clip'},defs),clipShape=el('path',{},clip);
+    const fiberGroup=el('g',{class:'fibers','clip-path':`url(#${id}-clip)`},group);
+    const count=item.id==='sartorius'?3:item.kind==='aux'?9:13;
+    const lines=['bone','tendon'].includes(item.kind)?[]:Array.from({length:count},()=>el('path',{class:'fiber',d:''},fiberGroup));
+    const result={group,shape,clipShape,fiberGroup,lines};parts.set(item.id,result);return result;
+  }
+  function label(name){
+    if(labelNodes.has(name))return labelNodes.get(name);
+    const group=el('g',{},labels),line=el('path',{},group),text=el('text',{},group);
+    const result={group,line,text};labelNodes.set(name,result);return result;
+  }
+  function leader(name,text,x,y,anchor){
+    const node=label(name),q=P(anchor).map(v=>v*scale),px=width*x,py=y*scale;
+    node.group.style.display='';node.text.textContent=text;
+    node.text.setAttribute('text-anchor',x>.5?'end':'start');node.text.setAttribute('x',px);node.text.setAttribute('y',py);
+    node.line.setAttribute('d',`M ${f(px)},${f(py+4)} L ${xy(q)}`);
+  }
+  function draw(){
+    const m=ThighModel.frame(angle,drive),items=ThighRenderer.render(m,camera,transparent.checked),byId=new Map(items.map(x=>[x.id,x]));
+    items.sort((a,b)=>transparent.checked?(a.kind==='bone'?0:1)-(b.kind==='bone'?0:1)||a.depth-b.depth:a.depth-b.depth);
+    for(const item of items){
+      const node=part(item),d=outline(item.loops);
+      node.shape.setAttribute('d',d);node.clipShape.setAttribute('d',d);
+      node.group.style.display=d?'':'none';node.fiberGroup.style.display=fibers.checked?'':'none';
+      node.lines.forEach((line,i)=>line.setAttribute('d',curve(ThighRenderer.fiber(item.rows,(i+1)/(node.lines.length+1)))));
+      if(item.bellyLength){node.group.dataset.bellyLength=String(f(item.bellyLength));node.group.dataset.bellyVolume=String(f(item.bellyVolume));node.group.dataset.referenceLength=String(item.referenceLength||'');}
+      drawing.appendChild(node.group);
+    }
+    labelNodes.forEach(n=>n.group.style.display='none');
+    leader('hip','고관절',.14,Math.max(23,14/scale),ThighModel.view([18,-17,0],camera));
+    function muscle(id,text,x,y){const item=byId.get(id);if(item&&item.area>(transparent.checked?12:45))leader(id,text,x,y,item.anchor);}
+    if(camera==='front'){
+      muscle('sartorius','봉공근',.87,82);muscle('rectus-femoris','대퇴직근',.14,145);
+      muscle('vastus-lateralis','외측광근',.14,222);muscle('vastus-medialis','내측광근',.87,284);
+      if(transparent.checked)muscle('vastus-intermedius','중간광근 · 깊은층',.87,197);
+    }else if(camera==='back'){
+      muscle('biceps-femoris','대퇴이두근',.14,158);muscle('semitendinosus','반힘줄근',.87,190);
+      muscle('adductor','내전근군',.87,93);
+      if(transparent.checked){muscle('semimembranosus','반막근 · 깊은층',.87,248);muscle('biceps-short','대퇴이두근 단두',.14,290);}
+    }else{
+      muscle('biceps-femoris','대퇴이두근',.14,153);muscle('vastus-lateralis','외측광근',.87,191);
+      muscle('sartorius','봉공근',.87,98);
+    }
+    const patella=byId.get('patella');
+    if(patella?.area>15||transparent.checked)leader('patella','무릎뼈',.87,352,ThighModel.view(m.patella,camera));
+
+    const rounded=Math.round(angle),text=rounded===0?'펴짐 0°':`굽힘 ${rounded}°`;
+    value.textContent=text;slider.value=rounded;slider.setAttribute('aria-valuetext',text);
+    root.dataset.angle=String(f(angle));root.dataset.camera=camera;root.dataset.drive=String(f(drive));root.dataset.revision='knee-context-thigh-v6';root.dataset.cameraYaw=String(camera==='side'?90:32);
+    root.dataset.knee=ThighModel.view(m.knee,camera).map(f).join(',');
+  }
+  function sync(){
+    play.textContent=playing?'일시정지':'재생';play.setAttribute('aria-pressed',String(playing));
+    root.classList.toggle('no-fibers',!fibers.checked);root.classList.toggle('transparent',transparent.checked);
+    buttons.forEach(([b,v])=>b.setAttribute('aria-pressed',String(v===camera)));
+    const view=camera==='front'?'앞쪽에서 약간 비스듬하게':camera==='back'?'뒤쪽에서 약간 비스듬하게':'측면';
+    const action=drive>.04?'굽힘 · 햄스트링 단축 예시':drive<-.04?'폄 · 대퇴사두근 단축 예시':'무릎 펴짐–굽힘';
+    caption.textContent=`${view} · 고관절 고정 · ${action}`;
+  }
+  function phaseFor(a,d){const p=Math.acos(Math.max(-1,Math.min(1,1-a/60)));return d<0?2*Math.PI-p:p;}
+  function snapshot(){return {modelContent:{topic:'대퇴부 무릎 굽힘 도해',angle:Math.round(angle),drive,camera,fibers:fibers.checked,transparent:transparent.checked},privateContent:{playing}};}
+  function save(){const s=snapshot();try{localStorage.setItem(store,JSON.stringify(s));}catch{}if(window.openai?.setWidgetState)Promise.resolve(window.openai.setWidgetState(s)).catch(()=>{});}
+  function restore(s){
+    const d=s?.modelContent;if(d?.topic!=='대퇴부 무릎 굽힘 도해')return;
+    if(Number.isFinite(d.angle))angle=Math.max(0,Math.min(120,d.angle));
+    if(Number.isFinite(d.drive))drive=Math.max(-1,Math.min(1,d.drive));
+    if(['front','side','back'].includes(d.camera))camera=d.camera;
+    if(typeof d.fibers==='boolean')fibers.checked=d.fibers;if(typeof d.transparent==='boolean')transparent.checked=d.transparent;
+    if(typeof s.privateContent?.playing==='boolean')playing=s.privateContent.playing&&!matchMedia('(prefers-reduced-motion: reduce)').matches;
+    phase=phaseFor(angle,drive);
+  }
+  function resize(){width=root.clientWidth;scale=width/560;const height=410*scale+16;svg.setAttribute('viewBox',`0 0 ${width} ${height}`);svg.setAttribute('height',height);drawing.setAttribute('transform',`scale(${scale})`);draw();}
+  play.addEventListener('click',()=>{interacted=true;playing=!playing;if(playing)phase=phaseFor(angle,drive);sync();save();});
+  slider.addEventListener('input',()=>{interacted=true;const next=Number(slider.value);drive=next>angle ? .75 : next<angle ? -.75 : drive;angle=next;playing=false;phase=phaseFor(angle,drive);sync();draw();});slider.addEventListener('change',save);
+  [fibers,transparent].forEach(c=>c.addEventListener('change',()=>{interacted=true;sync();draw();save();}));
+  buttons.forEach(([b,v])=>b.addEventListener('click',()=>{interacted=true;camera=v;sync();draw();save();}));
+  window.addEventListener('openai:set_globals',e=>{if(!interacted){restore(e.detail?.globals?.widgetState);sync();draw();}});
+  try{restore(window.openai?.widgetState||JSON.parse(localStorage.getItem(store)||'null'));}catch{}
+  sync();new ResizeObserver(resize).observe(root);resize();root.dataset.geometryVerification=JSON.stringify(ThighModel.verify());
+  function tick(t){
+    const dt=last?Math.min((t-last)/1000,.08):0;last=t;
+    if(playing&&!document.hidden){phase+=dt*Math.PI/5;angle=60*(1-Math.cos(phase));drive=Math.sin(phase);if(t-lastDraw>=33){sync();draw();lastDraw=t;}}
+    if(root.isConnected)requestAnimationFrame(tick);
+  }
+  requestAnimationFrame(tick);
+})();
+</script>
+<script>
+(()=>{const r=document.getElementById('thigh-motion'),s=r.querySelector('svg');let p=false;function f(){p=false;const available=Math.max(0,document.documentElement.clientWidth-32),overhead=r.scrollHeight-s.getBoundingClientRect().height,heightWidth=(innerHeight-overhead-48)*560/410,w=available<=680?available:Math.min(available,700,Math.max(220,heightWidth)),n=Math.floor(w)+'px';if(r.style.width!==n)r.style.width=n;}const q=()=>{if(!p){p=true;requestAnimationFrame(f);}};new ResizeObserver(q).observe(r);window.addEventListener('resize',q);q();})();
+</script></body></html>
