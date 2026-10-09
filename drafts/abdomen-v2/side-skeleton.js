@@ -23,7 +23,7 @@ function drawSideSkeleton(drawing,el,path){const A=ClassicSideAnatomy,f=n=>Math.
  path('M 72,282 L 77,282 L 74,299 L 68,290 Z','bone',axial);
  // Align vertical torso landmarks with the coronal plate, then reduce the
  // previously oversized lateral pelvic height without stretching the rim.
- const pelvic=(d,cls)=>path(d.replace(/(-?\d+(?:\.\d+)?),(-?\d+(?:\.\d+)?)/g,(_,x,y)=>`${x},${f(+y>390?390+(+y-390)*.6:+y)}`),cls,axial);
+ const pelvic=(d,cls)=>{const n=path(d.replace(/(-?\d+(?:\.\d+)?),(-?\d+(?:\.\d+)?)/g,(_,x,y)=>`${x},${f(+y>390?390+(+y-390)*.6:+y)}`),cls,axial);n.setAttribute('data-part','pelvic-skeleton');return n;};
  pelvic(A.sacrum,'bone');pelvic('M -9,454 Q -3,470 6,470 Q 12,472 8,475 Q -3,474 -13,460 Z','bone');
  pelvic(A.pelvis,'bone pelvis').setAttribute('fill-rule','evenodd');
  pelvic('M -42,395 Q -26,384 -11,386 M -19,405 Q -15,412 -21,419 M 7,425 Q 30,412 38,433 Q 34,450 15,446 Q 5,440 7,425','bone-detail');

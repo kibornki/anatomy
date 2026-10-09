@@ -18,6 +18,13 @@ function AbdomenDraft(host) {
  const C=ClassicCoronalAnatomy,S=ClassicSideAnatomy,B=C.body;
  function buildFront(){
   const g=el('g',{'data-view':'front'},drawing),axial=el('g',{},g);C.draw(axial,el,path,'front');
+  const legs=el('g',{'data-part':'lower-body-context'},g);g.insertBefore(legs,axial);
+  for(const sign of [-1,1]){
+   const leg=el('g',{'data-leg':sign,transform:`scale(${sign} 1)`},legs);
+   path('M 57,475 Q 75,467 100,480 Q 120,501 116,547 L 106,631 Q 104,661 83,667 Q 63,665 60,644 Q 54,592 53,542 Q 47,501 57,475 Z','torso-context',leg);
+   bone(leg,'M 65,464 C 50,469 56,491 72,489 L 85,499 Q 80,522 78,559 L 71,630 Q 69,641 65,647 Q 60,660 72,663 Q 81,658 88,665 Q 102,665 105,656 Q 111,646 96,636 L 97,550 Q 99,519 108,506 Q 120,501 113,488 Q 108,478 101,483 L 89,490 L 78,477 Q 80,463 65,464 Z');
+   bone(leg,'M 65,483 Q 76,486 79,476 M 86,511 Q 87,544 84,579 M 71,643 Q 86,638 100,648','bone-detail');
+  }
   const G=C.girdle(35),at=G.at;
   const humerus='M -13,-12 C -30,-9 -31,10 -20,23 C -14,34 -12,54 -10,83 L -8,139 C -8,150 -19,158 -17,167 Q -14,175 -6,171 Q 0,176 8,170 Q 21,172 21,163 C 20,154 10,149 10,139 L 12,72 Q 12,41 22,20 C 32,1 13,-23 -2,-20 Q -9,-20 -13,-12 Z';
   const scapula='M 147,159 Q 127,145 89,165 Q 85,212 109,291 Q 121,298 130,277 L 163,190 Q 177,180 166,161 L 160,154 Q 164,144 151,143 L 135,146 Q 128,151 139,155 Z';
@@ -74,6 +81,11 @@ function AbdomenDraft(host) {
  }
  function buildSide(){
   const g=el('g',{'data-view':'side'},drawing),skeleton=el('g',{},g);drawSideSkeleton(skeleton,el,path);
+  const leg=el('g',{'data-leg':'side'},g);g.insertBefore(leg,skeleton);
+  // A contextual thigh reaches the knee; no additional muscle targets.
+  path('M 4,412 Q 32,408 45,431 Q 56,457 47,490 L 42,538 Q 38,559 20,567 Q -2,565 -7,545 Q -15,501 -11,462 Q -17,433 4,412 Z','torso-context',leg);
+  bone(leg,'M 12,414 Q 29,410 32,425 Q 34,432 26,437 L 30,451 L 30,531 Q 33,543 38,545 Q 45,556 32,561 Q 21,556 10,561 Q -2,558 4,548 L 11,536 L 10,451 Q 2,441 1,432 Q -3,420 12,414 Z');
+  bone(leg,'M 7,425 Q 19,435 30,425 M 18,451 L 18,525 M 8,549 Q 20,545 33,552','bone-detail');
   const muscles=el('g',{class:'muscle-layers'},g),ribs=S.ribs;
   // Iliac crest, costal margin, and anterior abdominal wall establish the fan.
   path('M 44,293 Q 69,319 56,347 Q 58,369 53,389 L 32,424 Q 49,403 56,373 Q 65,335 44,293 Z','aponeurosis',muscles);
@@ -142,30 +154,46 @@ function AbdomenDraft(host) {
  for(const [view,plate] of Object.entries(plates)){
   plate.paths=Array.from(plate.g.querySelectorAll('path')).map(n=>{
    const matrix=n.getCTM(),gMatrix=plate.g.getCTM(),local=gMatrix.inverse().multiply(matrix);
-   const pelvis=!!n.closest('[data-part="coronal-hip-bone"],[data-part="coronal-sacrum"],[data-part="coronal-pubic-symphysis"]')||(view==='side'&&(/pelvis/.test(n.classList.value)||n.getAttribute('d')?.includes('475')));
+   const pelvis=!!n.closest('[data-part="coronal-hip-bone"],[data-part="coronal-sacrum"],[data-part="coronal-pubic-symphysis"],[data-part="pelvic-skeleton"]');
    const posterior=!!n.closest('[data-part="coronal-vertebrae"]');
-   const points=samples(n.getAttribute('d')).map(q=>{if(!q.p)return q;const p=new DOMPoint(...q.p).matrixTransform(local);return {...q,xyz:view==='side'?[0,1.24*p.y-39,p.x]:[p.x,p.y,posterior?spineZ(p.y):frontZ(p.x,p.y)]};});
-   const rigid=!!n.closest('[data-rib],[data-part="coronal-sternum"],[data-part="shoulder-skeleton"]');
-   return {n,points,pelvis,rigid};
+   const leg=n.closest('[data-leg]')?.dataset.leg;
+   const points=samples(n.getAttribute('d')).map(q=>{if(!q.p)return q;const p=new DOMPoint(...q.p).matrixTransform(local);return {...q,xyz:view==='side'?[0,1.24*p.y-39,p.x]:[p.x,p.y,leg?frontZ(75,475):posterior?spineZ(p.y):frontZ(p.x,p.y)]};});
+   const rigid=!!n.closest('[data-rib],[data-part="coronal-sternum"],[data-part="shoulder-skeleton"]')||n.classList.contains('thorax-mass');
+   const vertebra=n.closest('[data-vertebra]')?.dataset.vertebra;
+   const v=vertebra&&(view==='side'?S.vertebrae:C.vertebrae).find(v=>v.id===vertebra),vy=v&&(view==='side'?1.24*v.center[1]-39:v.y+4);
+   return {n,points,pelvis,rigid,leg,vertebra:vy};
   });
   for(const m of masks.filter(m=>m.view===view))plate.paths.push({n:m.n,pelvis:false,points:samples(m.n.getAttribute('d')).map(q=>q.p?{...q,xyz:[m.sign*q.p[0],q.p[1],frontZ(m.sign*q.p[0],q.p[1])]}:q)});
   // Coordinates have been baked; remove the neutral transforms afterwards.
   plate.g.querySelectorAll('[transform]').forEach(n=>n.removeAttribute('transform'));
+  // During deep flexion the anterior chest passes in front of the upper
+  // abdominal wall. Keep its existing context surface above that overlap.
+  if(view==='front')plate.g.querySelectorAll('.context-muscle').forEach(n=>plate.g.appendChild(n));
  }
  const smooth=t=>{t=Math.max(0,Math.min(1,t));return t*t*(3-2*t);};
  function frame(angle){
-  const rad=angle*Math.PI/180,alpha=y=>rad*smooth((430-y)/65),centers=new Map();let cy=430,cz=spineZ(430);centers.set(430,[cy,cz]);
-  for(let y=429;y>=60;y--){const a=alpha(y+.5),dy=-1,dz=spineZ(y)-spineZ(y+1);cy+=dy*Math.cos(a)+dz*Math.sin(a);cz+=-dy*Math.sin(a)+dz*Math.cos(a);centers.set(y,[cy,cz]);}
-  function deform([x,y,z],fixed=false){if(fixed||y>=430)return [x,y,z];const lo=Math.floor(y),t=y-lo,a=alpha(y),ca=centers.get(lo)||centers.get(60),cb=centers.get(lo+1)||ca,c=mix(ca,cb,t),dz=z-spineZ(y);return [x,c[0]+dz*Math.sin(a),c[1]+dz*Math.cos(a)];}
-  function rigid([x,y,z]){const c=centers.get(365),dy=y-365,dz=z-spineZ(365);return [x,c[0]+dy*Math.cos(rad)+dz*Math.sin(rad),c[1]-dy*Math.sin(rad)+dz*Math.cos(rad)];}
-  return {deform,rigid,alpha};
+  // The slider represents a coupled curl, not one measured joint angle.
+  const p=Math.max(0,Math.min(1,angle/100)),rad=65*p*Math.PI/180,tilt=-25*p*Math.PI/180,pivot=[0,475,15],rotate=([x,y,z],c,a)=>{const dy=y-c[1],dz=z-c[2];return [x,c[1]+dy*Math.cos(a)+dz*Math.sin(a),c[2]-dy*Math.sin(a)+dz*Math.cos(a)];};
+  const pelvis=q=>rotate(q,pivot,tilt),alpha=y=>tilt+(rad-tilt)*smooth((455-y)/100),centers=new Map(),base=pelvis([0,455,spineZ(455)]);let cy=base[1],cz=base[2];centers.set(455,[cy,cz]);
+  for(let y=454;y>=60;y--){const a=alpha(y+.5),dy=-1,dz=spineZ(y)-spineZ(y+1);cy+=dy*Math.cos(a)+dz*Math.sin(a);cz+=-dy*Math.sin(a)+dz*Math.cos(a);centers.set(y,[cy,cz]);}
+  function deform([x,y,z],pelvic=false){if(pelvic||y>=455)return pelvis([x,y,z]);const lo=Math.floor(y),t=y-lo,a=alpha(y),ca=centers.get(lo)||centers.get(60),cb=centers.get(lo+1)||ca,c=mix(ca,cb,t),offset=z-spineZ(y),curvature=Math.abs(alpha(y+.5)-alpha(y-.5));
+   // Compress the soft anterior wall within the inner bend radius, preventing
+   // inverted rectus/fiber folds during the deep curl. Bone sizes stay rigid.
+   const dz=offset>0?offset/Math.sqrt(1+(offset*curvature/.65)**2):offset;
+   return [x,c[0]+dz*Math.sin(a),c[1]+dz*Math.cos(a)];}
+  function rigid([x,y,z]){const c=centers.get(355),dy=y-355,dz=z-spineZ(355);return [x,c[0]+dy*Math.cos(rad)+dz*Math.sin(rad),c[1]-dy*Math.sin(rad)+dz*Math.cos(rad)];}
+  function segment(q,y){const c=[0,y,spineZ(y)],d=deform(c),r=rotate(q,c,alpha(y));return [r[0],r[1]+d[1]-c[1],r[2]+d[2]-c[2]];}
+  function thigh(q,view,sign){const h=view==='side'?[0,475,20]:[75*Number(sign),475,frontZ(75,475)],d=pelvis(h),r=rotate(q,h,-100*p*Math.PI/180);return [r[0],r[1]+d[1]-h[1],r[2]+d[2]-h[2]];}
+  return {deform,rigid,pelvis,thigh,segment,alpha,progress:p};
  }
  const nodes=['serratus','external','internal','rectus'].map((id,i)=>{const group=el('g',{'data-label':id},labels),line=path('','',group),text=el('text',{},group);text.textContent=['전거근','외복사근','내복사근','복직근'][i];return {line,text};});
  function render(angle,view){
   const f=frame(angle),plate=plates[view],yaw=16*Math.PI/180,project=p=>view==='side'?[p[2],p[1]]:[p[0]*Math.cos(yaw)+p[2]*Math.sin(yaw),p[1]];
   for(const [v,p] of Object.entries(plates))p.g.style.display=v===view?'':'none';
-  for(const p of plate.paths)p.n.setAttribute('d',p.points.map(q=>q.cmd==='Z'?'Z':q.cmd+' '+xy(project(p.rigid?f.rigid(q.xyz):f.deform(q.xyz,p.pelvis)))).join(' '));
-  const center=view==='side'?325:310,scale=1.04,top=-42;
+  for(const p of plate.paths)p.n.setAttribute('d',p.points.map(q=>q.cmd==='Z'?'Z':q.cmd+' '+xy(project(p.leg?f.thigh(q.xyz,view,p.leg):p.pelvis?f.pelvis(q.xyz):p.rigid?f.rigid(q.xyz):p.vertebra?f.segment(q.xyz,p.vertebra):f.deform(q.xyz)))).join(' '));
+  // Keep both the extended thigh and the compact curled body legible in the
+  // existing canvas, instead of clipping the knee or shrinking the curl.
+  const bounds=plate.g.getBBox(),scale=Math.min(480/bounds.width,500/bounds.height,1.5),center=320-scale*(bounds.x+bounds.width/2),top=310-scale*(bounds.y+bounds.height/2);
   drawing.setAttribute('transform',`translate(${center} ${top}) scale(${scale})`);
   // Labels use the same point deformation as the fibers and attachments.
   nodes.forEach((n,i)=>{const key=['serratus','external','internal','rectus'][i],p=plate.anchors[key],xyz=view==='side'?[0,1.24*p[1]-39,p[0]]:[p[0],p[1],frontZ(...p)],q=project(f.deform(xyz)),left=i===1||i===3,x=left?14:626,y=100+i*105;
@@ -177,7 +205,7 @@ function AbdomenDraft(host) {
   nodes.forEach((n,i)=>{const key=['serratus','external-oblique','internal-oblique','rectus'][i],targets=Array.from(plate.g.querySelectorAll(`[data-muscle="${key}"] > .muscle`));
    for(const target of (i===1||i===3?targets:targets.reverse())){const a=C.anchor(target);if(a?.visible){const q=new DOMPoint(...a.point).matrixTransform(svg.getCTM().inverse()),current=n.line.getAttribute('d').split(' L ')[0];n.line.setAttribute('d',current+' L '+xy([q.x,q.y]));break;}}
   });
-  svg.setAttribute('viewBox','0 0 640 515');svg.setAttribute('height',host.clientWidth*515/640);
+  svg.setAttribute('viewBox','0 0 640 610');svg.setAttribute('height',host.clientWidth*610/640);
   host.dataset.angle=angle;host.dataset.view=view;host.dataset.cameraYaw=view==='front'?'16':'90';
  }
  return {render,frame,plates,frontZ,profile,source:'shared-classic-skeleton-abdominal-flow-draft'};
