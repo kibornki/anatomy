@@ -1,0 +1,92 @@
+[
+  {
+    "region": "upperbody",
+    "view": "front",
+    "angle": "60",
+    "camera": "front",
+    "cameraYaw": "0",
+    "sourceGeometryUnchanged": true,
+    "fiberAdded": 152,
+    "boneMerged": 203
+  },
+  {
+    "region": "upperbody",
+    "view": "side",
+    "angle": "60",
+    "camera": "side",
+    "cameraYaw": "90",
+    "sourceGeometryUnchanged": true,
+    "fiberAdded": 273,
+    "boneMerged": 208
+  },
+  {
+    "region": "upperbody",
+    "view": "back",
+    "angle": "60",
+    "camera": "back",
+    "cameraYaw": "0",
+    "sourceGeometryUnchanged": true,
+    "fiberAdded": 537,
+    "boneMerged": 210
+  },
+  {
+    "region": "forearm",
+    "view": "front",
+    "angle": "0",
+    "camera": "front",
+    "cameraYaw": null,
+    "sourceGeometryUnchanged": true,
+    "fiberAdded": 118,
+    "boneMerged": 10
+  },
+  {
+    "region": "forearm",
+    "view": "side",
+    "angle": "0",
+    "camera": "side",
+    "cameraYaw": null,
+    "sourceGeometryUnchanged": true,
+    "fiberAdded": 118,
+    "boneMerged": 10
+  },
+  {
+    "region": "forearm",
+    "view": "back",
+    "angle": "0",
+    "camera": "back",
+    "cameraYaw": null,
+    "sourceGeometryUnchanged": true,
+    "fiberAdded": 118,
+    "boneMerged": 10
+  },
+  {
+    "region": "thigh",
+    "view": "front",
+    "angle": "0",
+    "camera": "front",
+    "cameraYaw": "32",
+    "sourceGeometryUnchanged": true,
+    "fiberAdded": 130,
+    "boneMerged": 7
+  },
+  {
+    "region": "thigh",
+    "view": "side",
+    "angle": "0",
+    "camera": "side",
+    "cameraYaw": "90",
+    "sourceGeometryUnchanged": true,
+    "fiberAdded": 130,
+    "boneMerged": 7
+  },
+  {
+    "region": "thigh",
+    "view": "back",
+    "angle": "0",
+    "camera": "back",
+    "cameraYaw": "32",
+    "sourceGeometryUnchanged": true,
+    "fiberAdded": 130,
+    "boneMerged": 6
+  }
+]
