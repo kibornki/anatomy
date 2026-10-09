@@ -75,18 +75,40 @@ for p in triceps:
     line=[];continue
    q[2]-=.08;line.append(q.round(4).tolist())
   if len(line)>3:p['fibers'].append(line)
-# A familiar schematic hand is retained as context, registered to atlas wrist.
-hand=json.loads((w/'hand-context.json').read_text())
-for b in hand:
- v=[];f=[]
- for row in b['rows']:
-  for x,y,z in row['ring']:v.append([-69-.8*x,465+.8*(y-480),27+.8*z])
- nr=len(b['rows'][0]['ring'])
- for i in range(len(b['rows'])-1):
-  for j in range(nr):
-   a=i*nr+j;bb=i*nr+(j+1)%nr;c=(i+1)*nr+(j+1)%nr;dd=(i+1)*nr+j;f += [[a,bb,c],[a,c,dd]]
- for j in range(1,nr-1):f += [[0,j+1,j],[len(v)-nr,len(v)-nr+j,len(v)-nr+j+1]]
- parts.append({'id':b['id'],'name':b['id'],'color':'bone','v':v,'f':f,'fibers':[],'authored':True,'forearm':True})
+# Context stops a short distance below the elbow. Clip in neutral bone
+# coordinates so the cut follows the forearm's rigid rotation.
+def crop_bone(part,limit=330):
+ old=np.array(part['v']);verts=[];faces=[];lookup={};segments=[]
+ def index(p):
+  key=tuple(np.round(p,6))
+  if key not in lookup:lookup[key]=len(verts);verts.append(list(key))
+  return lookup[key]
+ for face in part['f']:
+  polygon=[];crossings=[]
+  for i in range(3):
+   a=old[face[i]];b=old[face[(i+1)%3]];ia=a[1]<=limit;ib=b[1]<=limit
+   if ia:polygon.append(a)
+   if ia!=ib:
+    q=a+(b-a)*(limit-a[1])/(b[1]-a[1]);polygon.append(q);crossings.append(q)
+  if len(crossings)==2:segments.append([index(q) for q in crossings])
+  ids=[index(q) for q in polygon]
+  for i in range(1,len(ids)-1):faces.append([ids[0],ids[i],ids[i+1]])
+ # Cap each cut boundary loop; do not introduce a taper or alter the shaft.
+ edges={}
+ for a,b in segments:edges.setdefault(a,[]).append(b);edges.setdefault(b,[]).append(a)
+ while edges:
+  first=next(iter(edges));loop=[first];prev=None;cur=first
+  while True:
+   options=edges.pop(cur,[]);nxt=next((v for v in options if v!=prev),first)
+   if nxt==first:break
+   if nxt in loop:break
+   loop.append(nxt);prev,cur=cur,nxt
+  if len(loop)>2:
+   center=np.mean(np.array(verts)[loop],0);ci=index(center)
+   for i in range(len(loop)):faces.append([ci,loop[i],loop[(i+1)%len(loop)]])
+ part['v']=verts;part['f']=faces;part['displayCut']=limit
+for p in parts:
+ if p['name'] in ['radius','ulna']:crop_bone(p)
 parts.append(patch)
 for p in parts:
  p['kind']='bone' if p['color']=='bone' else 'context' if p['color']=='context' else 'tendon' if p['color']=='tendon' else 'muscle'

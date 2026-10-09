@@ -6,12 +6,15 @@ function AtlasArm(root){
  const ns='http://www.w3.org/2000/svg',make=(tag,attrs,parent)=>{const n=document.createElementNS(ns,tag);for(const [k,v] of Object.entries(attrs))n.setAttribute(k,v);parent.append(n);return n;};
  const smooth=t=>{t=Math.max(0,Math.min(1,t));return t*t*(3-2*t);},joint=atlas.joint;
  const forearm=(p,angle)=>{const a=angle*Math.PI/180,c=Math.cos(a),s=Math.sin(a),y=p[1]-joint[1],z=p[2]-joint[2];return [p[0],joint[1]+y*c-z*s,joint[2]+y*s+z*c];};
- function skin(p,part,angle){
+ const collision=ArmBoneCollision(atlas,forearm);
+ function unconstrained(p,part,angle){
   if(part.forearm)return forearm(p,angle);
   if(!part.attachment)return p;
+  if(part.name.startsWith('triceps'))return forearm(p,angle*smooth((p[1]-205)/77));
   const anchor=part.attachment,moving=forearm(anchor,angle),triceps=part.name.startsWith('triceps'),weight=smooth((p[1]-(triceps?115:100))/(anchor[1]-(triceps?115:100)));
   return p.map((v,i)=>v+(moving[i]-anchor[i])*weight);
  }
+ function skin(p,part,angle){const q=unconstrained(p,part,angle);return part.kind==='bone'?q:collision.constrain(q,part,angle);}
  const colors={'bone':'#e8e9eb','context':'#cbd1d9','tendon':'#f7f7f3'};
  const nodes=atlas.parts.map((part,i)=>{
   const g=make('g',{'data-atlas-part':part.name,'data-muscle':part.kind==='muscle'?part.name:'','data-kind':part.kind},drawing),clip=make('clipPath',{id:'arm-clip-'+i},defs),mask=make('path',{},clip);
@@ -26,14 +29,15 @@ function AtlasArm(root){
  const labelNodes=new Map();for(const list of Object.values(specs))for(const [name,text,x,y]of list){if(labelNodes.has(name))continue;const g=make('g',{'data-label':name},labels),line=make('path',{},g),t=make('text',{},g);t.textContent=text;labelNodes.set(name,{g,line,text:t});}
  const curve=ps=>{if(ps.length<3)return '';let d='M'+ps[0].join(',');for(let i=1;i<ps.length-1;i++)d+='Q'+ps[i].join(',')+' '+ps[i].map((v,j)=>(v+ps[i+1][j])/2).join(',');return d+'L'+ps.at(-1).join(',');};
  const offsets=new Map();for(const [view,degrees]of [['front',16],['side',90],['back',164]]){const a=degrees*Math.PI/180;let min=Infinity,max=-Infinity;for(const p of atlas.parts.filter(p=>p.kind==='bone'))for(const v of p.v){const x=v[0]*Math.cos(a)+v[2]*Math.sin(a);min=Math.min(min,x);max=Math.max(max,x);}offsets.set(view,320-(min+max)*1.05/2);}
- let debug=null,lastKey='';
+ let debug=null,lastVisibility=null,lastKey='';
  function render(angle,view='front'){
   const transparent=root.classList.contains('transparent'),fibersOn=!root.classList.contains('no-fibers'),key=[angle,view,transparent,fibersOn].join();if(key===lastKey)return;lastKey=key;
   const start=performance.now(),degrees=view==='side'?90:view==='back'?164:16,a=degrees*Math.PI/180,c=Math.cos(a),s=Math.sin(a);
   const project=p=>[offsets.get(view)+(p[0]*c+p[2]*s)*1.05,15+(p[1]-29)*1.05],depth=p=>-p[0]*s+p[2]*c;
-  const posed=nodes.map(n=>n.part.v.map(p=>skin(p,n.part,angle))),buffer=AbdominalVisibility({project,depth,step:.9});
+  const posed=nodes.map(n=>n.part.v.map(p=>skin(p,n.part,angle))),buffer=ArmVisibility({project,depth,step:.9,accept:(ps,wa,wb,wc,id)=>nodes[id].part.kind==='bone'||collision.minimumXYZ(ps[0][0]*wa+ps[1][0]*wb+ps[2][0]*wc,ps[0][1]*wa+ps[1][1]*wb+ps[2][1]*wc,ps[0][2]*wa+ps[1][2]*wb+ps[2][2]*wc,angle)>=.65});
   nodes.forEach((n,i)=>n.part.f.forEach(f=>buffer.triangle(...f.map(j=>posed[i][j]),i)));
   const visible=buffer.solve(nodes.length,{projections:i=>nodes[i].part.kind!=='bone',scanlineClips:false,occludes:i=>!transparent||nodes[i].part.kind==='bone'});
+  lastVisibility={...visible,offset:offsets.get(view),degrees};
   nodes.forEach((n,i)=>{
    const soft=n.part.kind!=='bone',local=visible.ownerZ[i],inside=k=>transparent&&soft?local[k]>-Infinity:visible.owners[k]===i;
    const contour=AtlasContour(visible,inside,visible.bounds[i]);n.fill.setAttribute('d',contour);n.outline.setAttribute('d',contour);n.mask.setAttribute('d',contour);n.g.setAttribute('opacity',transparent&&soft?.32:1);
@@ -44,11 +48,12 @@ function AtlasArm(root){
   labelNodes.forEach(n=>n.g.style.display='none');
   for(const [name,text,x,y]of specs[view]){
    const id=nodes.findIndex(n=>n.part.name===name);let points=visible.centers[id];if(transparent){points=[];const b=visible.bounds[id],local=visible.ownerZ[id];for(let iy=b[1];iy<=b[3];iy+=6)for(let ix=b[0];ix<=b[2];ix+=6)if(local[iy*visible.w+ix]>-Infinity)points.push([visible.x0+(ix+.5)*visible.step,visible.y0+(iy+.5)*visible.step]);}
+   const hit=svg.createSVGPoint();points=points.filter(p=>{hit.x=p[0];hit.y=p[1];return nodes[id].fill.isPointInFill(hit);});
    if(points.length<3||!transparent&&visible.coverage[id]<80)continue;const avg=points.reduce((sum,p)=>sum.map((v,j)=>v+p[j]/points.length),[0,0]),target=points.reduce((best,p)=>Math.hypot(...p.map((v,j)=>v-avg[j]))<Math.hypot(...best.map((v,j)=>v-avg[j]))?p:best);
    const n=labelNodes.get(name);n.g.style.display='';n.text.textContent=text;n.text.setAttribute('x',x);n.text.setAttribute('y',y);n.text.setAttribute('text-anchor',x<320?'start':'end');n.line.setAttribute('d',`M${x},${y+5}L${target.join(',')}`);
   }
-  svg.setAttribute('viewBox','0 0 640 640');svg.setAttribute('height',root.clientWidth);root.dataset.cameraYaw=degrees;
+  svg.setAttribute('viewBox','0 0 640 430');svg.setAttribute('height',root.clientWidth*430/640);root.dataset.cameraYaw=degrees;
   debug={angle,view,posed:posed.map((v,i)=>({name:nodes[i].part.name,kind:nodes[i].part.kind,forearm:!!nodes[i].part.forearm,v})),coverage:visible.coverage,duration:performance.now()-start};
  }
- return {render,atlas,skin,forearm,get debug(){return debug;}};
+ return {render,atlas,skin,forearm,collision,get debug(){return debug;},get visibility(){return lastVisibility;}};
 }

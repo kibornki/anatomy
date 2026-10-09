@@ -1519,7 +1519,15 @@ const ThighRenderer = (() => {
   }
   function render(model,camera,transparent){
     const view=p=>ThighModel.view(p,camera);
-    const raw=model.bones.map(x=>({...x,kind:'bone'})).concat(model.muscles,model.tendons.map(x=>({...x,kind:'tendon'})),[{id:'foot',kind:'bone',rows:model.foot}]);
+    // Keep the existing thigh geometry and knee mechanics. Only distal context
+    // is cut in the rigid lower-leg frame, so bending cannot bring feet back.
+    const limit=325,distal=new Set(['tibia','fibula','gastrocnemius-lateral','gastrocnemius-medial']);
+    const crop=x=>{if(!distal.has(x.id))return x;const rows=[];
+      for(let i=0;i<x.rows.length;i++){const r=x.rows[i],y=ThighModel.lower(r.center,-model.angle)[1];
+        if(y<=limit){rows.push(r);continue;}
+        const a=rows.at(-1);if(a){const ya=ThighModel.lower(a.center,-model.angle)[1],t=(limit-ya)/(y-ya),mix=(p,q)=>p.map((v,j)=>v+(q[j]-v)*t);rows.push({...r,center:mix(a.center,r.center),ring:r.ring.map((p,j)=>mix(a.ring[j],p))});}break;
+      }return {...x,rows};};
+    const raw=model.bones.filter(x=>!x.id.startsWith('toe-')).map(x=>crop({...x,kind:'bone'})).concat(model.muscles.filter(x=>x.id!=='tibialis-anterior').map(crop),model.tendons.filter(x=>x.id!=='achilles-tendon').map(x=>({...x,kind:'tendon'}))).filter(x=>x.rows.length>1);
     const items=raw.map(x=>({...x,rows:x.rows.map(s=>({...s,center:view(s.center),ring:s.ring.map(view)}))}));
     const depth=new Float32Array(NX*NY).fill(-Infinity),owner=new Int16Array(NX*NY).fill(-1);
     function triangle(a,b,c,id,item){
@@ -1671,10 +1679,10 @@ const ThighRenderer = (() => {
     }
     const patella=byId.get('patella');
     if(patella?.area>15||transparent.checked)leader('patella','무릎뼈',.87,352,ThighModel.view(m.patella,camera));
-    if(camera==='side'||transparent.checked){const calf=[byId.get('gastrocnemius-medial'),byId.get('gastrocnemius-lateral')].sort((a,b)=>b.area-a.area)[0];if(calf?.area>45)leader('calf','장딴지근',.14,437,calf.anchor);}
+
     const rounded=Math.round(angle),text=rounded===0?'펴짐 0°':`굽힘 ${rounded}°`;
     value.textContent=text;slider.value=rounded;slider.setAttribute('aria-valuetext',text);
-    root.dataset.angle=String(f(angle));root.dataset.camera=camera;root.dataset.drive=String(f(drive));root.dataset.revision='foot-proportions-thigh-v5';root.dataset.cameraYaw=String(camera==='side'?90:32);
+    root.dataset.angle=String(f(angle));root.dataset.camera=camera;root.dataset.drive=String(f(drive));root.dataset.revision='knee-context-thigh-v6';root.dataset.cameraYaw=String(camera==='side'?90:32);
     root.dataset.knee=ThighModel.view(m.knee,camera).map(f).join(',');
   }
   function sync(){
@@ -1697,7 +1705,7 @@ const ThighRenderer = (() => {
     if(typeof s.privateContent?.playing==='boolean')playing=s.privateContent.playing&&!matchMedia('(prefers-reduced-motion: reduce)').matches;
     phase=phaseFor(angle,drive);
   }
-  function resize(){width=root.clientWidth;scale=width/560;const height=620*scale+16;svg.setAttribute('viewBox',`0 0 ${width} ${height}`);svg.setAttribute('height',height);drawing.setAttribute('transform',`scale(${scale})`);draw();}
+  function resize(){width=root.clientWidth;scale=width/560;const height=410*scale+16;svg.setAttribute('viewBox',`0 0 ${width} ${height}`);svg.setAttribute('height',height);drawing.setAttribute('transform',`scale(${scale})`);draw();}
   play.addEventListener('click',()=>{interacted=true;playing=!playing;if(playing)phase=phaseFor(angle,drive);sync();save();});
   slider.addEventListener('input',()=>{interacted=true;const next=Number(slider.value);drive=next>angle ? .75 : next<angle ? -.75 : drive;angle=next;playing=false;phase=phaseFor(angle,drive);sync();draw();});slider.addEventListener('change',save);
   [fibers,transparent].forEach(c=>c.addEventListener('change',()=>{interacted=true;sync();draw();save();}));
@@ -1714,5 +1722,5 @@ const ThighRenderer = (() => {
 })();
 </script>
 <script>
-(()=>{const r=document.getElementById('thigh-motion'),s=r.querySelector('svg');let p=false;function f(){p=false;const available=Math.max(0,document.documentElement.clientWidth-32),overhead=r.scrollHeight-s.getBoundingClientRect().height,heightWidth=(innerHeight-overhead-48)*560/620,w=Math.min(available,700,Math.max(220,heightWidth)),n=Math.floor(w)+'px';if(r.style.width!==n)r.style.width=n;}const q=()=>{if(!p){p=true;requestAnimationFrame(f);}};new ResizeObserver(q).observe(r);window.addEventListener('resize',q);q();})();
+(()=>{const r=document.getElementById('thigh-motion'),s=r.querySelector('svg');let p=false;function f(){p=false;const available=Math.max(0,document.documentElement.clientWidth-32),overhead=r.scrollHeight-s.getBoundingClientRect().height,heightWidth=(innerHeight-overhead-48)*560/410,w=available<=680?available:Math.min(available,700,Math.max(220,heightWidth)),n=Math.floor(w)+'px';if(r.style.width!==n)r.style.width=n;}const q=()=>{if(!p){p=true;requestAnimationFrame(f);}};new ResizeObserver(q).observe(r);window.addEventListener('resize',q);q();})();
 </script></body></html>

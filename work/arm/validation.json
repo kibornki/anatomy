@@ -4,152 +4,152 @@
       "view": "front",
       "angle": 0,
       "transparent": false,
-      "duration": 201.8999999910593
+      "duration": 200.8999999910593
     },
     {
       "view": "front",
       "angle": 45,
       "transparent": false,
-      "duration": 69.90000000596046
+      "duration": 220.29999999701977
     },
     {
       "view": "front",
       "angle": 90,
       "transparent": false,
-      "duration": 96
+      "duration": 175
     },
     {
       "view": "front",
       "angle": 135,
       "transparent": false,
-      "duration": 60.8999999910593
+      "duration": 137.70000000298023
     },
     {
       "view": "back",
       "angle": 0,
       "transparent": false,
-      "duration": 88.79999999701977
+      "duration": 137.20000000298023
     },
     {
       "view": "back",
       "angle": 45,
       "transparent": false,
-      "duration": 68
+      "duration": 179.6000000089407
     },
     {
       "view": "back",
       "angle": 90,
       "transparent": false,
-      "duration": 79.40000000596046
+      "duration": 147.90000000596046
     },
     {
       "view": "back",
       "angle": 135,
       "transparent": false,
-      "duration": 52.20000000298023
+      "duration": 124.59999999403954
     },
     {
       "view": "side",
       "angle": 0,
       "transparent": false,
-      "duration": 87.5
+      "duration": 103
     },
     {
       "view": "side",
       "angle": 45,
       "transparent": false,
-      "duration": 66.59999999403954
+      "duration": 192.59999999403954
     },
     {
       "view": "side",
       "angle": 90,
       "transparent": false,
-      "duration": 88.5
+      "duration": 121.29999999701977
     },
     {
       "view": "side",
       "angle": 135,
       "transparent": false,
-      "duration": 63.900000005960464
+      "duration": 124.29999999701977
     },
     {
       "view": "front",
       "angle": 0,
       "transparent": true,
-      "duration": 62.80000001192093
+      "duration": 202.40000000596046
     },
     {
       "view": "front",
       "angle": 45,
       "transparent": true,
-      "duration": 67.70000000298023
+      "duration": 141.69999998807907
     },
     {
       "view": "front",
       "angle": 90,
       "transparent": true,
-      "duration": 82.20000000298023
+      "duration": 190.29999999701977
     },
     {
       "view": "front",
       "angle": 135,
       "transparent": true,
-      "duration": 83.5
+      "duration": 125.1000000089407
     },
     {
       "view": "back",
       "angle": 0,
       "transparent": true,
-      "duration": 63.70000000298023
+      "duration": 162.09999999403954
     },
     {
       "view": "back",
       "angle": 45,
       "transparent": true,
-      "duration": 70.1000000089407
+      "duration": 118.20000000298023
     },
     {
       "view": "back",
       "angle": 90,
       "transparent": true,
-      "duration": 63.70000000298023
+      "duration": 177.5
     },
     {
       "view": "back",
       "angle": 135,
       "transparent": true,
-      "duration": 103.5
+      "duration": 114.1000000089407
     },
     {
       "view": "side",
       "angle": 0,
       "transparent": true,
-      "duration": 57.20000000298023
+      "duration": 149.6000000089407
     },
     {
       "view": "side",
       "angle": 45,
       "transparent": true,
-      "duration": 96.40000000596046
+      "duration": 115.90000000596046
     },
     {
       "view": "side",
       "angle": 90,
       "transparent": true,
-      "duration": 60.099999994039536
+      "duration": 139.29999999701977
     },
     {
       "view": "side",
       "angle": 135,
       "transparent": true,
-      "duration": 83.90000000596046
+      "duration": 113.90000000596046
     }
   ],
   "pageErrors": [],
   "checks": [
     "rigid bones",
     "fixed shoulder",
-    "neutral atlas shape",
+    "neutral bones preserved; atlas muscle surfaces constrained",
     "visible label targets",
     "head colors",
     "opacity",
@@ -158,7 +158,7 @@
     "animation",
     "state migration",
     "mobile",
-    "hub arm only"
+    "hub arm and thigh only"
   ],
   "limitations": "UI/geometry invariants, not anatomical or physiological certification."
 }

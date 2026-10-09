@@ -9,10 +9,10 @@ head=re.sub(r'<desc id="arm-desc">.*?</desc>','<desc id="arm-desc">오른팔 아
 credit='<div class="text-small atlas-credit">자료: <a href="https://github.com/Kevin-Mattheus-Moerman/BodyParts3D/tree/f0eeb6e843380cfe6b83797cf8c3e1af74de5e61" target="_blank" rel="noopener">BodyParts3D</a> © 2008 DBCLS · <a href="https://creativecommons.org/licenses/by-sa/2.1/jp/" target="_blank" rel="noopener">CC BY-SA 2.1 Japan</a> · STL: Kevin Mattheus Moerman</div>'
 head=head.replace('0°: 펴짐 · 135°: 굽힘 · 어깨 고정 · 변형은 작화용 단순화</div>','0°: 펴짐 · 135°: 굽힘 · 어깨 고정 · 건막·섬유·변형은 작화용 근사</div>'+credit,1)
 match=re.search(r'(<script type="application/json" id="diagram-config">)(.*?)(</script>)',head,re.S)
-metadata=json.loads(match[2]);metadata.update(revision='arm-atlas-aponeurosis-v1',initialAngle=0,height=640,cameraYaw=16,sourceFile='work/arm/atlas-renderer.js')
+metadata=json.loads(match[2]);metadata.update(revision='arm-atlas-contact-crop-v2',initialAngle=0,height=430,cameraYaw=16,sourceFile='work/arm/atlas-renderer.js')
 head=head[:match.start(2)]+json.dumps(metadata,ensure_ascii=False)+head[match.end(2):]
-scripts='\n'.join((root/'work/abdomen'/f).read_text() for f in ['visibility.js','atlas-contours.js'])+'\n'+'\n'.join((w/f).read_text() for f in ['atlas-renderer.js','controls.js'])
-document=head+'<script type="application/json" id="arm-atlas">'+(w/'atlas-data.json').read_text().replace('<','\\u003c')+'</script><script>'+scripts+'</script></body></html>'
+scripts='\n'.join((root/'work/abdomen'/f).read_text() for f in ['atlas-contours.js'])+'\n'+'\n'.join((w/f).read_text() for f in ['collision.js','visibility.js','atlas-renderer.js','controls.js'])
+document=head+'<script type="application/json" id="arm-atlas">'+(w/'atlas-data.json').read_text().replace('<','\\u003c')+'</script><script type="application/json" id="arm-bone-fields">'+(w/'bone-fields.json').read_text()+'</script><script>'+scripts+'</script></body></html>'
 if '--publish' in sys.argv:
  (root/'arm.html').write_text(document)
  hubPath=root/'index.html';hub=hubPath.read_text();match=re.search(r'(<script type="application/json" id="anatomy-data">)(.*?)(</script>)',hub,re.S);data=json.loads(match[2])
