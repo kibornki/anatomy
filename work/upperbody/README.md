@@ -18,11 +18,19 @@
 겨드랑이 경유점은 견갑골 하각 아래가 아니라 원본 광배근 외측 이행부
 (x=92.5–94, y=236–239)를 통과한다. 건 이행부는 y<219, |x|>94의
 상완 부착점 근처로 제한하여 겨드랑이 근복이 흰 영역으로 끊기지 않게 한다.
-독립적으로 맞춘 대원근/광배근 표면이 거상에서 겹치는 구간은
-`axillary-fit.py`로 광배근의 자유 외측 가장자리에만 간격을 준다.
-기시·정지 정점과 뼈는 그대로 유지하고 자유 근복의 두께로 기존 부피를
-유지한다. 이 간격은 승인 시안을 읽을 수 있게 하는 도해용 제약이며,
-실측한 근육 간 접촉이나 생리적 변형 데이터가 아니다.
+거상 시 광배근의 근복은 흉곽을 감싸며 겨드랑이 뒤주름으로 이어지고,
+상완 가까운 건은 대원근 앞쪽으로 돌아 원래 상완 부착 영역에 도달한다.
+측면에서는 전거근의 뒤쪽·아래쪽 일부를 광배근이 바깥에서 덮고,
+전거근 앞쪽은 드러난다. 내측 광배근은 승모근 하부보다 깊다.
+정상적인 표층 겹침을 없애려고 광배근 전체를 뒤로 밀지 않는다.
+
+`axillary-fit.py`는 다음 단계를 실행한다. 이전 자세를 다음 자세의 실제
+상완 부착 변화로 옮기는 조화 변형, 자유 근복의 겨드랑이 경로 맞춤,
+측면 외피의 전거근 바깥 감싸기, 마지막 세밀한 면 거리 보정이다.
+원본 기시·정지 정점, 중립 표면, 다른 근육과 뼈는 유지하고, 자유 근복의
+두께로 원래 폐곡면 부피를 보존한다. `latissimusMotionSeed`는 재생성의
+동일한 시작 자세를 기록한다. 거리장 캐시는 입력 형상과 자세별로 구분한다.
+이 경로와 간격은 도해용 제약이며 실측한 조직 운동 데이터가 아니다.
 
 각 가이드 점과 재료 경계는 원본 삼각형의 barycentric 좌표에 붙인다.
 런타임에서 실제로 변형된 동일 삼각형을 따라 움직이며, 근육과 건막을
@@ -38,8 +46,8 @@ Gray 후면 도판, MoBL ARMS 경로 사본 및 승인 시안의 지역별 방�
 표현만 재생성할 때 기존 변위 프레임을 재사용한다:
 
 ```sh
-python work/upperbody/latissimus-detail.py
 python work/upperbody/axillary-fit.py
+python work/upperbody/latissimus-detail.py
 python work/upperbody/build.py
 python work/upperbody/review-latissimus.py
 ```
@@ -47,7 +55,8 @@ python work/upperbody/review-latissimus.py
 `prepare.py` 전체 실행 후에도 이 작성 과정을 자동으로 적용한다.
 review-latissimus.py는 재료 분할 면적, 삼각형 좌표, 원본 표면/운동/
 다른 부위 유지 여부와 중앙 경로의 시작점 및 상완 부착 영역 선택을
-검사한다. 이는 해부학적 근섬유 실측 검사가 아니다.
+검사한다. 각 섬유가 분리된 원본 표면 성분 사이를 뛰어넘지 않는지도 검사한다.
+이는 해부학적 근섬유 실측 검사가 아니다.
 
 모바일에서도 지역별 흐름을 읽을 수 있도록 같은 카메라에서 상체
 표시 배율을 키웠다. 좌우 프레임을 넘어가는 상완 뼈는 표시 경계에서
@@ -95,6 +104,9 @@ BodyParts3D의 중립 뼈·근육 표면, 기존 11개 근육, 색, 세 시점�
 python work/upperbody/prepare.py
 python work/upperbody/build.py
 node work/upperbody/review-geometry.cjs
+python work/upperbody/review-latissimus.py
+python work/upperbody/review-contact.py
+python work/upperbody/review-tissue-contact.py
 ```
 
 기존 neutral atlas-data.json을 입력으로 사용한다. 중립 표면은 유지하고
@@ -116,3 +128,16 @@ NumPy/SciPy와 기존 Chromium/Playwright 환경을 재사용한다.
 STL 변환: Kevin Mattheus Moerman. 출처·캐시·원본 라이선스는
 ../upperbody-atlas-preview/README.md 및 LICENSE-BodyParts3D.txt에 있다.
 앱에도 출처와 라이선스 링크를 표시한다.
+
+`review-contact.py`는 각 삼각형의 55개 점에서 원래 견갑골과 떨어져 있던
+광배근 면을 검사한다. 15–120°의 106개 보간 각도에서 기존 견갑골 거리장을
+사용한다. 원래의 접촉/겹침은 제외하며, 그리드 근사에 대한 회귀 검사다.
+`face-clearance-validation.json`은 저장된 22개 자세에서 전거근·대원근·
+승모근 하부와 뼈에 대한 자유 면 검사 결과다. 고정 부착점만으로 이루어진
+샘플은 움직이지 않으므로 보정 대상에서 제외한다. 검사는 모든 접촉의
+정확한 삼각형 교차 인증이나 생리적 운동 검증을 의미하지 않는다.
+
+`review-tissue-contact.py`는 저장 자세와 그 사이 2.5° 자세의 총 43개에서
+실제로 저장·보간한 면을 전거근·대원근·승모근 하부 거리장과 비교한다.
+원본 접촉과 고정 부착점 전용 샘플은 제외하며 −0.25 단위 미만의
+새 관통을 검출한다. 결과는 tissue-contact-validation.json에 저장한다.

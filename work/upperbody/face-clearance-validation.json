@@ -1,0 +1,134 @@
+[
+  {
+    "angle": 15,
+    "iterations": 9,
+    "freeFaceCrossings": 0,
+    "volumeRatio": 0.9999999999999986
+  },
+  {
+    "angle": 20,
+    "iterations": 9,
+    "freeFaceCrossings": 0,
+    "volumeRatio": 1.0000000000000013
+  },
+  {
+    "angle": 25,
+    "iterations": 9,
+    "freeFaceCrossings": 0,
+    "volumeRatio": 0.9999999999999988
+  },
+  {
+    "angle": 30,
+    "iterations": 9,
+    "freeFaceCrossings": 0,
+    "volumeRatio": 1.0000000000000002
+  },
+  {
+    "angle": 35,
+    "iterations": 9,
+    "freeFaceCrossings": 0,
+    "volumeRatio": 1.0000000000000009
+  },
+  {
+    "angle": 40,
+    "iterations": 9,
+    "freeFaceCrossings": 0,
+    "volumeRatio": 1.0000000000000018
+  },
+  {
+    "angle": 45,
+    "iterations": 9,
+    "freeFaceCrossings": 0,
+    "volumeRatio": 1.0
+  },
+  {
+    "angle": 50,
+    "iterations": 9,
+    "freeFaceCrossings": 0,
+    "volumeRatio": 1.0000000000000016
+  },
+  {
+    "angle": 55,
+    "iterations": 9,
+    "freeFaceCrossings": 0,
+    "volumeRatio": 1.0
+  },
+  {
+    "angle": 60,
+    "iterations": 9,
+    "freeFaceCrossings": 0,
+    "volumeRatio": 1.0000000000000004
+  },
+  {
+    "angle": 65,
+    "iterations": 9,
+    "freeFaceCrossings": 0,
+    "volumeRatio": 1.0
+  },
+  {
+    "angle": 70,
+    "iterations": 9,
+    "freeFaceCrossings": 0,
+    "volumeRatio": 1.0000000000000002
+  },
+  {
+    "angle": 75,
+    "iterations": 9,
+    "freeFaceCrossings": 0,
+    "volumeRatio": 1.0
+  },
+  {
+    "angle": 80,
+    "iterations": 9,
+    "freeFaceCrossings": 0,
+    "volumeRatio": 1.0
+  },
+  {
+    "angle": 85,
+    "iterations": 9,
+    "freeFaceCrossings": 0,
+    "volumeRatio": 1.0
+  },
+  {
+    "angle": 90,
+    "iterations": 9,
+    "freeFaceCrossings": 0,
+    "volumeRatio": 1.0000000000000004
+  },
+  {
+    "angle": 95,
+    "iterations": 9,
+    "freeFaceCrossings": 0,
+    "volumeRatio": 1.0
+  },
+  {
+    "angle": 100,
+    "iterations": 9,
+    "freeFaceCrossings": 0,
+    "volumeRatio": 1.0
+  },
+  {
+    "angle": 105,
+    "iterations": 9,
+    "freeFaceCrossings": 0,
+    "volumeRatio": 1.0
+  },
+  {
+    "angle": 110,
+    "iterations": 9,
+    "freeFaceCrossings": 0,
+    "volumeRatio": 1.0000000000000033
+  },
+  {
+    "angle": 115,
+    "iterations": 9,
+    "freeFaceCrossings": 0,
+    "volumeRatio": 1.0000000000000009
+  },
+  {
+    "angle": 120,
+    "iterations": 9,
+    "freeFaceCrossings": 0,
+    "volumeRatio": 1.0000000000000004
+  }
+]

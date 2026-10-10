@@ -1,37 +1,752 @@
 {
-  "keyframeAngles": [
-    15,
-    20,
-    25,
-    30,
-    35,
-    40,
-    45,
-    50,
-    55,
-    60,
-    65,
-    70,
-    75,
-    80,
-    85,
-    90,
-    95,
-    100,
-    105,
-    110,
-    115,
-    120
+  "samplesPerAngle": 131428,
+  "raisedAngles": 106,
+  "worstClearance": 0.5225788700323373,
+  "crossings": 0,
+  "previousCrossings": 21804,
+  "poses": [
+    {
+      "angle": 15,
+      "minClearance": 2.5604128763911276,
+      "crossings": 0,
+      "previousMinClearance": -2.3384475582641127,
+      "previousCrossings": 509
+    },
+    {
+      "angle": 16,
+      "minClearance": 2.7292291970011533,
+      "crossings": 0,
+      "previousMinClearance": -2.29597024967467,
+      "previousCrossings": 706
+    },
+    {
+      "angle": 17,
+      "minClearance": 2.638097457960701,
+      "crossings": 0,
+      "previousMinClearance": -2.2364423597356486,
+      "previousCrossings": 689
+    },
+    {
+      "angle": 18,
+      "minClearance": 2.5597006933288533,
+      "crossings": 0,
+      "previousMinClearance": -2.352338671948724,
+      "previousCrossings": 606
+    },
+    {
+      "angle": 19,
+      "minClearance": 2.520283028832493,
+      "crossings": 0,
+      "previousMinClearance": -2.4510897922941717,
+      "previousCrossings": 481
+    },
+    {
+      "angle": 20,
+      "minClearance": 2.486991991351648,
+      "crossings": 0,
+      "previousMinClearance": -2.320548683821762,
+      "previousCrossings": 453
+    },
+    {
+      "angle": 21,
+      "minClearance": 2.4640883631152595,
+      "crossings": 0,
+      "previousMinClearance": -2.42181639021715,
+      "previousCrossings": 663
+    },
+    {
+      "angle": 22,
+      "minClearance": 2.4661813850001173,
+      "crossings": 0,
+      "previousMinClearance": -2.4393227414222713,
+      "previousCrossings": 645
+    },
+    {
+      "angle": 23,
+      "minClearance": 2.448286227029605,
+      "crossings": 0,
+      "previousMinClearance": -2.1899605137112954,
+      "previousCrossings": 535
+    },
+    {
+      "angle": 24,
+      "minClearance": 2.380617280788489,
+      "crossings": 0,
+      "previousMinClearance": -1.9158692398076933,
+      "previousCrossings": 334
+    },
+    {
+      "angle": 25,
+      "minClearance": 2.3323158716486074,
+      "crossings": 0,
+      "previousMinClearance": -1.9055552792791395,
+      "previousCrossings": 224
+    },
+    {
+      "angle": 26,
+      "minClearance": 2.33351706903075,
+      "crossings": 0,
+      "previousMinClearance": -1.835433196500877,
+      "previousCrossings": 253
+    },
+    {
+      "angle": 27,
+      "minClearance": 2.370462714385934,
+      "crossings": 0,
+      "previousMinClearance": -1.7522490364445673,
+      "previousCrossings": 192
+    },
+    {
+      "angle": 28,
+      "minClearance": 2.3827953938400075,
+      "crossings": 0,
+      "previousMinClearance": -1.4828127261070323,
+      "previousCrossings": 99
+    },
+    {
+      "angle": 29,
+      "minClearance": 2.440086841576958,
+      "crossings": 0,
+      "previousMinClearance": -0.09013901021913526,
+      "previousCrossings": 0
+    },
+    {
+      "angle": 30,
+      "minClearance": 2.4611141110531047,
+      "crossings": 0,
+      "previousMinClearance": 0.7497494081570457,
+      "previousCrossings": 0
+    },
+    {
+      "angle": 31,
+      "minClearance": 2.4590198690339085,
+      "crossings": 0,
+      "previousMinClearance": 0.9307265395340466,
+      "previousCrossings": 0
+    },
+    {
+      "angle": 32,
+      "minClearance": 2.4441755519707917,
+      "crossings": 0,
+      "previousMinClearance": 1.2328461793309866,
+      "previousCrossings": 0
+    },
+    {
+      "angle": 33,
+      "minClearance": 2.4456137598595618,
+      "crossings": 0,
+      "previousMinClearance": 1.4313064304112262,
+      "previousCrossings": 0
+    },
+    {
+      "angle": 34,
+      "minClearance": 2.4270532965231792,
+      "crossings": 0,
+      "previousMinClearance": 1.6059729731694836,
+      "previousCrossings": 0
+    },
+    {
+      "angle": 35,
+      "minClearance": 2.414268269279636,
+      "crossings": 0,
+      "previousMinClearance": 1.7316081237876828,
+      "previousCrossings": 0
+    },
+    {
+      "angle": 36,
+      "minClearance": 2.3891577065116287,
+      "crossings": 0,
+      "previousMinClearance": 1.7265791022848704,
+      "previousCrossings": 0
+    },
+    {
+      "angle": 37,
+      "minClearance": 2.3749913541567453,
+      "crossings": 0,
+      "previousMinClearance": 1.6690384803721836,
+      "previousCrossings": 0
+    },
+    {
+      "angle": 38,
+      "minClearance": 2.3123048784154063,
+      "crossings": 0,
+      "previousMinClearance": 1.69700750739781,
+      "previousCrossings": 0
+    },
+    {
+      "angle": 39,
+      "minClearance": 2.252110849444121,
+      "crossings": 0,
+      "previousMinClearance": 1.7473507492546811,
+      "previousCrossings": 0
+    },
+    {
+      "angle": 40,
+      "minClearance": 2.194289474547336,
+      "crossings": 0,
+      "previousMinClearance": 1.8353281702766306,
+      "previousCrossings": 0
+    },
+    {
+      "angle": 41,
+      "minClearance": 2.143690793803397,
+      "crossings": 0,
+      "previousMinClearance": 1.8277562007294201,
+      "previousCrossings": 0
+    },
+    {
+      "angle": 42,
+      "minClearance": 2.0945332424080902,
+      "crossings": 0,
+      "previousMinClearance": 1.7175556116272328,
+      "previousCrossings": 0
+    },
+    {
+      "angle": 43,
+      "minClearance": 2.0468702165035237,
+      "crossings": 0,
+      "previousMinClearance": 1.6627149223733535,
+      "previousCrossings": 0
+    },
+    {
+      "angle": 44,
+      "minClearance": 2.009250289522352,
+      "crossings": 0,
+      "previousMinClearance": 1.6031476653195986,
+      "previousCrossings": 0
+    },
+    {
+      "angle": 45,
+      "minClearance": 2.0006065156493955,
+      "crossings": 0,
+      "previousMinClearance": 1.5781027918529285,
+      "previousCrossings": 0
+    },
+    {
+      "angle": 46,
+      "minClearance": 2.165422532737434,
+      "crossings": 0,
+      "previousMinClearance": 1.5383416583167995,
+      "previousCrossings": 0
+    },
+    {
+      "angle": 47,
+      "minClearance": 2.323095444035276,
+      "crossings": 0,
+      "previousMinClearance": 1.5150540832698653,
+      "previousCrossings": 0
+    },
+    {
+      "angle": 48,
+      "minClearance": 2.397721025690545,
+      "crossings": 0,
+      "previousMinClearance": 1.4308913402614634,
+      "previousCrossings": 0
+    },
+    {
+      "angle": 49,
+      "minClearance": 2.464993058069714,
+      "crossings": 0,
+      "previousMinClearance": 1.2311065207318124,
+      "previousCrossings": 0
+    },
+    {
+      "angle": 50,
+      "minClearance": 2.5715934190795258,
+      "crossings": 0,
+      "previousMinClearance": 1.1116812563730494,
+      "previousCrossings": 0
+    },
+    {
+      "angle": 51,
+      "minClearance": 2.5475906439790394,
+      "crossings": 0,
+      "previousMinClearance": 0.9521158144246916,
+      "previousCrossings": 0
+    },
+    {
+      "angle": 52,
+      "minClearance": 2.5391540728570914,
+      "crossings": 0,
+      "previousMinClearance": 0.8084735952279489,
+      "previousCrossings": 0
+    },
+    {
+      "angle": 53,
+      "minClearance": 2.532048840611619,
+      "crossings": 0,
+      "previousMinClearance": 0.6955539185656787,
+      "previousCrossings": 0
+    },
+    {
+      "angle": 54,
+      "minClearance": 2.518080033760719,
+      "crossings": 0,
+      "previousMinClearance": 0.3641048847208416,
+      "previousCrossings": 0
+    },
+    {
+      "angle": 55,
+      "minClearance": 2.4971620237748255,
+      "crossings": 0,
+      "previousMinClearance": 0.017481961555834202,
+      "previousCrossings": 0
+    },
+    {
+      "angle": 56,
+      "minClearance": 2.4870646280157778,
+      "crossings": 0,
+      "previousMinClearance": -1.1073946558784977,
+      "previousCrossings": 13
+    },
+    {
+      "angle": 57,
+      "minClearance": 2.4630152332521242,
+      "crossings": 0,
+      "previousMinClearance": -1.4373364504268544,
+      "previousCrossings": 48
+    },
+    {
+      "angle": 58,
+      "minClearance": 2.459085803745617,
+      "crossings": 0,
+      "previousMinClearance": -1.7171818681304674,
+      "previousCrossings": 73
+    },
+    {
+      "angle": 59,
+      "minClearance": 2.4655198211218217,
+      "crossings": 0,
+      "previousMinClearance": -2.133432208315121,
+      "previousCrossings": 89
+    },
+    {
+      "angle": 60,
+      "minClearance": 2.426867869994301,
+      "crossings": 0,
+      "previousMinClearance": -2.5682129358518364,
+      "previousCrossings": 98
+    },
+    {
+      "angle": 61,
+      "minClearance": 2.4744326917142514,
+      "crossings": 0,
+      "previousMinClearance": -2.495260619873515,
+      "previousCrossings": 110
+    },
+    {
+      "angle": 62,
+      "minClearance": 2.4335606235790417,
+      "crossings": 0,
+      "previousMinClearance": -2.648961666052696,
+      "previousCrossings": 115
+    },
+    {
+      "angle": 63,
+      "minClearance": 2.4406914259229864,
+      "crossings": 0,
+      "previousMinClearance": -2.424822241469193,
+      "previousCrossings": 121
+    },
+    {
+      "angle": 64,
+      "minClearance": 2.4431193030790928,
+      "crossings": 0,
+      "previousMinClearance": -2.4473595628941998,
+      "previousCrossings": 129
+    },
+    {
+      "angle": 65,
+      "minClearance": 2.3969674442242836,
+      "crossings": 0,
+      "previousMinClearance": -2.6183034508456338,
+      "previousCrossings": 129
+    },
+    {
+      "angle": 66,
+      "minClearance": 2.3937653645396053,
+      "crossings": 0,
+      "previousMinClearance": -2.4516731882234946,
+      "previousCrossings": 145
+    },
+    {
+      "angle": 67,
+      "minClearance": 2.4272286662360347,
+      "crossings": 0,
+      "previousMinClearance": -2.687475590408534,
+      "previousCrossings": 158
+    },
+    {
+      "angle": 68,
+      "minClearance": 2.3765334223660752,
+      "crossings": 0,
+      "previousMinClearance": -2.586353949366407,
+      "previousCrossings": 166
+    },
+    {
+      "angle": 69,
+      "minClearance": 2.389982781586542,
+      "crossings": 0,
+      "previousMinClearance": -2.595291041510716,
+      "previousCrossings": 164
+    },
+    {
+      "angle": 70,
+      "minClearance": 2.335524558242413,
+      "crossings": 0,
+      "previousMinClearance": -2.2814302074509665,
+      "previousCrossings": 156
+    },
+    {
+      "angle": 71,
+      "minClearance": 2.361454277729013,
+      "crossings": 0,
+      "previousMinClearance": -2.480294098605495,
+      "previousCrossings": 157
+    },
+    {
+      "angle": 72,
+      "minClearance": 2.3754147887544987,
+      "crossings": 0,
+      "previousMinClearance": -2.5767800390295084,
+      "previousCrossings": 168
+    },
+    {
+      "angle": 73,
+      "minClearance": 2.363455452458128,
+      "crossings": 0,
+      "previousMinClearance": -2.5039910070300246,
+      "previousCrossings": 178
+    },
+    {
+      "angle": 74,
+      "minClearance": 2.323180741166484,
+      "crossings": 0,
+      "previousMinClearance": -2.455717688574002,
+      "previousCrossings": 180
+    },
+    {
+      "angle": 75,
+      "minClearance": 2.3014268527473214,
+      "crossings": 0,
+      "previousMinClearance": -2.5956937000688636,
+      "previousCrossings": 172
+    },
+    {
+      "angle": 76,
+      "minClearance": 2.180553105659199,
+      "crossings": 0,
+      "previousMinClearance": -2.637265937880591,
+      "previousCrossings": 197
+    },
+    {
+      "angle": 77,
+      "minClearance": 2.06929727652441,
+      "crossings": 0,
+      "previousMinClearance": -2.3985661975390764,
+      "previousCrossings": 221
+    },
+    {
+      "angle": 78,
+      "minClearance": 1.9712422527623024,
+      "crossings": 0,
+      "previousMinClearance": -2.4712363578206773,
+      "previousCrossings": 238
+    },
+    {
+      "angle": 79,
+      "minClearance": 1.9359077881556517,
+      "crossings": 0,
+      "previousMinClearance": -2.490467126190238,
+      "previousCrossings": 241
+    },
+    {
+      "angle": 80,
+      "minClearance": 2.005435642430974,
+      "crossings": 0,
+      "previousMinClearance": -2.369878194150221,
+      "previousCrossings": 241
+    },
+    {
+      "angle": 81,
+      "minClearance": 2.029416557579012,
+      "crossings": 0,
+      "previousMinClearance": -2.342624725941804,
+      "previousCrossings": 234
+    },
+    {
+      "angle": 82,
+      "minClearance": 1.9904943107655595,
+      "crossings": 0,
+      "previousMinClearance": -2.3766732467208023,
+      "previousCrossings": 227
+    },
+    {
+      "angle": 83,
+      "minClearance": 1.8950227358465734,
+      "crossings": 0,
+      "previousMinClearance": -2.517438909379944,
+      "previousCrossings": 220
+    },
+    {
+      "angle": 84,
+      "minClearance": 1.9330041746238518,
+      "crossings": 0,
+      "previousMinClearance": -2.575244222398283,
+      "previousCrossings": 221
+    },
+    {
+      "angle": 85,
+      "minClearance": 1.9179019007562776,
+      "crossings": 0,
+      "previousMinClearance": -2.3219021919160405,
+      "previousCrossings": 219
+    },
+    {
+      "angle": 86,
+      "minClearance": 2.0159984021462263,
+      "crossings": 0,
+      "previousMinClearance": -2.385170509873969,
+      "previousCrossings": 213
+    },
+    {
+      "angle": 87,
+      "minClearance": 2.0349477430734124,
+      "crossings": 0,
+      "previousMinClearance": -2.4715295337397922,
+      "previousCrossings": 214
+    },
+    {
+      "angle": 88,
+      "minClearance": 2.2135956567265427,
+      "crossings": 0,
+      "previousMinClearance": -2.363609122287585,
+      "previousCrossings": 230
+    },
+    {
+      "angle": 89,
+      "minClearance": 2.2314044629189373,
+      "crossings": 0,
+      "previousMinClearance": -2.4135704276296175,
+      "previousCrossings": 232
+    },
+    {
+      "angle": 90,
+      "minClearance": 2.30529133325189,
+      "crossings": 0,
+      "previousMinClearance": -2.401316945866132,
+      "previousCrossings": 230
+    },
+    {
+      "angle": 91,
+      "minClearance": 2.2017025129680006,
+      "crossings": 0,
+      "previousMinClearance": -2.3026360538219364,
+      "previousCrossings": 246
+    },
+    {
+      "angle": 92,
+      "minClearance": 2.1350992564481643,
+      "crossings": 0,
+      "previousMinClearance": -2.3026476446965516,
+      "previousCrossings": 258
+    },
+    {
+      "angle": 93,
+      "minClearance": 2.0518316605656906,
+      "crossings": 0,
+      "previousMinClearance": -2.43899433176992,
+      "previousCrossings": 262
+    },
+    {
+      "angle": 94,
+      "minClearance": 1.8499921878363605,
+      "crossings": 0,
+      "previousMinClearance": -2.4334730313270283,
+      "previousCrossings": 256
+    },
+    {
+      "angle": 95,
+      "minClearance": 1.8646818399051641,
+      "crossings": 0,
+      "previousMinClearance": -2.512366196277246,
+      "previousCrossings": 257
+    },
+    {
+      "angle": 96,
+      "minClearance": 1.820323916341404,
+      "crossings": 0,
+      "previousMinClearance": -2.505888983105587,
+      "previousCrossings": 253
+    },
+    {
+      "angle": 97,
+      "minClearance": 1.6846608259576765,
+      "crossings": 0,
+      "previousMinClearance": -2.6112978711966033,
+      "previousCrossings": 269
+    },
+    {
+      "angle": 98,
+      "minClearance": 1.7347249269388412,
+      "crossings": 0,
+      "previousMinClearance": -2.656282865822049,
+      "previousCrossings": 265
+    },
+    {
+      "angle": 99,
+      "minClearance": 1.836177113799194,
+      "crossings": 0,
+      "previousMinClearance": -2.426623569730864,
+      "previousCrossings": 237
+    },
+    {
+      "angle": 100,
+      "minClearance": 1.7771041011252113,
+      "crossings": 0,
+      "previousMinClearance": -2.2896453585801586,
+      "previousCrossings": 242
+    },
+    {
+      "angle": 101,
+      "minClearance": 1.7299538361811488,
+      "crossings": 0,
+      "previousMinClearance": -2.429555748966557,
+      "previousCrossings": 267
+    },
+    {
+      "angle": 102,
+      "minClearance": 1.67275113849844,
+      "crossings": 0,
+      "previousMinClearance": -2.2941138199859563,
+      "previousCrossings": 258
+    },
+    {
+      "angle": 103,
+      "minClearance": 1.7094262988252105,
+      "crossings": 0,
+      "previousMinClearance": -2.5559874209420688,
+      "previousCrossings": 261
+    },
+    {
+      "angle": 104,
+      "minClearance": 1.5312892654228423,
+      "crossings": 0,
+      "previousMinClearance": -2.4285159860763548,
+      "previousCrossings": 239
+    },
+    {
+      "angle": 105,
+      "minClearance": 0.8932690339005492,
+      "crossings": 0,
+      "previousMinClearance": -2.5560347366770158,
+      "previousCrossings": 223
+    },
+    {
+      "angle": 106,
+      "minClearance": 0.7875297111761553,
+      "crossings": 0,
+      "previousMinClearance": -2.5717924597949877,
+      "previousCrossings": 230
+    },
+    {
+      "angle": 107,
+      "minClearance": 0.747239525966927,
+      "crossings": 0,
+      "previousMinClearance": -2.5486852480625783,
+      "previousCrossings": 271
+    },
+    {
+      "angle": 108,
+      "minClearance": 0.7612613780600258,
+      "crossings": 0,
+      "previousMinClearance": -2.4249168003938157,
+      "previousCrossings": 321
+    },
+    {
+      "angle": 109,
+      "minClearance": 0.8292317723658769,
+      "crossings": 0,
+      "previousMinClearance": -2.300002174792867,
+      "previousCrossings": 358
+    },
+    {
+      "angle": 110,
+      "minClearance": 0.9508805676840324,
+      "crossings": 0,
+      "previousMinClearance": -2.1183583835662088,
+      "previousCrossings": 365
+    },
+    {
+      "angle": 111,
+      "minClearance": 1.074751509475193,
+      "crossings": 0,
+      "previousMinClearance": -2.2293493988784667,
+      "previousCrossings": 391
+    },
+    {
+      "angle": 112,
+      "minClearance": 0.999923474960517,
+      "crossings": 0,
+      "previousMinClearance": -2.3969241335301756,
+      "previousCrossings": 420
+    },
+    {
+      "angle": 113,
+      "minClearance": 1.0333866836956482,
+      "crossings": 0,
+      "previousMinClearance": -2.3949863401280065,
+      "previousCrossings": 403
+    },
+    {
+      "angle": 114,
+      "minClearance": 0.8581657308867319,
+      "crossings": 0,
+      "previousMinClearance": -2.3044816512392456,
+      "previousCrossings": 363
+    },
+    {
+      "angle": 115,
+      "minClearance": 0.9878020761073203,
+      "crossings": 0,
+      "previousMinClearance": -2.5416665235356,
+      "previousCrossings": 325
+    },
+    {
+      "angle": 116,
+      "minClearance": 0.7412977015377663,
+      "crossings": 0,
+      "previousMinClearance": -2.3066816018858263,
+      "previousCrossings": 361
+    },
+    {
+      "angle": 117,
+      "minClearance": 0.5225788700323373,
+      "crossings": 0,
+      "previousMinClearance": -2.6282372441747412,
+      "previousCrossings": 404
+    },
+    {
+      "angle": 118,
+      "minClearance": 0.6878401748013142,
+      "crossings": 0,
+      "previousMinClearance": -2.619062008466376,
+      "previousCrossings": 453
+    },
+    {
+      "angle": 119,
+      "minClearance": 0.676135031955957,
+      "crossings": 0,
+      "previousMinClearance": -2.2218004047970834,
+      "previousCrossings": 494
+    },
+    {
+      "angle": 120,
+      "minClearance": 0.9598695468181684,
+      "crossings": 0,
+      "previousMinClearance": -2.4749456337471254,
+      "previousCrossings": 516
+    }
   ],
-  "bones": [
-    "scapula",
-    "clavicle",
-    "humerus",
-    "thorax"
-  ],
-  "additionalInteriorVertexFindings": [],
-  "gridStep": 1.25,
-  "criterion": "SDF < -0.8 and worse than that source vertex by > 0.5; source native intersections retained. Keyframe vertex samples, not a clinical or complete triangle contact certificate.",
-  "posteriorSurfaceMargin": 1.5,
-  "posteriorNeighborhoodCells": 5
+  "scope": "Previously clear native latissimus transition faces, sampled against the existing scapular signed-distance field. Excludes native contact/overlap; not exact triangle intersection certification."
 }

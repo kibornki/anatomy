@@ -5,6 +5,8 @@ import json
 import subprocess
 import re
 import numpy as np
+from scipy.sparse import coo_matrix
+from scipy.sparse.csgraph import connected_components
 
 w = Path(__file__).parent
 root = w.parents[1]
@@ -25,6 +27,8 @@ for part in data['parts']:
         assert part['fibers'] == before['fibers']
         continue
     v, f = np.asarray(part['v']), np.asarray(part['f'])
+    edges = np.concatenate([f[:, [0, 1]], f[:, [1, 2]], f[:, [2, 0]]])
+    _, component = connected_components(coo_matrix((np.ones(len(edges)), (edges[:, 0], edges[:, 1])), shape=(len(v), len(v))), directed=False)
     origins = np.array([path['origin'] for path in part['regionalPathways']])
     assert np.max(np.abs(origins[:, 0])) <= .8 + 1e-8
     assert origins[:, 1].min() < 250 and origins[:, 1].max() < 390
@@ -45,6 +49,7 @@ for part in data['parts']:
     assert error < 1e-7
     partition_error = max(partition_error, error)
     for guide in part['surfaceGuides']:
+        assert len({component[f[point[0], 0]] for point in guide['points']}) == 1, 'A fiber jumped between disconnected native shells'
         for face, *weights in guide['points']:
             assert 0 <= face < len(f) and min(weights) >= -1e-7 and abs(sum(weights) - 1) < 2e-8
             guide_points += 1
@@ -63,10 +68,8 @@ for frame, before in zip(data['frames'], old['frames']):
         current_slice = a[part['frameOffset']:part['frameOffset'] + count]
         previous_slice = b[before_part['frameOffset']:before_part['frameOffset'] + count]
         if part['name'] == 'latissimus':
-            baseline = np.frombuffer(base64.b64decode(frame['latissimusAxillaryBase']), dtype='<i2')
-            assert np.array_equal(baseline, previous_slice)
             locked = part['attachments']['origin'] + part['attachments']['insertion']
-            assert np.array_equal(current_slice.reshape(-1, 3)[locked], baseline.reshape(-1, 3)[locked])
+            assert np.array_equal(current_slice.reshape(-1, 3)[locked], previous_slice.reshape(-1, 3)[locked])
         else:
             assert np.array_equal(current_slice, previous_slice)
 

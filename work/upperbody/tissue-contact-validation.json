@@ -1,0 +1,866 @@
+{
+  "poses": [
+    {
+      "angle": 15.0,
+      "tissues": {
+        "serratus": {
+          "samples": 105429,
+          "minClearance": 1.0328615721583512,
+          "crossings": 0
+        },
+        "trapezius-lower": {
+          "samples": 103134,
+          "minClearance": 0.9328000000000002,
+          "crossings": 0
+        },
+        "teres-major": {
+          "samples": 101872,
+          "minClearance": 0.8939525971326177,
+          "crossings": 0
+        }
+      }
+    },
+    {
+      "angle": 17.5,
+      "tissues": {
+        "serratus": {
+          "samples": 105429,
+          "minClearance": 1.0816334378666619,
+          "crossings": 0
+        },
+        "trapezius-lower": {
+          "samples": 103134,
+          "minClearance": 0.8167134728871303,
+          "crossings": 0
+        },
+        "teres-major": {
+          "samples": 101872,
+          "minClearance": 0.4196454381181727,
+          "crossings": 0
+        }
+      }
+    },
+    {
+      "angle": 20.0,
+      "tissues": {
+        "serratus": {
+          "samples": 105429,
+          "minClearance": 0.9259784734864763,
+          "crossings": 0
+        },
+        "trapezius-lower": {
+          "samples": 103134,
+          "minClearance": 0.8979401438064585,
+          "crossings": 0
+        },
+        "teres-major": {
+          "samples": 101872,
+          "minClearance": 1.0010904342873006,
+          "crossings": 0
+        }
+      }
+    },
+    {
+      "angle": 22.5,
+      "tissues": {
+        "serratus": {
+          "samples": 105429,
+          "minClearance": 1.2007882997619967,
+          "crossings": 0
+        },
+        "trapezius-lower": {
+          "samples": 103134,
+          "minClearance": 0.8611994423308614,
+          "crossings": 0
+        },
+        "teres-major": {
+          "samples": 101872,
+          "minClearance": 0.40658781614914036,
+          "crossings": 0
+        }
+      }
+    },
+    {
+      "angle": 25.0,
+      "tissues": {
+        "serratus": {
+          "samples": 105429,
+          "minClearance": 0.8642444324345036,
+          "crossings": 0
+        },
+        "trapezius-lower": {
+          "samples": 103134,
+          "minClearance": 0.8794815785189967,
+          "crossings": 0
+        },
+        "teres-major": {
+          "samples": 101872,
+          "minClearance": 1.0197014984330206,
+          "crossings": 0
+        }
+      }
+    },
+    {
+      "angle": 27.5,
+      "tissues": {
+        "serratus": {
+          "samples": 105429,
+          "minClearance": 0.38344127729995325,
+          "crossings": 0
+        },
+        "trapezius-lower": {
+          "samples": 103134,
+          "minClearance": 0.8578274275555544,
+          "crossings": 0
+        },
+        "teres-major": {
+          "samples": 101872,
+          "minClearance": -0.18924898950890354,
+          "crossings": 0
+        }
+      }
+    },
+    {
+      "angle": 30.0,
+      "tissues": {
+        "serratus": {
+          "samples": 105429,
+          "minClearance": 1.0833457935344466,
+          "crossings": 0
+        },
+        "trapezius-lower": {
+          "samples": 103134,
+          "minClearance": 0.9224520958963645,
+          "crossings": 0
+        },
+        "teres-major": {
+          "samples": 101872,
+          "minClearance": 0.8685267081481707,
+          "crossings": 0
+        }
+      }
+    },
+    {
+      "angle": 32.5,
+      "tissues": {
+        "serratus": {
+          "samples": 105429,
+          "minClearance": 0.18404513580249107,
+          "crossings": 0
+        },
+        "trapezius-lower": {
+          "samples": 103134,
+          "minClearance": 0.8584444444444461,
+          "crossings": 0
+        },
+        "teres-major": {
+          "samples": 101872,
+          "minClearance": 0.5688437684076972,
+          "crossings": 0
+        }
+      }
+    },
+    {
+      "angle": 35.0,
+      "tissues": {
+        "serratus": {
+          "samples": 105429,
+          "minClearance": 0.9638917521709565,
+          "crossings": 0
+        },
+        "trapezius-lower": {
+          "samples": 103134,
+          "minClearance": 0.9202666666666648,
+          "crossings": 0
+        },
+        "teres-major": {
+          "samples": 101872,
+          "minClearance": 0.947952120196426,
+          "crossings": 0
+        }
+      }
+    },
+    {
+      "angle": 37.5,
+      "tissues": {
+        "serratus": {
+          "samples": 105429,
+          "minClearance": 1.2715031996444952,
+          "crossings": 0
+        },
+        "trapezius-lower": {
+          "samples": 103134,
+          "minClearance": 0.9026517293827117,
+          "crossings": 0
+        },
+        "teres-major": {
+          "samples": 101872,
+          "minClearance": 1.1662226704978862,
+          "crossings": 0
+        }
+      }
+    },
+    {
+      "angle": 40.0,
+      "tissues": {
+        "serratus": {
+          "samples": 105429,
+          "minClearance": 1.0813920301137283,
+          "crossings": 0
+        },
+        "trapezius-lower": {
+          "samples": 103134,
+          "minClearance": 0.8531400019753499,
+          "crossings": 0
+        },
+        "teres-major": {
+          "samples": 101872,
+          "minClearance": 0.9089265938322371,
+          "crossings": 0
+        }
+      }
+    },
+    {
+      "angle": 42.5,
+      "tissues": {
+        "serratus": {
+          "samples": 105429,
+          "minClearance": 1.069867581799238,
+          "crossings": 0
+        },
+        "trapezius-lower": {
+          "samples": 103134,
+          "minClearance": 0.7590394112000085,
+          "crossings": 0
+        },
+        "teres-major": {
+          "samples": 101872,
+          "minClearance": 0.25316576393560586,
+          "crossings": 0
+        }
+      }
+    },
+    {
+      "angle": 45.0,
+      "tissues": {
+        "serratus": {
+          "samples": 105429,
+          "minClearance": 0.8547594824691137,
+          "crossings": 0
+        },
+        "trapezius-lower": {
+          "samples": 103134,
+          "minClearance": 0.8796444444444429,
+          "crossings": 0
+        },
+        "teres-major": {
+          "samples": 101872,
+          "minClearance": 0.9349852524047714,
+          "crossings": 0
+        }
+      }
+    },
+    {
+      "angle": 47.5,
+      "tissues": {
+        "serratus": {
+          "samples": 105429,
+          "minClearance": 0.8752506666667071,
+          "crossings": 0
+        },
+        "trapezius-lower": {
+          "samples": 103134,
+          "minClearance": 0.7811437828505403,
+          "crossings": 0
+        },
+        "teres-major": {
+          "samples": 101872,
+          "minClearance": 0.9863477974205684,
+          "crossings": 0
+        }
+      }
+    },
+    {
+      "angle": 50.0,
+      "tissues": {
+        "serratus": {
+          "samples": 105429,
+          "minClearance": 1.015247339934435,
+          "crossings": 0
+        },
+        "trapezius-lower": {
+          "samples": 103134,
+          "minClearance": 0.8709388023873056,
+          "crossings": 0
+        },
+        "teres-major": {
+          "samples": 101872,
+          "minClearance": 0.9853219671660172,
+          "crossings": 0
+        }
+      }
+    },
+    {
+      "angle": 52.5,
+      "tissues": {
+        "serratus": {
+          "samples": 105429,
+          "minClearance": 0.7720502716049238,
+          "crossings": 0
+        },
+        "trapezius-lower": {
+          "samples": 103134,
+          "minClearance": 0.8581301918932307,
+          "crossings": 0
+        },
+        "teres-major": {
+          "samples": 101872,
+          "minClearance": 0.9308945865631711,
+          "crossings": 0
+        }
+      }
+    },
+    {
+      "angle": 55.0,
+      "tissues": {
+        "serratus": {
+          "samples": 105429,
+          "minClearance": 1.6045130285037148,
+          "crossings": 0
+        },
+        "trapezius-lower": {
+          "samples": 103134,
+          "minClearance": 0.8989416564438631,
+          "crossings": 0
+        },
+        "teres-major": {
+          "samples": 101872,
+          "minClearance": 0.9035177297366639,
+          "crossings": 0
+        }
+      }
+    },
+    {
+      "angle": 57.5,
+      "tissues": {
+        "serratus": {
+          "samples": 105429,
+          "minClearance": 0.6389973883106324,
+          "crossings": 0
+        },
+        "trapezius-lower": {
+          "samples": 103134,
+          "minClearance": 0.9141231478518543,
+          "crossings": 0
+        },
+        "teres-major": {
+          "samples": 101872,
+          "minClearance": 0.5276727205925897,
+          "crossings": 0
+        }
+      }
+    },
+    {
+      "angle": 60.0,
+      "tissues": {
+        "serratus": {
+          "samples": 105429,
+          "minClearance": 0.9490337321903489,
+          "crossings": 0
+        },
+        "trapezius-lower": {
+          "samples": 103134,
+          "minClearance": 0.9003966964938273,
+          "crossings": 0
+        },
+        "teres-major": {
+          "samples": 101872,
+          "minClearance": 0.918981724156837,
+          "crossings": 0
+        }
+      }
+    },
+    {
+      "angle": 62.5,
+      "tissues": {
+        "serratus": {
+          "samples": 105429,
+          "minClearance": 1.3652477037037563,
+          "crossings": 0
+        },
+        "trapezius-lower": {
+          "samples": 103134,
+          "minClearance": 0.761748261925926,
+          "crossings": 0
+        },
+        "teres-major": {
+          "samples": 101872,
+          "minClearance": 0.8622057666370034,
+          "crossings": 0
+        }
+      }
+    },
+    {
+      "angle": 65.0,
+      "tissues": {
+        "serratus": {
+          "samples": 105429,
+          "minClearance": 1.6928962358191935,
+          "crossings": 0
+        },
+        "trapezius-lower": {
+          "samples": 103134,
+          "minClearance": 0.8747943893333394,
+          "crossings": 0
+        },
+        "teres-major": {
+          "samples": 101872,
+          "minClearance": 0.9916230110814801,
+          "crossings": 0
+        }
+      }
+    },
+    {
+      "angle": 67.5,
+      "tissues": {
+        "serratus": {
+          "samples": 105429,
+          "minClearance": 1.290285170945928,
+          "crossings": 0
+        },
+        "trapezius-lower": {
+          "samples": 103134,
+          "minClearance": 0.8681084752592596,
+          "crossings": 0
+        },
+        "teres-major": {
+          "samples": 101872,
+          "minClearance": 0.3583926858271853,
+          "crossings": 0
+        }
+      }
+    },
+    {
+      "angle": 70.0,
+      "tissues": {
+        "serratus": {
+          "samples": 105429,
+          "minClearance": 1.5703888888888873,
+          "crossings": 0
+        },
+        "trapezius-lower": {
+          "samples": 103134,
+          "minClearance": 0.8501308955716067,
+          "crossings": 0
+        },
+        "teres-major": {
+          "samples": 101872,
+          "minClearance": 0.886207761794096,
+          "crossings": 0
+        }
+      }
+    },
+    {
+      "angle": 72.5,
+      "tissues": {
+        "serratus": {
+          "samples": 105429,
+          "minClearance": 1.550544444444455,
+          "crossings": 0
+        },
+        "trapezius-lower": {
+          "samples": 103134,
+          "minClearance": 0.7756742287802483,
+          "crossings": 0
+        },
+        "teres-major": {
+          "samples": 101872,
+          "minClearance": 0.005933333333327833,
+          "crossings": 0
+        }
+      }
+    },
+    {
+      "angle": 75.0,
+      "tissues": {
+        "serratus": {
+          "samples": 105429,
+          "minClearance": 1.640973024914958,
+          "crossings": 0
+        },
+        "trapezius-lower": {
+          "samples": 103134,
+          "minClearance": 0.8740000000000014,
+          "crossings": 0
+        },
+        "teres-major": {
+          "samples": 101872,
+          "minClearance": 0.8903758802172546,
+          "crossings": 0
+        }
+      }
+    },
+    {
+      "angle": 77.5,
+      "tissues": {
+        "serratus": {
+          "samples": 105429,
+          "minClearance": 1.5381666666666671,
+          "crossings": 0
+        },
+        "trapezius-lower": {
+          "samples": 103134,
+          "minClearance": 0.7248888888888904,
+          "crossings": 0
+        },
+        "teres-major": {
+          "samples": 101872,
+          "minClearance": 0.7911243012907673,
+          "crossings": 0
+        }
+      }
+    },
+    {
+      "angle": 80.0,
+      "tissues": {
+        "serratus": {
+          "samples": 105429,
+          "minClearance": 1.3664585159439309,
+          "crossings": 0
+        },
+        "trapezius-lower": {
+          "samples": 103134,
+          "minClearance": 0.8521296337247182,
+          "crossings": 0
+        },
+        "teres-major": {
+          "samples": 101872,
+          "minClearance": 0.9238812657777989,
+          "crossings": 0
+        }
+      }
+    },
+    {
+      "angle": 82.5,
+      "tissues": {
+        "serratus": {
+          "samples": 105429,
+          "minClearance": 1.1308000000000185,
+          "crossings": 0
+        },
+        "trapezius-lower": {
+          "samples": 103134,
+          "minClearance": -0.005579141152479328,
+          "crossings": 0
+        },
+        "teres-major": {
+          "samples": 101872,
+          "minClearance": 0.23184423679999383,
+          "crossings": 0
+        }
+      }
+    },
+    {
+      "angle": 85.0,
+      "tissues": {
+        "serratus": {
+          "samples": 105429,
+          "minClearance": 0.9616497960132357,
+          "crossings": 0
+        },
+        "trapezius-lower": {
+          "samples": 103134,
+          "minClearance": 0.8573849172097745,
+          "crossings": 0
+        },
+        "teres-major": {
+          "samples": 101872,
+          "minClearance": 0.9381777735111421,
+          "crossings": 0
+        }
+      }
+    },
+    {
+      "angle": 87.5,
+      "tissues": {
+        "serratus": {
+          "samples": 105429,
+          "minClearance": 1.1308000000000187,
+          "crossings": 0
+        },
+        "trapezius-lower": {
+          "samples": 103134,
+          "minClearance": 0.8392371858431038,
+          "crossings": 0
+        },
+        "teres-major": {
+          "samples": 101872,
+          "minClearance": 0.6495829673086476,
+          "crossings": 0
+        }
+      }
+    },
+    {
+      "angle": 90.0,
+      "tissues": {
+        "serratus": {
+          "samples": 105429,
+          "minClearance": 1.501468894340737,
+          "crossings": 0
+        },
+        "trapezius-lower": {
+          "samples": 103134,
+          "minClearance": 0.9148926806913557,
+          "crossings": 0
+        },
+        "teres-major": {
+          "samples": 101872,
+          "minClearance": 0.9960161834666822,
+          "crossings": 0
+        }
+      }
+    },
+    {
+      "angle": 92.5,
+      "tissues": {
+        "serratus": {
+          "samples": 105429,
+          "minClearance": 1.090800000000005,
+          "crossings": 0
+        },
+        "trapezius-lower": {
+          "samples": 103134,
+          "minClearance": 0.9158764476049356,
+          "crossings": 0
+        },
+        "teres-major": {
+          "samples": 101872,
+          "minClearance": 0.46540874445433583,
+          "crossings": 0
+        }
+      }
+    },
+    {
+      "angle": 95.0,
+      "tissues": {
+        "serratus": {
+          "samples": 105429,
+          "minClearance": 1.5181666666666693,
+          "crossings": 0
+        },
+        "trapezius-lower": {
+          "samples": 103134,
+          "minClearance": 0.8684225416564157,
+          "crossings": 0
+        },
+        "teres-major": {
+          "samples": 101872,
+          "minClearance": 0.9654422906083093,
+          "crossings": 0
+        }
+      }
+    },
+    {
+      "angle": 97.5,
+      "tissues": {
+        "serratus": {
+          "samples": 105429,
+          "minClearance": 1.3406517070172064,
+          "crossings": 0
+        },
+        "trapezius-lower": {
+          "samples": 103134,
+          "minClearance": 0.6949815249450803,
+          "crossings": 0
+        },
+        "teres-major": {
+          "samples": 101872,
+          "minClearance": 1.1571125995835643,
+          "crossings": 0
+        }
+      }
+    },
+    {
+      "angle": 100.0,
+      "tissues": {
+        "serratus": {
+          "samples": 105429,
+          "minClearance": 1.3437222222222278,
+          "crossings": 0
+        },
+        "trapezius-lower": {
+          "samples": 103134,
+          "minClearance": 0.9012968424484886,
+          "crossings": 0
+        },
+        "teres-major": {
+          "samples": 101872,
+          "minClearance": 0.9250288249986605,
+          "crossings": 0
+        }
+      }
+    },
+    {
+      "angle": 102.5,
+      "tissues": {
+        "serratus": {
+          "samples": 105429,
+          "minClearance": 1.1744851102716767,
+          "crossings": 0
+        },
+        "trapezius-lower": {
+          "samples": 103134,
+          "minClearance": 0.7567999999999975,
+          "crossings": 0
+        },
+        "teres-major": {
+          "samples": 101872,
+          "minClearance": 0.9033241654275203,
+          "crossings": 0
+        }
+      }
+    },
+    {
+      "angle": 105.0,
+      "tissues": {
+        "serratus": {
+          "samples": 105429,
+          "minClearance": 1.5303912653333254,
+          "crossings": 0
+        },
+        "trapezius-lower": {
+          "samples": 103134,
+          "minClearance": 0.8588677184576815,
+          "crossings": 0
+        },
+        "teres-major": {
+          "samples": 101872,
+          "minClearance": 1.1016279249007324,
+          "crossings": 0
+        }
+      }
+    },
+    {
+      "angle": 107.5,
+      "tissues": {
+        "serratus": {
+          "samples": 105429,
+          "minClearance": 0.8395845518687384,
+          "crossings": 0
+        },
+        "trapezius-lower": {
+          "samples": 103134,
+          "minClearance": 0.8682536477724364,
+          "crossings": 0
+        },
+        "teres-major": {
+          "samples": 101872,
+          "minClearance": 0.3336494100041236,
+          "crossings": 0
+        }
+      }
+    },
+    {
+      "angle": 110.0,
+      "tissues": {
+        "serratus": {
+          "samples": 105429,
+          "minClearance": 1.3141081663796426,
+          "crossings": 0
+        },
+        "trapezius-lower": {
+          "samples": 103134,
+          "minClearance": 0.8626666666666649,
+          "crossings": 0
+        },
+        "teres-major": {
+          "samples": 101872,
+          "minClearance": 0.941849660523447,
+          "crossings": 0
+        }
+      }
+    },
+    {
+      "angle": 112.5,
+      "tissues": {
+        "serratus": {
+          "samples": 105429,
+          "minClearance": 0.5404840399012119,
+          "crossings": 0
+        },
+        "trapezius-lower": {
+          "samples": 103134,
+          "minClearance": 0.4753392156445191,
+          "crossings": 0
+        },
+        "teres-major": {
+          "samples": 101872,
+          "minClearance": 0.8271448138237966,
+          "crossings": 0
+        }
+      }
+    },
+    {
+      "angle": 115.0,
+      "tissues": {
+        "serratus": {
+          "samples": 105429,
+          "minClearance": 0.9870562129909036,
+          "crossings": 0
+        },
+        "trapezius-lower": {
+          "samples": 103134,
+          "minClearance": 0.89377777777778,
+          "crossings": 0
+        },
+        "teres-major": {
+          "samples": 101872,
+          "minClearance": 1.3163322593009,
+          "crossings": 0
+        }
+      }
+    },
+    {
+      "angle": 117.5,
+      "tissues": {
+        "serratus": {
+          "samples": 105429,
+          "minClearance": 0.888698409244506,
+          "crossings": 0
+        },
+        "trapezius-lower": {
+          "samples": 103134,
+          "minClearance": 0.8798302554074047,
+          "crossings": 0
+        },
+        "teres-major": {
+          "samples": 101872,
+          "minClearance": 0.7532433216790211,
+          "crossings": 0
+        }
+      }
+    },
+    {
+      "angle": 120.0,
+      "tissues": {
+        "serratus": {
+          "samples": 105429,
+          "minClearance": 0.918009579544361,
+          "crossings": 0
+        },
+        "trapezius-lower": {
+          "samples": 103134,
+          "minClearance": 0.8718588894814848,
+          "crossings": 0
+        },
+        "teres-major": {
+          "samples": 101872,
+          "minClearance": 0.9491464093477748,
+          "crossings": 0
+        }
+      }
+    }
+  ],
+  "crossings": 0,
+  "scope": "Check saved and halfway poses for added free-face muscle penetration.\n\nPreserve source overlaps and fixed attachment-only samples. The signed-distance\nfield is a voxel approximation; this does not certify exact triangle contact."
+}

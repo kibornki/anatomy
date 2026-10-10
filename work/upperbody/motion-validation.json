@@ -1,7 +1,7 @@
 {
   "poses": 106,
   "maxAttachmentError": 0.06950376993887374,
-  "maxVolumeError": 0.00827562691156869,
+  "maxVolumeError": 0.005156417366200872,
   "maxRigidError": 1.9895196601282805e-13,
   "maxStep": 4.133970585554312,
   "muscleNames": [

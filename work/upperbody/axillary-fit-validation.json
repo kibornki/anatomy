@@ -1,0 +1,332 @@
+[
+  {
+    "angle": 15,
+    "bad": 0,
+    "clearance": -0.10005692159996478,
+    "volumeRatio": 1.0000000000000024,
+    "iterations": 131,
+    "fields": {
+      "scapula": 0,
+      "clavicle": 0,
+      "humerus": 0,
+      "thorax": 0,
+      "teres-major": 0,
+      "serratus": 0
+    }
+  },
+  {
+    "angle": 20,
+    "bad": 0,
+    "clearance": -0.5235103948545107,
+    "volumeRatio": 1.0000000000000013,
+    "iterations": 131,
+    "fields": {
+      "scapula": 0,
+      "clavicle": 0,
+      "humerus": 0,
+      "thorax": 0,
+      "teres-major": 4,
+      "serratus": 0
+    }
+  },
+  {
+    "angle": 25,
+    "bad": 0,
+    "clearance": -0.15817352250234495,
+    "volumeRatio": 1.0000000000000022,
+    "iterations": 131,
+    "fields": {
+      "scapula": 0,
+      "clavicle": 0,
+      "humerus": 0,
+      "thorax": 0,
+      "teres-major": 0,
+      "serratus": 0
+    }
+  },
+  {
+    "angle": 30,
+    "bad": 0,
+    "clearance": -0.19309255682314796,
+    "volumeRatio": 1.000000000000002,
+    "iterations": 131,
+    "fields": {
+      "scapula": 0,
+      "clavicle": 0,
+      "humerus": 0,
+      "thorax": 0,
+      "teres-major": 0,
+      "serratus": 0
+    }
+  },
+  {
+    "angle": 35,
+    "bad": 0,
+    "clearance": -0.3732420300900463,
+    "volumeRatio": 1.0,
+    "iterations": 131,
+    "fields": {
+      "scapula": 0,
+      "clavicle": 0,
+      "humerus": 0,
+      "thorax": 0,
+      "teres-major": 2,
+      "serratus": 0
+    }
+  },
+  {
+    "angle": 40,
+    "bad": 0,
+    "clearance": -0.4256170377577999,
+    "volumeRatio": 1.0000000000000038,
+    "iterations": 131,
+    "fields": {
+      "scapula": 0,
+      "clavicle": 0,
+      "humerus": 0,
+      "thorax": 0,
+      "teres-major": 2,
+      "serratus": 0
+    }
+  },
+  {
+    "angle": 45,
+    "bad": 0,
+    "clearance": 0.09782810558277895,
+    "volumeRatio": 1.0000000000000002,
+    "iterations": 131,
+    "fields": {
+      "scapula": 0,
+      "clavicle": 0,
+      "humerus": 0,
+      "thorax": 0,
+      "teres-major": 0,
+      "serratus": 0
+    }
+  },
+  {
+    "angle": 50,
+    "bad": 0,
+    "clearance": -0.31079865652433675,
+    "volumeRatio": 0.9999999999999967,
+    "iterations": 131,
+    "fields": {
+      "scapula": 0,
+      "clavicle": 0,
+      "humerus": 0,
+      "thorax": 0,
+      "teres-major": 1,
+      "serratus": 0
+    }
+  },
+  {
+    "angle": 55,
+    "bad": 0,
+    "clearance": -0.09355381335616322,
+    "volumeRatio": 0.9999999999999986,
+    "iterations": 131,
+    "fields": {
+      "scapula": 0,
+      "clavicle": 0,
+      "humerus": 0,
+      "thorax": 0,
+      "teres-major": 0,
+      "serratus": 0
+    }
+  },
+  {
+    "angle": 60,
+    "bad": 0,
+    "clearance": -0.17752800133915853,
+    "volumeRatio": 0.9999999999999993,
+    "iterations": 131,
+    "fields": {
+      "scapula": 0,
+      "clavicle": 0,
+      "humerus": 0,
+      "thorax": 0,
+      "teres-major": 0,
+      "serratus": 0
+    }
+  },
+  {
+    "angle": 65,
+    "bad": 0,
+    "clearance": -0.2718193617886755,
+    "volumeRatio": 1.000000000000001,
+    "iterations": 131,
+    "fields": {
+      "scapula": 0,
+      "clavicle": 0,
+      "humerus": 0,
+      "thorax": 0,
+      "teres-major": 2,
+      "serratus": 0
+    }
+  },
+  {
+    "angle": 70,
+    "bad": 0,
+    "clearance": -0.3227071016865457,
+    "volumeRatio": 1.0000000000000018,
+    "iterations": 131,
+    "fields": {
+      "scapula": 0,
+      "clavicle": 0,
+      "humerus": 0,
+      "thorax": 0,
+      "teres-major": 1,
+      "serratus": 0
+    }
+  },
+  {
+    "angle": 75,
+    "bad": 0,
+    "clearance": -0.20783969543370515,
+    "volumeRatio": 0.9999999999999993,
+    "iterations": 131,
+    "fields": {
+      "scapula": 0,
+      "clavicle": 0,
+      "humerus": 0,
+      "thorax": 0,
+      "teres-major": 0,
+      "serratus": 0
+    }
+  },
+  {
+    "angle": 80,
+    "bad": 0,
+    "clearance": -0.4605174714926664,
+    "volumeRatio": 0.9999999999999986,
+    "iterations": 131,
+    "fields": {
+      "scapula": 0,
+      "clavicle": 0,
+      "humerus": 0,
+      "thorax": 0,
+      "teres-major": 6,
+      "serratus": 0
+    }
+  },
+  {
+    "angle": 85,
+    "bad": 0,
+    "clearance": 0.20350446930415744,
+    "volumeRatio": 1.000000000000001,
+    "iterations": 131,
+    "fields": {
+      "scapula": 0,
+      "clavicle": 0,
+      "humerus": 0,
+      "thorax": 0,
+      "teres-major": 0,
+      "serratus": 0
+    }
+  },
+  {
+    "angle": 90,
+    "bad": 0,
+    "clearance": -0.38293691441226874,
+    "volumeRatio": 0.9999999999999983,
+    "iterations": 131,
+    "fields": {
+      "scapula": 0,
+      "clavicle": 0,
+      "humerus": 0,
+      "thorax": 0,
+      "teres-major": 2,
+      "serratus": 0
+    }
+  },
+  {
+    "angle": 95,
+    "bad": 0,
+    "clearance": -0.23682547865909712,
+    "volumeRatio": 0.9999999999999971,
+    "iterations": 131,
+    "fields": {
+      "scapula": 0,
+      "clavicle": 0,
+      "humerus": 0,
+      "thorax": 0,
+      "teres-major": 0,
+      "serratus": 0
+    }
+  },
+  {
+    "angle": 100,
+    "bad": 0,
+    "clearance": -0.0938580670146397,
+    "volumeRatio": 1.0,
+    "iterations": 131,
+    "fields": {
+      "scapula": 0,
+      "clavicle": 0,
+      "humerus": 0,
+      "thorax": 0,
+      "teres-major": 0,
+      "serratus": 0
+    }
+  },
+  {
+    "angle": 105,
+    "bad": 0,
+    "clearance": 0.014159353996286206,
+    "volumeRatio": 1.0000000000000004,
+    "iterations": 131,
+    "fields": {
+      "scapula": 0,
+      "clavicle": 0,
+      "humerus": 0,
+      "thorax": 0,
+      "teres-major": 0,
+      "serratus": 0
+    }
+  },
+  {
+    "angle": 110,
+    "bad": 0,
+    "clearance": -0.11155905786432048,
+    "volumeRatio": 1.0000000000000004,
+    "iterations": 132,
+    "fields": {
+      "scapula": 0,
+      "clavicle": 0,
+      "humerus": 0,
+      "thorax": 0,
+      "teres-major": 0,
+      "serratus": 0
+    }
+  },
+  {
+    "angle": 115,
+    "bad": 0,
+    "clearance": -0.24804710140843328,
+    "volumeRatio": 0.9999999999999983,
+    "iterations": 135,
+    "fields": {
+      "scapula": 1,
+      "clavicle": 0,
+      "humerus": 0,
+      "thorax": 0,
+      "teres-major": 0,
+      "serratus": 0
+    }
+  },
+  {
+    "angle": 120,
+    "bad": 0,
+    "clearance": -0.007102491100807629,
+    "volumeRatio": 0.9999999999999983,
+    "iterations": 180,
+    "fields": {
+      "scapula": 0,
+      "clavicle": 0,
+      "humerus": 0,
+      "thorax": 0,
+      "teres-major": 0,
+      "serratus": 0
+    }
+  }
+]

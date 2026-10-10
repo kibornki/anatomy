@@ -1,6 +1,6 @@
 {
   "frames": 22,
-  "guidePoints": 15156,
+  "guidePoints": 11784,
   "maxMaterialPartitionAreaError": 6.465938895416912e-13,
   "nativeNeutralSurfacesUnchanged": true,
   "otherMusclesAndPosesUnchanged": true,
@@ -9,6 +9,5 @@
   "regionalOriginsAtMedialBand": true,
   "endpointChosenFromNativeHumeralInsertion": true,
   "waypointAtLateralAxillaryTransition": true,
-  "scope": "Triangle material partition and surface-attached authored guides; borders and paths are illustrative, not measured anatomical segmentation or fascicle data.",
-  "maxAdditionalBoneIntrusionVsBaseline": 0.009322980655642354
+  "scope": "Triangle material partition and surface-attached authored guides; borders and paths are illustrative, not measured anatomical segmentation or fascicle data."
 }

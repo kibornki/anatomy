@@ -9,6 +9,8 @@ import base64
 import json
 import numpy as np
 from scipy.interpolate import PchipInterpolator
+from scipy.sparse import coo_matrix
+from scipy.sparse.csgraph import connected_components
 
 border = PchipInterpolator([295, 320, 340, 360, 380, 400, 425], [0, 3, 8, 16, 25, 38, 52], extrapolate=False)
 
@@ -30,6 +32,10 @@ def tissue(point):
 def author(part):
     v, f = np.asarray(part['v']), np.asarray(part['f'])
     triangles = v[f]
+    edges = np.concatenate([f[:, [0, 1]], f[:, [1, 2]], f[:, [2, 0]]])
+    graph = coo_matrix((np.ones(len(edges)), (edges[:, 0], edges[:, 1])), shape=(len(v), len(v)))
+    _, components = connected_components(graph, directed=False)
+    face_component = components[f[:, 0]]
     fields = np.array([tissue(point) for point in v])
     patches = {'muscle': [], 'aponeurosis': []}
     eye = np.eye(3)
@@ -54,11 +60,11 @@ def author(part):
     valid_face = np.abs(determinant) > 1e-9
     divisor = np.where(valid_face, determinant, 1)
 
-    def project(xy):
+    def project(xy, component):
         delta = xy - a[:, :2]
         b = (delta[:, 0] * w[:, 1] - delta[:, 1] * w[:, 0]) / divisor
         c = (u[:, 0] * delta[:, 1] - u[:, 1] * delta[:, 0]) / divisor
-        ids = np.flatnonzero(valid_face & (b >= -1e-8) & (c >= -1e-8) & (b + c <= 1 + 1e-8))
+        ids = np.flatnonzero(valid_face & (face_component == component) & (b >= -1e-8) & (c >= -1e-8) & (b + c <= 1 + 1e-8))
         if not len(ids):
             return None
         z = a[ids, 2] + b[ids] * u[ids, 2] + c[ids] * w[ids, 2]
@@ -68,7 +74,9 @@ def author(part):
 
     guides = []
 
-    def trace(origin, target, fold=None):
+    def trace(origin, target, fold=None, component=None):
+        if component is None:
+            component = components[np.argmin(np.linalg.norm(v[:, :2] - origin, axis=1))]
         segment, kind, previous = [], None, None
 
         def flush():
@@ -94,7 +102,7 @@ def author(part):
                     first = fold + np.array([2, -5.5])
                     second = target + np.array([-1, 8])
                     xy = (1 - s)**3 * fold + 3 * (1 - s)**2 * s * first + 3 * (1 - s) * s**2 * second + s**3 * target
-            result = project(xy)
+            result = project(xy, component)
             if result is None:
                 flush(); segment, kind, previous = [], None, None
                 continue
@@ -117,12 +125,14 @@ def author(part):
     for i, y in enumerate(origin_rows):
         t = i / (len(origin_rows) - 1)
         origin = np.array([.8, y])
+        component = components[np.argmin(np.linalg.norm(v[:, :2] - origin, axis=1))]
         desired = np.array([99, 201 + 13 * t])
-        target = insertion[np.argmin(np.linalg.norm(insertion[:, :2] - desired, axis=1))][:2]
+        candidates = v[[index for index in part['attachments']['insertion'] if components[index] == component]]
+        target = candidates[np.argmin(np.linalg.norm(candidates[:, :2] - desired, axis=1))][:2]
         # Lateral source shell at y=236..240 (x~93..95), outside the
         # scapular inferior tip, continues into the proximal humeral band.
         fold = np.array([92.5 + 1.5 * t, 236 + 3 * t])
-        trace(origin, target, fold)
+        trace(origin, target, fold, component)
         pathways.append({'origin': origin.tolist(), 'axillaryFold': fold.tolist(), 'humeralInsertion': target.tolist()})
     # Connective-tissue guides have their own pale stroke and material clip.
     for y in np.linspace(340, 408, 8):
