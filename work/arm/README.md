@@ -72,3 +72,16 @@ python work/arm/review-visible.py
 표시 범위·건막 가이드가 바뀌었을 때만 `python work/arm/prepare.py`를 실행한다.
 `atlas-input.json`의 원본 뼈가 바뀔 때만 `bone-fields.py`를 실행한다.
 기준 모델이 바뀔 때만 OpenSim을 설치하고 `export-motion-reference.py`를 실행한다.
+
+
+## Arm visual quality experiment (unpublished)
+
+See [VISUAL_REVIEW.md](VISUAL_REVIEW.md) for the public reference review,
+matched 48-condition Before/After captures, validation and remaining limits.
+`surface-lighting.js` uses the existing depth buffer without changing meshes,
+motion or visibility. `fiber-guides.json` supplies separate authored biceps
+surface flow guides; they are educational approximations, not measured fascicles.
+Regenerate those guides only with `python work/arm/fiber-guides.py`.
+The original atlas, bone fields, OpenSim reference and posterior triceps guides
+remain unchanged. The experiment workflow saves review images on its feature
+branch and uploads standalone previews; it does not deploy GitHub Pages.
