@@ -1,27 +1,33 @@
 name: Verify published visual quality
 on:
-  workflow_run:
-    workflows: ["pages build and deployment"]
-    types: [completed]
+  push:
     branches: [gh-pages]
+    paths:
+      - 'index.html'
+      - 'upperbody.html'
+      - 'arm.html'
+      - 'abdomen.html'
+      - 'forearm.html'
+      - 'thigh.html'
+      - 'work/visual/review-published.py'
+      - '.github/workflows/verify-published-visual.yml'
 permissions:
   contents: read
 jobs:
   verify:
-    if: github.event.workflow_run.conclusion == 'success'
     runs-on: ubuntu-latest
     timeout-minutes: 12
     steps:
       - uses: actions/checkout@v4
         with:
-          ref: ${{ github.event.workflow_run.head_sha }}
+          ref: ${{ github.sha }}
       - name: Install real browser
         run: |
           pip install playwright
           python -m playwright install --with-deps chromium
       - name: Verify deployed documents and all five browser tabs
         env:
-          ANATOMY_EXPECTED_REVISION: ${{ github.event.workflow_run.head_sha }}
+          ANATOMY_EXPECTED_REVISION: ${{ github.sha }}
         run: python work/visual/review-published.py
       - uses: actions/upload-artifact@v4
         if: always()
