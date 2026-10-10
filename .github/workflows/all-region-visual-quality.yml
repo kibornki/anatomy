@@ -24,7 +24,7 @@ jobs:
           python -m playwright install --with-deps chromium
           python -c "from playwright.sync_api import sync_playwright; p=sync_playwright().start(); print(p.chromium.executable_path)" > /tmp/anatomy-visual-chromium
           sudo ln -sf "$(cat /tmp/anatomy-visual-chromium)" /usr/bin/chromium
-          sudo install -d -o "$USER" /workspace/artifacts/arm-implementation /workspace/artifacts/limb-implementation
+          sudo install -d -o "$USER" /workspace/artifacts/arm-implementation /workspace/artifacts/limb-implementation /workspace/artifacts/abdomen-atlas-review
           npm install --no-save --package-lock=false playwright
           npx playwright install --with-deps chromium
       - name: Preserve live baseline pages
@@ -118,7 +118,7 @@ jobs:
         run: |
           python - <<'PY'
           import urllib.request,base64
-          samples={'pectoral':'https://r2.anatobase.com/video/75/images/demo-1790265281282-360/001.webp','forearm':'https://r2.anatobase.com/video/123/images/demo-1790265494918-360/001.webp','hamstrings':'https://r2.anatobase.com/video/193/images/demo-1790265713907-360/001.webp'}
+          samples={'abdominal-wall':'https://r2.anatobase.com/page/9000529/images/demo-1790264895272-360.webp','pectoral':'https://r2.anatobase.com/video/75/images/demo-1790265281282-360/001.webp','forearm':'https://r2.anatobase.com/video/123/images/demo-1790265494918-360/001.webp','hamstrings':'https://r2.anatobase.com/video/193/images/demo-1790265713907-360/001.webp'}
           for name,url in samples.items():
               req=urllib.request.Request(url,headers={'User-Agent':'Mozilla/5.0','Referer':'https://anatobase.com/'})
               with urllib.request.urlopen(req) as res:
