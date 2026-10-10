@@ -1,0 +1,138 @@
+{
+  "sourceRegistration": {
+    "basis": "BodyParts3D 3.0 FMA23130 humerus shared by work/arm and work/upperbody",
+    "sourceCommit": "f0eeb6e843380cfe6b83797cf8c3e1af74de5e61",
+    "scales": {
+      "arm": 0.8,
+      "upperbody": 0.58
+    },
+    "rule": "upperbody right-side coordinates are mirrored from the rig by x=-x; armPoint = (0.8/0.58)*upperbodyRightPoint + offset.",
+    "offset": [
+      132.1449516673784,
+      -171.0673301712278,
+      -57.44146129641597
+    ],
+    "fit": "Offset from matched humerus point-cloud centroids; 402 arm and 752 upperbody right humerus vertices.",
+    "validation": {
+      "meanNearestVertexDistanceArmToUpperUnits": 1.9436,
+      "p95NearestVertexDistanceArmToUpperUnits": 3.0228,
+      "maxNearestVertexDistanceArmToUpperUnits": 5.4647
+    }
+  },
+  "landmarks": [
+    {
+      "id": "sternoclavicular",
+      "short": "SC 관절",
+      "label": "흉쇄관절",
+      "point": [
+        122.36615176166038,
+        56.08317917339454,
+        44.95948766719028
+      ],
+      "motion": "fixed",
+      "source": "upperbody rig.sc mapped by common humerus registration",
+      "note": "쇄골 안쪽 끝의 기준점이다. 흉곽에서 어깨로 이어지는 쇄골의 방향과 S곡선을 잡을 때 사용한다."
+    },
+    {
+      "id": "acromioclavicular",
+      "short": "견봉·AC",
+      "label": "견봉 / 견봉쇄골 기준",
+      "point": [
+        14.919669106044651,
+        38.08754295552683,
+        -5.191438075962189
+      ],
+      "motion": "fixed",
+      "source": "upperbody rig.ac mapped by common humerus registration",
+      "note": "견봉과 쇄골이 만나는 어깨 상단 기준이다. 삼각근 어깨 캡의 상단 및 쇄골·견갑골 관계를 확인한다."
+    },
+    {
+      "id": "glenohumeral",
+      "short": "견관절 중심",
+      "label": "견관절 중심",
+      "point": [
+        -1.4136993455544484,
+        52.989275650097,
+        1.0803642930836332
+      ],
+      "motion": "fixed",
+      "source": "upperbody rig.gh mapped by common humerus registration",
+      "note": "위팔뼈두와 관절와가 만나는 회전 중심이다. 견봉 표면점과 구분해서 어깨 덩어리의 관절 위치를 읽는다."
+    },
+    {
+      "id": "elbow-axis",
+      "short": "팔꿈치 축",
+      "label": "팔꿈치 굴곡 기준축",
+      "point": [
+        -34,
+        282,
+        -5
+      ],
+      "motion": "fixed",
+      "source": "arm atlas joint",
+      "note": "현재 동작에서 위팔뼈와 어깨띠는 고정되고 요골·척골이 이 기준점 주위로 회전한다. 팔꿈치 동작은 0–135° 도해용 힌지다."
+    },
+    {
+      "id": "olecranon",
+      "short": "주두 가이드",
+      "label": "주두 / 삼두근 부착 가이드",
+      "point": [
+        -34,
+        282,
+        -22
+      ],
+      "motion": "forearm",
+      "source": "authored triceps attachment guide",
+      "note": "삼두근이 척골 주두로 이어지는 방향을 찾는 작화용 부착 가이드다. 원본 아틀라스의 개별 주두 부착 분할로 오해하지 않는다."
+    },
+    {
+      "id": "radial-tuberosity",
+      "short": "요골결절 가이드",
+      "label": "요골결절 / 이두근 부착 가이드",
+      "point": [
+        -45.4946,
+        301.3555,
+        7.1049
+      ],
+      "motion": "forearm",
+      "source": "authored biceps attachment guide",
+      "note": "이두근이 요골결절로 이어지는 방향을 읽는 작화용 가이드다. 정밀한 부착점 분할이나 실측 조직 경계는 아니다."
+    },
+    {
+      "id": "inferior-angle",
+      "short": "견갑골 하각",
+      "label": "견갑골 하각 근사",
+      "point": [
+        58.913325,
+        160.426175,
+        -57.537425
+      ],
+      "motion": "fixed",
+      "source": "Mean of scapula atlas vertices within 2 atlas units of the maximum y; approximate inferior-angle blockout anchor.",
+      "note": "원본 견갑골 메시의 아래쪽 끝을 평균점으로 잡은 블록아웃 기준이다. 아틀라스에 별도 하각 라벨/실측점이 없어 윤곽 확인용 근사점으로 사용한다."
+    }
+  ],
+  "inferiorAngle": {
+    "point": [
+      58.913325,
+      160.426175,
+      -57.537425
+    ],
+    "source": "Mean of scapula atlas vertices within 2 atlas units of the maximum y; approximate inferior-angle blockout anchor."
+  },
+  "simplification": {
+    "description": "Low-resolution 3D lofts are generated from the current posed BodyParts3D vertex clouds using their principal axis and measured local cross-sections. The scapula uses an AC-to-glenoid-to-inferior-angle triangular plate with thickness sampled from the atlas surface.",
+    "groups": [
+      "clavicle",
+      "scapula",
+      "humerus",
+      "radius",
+      "ulna",
+      "deltoid heads combined as one cap",
+      "biceps long/short combined as one primary envelope",
+      "triceps heads combined as one primary envelope",
+      "brachialis secondary envelope"
+    ],
+    "limits": "Artist blockout geometry for form reading only; not a medically accurate replacement anatomy, measured muscle volume, patient-specific landmark map, fiber simulation, or muscle activation model."
+  }
+}

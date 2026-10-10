@@ -10,3 +10,29 @@
 .diagram [data-atlas-part^="triceps-"] .fiber{stroke-width:.55;stroke-linecap:round;stroke-linejoin:round}
 .diagram [data-atlas-part^="biceps-"]>path[fill="none"]:not(.fiber),
 .diagram [data-atlas-part^="triceps-"]>path[fill="none"]:not(.fiber){stroke-opacity:.22}
+
+.artist-learning{display:grid;gap:8px;margin:8px 0 14px}
+.artist-mode-buttons,.artist-landmark-buttons{display:flex;align-items:center;gap:5px;flex-wrap:wrap}
+.artist-mode-buttons .btn,.artist-landmark-buttons .btn{border:1px solid color-mix(in srgb,var(--muted-foreground) 30%,var(--background));color:var(--foreground);background:var(--background);padding:4px 9px;font-size:12px}
+.artist-mode-buttons .btn[aria-pressed=true],.artist-landmark-buttons .btn[aria-pressed=true]{border-color:var(--foreground);background:var(--foreground);color:var(--background)}
+.artist-landmark-buttons>span{margin-right:3px;color:var(--muted-foreground)}
+.artist-note{margin:0;padding:7px 10px;border-left:3px solid var(--orange);background:color-mix(in srgb,var(--orange) 5%,var(--background));line-height:1.55}
+.artist-method{margin:0;color:var(--muted-foreground);line-height:1.5}
+.diagram [data-display-layer=anatomy]{transition:none}
+.diagram[data-mode=sculpt] [data-display-layer=anatomy]:not([data-kind=tendon]){display:none}
+.diagram[data-mode=sculpt] .diagram-labels{display:none}
+.diagram[data-mode=anatomy] .sculpt-layer{display:none}
+.diagram[data-mode=sculpt] .sculpt-layer{display:inline}
+.diagram[data-mode=compare] [data-display-layer=anatomy]{clip-path:inset(0 50% 0 0)}
+.diagram[data-mode=compare] .sculpt-layer{display:inline;clip-path:inset(0 0 0 50%)}
+.diagram[data-mode=compare] .diagram-labels{clip-path:inset(0 50% 0 0)}
+.diagram-mode-labels{display:none;fill:var(--foreground);paint-order:stroke;stroke:var(--background);stroke-width:3px;stroke-linejoin:round}
+.diagram[data-mode=compare] .diagram-mode-labels{display:block}
+.diagram-landmark{pointer-events:none}
+.diagram-landmark text{paint-order:stroke;stroke:var(--background);stroke-width:3px;stroke-linejoin:round}
+.sculpt-fill{stroke:none}
+.sculpt-outline{stroke-linejoin:round;stroke-opacity:.62}
+.sculpt-form-lines{pointer-events:none}
+.diagram.transparent .sculpt-muscle{fill-opacity:.38}
+.sculpt-bone-key{background:#d8dce1}.sculpt-muscle-key{background:#c9ced5}
+.diagram.no-fibers .sculpt-form-lines{display:none}

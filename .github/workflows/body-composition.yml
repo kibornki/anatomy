@@ -31,7 +31,9 @@ jobs:
           python work/abdomen/build.py --publish
           python work/limb/build.py --publish
       - name: Verify neutral geometry and tissue controls
-        run: node work/composition/review-geometry.cjs
+        run: |
+          node work/composition/review-geometry.cjs
+          node work/arm/review-motion.cjs
       - name: Install browser
         run: |
           npm install --no-save --package-lock=false playwright
@@ -40,6 +42,7 @@ jobs:
         run: |
           python -m http.server 8767 --bind 127.0.0.1 &
           node work/composition/review-browser.cjs
+          node work/arm/review-sculpt.cjs
       - name: Save the validated generated pages on the feature branch
         if: github.event_name == 'push'
         run: |
@@ -62,4 +65,5 @@ jobs:
             forearm.html
             thigh.html
             artifacts/composition-*
+            artifacts/arm-sculpt/
           retention-days: 7
