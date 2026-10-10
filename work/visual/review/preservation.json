@@ -1,0 +1,26 @@
+{
+  "protectedFiles": {
+    "work/abdomen/atlas-data.json": "a67baff961d3e716a54c6a880926510d62086048db0f0b88b0319af62ee1b26a",
+    "work/abdomen/controls.js": "705194a73cf5362551f3aff2cf79540f9dbea30244bbbca01171edd13a4022ac",
+    "work/arm/atlas-data.json": "878b1aa41eea38a54e0c37b62f9a7eb08ecedb968dca3307480b5bb264f60944",
+    "work/arm/bone-fields.json": "044b53a65589ae0935ba59975832b398fb6430bc7aaba42c4d8c8c10e048d726",
+    "work/arm/collision.js": "d4fbc0a32aaa15ab7a56cc9227c2c3697fb5ef44bdf31f4f072334ea6c725e17",
+    "work/arm/controls.js": "5dbbe6afcfe201fee8562eba25980d4284a80d01a6b12e94ccc120e6f07dc230",
+    "work/arm/motion-reference.json": "76f0a6659235de536ce663d166fd84c95b5ea34ae89076a06cf196b8983df7bf",
+    "work/arm/motion.js": "ebb74189e024f7c240e59fddf51db160332ea23f4bbdbcd8f1baf8e4da169745",
+    "work/arm/reference/arm26.osim": "e2224d0044eb393b05d64926c3fa1682c451a9adc7f510e5517ef9958d3d41b9",
+    "work/composition/composition.js": "adf9b3ea2152f3dfac5b143be7b49989edaf7c5c838984102c390f333bb0ce19",
+    "work/limb-atlas-preview/atlas-data.json": "43e7034daa8cb992a032c223d528e3567e715f05a3a505e4f9aa264c0ef4eed0",
+    "work/limb/collision.js": "22a0d02b1fa07b5a32edc41f5f8b16472d838a8f48139813400b5a3857ee412c",
+    "work/limb/controls.js": "da460851b23dd9087f464b76cf06a3b5f05fbf32c4769d7d250a554ff11089af",
+    "work/limb/forearm-bone-fields.json": "f8f28ced8a9d74cb8ee5eec8d03ea6d3622ab47e8dd0f911df76606a8e454907",
+    "work/limb/motion-reference.json": "2ba1d9d8494759909c91eafbd9446fbc84ad33e0fcae0e8d233b876805985e21",
+    "work/limb/motion.js": "aa59e39c3d6da949fcc1b9586ae2ed58c131776fe3dc580333e6949e17509a15",
+    "work/limb/thigh-bone-fields.json": "c2e81d4df2fbc8ed22de89a39a1ae5ab23eee23f4d0d6caa6b9a28a992b923d8",
+    "work/upperbody-atlas-preview/atlas-data.json": "d9918f1cbdb1fa2c6be9fdb85c7da3c54a32b841a807d3d82bce00558beb7649",
+    "work/upperbody/atlas-data.json": "2f3df1c9e7135f804acf0ad800cbf1ee791a0a14936ee90cc7e21fd150a281b4",
+    "work/upperbody/controls.js": "3a1d1ca36227153a90c76539a4956d9188b3bdcf14f60d03f6bede251efd8743",
+    "work/upperbody/motion.js": "a5925ac5c3103e42a604fa126d533a79be74d73af93ed24a2a4abbe02f5dc7f3"
+  },
+  "hubMatchesAllStandalonePages": true
+}
