@@ -37,3 +37,6 @@ out={**native,'parts':out_parts,'frames':frames,'rig':rig,'revision':'attachment
 (w/'atlas-data.json').write_text(json.dumps(out,separators=(',',':')))
 (w/'geometry-validation.json').write_text(json.dumps({'frames':audits,'source':'Native BodyParts3D neutral surface','scope':'Attachment residual, closed-shell volume and edge/area deformation. Not physiological fascicle measurements.'},indent=2))
 print('Prepared',len(out_parts),'native parts;',len(frames),'attachment-constrained 3D frames.')
+# Tissue patches are authored on the final native triangle winding; guides
+# follow these triangles at runtime and consume no displacement offsets.
+runpy.run_path(str(w/'latissimus-detail.py'))['main']()

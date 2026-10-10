@@ -15,7 +15,8 @@ function NativeUpperbodyMotion(data){
    let offset=part.frameOffset;
    const deform=part.kind==='muscle'?p=>p.map((v,i)=>v+((1-t)*a.values[offset+i]+t*b.values[offset+i])/50):rigid[part.name]||rigid.fixed;
    const points=ps=>ps.map(p=>{const q=deform(p);if(part.kind==='muscle')offset+=3;return q;});
-   left.set(part.name,{v:points(part.v),fibers:part.fibers.map(points)});
+   const vertices=points(part.v),fibers=part.surfaceGuides?part.surfaceGuides.map(guide=>guide.points.map(([face,...weights])=>[0,1,2].map(axis=>weights.reduce((sum,weight,j)=>sum+weight*vertices[part.f[face][j]][axis],0)))):part.fibers.map(points);
+   left.set(part.name,{v:vertices,fibers});
   }
   return data.parts.map(p=>{if(!p.mirrorOf)return left.get(p.name);const original=left.get(p.mirrorOf),mirror=ps=>ps.map(p=>[-p[0],p[1],p[2]]);return{v:mirror(original.v),fibers:original.fibers.map(mirror)};});
  }
