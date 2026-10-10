@@ -1,0 +1,13 @@
+{
+  "photoUpload": true,
+  "frontLandmarkRatio": true,
+  "sideLandmarkRatio": true,
+  "undoAndClear": true,
+  "shapeControls": true,
+  "reset": true,
+  "playback": true,
+  "transparency": true,
+  "mobileOverflow": false,
+  "hubShapeRestoration": true,
+  "browserErrors": []
+}

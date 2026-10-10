@@ -1,0 +1,1229 @@
+{
+  "profilesAndPoses": [
+    {
+      "shape": {
+        "width": 1,
+        "depth": 1,
+        "length": 1
+      },
+      "angle": 15,
+      "fields": {
+        "scapula": {
+          "min": 2.7165867036188924,
+          "crossings": 0
+        },
+        "clavicle": {
+          "min": 6.0,
+          "crossings": 0
+        },
+        "humerus": {
+          "min": 0.7683229387345302,
+          "crossings": 0
+        },
+        "serratus": {
+          "min": 1.0328615721583512,
+          "crossings": 0
+        },
+        "trapezius-lower": {
+          "min": 0.9328000000000002,
+          "crossings": 0
+        },
+        "teres-major": {
+          "min": 0.8939525971326177,
+          "crossings": 0
+        }
+      }
+    },
+    {
+      "shape": {
+        "width": 1,
+        "depth": 1,
+        "length": 1
+      },
+      "angle": 60,
+      "fields": {
+        "scapula": {
+          "min": 2.3259566534468292,
+          "crossings": 0
+        },
+        "clavicle": {
+          "min": 6.0,
+          "crossings": 0
+        },
+        "humerus": {
+          "min": 0.3088701862514628,
+          "crossings": 0
+        },
+        "serratus": {
+          "min": 0.9490337321903489,
+          "crossings": 0
+        },
+        "trapezius-lower": {
+          "min": 0.9003966964938273,
+          "crossings": 0
+        },
+        "teres-major": {
+          "min": 0.918981724156837,
+          "crossings": 0
+        }
+      }
+    },
+    {
+      "shape": {
+        "width": 1,
+        "depth": 1,
+        "length": 1
+      },
+      "angle": 90,
+      "fields": {
+        "scapula": {
+          "min": 1.9718876740405022,
+          "crossings": 0
+        },
+        "clavicle": {
+          "min": 6.0,
+          "crossings": 0
+        },
+        "humerus": {
+          "min": 0.7368137087999891,
+          "crossings": 0
+        },
+        "serratus": {
+          "min": 1.501468894340737,
+          "crossings": 0
+        },
+        "trapezius-lower": {
+          "min": 0.9148926806913557,
+          "crossings": 0
+        },
+        "teres-major": {
+          "min": 0.9960161834666822,
+          "crossings": 0
+        }
+      }
+    },
+    {
+      "shape": {
+        "width": 1,
+        "depth": 1,
+        "length": 1
+      },
+      "angle": 120,
+      "fields": {
+        "scapula": {
+          "min": 0.6066393223901142,
+          "crossings": 0
+        },
+        "clavicle": {
+          "min": 6.0,
+          "crossings": 0
+        },
+        "humerus": {
+          "min": 0.6083777777777755,
+          "crossings": 0
+        },
+        "serratus": {
+          "min": 0.918009579544361,
+          "crossings": 0
+        },
+        "trapezius-lower": {
+          "min": 0.8718588894814848,
+          "crossings": 0
+        },
+        "teres-major": {
+          "min": 0.9491464093477748,
+          "crossings": 0
+        }
+      }
+    },
+    {
+      "shape": {
+        "width": 0.95,
+        "depth": 0.95,
+        "length": 0.95
+      },
+      "angle": 15,
+      "fields": {
+        "scapula": {
+          "min": 2.6592763722222297,
+          "crossings": 0
+        },
+        "clavicle": {
+          "min": 6.0,
+          "crossings": 0
+        },
+        "humerus": {
+          "min": 0.8246900772856786,
+          "crossings": 0
+        },
+        "serratus": {
+          "min": 1.3055158565926046,
+          "crossings": 0
+        },
+        "trapezius-lower": {
+          "min": 0.6734939420444457,
+          "crossings": 0
+        },
+        "teres-major": {
+          "min": 0.7430214376296213,
+          "crossings": 0
+        }
+      }
+    },
+    {
+      "shape": {
+        "width": 0.95,
+        "depth": 0.95,
+        "length": 0.95
+      },
+      "angle": 60,
+      "fields": {
+        "scapula": {
+          "min": 2.3645636891765136,
+          "crossings": 0
+        },
+        "clavicle": {
+          "min": 6.0,
+          "crossings": 0
+        },
+        "humerus": {
+          "min": 0.7348338409472419,
+          "crossings": 0
+        },
+        "serratus": {
+          "min": 0.7897020110800305,
+          "crossings": 0
+        },
+        "trapezius-lower": {
+          "min": 0.6680424804584929,
+          "crossings": 0
+        },
+        "teres-major": {
+          "min": 0.7559819126518431,
+          "crossings": 0
+        }
+      }
+    },
+    {
+      "shape": {
+        "width": 0.95,
+        "depth": 0.95,
+        "length": 0.95
+      },
+      "angle": 90,
+      "fields": {
+        "scapula": {
+          "min": 2.0518584067259225,
+          "crossings": 0
+        },
+        "clavicle": {
+          "min": 6.0,
+          "crossings": 0
+        },
+        "humerus": {
+          "min": 0.7716244337777665,
+          "crossings": 0
+        },
+        "serratus": {
+          "min": 1.0958672199367718,
+          "crossings": 0
+        },
+        "trapezius-lower": {
+          "min": 0.6681836757333358,
+          "crossings": 0
+        },
+        "teres-major": {
+          "min": 0.698622272948185,
+          "crossings": 0
+        }
+      }
+    },
+    {
+      "shape": {
+        "width": 0.95,
+        "depth": 0.95,
+        "length": 0.95
+      },
+      "angle": 120,
+      "fields": {
+        "scapula": {
+          "min": 0.8316092123654305,
+          "crossings": 0
+        },
+        "clavicle": {
+          "min": 6.0,
+          "crossings": 0
+        },
+        "humerus": {
+          "min": 0.8322324751766217,
+          "crossings": 0
+        },
+        "serratus": {
+          "min": 1.2543802026666762,
+          "crossings": 0
+        },
+        "trapezius-lower": {
+          "min": 0.6982666666666671,
+          "crossings": 0
+        },
+        "teres-major": {
+          "min": 0.6951374201422147,
+          "crossings": 0
+        }
+      }
+    },
+    {
+      "shape": {
+        "width": 0.95,
+        "depth": 0.95,
+        "length": 1.05
+      },
+      "angle": 15,
+      "fields": {
+        "scapula": {
+          "min": 2.488722704463363,
+          "crossings": 0
+        },
+        "clavicle": {
+          "min": 6.0,
+          "crossings": 0
+        },
+        "humerus": {
+          "min": 0.7794309105777941,
+          "crossings": 0
+        },
+        "serratus": {
+          "min": 1.3884666666666767,
+          "crossings": 0
+        },
+        "trapezius-lower": {
+          "min": 0.6679198012049385,
+          "crossings": 0
+        },
+        "teres-major": {
+          "min": 0.6909546459931888,
+          "crossings": 0
+        }
+      }
+    },
+    {
+      "shape": {
+        "width": 0.95,
+        "depth": 0.95,
+        "length": 1.05
+      },
+      "angle": 60,
+      "fields": {
+        "scapula": {
+          "min": 3.13788283494259,
+          "crossings": 0
+        },
+        "clavicle": {
+          "min": 6.0,
+          "crossings": 0
+        },
+        "humerus": {
+          "min": 0.7686105216619662,
+          "crossings": 0
+        },
+        "serratus": {
+          "min": 0.9022259745493613,
+          "crossings": 0
+        },
+        "trapezius-lower": {
+          "min": 0.6801500073522437,
+          "crossings": 0
+        },
+        "teres-major": {
+          "min": 0.9175477580567581,
+          "crossings": 0
+        }
+      }
+    },
+    {
+      "shape": {
+        "width": 0.95,
+        "depth": 0.95,
+        "length": 1.05
+      },
+      "angle": 90,
+      "fields": {
+        "scapula": {
+          "min": 2.1116038497418286,
+          "crossings": 0
+        },
+        "clavicle": {
+          "min": 6.0,
+          "crossings": 0
+        },
+        "humerus": {
+          "min": 0.657448234432306,
+          "crossings": 0
+        },
+        "serratus": {
+          "min": 0.8108023441149854,
+          "crossings": 0
+        },
+        "trapezius-lower": {
+          "min": 0.6574320501646657,
+          "crossings": 0
+        },
+        "teres-major": {
+          "min": 0.719904541667194,
+          "crossings": 0
+        }
+      }
+    },
+    {
+      "shape": {
+        "width": 0.95,
+        "depth": 0.95,
+        "length": 1.05
+      },
+      "angle": 120,
+      "fields": {
+        "scapula": {
+          "min": 0.5804602910555374,
+          "crossings": 0
+        },
+        "clavicle": {
+          "min": 6.0,
+          "crossings": 0
+        },
+        "humerus": {
+          "min": 1.2952371314429068,
+          "crossings": 0
+        },
+        "serratus": {
+          "min": 0.6692361657541053,
+          "crossings": 0
+        },
+        "trapezius-lower": {
+          "min": 0.6609218494582998,
+          "crossings": 0
+        },
+        "teres-major": {
+          "min": 0.8903052862497417,
+          "crossings": 0
+        }
+      }
+    },
+    {
+      "shape": {
+        "width": 0.95,
+        "depth": 1.05,
+        "length": 0.95
+      },
+      "angle": 15,
+      "fields": {
+        "scapula": {
+          "min": 2.7744593975845886,
+          "crossings": 0
+        },
+        "clavicle": {
+          "min": 6.0,
+          "crossings": 0
+        },
+        "humerus": {
+          "min": 0.7868524257164055,
+          "crossings": 0
+        },
+        "serratus": {
+          "min": 1.4423635682654994,
+          "crossings": 0
+        },
+        "trapezius-lower": {
+          "min": 0.6851999999999947,
+          "crossings": 0
+        },
+        "teres-major": {
+          "min": 0.6959851170765146,
+          "crossings": 0
+        }
+      }
+    },
+    {
+      "shape": {
+        "width": 0.95,
+        "depth": 1.05,
+        "length": 0.95
+      },
+      "angle": 60,
+      "fields": {
+        "scapula": {
+          "min": 2.096229992129583,
+          "crossings": 0
+        },
+        "clavicle": {
+          "min": 6.0,
+          "crossings": 0
+        },
+        "humerus": {
+          "min": 0.9604030492200024,
+          "crossings": 0
+        },
+        "serratus": {
+          "min": 0.8029711211234535,
+          "crossings": 0
+        },
+        "trapezius-lower": {
+          "min": 0.7067328626102757,
+          "crossings": 0
+        },
+        "teres-major": {
+          "min": 0.9208559472197524,
+          "crossings": 0
+        }
+      }
+    },
+    {
+      "shape": {
+        "width": 0.95,
+        "depth": 1.05,
+        "length": 0.95
+      },
+      "angle": 90,
+      "fields": {
+        "scapula": {
+          "min": 1.4903196357465163,
+          "crossings": 0
+        },
+        "clavicle": {
+          "min": 6.0,
+          "crossings": 0
+        },
+        "humerus": {
+          "min": 0.6943467274553599,
+          "crossings": 0
+        },
+        "serratus": {
+          "min": 1.4443222222222296,
+          "crossings": 0
+        },
+        "trapezius-lower": {
+          "min": 0.6554336429170732,
+          "crossings": 0
+        },
+        "teres-major": {
+          "min": 0.7090888888888891,
+          "crossings": 0
+        }
+      }
+    },
+    {
+      "shape": {
+        "width": 0.95,
+        "depth": 1.05,
+        "length": 0.95
+      },
+      "angle": 120,
+      "fields": {
+        "scapula": {
+          "min": 0.925112717280158,
+          "crossings": 0
+        },
+        "clavicle": {
+          "min": 6.0,
+          "crossings": 0
+        },
+        "humerus": {
+          "min": 1.3243694558817054,
+          "crossings": 0
+        },
+        "serratus": {
+          "min": 0.9651112613925965,
+          "crossings": 0
+        },
+        "trapezius-lower": {
+          "min": 0.6592856087703672,
+          "crossings": 0
+        },
+        "teres-major": {
+          "min": 0.7679071575516422,
+          "crossings": 0
+        }
+      }
+    },
+    {
+      "shape": {
+        "width": 0.95,
+        "depth": 1.05,
+        "length": 1.05
+      },
+      "angle": 15,
+      "fields": {
+        "scapula": {
+          "min": 2.5138930290695196,
+          "crossings": 0
+        },
+        "clavicle": {
+          "min": 6.0,
+          "crossings": 0
+        },
+        "humerus": {
+          "min": 0.7794309105777939,
+          "crossings": 0
+        },
+        "serratus": {
+          "min": 0.7095546425886078,
+          "crossings": 0
+        },
+        "trapezius-lower": {
+          "min": 0.6585333333333309,
+          "crossings": 0
+        },
+        "teres-major": {
+          "min": 0.7713463851024454,
+          "crossings": 0
+        }
+      }
+    },
+    {
+      "shape": {
+        "width": 0.95,
+        "depth": 1.05,
+        "length": 1.05
+      },
+      "angle": 60,
+      "fields": {
+        "scapula": {
+          "min": 3.1322831606355552,
+          "crossings": 0
+        },
+        "clavicle": {
+          "min": 6.0,
+          "crossings": 0
+        },
+        "humerus": {
+          "min": 0.6565453848539681,
+          "crossings": 0
+        },
+        "serratus": {
+          "min": 1.5430287371360405,
+          "crossings": 0
+        },
+        "trapezius-lower": {
+          "min": 0.6511026678919237,
+          "crossings": 0
+        },
+        "teres-major": {
+          "min": 0.6605417310783237,
+          "crossings": 0
+        }
+      }
+    },
+    {
+      "shape": {
+        "width": 0.95,
+        "depth": 1.05,
+        "length": 1.05
+      },
+      "angle": 90,
+      "fields": {
+        "scapula": {
+          "min": 2.017801563451999,
+          "crossings": 0
+        },
+        "clavicle": {
+          "min": 6.0,
+          "crossings": 0
+        },
+        "humerus": {
+          "min": 0.6968102211062305,
+          "crossings": 0
+        },
+        "serratus": {
+          "min": 1.081958278790829,
+          "crossings": 0
+        },
+        "trapezius-lower": {
+          "min": 0.7007360138600975,
+          "crossings": 0
+        },
+        "teres-major": {
+          "min": 0.9944006004700914,
+          "crossings": 0
+        }
+      }
+    },
+    {
+      "shape": {
+        "width": 0.95,
+        "depth": 1.05,
+        "length": 1.05
+      },
+      "angle": 120,
+      "fields": {
+        "scapula": {
+          "min": 0.6556215407811098,
+          "crossings": 0
+        },
+        "clavicle": {
+          "min": 6.0,
+          "crossings": 0
+        },
+        "humerus": {
+          "min": 0.6818650044510692,
+          "crossings": 0
+        },
+        "serratus": {
+          "min": 0.6533507516395278,
+          "crossings": 0
+        },
+        "trapezius-lower": {
+          "min": 0.7052765362016523,
+          "crossings": 0
+        },
+        "teres-major": {
+          "min": 0.8259781283862679,
+          "crossings": 0
+        }
+      }
+    },
+    {
+      "shape": {
+        "width": 1.05,
+        "depth": 0.95,
+        "length": 0.95
+      },
+      "angle": 15,
+      "fields": {
+        "scapula": {
+          "min": 2.548327201797533,
+          "crossings": 0
+        },
+        "clavicle": {
+          "min": 6.0,
+          "crossings": 0
+        },
+        "humerus": {
+          "min": 0.9324004024889141,
+          "crossings": 0
+        },
+        "serratus": {
+          "min": 0.9372886678785023,
+          "crossings": 0
+        },
+        "trapezius-lower": {
+          "min": 0.7313803205530871,
+          "crossings": 0
+        },
+        "teres-major": {
+          "min": 0.7035427822617162,
+          "crossings": 0
+        }
+      }
+    },
+    {
+      "shape": {
+        "width": 1.05,
+        "depth": 0.95,
+        "length": 0.95
+      },
+      "angle": 60,
+      "fields": {
+        "scapula": {
+          "min": 1.225210997293123,
+          "crossings": 0
+        },
+        "clavicle": {
+          "min": 6.0,
+          "crossings": 0
+        },
+        "humerus": {
+          "min": 0.8147631386341694,
+          "crossings": 0
+        },
+        "serratus": {
+          "min": 0.8276307508735362,
+          "crossings": 0
+        },
+        "trapezius-lower": {
+          "min": 0.651139199159303,
+          "crossings": 0
+        },
+        "teres-major": {
+          "min": 0.8182633488739319,
+          "crossings": 0
+        }
+      }
+    },
+    {
+      "shape": {
+        "width": 1.05,
+        "depth": 0.95,
+        "length": 0.95
+      },
+      "angle": 90,
+      "fields": {
+        "scapula": {
+          "min": 2.383817943098525,
+          "crossings": 0
+        },
+        "clavicle": {
+          "min": 6.0,
+          "crossings": 0
+        },
+        "humerus": {
+          "min": 0.7920194639588246,
+          "crossings": 0
+        },
+        "serratus": {
+          "min": 1.6008618842856117,
+          "crossings": 0
+        },
+        "trapezius-lower": {
+          "min": 0.6626864184933545,
+          "crossings": 0
+        },
+        "teres-major": {
+          "min": 0.686200759930302,
+          "crossings": 0
+        }
+      }
+    },
+    {
+      "shape": {
+        "width": 1.05,
+        "depth": 0.95,
+        "length": 0.95
+      },
+      "angle": 120,
+      "fields": {
+        "scapula": {
+          "min": 2.3620932456276695,
+          "crossings": 0
+        },
+        "clavicle": {
+          "min": 6.0,
+          "crossings": 0
+        },
+        "humerus": {
+          "min": 0.9899086610182822,
+          "crossings": 0
+        },
+        "serratus": {
+          "min": 1.8825889710048205,
+          "crossings": 0
+        },
+        "trapezius-lower": {
+          "min": 0.6630914036545292,
+          "crossings": 0
+        },
+        "teres-major": {
+          "min": 0.6990793043767916,
+          "crossings": 0
+        }
+      }
+    },
+    {
+      "shape": {
+        "width": 1.05,
+        "depth": 0.95,
+        "length": 1.05
+      },
+      "angle": 15,
+      "fields": {
+        "scapula": {
+          "min": 2.4929810983407403,
+          "crossings": 0
+        },
+        "clavicle": {
+          "min": 6.0,
+          "crossings": 0
+        },
+        "humerus": {
+          "min": 0.6713840758685973,
+          "crossings": 0
+        },
+        "serratus": {
+          "min": 0.9766902418941568,
+          "crossings": 0
+        },
+        "trapezius-lower": {
+          "min": 0.7273557413925943,
+          "crossings": 0
+        },
+        "teres-major": {
+          "min": 0.6615146556983472,
+          "crossings": 0
+        }
+      }
+    },
+    {
+      "shape": {
+        "width": 1.05,
+        "depth": 0.95,
+        "length": 1.05
+      },
+      "angle": 60,
+      "fields": {
+        "scapula": {
+          "min": 2.7999787012233415,
+          "crossings": 0
+        },
+        "clavicle": {
+          "min": 6.0,
+          "crossings": 0
+        },
+        "humerus": {
+          "min": 0.8672101374419733,
+          "crossings": 0
+        },
+        "serratus": {
+          "min": 0.8445897295627979,
+          "crossings": 0
+        },
+        "trapezius-lower": {
+          "min": 0.7308415161628457,
+          "crossings": 0
+        },
+        "teres-major": {
+          "min": 0.8242629270123489,
+          "crossings": 0
+        }
+      }
+    },
+    {
+      "shape": {
+        "width": 1.05,
+        "depth": 0.95,
+        "length": 1.05
+      },
+      "angle": 90,
+      "fields": {
+        "scapula": {
+          "min": 2.719979039407426,
+          "crossings": 0
+        },
+        "clavicle": {
+          "min": 6.0,
+          "crossings": 0
+        },
+        "humerus": {
+          "min": 0.7792666666666737,
+          "crossings": 0
+        },
+        "serratus": {
+          "min": 1.1361480525183467,
+          "crossings": 0
+        },
+        "trapezius-lower": {
+          "min": 0.652413631683953,
+          "crossings": 0
+        },
+        "teres-major": {
+          "min": 0.7670701796892763,
+          "crossings": 0
+        }
+      }
+    },
+    {
+      "shape": {
+        "width": 1.05,
+        "depth": 0.95,
+        "length": 1.05
+      },
+      "angle": 120,
+      "fields": {
+        "scapula": {
+          "min": 0.9720626863318377,
+          "crossings": 0
+        },
+        "clavicle": {
+          "min": 6.0,
+          "crossings": 0
+        },
+        "humerus": {
+          "min": 0.6866143215408921,
+          "crossings": 0
+        },
+        "serratus": {
+          "min": 0.7961323907157287,
+          "crossings": 0
+        },
+        "trapezius-lower": {
+          "min": 0.6902666666666724,
+          "crossings": 0
+        },
+        "teres-major": {
+          "min": 0.7665963781355984,
+          "crossings": 0
+        }
+      }
+    },
+    {
+      "shape": {
+        "width": 1.05,
+        "depth": 1.05,
+        "length": 0.95
+      },
+      "angle": 15,
+      "fields": {
+        "scapula": {
+          "min": 2.6303021137975375,
+          "crossings": 0
+        },
+        "clavicle": {
+          "min": 6.0,
+          "crossings": 0
+        },
+        "humerus": {
+          "min": 0.8500454958542729,
+          "crossings": 0
+        },
+        "serratus": {
+          "min": 0.9462724705128334,
+          "crossings": 0
+        },
+        "trapezius-lower": {
+          "min": 0.6643469389588491,
+          "crossings": 0
+        },
+        "teres-major": {
+          "min": 0.7835777777777864,
+          "crossings": 0
+        }
+      }
+    },
+    {
+      "shape": {
+        "width": 1.05,
+        "depth": 1.05,
+        "length": 0.95
+      },
+      "angle": 60,
+      "fields": {
+        "scapula": {
+          "min": 0.8282690500195424,
+          "crossings": 0
+        },
+        "clavicle": {
+          "min": 6.0,
+          "crossings": 0
+        },
+        "humerus": {
+          "min": 0.6784353692043248,
+          "crossings": 0
+        },
+        "serratus": {
+          "min": 0.7549656842738055,
+          "crossings": 0
+        },
+        "trapezius-lower": {
+          "min": 0.6688596509634636,
+          "crossings": 0
+        },
+        "teres-major": {
+          "min": 0.6699030958815321,
+          "crossings": 0
+        }
+      }
+    },
+    {
+      "shape": {
+        "width": 1.05,
+        "depth": 1.05,
+        "length": 0.95
+      },
+      "angle": 90,
+      "fields": {
+        "scapula": {
+          "min": 1.6306959312607003,
+          "crossings": 0
+        },
+        "clavicle": {
+          "min": 6.0,
+          "crossings": 0
+        },
+        "humerus": {
+          "min": 0.8077907622574365,
+          "crossings": 0
+        },
+        "serratus": {
+          "min": 1.032421125594521,
+          "crossings": 0
+        },
+        "trapezius-lower": {
+          "min": 0.6670078640542845,
+          "crossings": 0
+        },
+        "teres-major": {
+          "min": 0.6851395207947366,
+          "crossings": 0
+        }
+      }
+    },
+    {
+      "shape": {
+        "width": 1.05,
+        "depth": 1.05,
+        "length": 0.95
+      },
+      "angle": 120,
+      "fields": {
+        "scapula": {
+          "min": 1.7331101943832934,
+          "crossings": 0
+        },
+        "clavicle": {
+          "min": 6.0,
+          "crossings": 0
+        },
+        "humerus": {
+          "min": 0.8880618289551597,
+          "crossings": 0
+        },
+        "serratus": {
+          "min": 1.7842408202474993,
+          "crossings": 0
+        },
+        "trapezius-lower": {
+          "min": 0.6590396294427122,
+          "crossings": 0
+        },
+        "teres-major": {
+          "min": 0.692562802848771,
+          "crossings": 0
+        }
+      }
+    },
+    {
+      "shape": {
+        "width": 1.05,
+        "depth": 1.05,
+        "length": 1.05
+      },
+      "angle": 15,
+      "fields": {
+        "scapula": {
+          "min": 2.6784301966521,
+          "crossings": 0
+        },
+        "clavicle": {
+          "min": 6.0,
+          "crossings": 0
+        },
+        "humerus": {
+          "min": 0.9843976408675605,
+          "crossings": 0
+        },
+        "serratus": {
+          "min": 0.8592116185196037,
+          "crossings": 0
+        },
+        "trapezius-lower": {
+          "min": 0.6587549530074032,
+          "crossings": 0
+        },
+        "teres-major": {
+          "min": 0.747865845543682,
+          "crossings": 0
+        }
+      }
+    },
+    {
+      "shape": {
+        "width": 1.05,
+        "depth": 1.05,
+        "length": 1.05
+      },
+      "angle": 60,
+      "fields": {
+        "scapula": {
+          "min": 2.1905696105777874,
+          "crossings": 0
+        },
+        "clavicle": {
+          "min": 6.0,
+          "crossings": 0
+        },
+        "humerus": {
+          "min": 0.8199051806024535,
+          "crossings": 0
+        },
+        "serratus": {
+          "min": 0.9845193671110983,
+          "crossings": 0
+        },
+        "trapezius-lower": {
+          "min": 0.7041777777777815,
+          "crossings": 0
+        },
+        "teres-major": {
+          "min": 1.00042083160491,
+          "crossings": 0
+        }
+      }
+    },
+    {
+      "shape": {
+        "width": 1.05,
+        "depth": 1.05,
+        "length": 1.05
+      },
+      "angle": 90,
+      "fields": {
+        "scapula": {
+          "min": 2.329325696074077,
+          "crossings": 0
+        },
+        "clavicle": {
+          "min": 6.0,
+          "crossings": 0
+        },
+        "humerus": {
+          "min": 0.8859333333333286,
+          "crossings": 0
+        },
+        "serratus": {
+          "min": 1.4424000000000081,
+          "crossings": 0
+        },
+        "trapezius-lower": {
+          "min": 0.6595124927209877,
+          "crossings": 0
+        },
+        "teres-major": {
+          "min": 0.7322724110222231,
+          "crossings": 0
+        }
+      }
+    },
+    {
+      "shape": {
+        "width": 1.05,
+        "depth": 1.05,
+        "length": 1.05
+      },
+      "angle": 120,
+      "fields": {
+        "scapula": {
+          "min": 0.8754573073820773,
+          "crossings": 0
+        },
+        "clavicle": {
+          "min": 6.0,
+          "crossings": 0
+        },
+        "humerus": {
+          "min": 0.8015262994035433,
+          "crossings": 0
+        },
+        "serratus": {
+          "min": 1.170046713286494,
+          "crossings": 0
+        },
+        "trapezius-lower": {
+          "min": 0.7583993658475465,
+          "crossings": 0
+        },
+        "teres-major": {
+          "min": 0.8350101437732774,
+          "crossings": 0
+        }
+      }
+    }
+  ],
+  "scope": "55 samples per triangle on previously source-clear free latissimus faces; rigid attachment-only samples and native overlap exempt. Voxel approximation, crossing threshold -0.25. Checks selected poses, not all shapes and continuous contact."
+}
