@@ -1,21 +1,23 @@
 (()=>{
  const root=document.getElementById('abdomen'),flexion=AbdomenFlexion(root),twisting=AbdomenTwist(root,flexion),by=id=>document.getElementById('abdomen-'+id);
- const revision='abdomen-atlas-v4',node=document.getElementById('hub-config'),config=node?JSON.parse(node.textContent):null,content=config?.state?.modelContent;
+ const revision='abdomen-atlas-v4',node=document.getElementById('hub-config'),config=node?JSON.parse(node.textContent):null,store='artist-abdomen-atlas-v4';
+ let saved=config?.state;try{saved??=JSON.parse(localStorage.getItem(store)||'null');}catch{}const content=saved?.modelContent;
  let curl=0,twist=30,view='front',playing=false,phase=0,last=0;
  if([revision,'abdomen-anatomy-review-v3','abdomen-twist-v2'].includes(content?.revision)){
   if(Number.isFinite(content.curl))curl=Math.max(0,Math.min(100,content.curl));
   if(Number.isFinite(content.twist))twist=Math.max(-60,Math.min(60,content.twist));
   if(['front','side','twist'].includes(content.camera))view=content.camera;
-  playing=config.state.privateContent?.playing===true;
+  playing=saved.privateContent?.playing===true;
  }else if(content?.revision==='abdomen-spine-curl-v1'){
   if(Number.isFinite(content.angle))curl=Math.max(0,Math.min(100,content.angle));
   if(['front','side'].includes(content.camera))view=content.camera;
-  playing=config.state.privateContent?.playing===true;
+  playing=saved.privateContent?.playing===true;
  }
  if(typeof content?.fibers==='boolean')by('fibers').checked=content.fibers;
  if(typeof content?.transparent==='boolean')by('transparent').checked=content.transparent;
+ const composition=flexion.composition;composition.restore(content?.composition);composition.mountControls(()=>{render();capture();queueFit();});
  function layers(){root.classList.toggle('no-fibers',!by('fibers').checked);root.classList.toggle('transparent',by('transparent').checked);render();}
- function capture(){if(config)parent.postMessage({type:'anatomy-hub-state',key:config.key,state:{modelContent:{revision,topic:'복부 말기와 비틀기',curl,twist,angle:view==='twist'?twist:curl,camera:view,fibers:by('fibers').checked,transparent:by('transparent').checked},privateContent:{playing}}},'*');}
+ function capture(){const state={modelContent:{revision,topic:'복부 말기와 비틀기',curl,twist,angle:view==='twist'?twist:curl,camera:view,fibers:by('fibers').checked,transparent:by('transparent').checked,composition:composition.state},privateContent:{playing}};try{localStorage.setItem(store,JSON.stringify(state));}catch{}if(config)parent.postMessage({type:'anatomy-hub-state',key:config.key,state},'*');}
  const legend=root.querySelector('.diagram-legend');
  for(const [name,color]of [['전거근','orange'],['외복사근','blue'],['내복사근','green'],['복직근','red'],['광배근','purple']]){const span=document.createElement('span'),dot=document.createElement('i');dot.className=color+'-key';span.append(dot,document.createTextNode(name));legend.append(span);}
  function render(){const yaw=view==='twist',angle=yaw?twist:curl,slider=by('angle');slider.min=yaw?-60:0;slider.max=yaw?60:100;slider.value=angle;by('value').textContent=Math.round(angle)+(yaw?'°':'%');by('motion-label').textContent=yaw?'척추 비틀기':'몸통 말기';slider.setAttribute('aria-label',yaw?'척추 비틀기':'몸통 말기');slider.setAttribute('aria-valuetext',Math.round(angle)+(yaw?'도 비틀기':'퍼센트 말기'));
