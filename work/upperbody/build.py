@@ -8,7 +8,7 @@ style='<style>.native-labels text{fill:var(--foreground)}.native-labels path{fil
 doc=doc.replace('</head>',style+'</head>')
 credit='<div class="native-credit">자료: <a href="https://github.com/Kevin-Mattheus-Moerman/BodyParts3D/tree/f0eeb6e843380cfe6b83797cf8c3e1af74de5e61" target="_blank" rel="noopener">BodyParts3D</a> © 2008 DBCLS · <a href="https://creativecommons.org/licenses/by-sa/2.1/jp/" target="_blank" rel="noopener">CC BY-SA 2.1 Japan</a> · STL: Kevin Mattheus Moerman</div>'
 lib='\n'.join((root/'work/abdomen'/f).read_text() for f in ['visibility.js','atlas-contours.js'])
-scripts=(root/'work/composition/composition.js').read_text()+'\n'+lib+'\n'+'\n'.join((w/f).read_text() for f in ['motion.js','renderer.js','controls.js'])
+scripts=(root/'work/visual/surface-lighting.js').read_text()+'\n'+(root/'work/composition/composition.js').read_text()+'\n'+lib+'\n'+'\n'.join((w/f).read_text() for f in ['motion.js','renderer.js','controls.js'])
 doc=doc.replace('</body>',credit+'<script type="application/json" id="upperbody-atlas">'+(w/'atlas-data.json').read_text()+'</script><script>'+scripts+'</script></body>')
 (root/'upperbody.html').write_text(doc)
 path=root/'index.html';hub=path.read_text();m=re.search(r'(<script type="application/json" id="anatomy-data">)(.*?)(</script>)',hub,re.S);data=json.loads(m[2]);config='<script type="application/json" id="hub-config">__HUB_CONFIG__</script>'
