@@ -84,7 +84,7 @@ for region,sp in specs.items():
             p['v']-=root
             if p['name'] in ['tibia','fibula']:
                 crop_bone(p,cut);p['v']=np.array(p['v']);p['f']=np.array(p['f'])
-        pose={'kneeFlexion':0,'description':'기존 무릎 폄 자세 · 무릎 아래 짧은 골격','cameraYaw':[32,90,148],'kneeY':float(knee[1]),'lowerLegCut':cut}
+        pose={'kneeFlexion':0,'description':'기존 무릎 폄 자세 · 무릎 아래 짧은 골격','cameraYaw':[32,90,148],'cameraYawByView':{'front':32,'side':90,'back':148,'medial':270},'kneeY':float(knee[1]),'lowerLegCut':cut}
         groups={'red':['rectus','vastus'],'blue':['biceps','semim'],'purple':['sartorius','adductor']}
     radius_end=next((q['v'][:,1].max() for q in parts if q['name']=='radius'),None)
     for p in parts:
