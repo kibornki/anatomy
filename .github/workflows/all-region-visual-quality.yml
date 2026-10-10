@@ -1,0 +1,54 @@
+name: All region visual quality
+on:
+  push:
+    branches: [codex/all-region-visual-quality]
+    paths:
+      - 'work/**'
+      - '.github/workflows/all-region-visual-quality.yml'
+permissions:
+  contents: write
+jobs:
+  review:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install browser review tools
+        run: |
+          pip install numpy scipy pillow playwright
+          python -m playwright install --with-deps chromium
+          python -c "from playwright.sync_api import sync_playwright; p=sync_playwright().start(); print(p.chromium.executable_path)" > /tmp/anatomy-visual-chromium
+          sudo ln -sf "$(cat /tmp/anatomy-visual-chromium)" /usr/bin/chromium
+          sudo install -d -o "$USER" /workspace/artifacts/arm-implementation /workspace/artifacts/limb-implementation
+      - name: Preserve live baseline pages
+        run: |
+          mkdir -p artifacts/visual/baseline
+          for region in upperbody arm abdomen forearm thigh; do
+            git show e3aa00e9555e0931b77772af8f41a774d898bb0c:$region.html > artifacts/visual/baseline/$region.html
+          done
+      - name: Capture live baseline before further changes
+        run: |
+          python -m http.server 8767 --bind 127.0.0.1 &
+          python work/visual/review.py --quick
+      - name: Record review images on feature branch
+        run: |
+          mkdir -p work/visual/review
+          cp artifacts/visual/*.png artifacts/visual/matrix.json work/visual/review/
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add work/visual/review
+          if ! git diff --cached --quiet; then
+            git commit -m "Record actual baseline region browser renders [skip ci]"
+            git push origin HEAD:refs/heads/codex/all-region-visual-quality
+          fi
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: anatomy-all-region-visual
+          path: artifacts/visual
+          retention-days: 14
