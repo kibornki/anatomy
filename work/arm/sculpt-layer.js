@@ -73,8 +73,8 @@ function ArmSculptLayer({atlas,landmarks,make,defs,drawing,svg}){
   {id:'brachialis',label:'상완근 secondary mass',kind:'muscle',parts:['brachialis']}
  ];
  const stop=(gradient,offset,color)=>make('stop',{offset,'stop-color':color},gradient);
- const boneGradient=make('linearGradient',{id:'arm-sculpt-bone-gradient',x1:'0%',y1:'0%',x2:'100%',y2:'100%'},defs);stop(boneGradient,'0%','#f0f1f3');stop(boneGradient,'52%','#d8dce1');stop(boneGradient,'100%','#b7bdc7');
- const muscleGradient=make('linearGradient',{id:'arm-sculpt-muscle-gradient',x1:'0%',y1:'0%',x2:'100%',y2:'100%'},defs);stop(muscleGradient,'0%','#e5e7eb');stop(muscleGradient,'55%','#c9ced5');stop(muscleGradient,'100%','#aeb5bf');
+ const boneGradient=make('linearGradient',{id:'arm-sculpt-bone-gradient',x1:'0%',y1:'0%',x2:'100%',y2:'100%'},defs);stop(boneGradient,'0%','#e9e3d8');stop(boneGradient,'52%','#cfc7bb');stop(boneGradient,'100%','#a69b8d');
+ const muscleGradient=make('linearGradient',{id:'arm-sculpt-muscle-gradient',x1:'0%',y1:'0%',x2:'100%',y2:'100%'},defs);stop(muscleGradient,'0%','#dfe6ec');stop(muscleGradient,'55%','#bec9d3');stop(muscleGradient,'100%','#909daa');
  const root=make('g',{'class':'sculpt-layer','data-display-layer':'sculpt','aria-hidden':'true'},drawing);
  const nodes=groups.map((group,i)=>{const g=make('g',{'data-sculpt-form':group.id,'data-kind':group.kind},root),clip=make('clipPath',{id:'arm-sculpt-clip-'+i},defs),mask=make('path',{},clip),fill=make('path',{class:'sculpt-fill '+(group.kind==='bone'?'sculpt-bone':'sculpt-muscle'),fill:'url(#arm-sculpt-'+group.kind+'-gradient)'},g),outline=make('path',{class:'sculpt-outline',fill:'none',stroke:'var(--muted-foreground)','stroke-width':group.kind==='bone'?.9:.65},g),fiber=make('path',{class:'sculpt-form-lines',fill:'none',stroke:'var(--foreground)','stroke-opacity':'.20','stroke-width':'.65','clip-path':'url(#arm-sculpt-clip-'+i+')'},g);return{g,part:{name:group.id+'-mass'},mask,fill,outline,fiber,artistSculpt:true,group,i};});
  const light=ArmSurfaceLighting(make,nodes);
@@ -95,7 +95,7 @@ function ArmSculptLayer({atlas,landmarks,make,defs,drawing,svg}){
    const buffer=ArmVisibility({project:sculptProject,depth,step:.9}),meshes=groups.map(g=>formMesh(g,posed));
    meshes.forEach((mesh,id)=>mesh.f.forEach(f=>buffer.triangle(mesh.v[f[0]],mesh.v[f[1]],mesh.v[f[2]],id)));
    const visible=buffer.solve(nodes.length,{projections:true,scanlineClips:false});
-   nodes.forEach((n,id)=>{const local=visible.ownerZ[id],inside=k=>transparent&&n.group.kind==='muscle'?local[k]>-Infinity:visible.owners[k]===id,contour=AtlasContour(visible,inside,visible.bounds[id]),mesh=meshes[id],plateOutline=mesh.outlinePoints?'M'+mesh.outlinePoints.map(project).map(p=>p.join(',')).join('L')+'Z':contour;n.mask.setAttribute('d',contour);n.fill.setAttribute('d',contour);n.outline.setAttribute('d',plateOutline);n.fiber.setAttribute('d',(mesh.rings||[]).filter((_,i)=>i%2===0&&i>0&&i<mesh.rings.length-1).map(r=>'M'+r.map(k=>project(mesh.v[k]).join(',')).join('L')+'Z').join(' '));});
+   nodes.forEach((n,id)=>{const local=visible.ownerZ[id],inside=k=>transparent&&n.group.kind==='muscle'?local[k]>-Infinity:visible.owners[k]===id,contour=AtlasContour(visible,inside,visible.bounds[id]),mesh=meshes[id],plateOutline=mesh.outlinePoints?'M'+mesh.outlinePoints.map(project).map(p=>p.join(',')).join('L')+'Z':contour;n.mask.setAttribute('d',contour);n.fill.setAttribute('d',contour);n.outline.setAttribute('d',plateOutline);n.fiber.setAttribute('d','');});
    light(visible);
   }
   drawLandmark(landmark,angle,mode==='compare'?sculptProject:project,forearm);
