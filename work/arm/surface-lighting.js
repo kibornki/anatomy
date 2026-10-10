@@ -1,7 +1,7 @@
 /* Lighting only: derive smooth camera-space normals from the existing depth
  * buffer. No mesh, attachment, motion or visibility data is changed. */
 function ArmSurfaceLighting(make,nodes){
- const selected=n=>/^(biceps-|triceps-)/.test(n.part.name);
+ const selected=n=>!!n.artistSculpt;
  const layers=nodes.map(n=>selected(n)?make('image',{'class':'arm-surface-lighting','clip-path':n.fiber.getAttribute('clip-path'),'pointer-events':'none'},n.g):null);
  layers.forEach((image,i)=>{if(image)nodes[i].g.insertBefore(image,nodes[i].outline);});
  const canvas=document.createElement('canvas'),ctx=canvas.getContext('2d');
