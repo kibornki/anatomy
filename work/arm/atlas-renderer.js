@@ -11,7 +11,7 @@ function AtlasArm(root){
  const fiberGuides=JSON.parse(document.getElementById('arm-fiber-guides').textContent).parts;
  const nodes=atlas.parts.map((part,i)=>{
   const g=make('g',{'data-atlas-part':part.name,'data-muscle':part.kind==='muscle'?part.name:'','data-kind':part.kind},drawing),clip=make('clipPath',{id:'arm-clip-'+i},defs),mask=make('path',{},clip);
-  const fill=make('path',{class:'atlas-fill '+part.kind,fill:colors[part.color]||'var(--'+part.color+')'},g),outline=make('path',{fill:'none',stroke:'var(--muted-foreground)','stroke-width':part.kind==='bone'?.9:.55,'stroke-opacity':part.kind==='bone'?.8:.4},g),fiber=make('path',{class:'fibers fiber',fill:'none',stroke:'var(--foreground)','clip-path':'url(#arm-clip-'+i+')'},g);
+  const fill=make('path',{class:'atlas-fill '+part.kind,fill:colors[part.color]||(/^(biceps-|triceps-)/.test(part.name)?'color-mix(in srgb,var(--'+part.color+') 85%,white)':'var(--'+part.color+')')},g),outline=make('path',{fill:'none',stroke:'var(--muted-foreground)','stroke-width':part.kind==='bone'?.9:.55,'stroke-opacity':part.kind==='bone'?.8:.4},g),fiber=make('path',{class:'fibers fiber',fill:'none',stroke:'var(--foreground)','clip-path':'url(#arm-clip-'+i+')'},g);
   return {part,g,mask,fill,outline,fiber,i,guides:fiberGuides[part.name]||part.fibers};
  });
  const lightSurfaces=ArmSurfaceLighting(make,nodes);

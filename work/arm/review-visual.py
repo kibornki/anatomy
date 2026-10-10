@@ -23,6 +23,22 @@ with sync_playwright() as pw:
    metrics.append(dict(stage=stage,view=view,angle=angle,fibers=fibers,transparent=transparent,
     duration=page.evaluate('armAtlas.model.debug.duration'),
     coverage=page.evaluate('armAtlas.model.debug.coverage')))
+ # Preserve the previously added arm size/fat controls and saved state.
+ for muscle in [60,160]:
+  page.locator('#arm-composition-muscle').fill(str(muscle));page.locator('#arm-composition-fat').fill('70')
+  page.locator('#arm-composition-fat-transparent').check()
+  for view,angle in product(['front','back','side'],[0,135]):
+   page.evaluate('([a,v])=>armAtlas.setPose(a,v)',[angle,view])
+   assert page.evaluate('armAtlas.model.composition.state.muscle')==muscle
+   assert page.evaluate('armAtlas.model.composition.state.fat')==70
+   assert page.evaluate('armAtlas.model.debug.posed.every(p=>p.v.every(v=>v.every(Number.isFinite)))')
+ page.reload();page.wait_for_function('!!window.armAtlas')
+ assert page.locator('#arm-composition-muscle').input_value()=='160'
+ assert page.locator('#arm-composition-fat').input_value()=='70'
+ assert page.locator('#arm-composition-fat-transparent').is_checked()
+ page.locator('#arm-composition-reset').click()
+ assert page.locator('#arm-composition-muscle').input_value()=='100'
+ assert page.locator('#arm-composition-fat').input_value()=='0'
  browser.close()
 assert not errors,errors
 for stage,fibers,transparent in product(['before','after'],[True,False],[False,True]):

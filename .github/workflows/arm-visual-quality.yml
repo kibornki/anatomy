@@ -18,6 +18,7 @@ jobs:
           import urllib.request,base64
           refs={
            'biceps':'https://r2.anatobase.com/video/126/images/demo-1790264512543-360/001.webp',
+           'upper-arm':'https://r2.anatobase.com/video/100/images/demo-1790267838862-360/007.webp',
            'arm-layers':'https://r2.anatobase.com/video/127/images/demo-1790268028185-360/001.webp'}
           for name,url in refs.items():
            try:
