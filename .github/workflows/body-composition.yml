@@ -10,7 +10,7 @@ on:
       - 'work/limb/**'
       - 'work/abdomen/**'
 permissions:
-  contents: read
+  contents: write
 jobs:
   validate:
     runs-on: ubuntu-latest
@@ -40,6 +40,16 @@ jobs:
         run: |
           python -m http.server 8767 --bind 127.0.0.1 &
           node work/composition/review-browser.cjs
+      - name: Save the validated generated pages on the feature branch
+        if: github.event_name == 'push'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add index.html upperbody.html arm.html abdomen.html forearm.html thigh.html
+          if ! git diff --cached --quiet; then
+            git commit -m "Build validated body composition pages"
+            git push origin HEAD:refs/heads/codex/body-composition-controls
+          fi
       - uses: actions/upload-artifact@v4
         if: always()
         with:

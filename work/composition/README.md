@@ -30,5 +30,6 @@
 - 로컬 서버 8767과 Playwright 설치 후 node work/composition/review-browser.cjs
 
 GitHub Actions는 다섯 단독 페이지와 통합본을 만들고 geometry 및 브라우저
-검사를 실행한다. 생성본과 모바일 캡처는 anatomy-body-composition 아티팩트에
+검사를 실행한다. 모든 검사가 통과한 생성 HTML은 기능 브랜치에 기록한다.
+생성본과 모바일 캡처는 anatomy-body-composition 아티팩트에
 보관하며 자동으로 게시하지 않는다.
