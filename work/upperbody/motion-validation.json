@@ -1,8 +1,9 @@
 {
   "poses": 106,
-  "maxApprovedError": 0.014071602609505914,
-  "maxRigidError": 1.1368683772161603e-13,
-  "maxStep": 4.123130278255845,
+  "maxAttachmentError": 0.06950376993887374,
+  "maxVolumeError": 0.00912647685062884,
+  "maxRigidError": 1.9895196601282805e-13,
+  "maxStep": 4.133970585554312,
   "muscleNames": [
     "pectoral-clavicular",
     "pectoral-sternal",

@@ -79,7 +79,7 @@ for region,sp in specs.items():
         fem=next(p['v'] for p in parts if p['name']=='femur')
         root=fem[fem[:,1]<np.quantile(fem[:,1],.05)].mean(0)
         knee=fem[fem[:,1]>np.quantile(fem[:,1],.98)].mean(0)-root
-        cut=float(knee[1]+72)
+        cut=float(knee[1]+96)
         for p in parts:
             p['v']-=root
             if p['name'] in ['tibia','fibula']:

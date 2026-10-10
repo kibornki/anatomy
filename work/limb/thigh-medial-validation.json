@@ -4,7 +4,7 @@
       "angle": 0,
       "view": "front",
       "yaw": 32,
-      "adductorCoverage": 2139,
+      "adductorCoverage": 2035,
       "labels": [
         "내전근",
         "봉공근",
@@ -18,10 +18,9 @@
       "angle": 0,
       "view": "side",
       "yaw": 90,
-      "adductorCoverage": 102,
+      "adductorCoverage": 97,
       "labels": [
         "봉공근",
-        "내전근",
         "대퇴직근",
         "반힘줄근",
         "외측광근",
@@ -33,23 +32,23 @@
       "angle": 0,
       "view": "medial",
       "yaw": 270,
-      "adductorCoverage": 3362,
+      "adductorCoverage": 3204,
       "labels": [
         "외측광근",
-        "내전근",
         "대퇴이두근",
+        "내전근",
         "대퇴직근",
         "봉공근",
         "반힘줄근",
-        "내측광근",
-        "반막근"
+        "반막근",
+        "내측광근"
       ]
     },
     {
       "angle": 0,
       "view": "back",
       "yaw": 148,
-      "adductorCoverage": 1152,
+      "adductorCoverage": 1096,
       "labels": [
         "봉공근",
         "대퇴직근",
@@ -65,7 +64,7 @@
       "angle": 60,
       "view": "front",
       "yaw": 32,
-      "adductorCoverage": 2243,
+      "adductorCoverage": 2132,
       "labels": [
         "봉공근",
         "내전근",
@@ -79,12 +78,11 @@
       "angle": 60,
       "view": "side",
       "yaw": 90,
-      "adductorCoverage": 104,
+      "adductorCoverage": 98,
       "labels": [
         "봉공근",
-        "내전근",
-        "반힘줄근",
         "대퇴직근",
+        "반힘줄근",
         "대퇴이두근",
         "외측광근",
         "반막근"
@@ -94,13 +92,13 @@
       "angle": 60,
       "view": "medial",
       "yaw": 270,
-      "adductorCoverage": 3216,
+      "adductorCoverage": 3064,
       "labels": [
         "외측광근",
         "내전근",
         "대퇴이두근",
-        "반힘줄근",
         "봉공근",
+        "반힘줄근",
         "대퇴직근",
         "반막근",
         "내측광근"
@@ -110,7 +108,7 @@
       "angle": 60,
       "view": "back",
       "yaw": 148,
-      "adductorCoverage": 992,
+      "adductorCoverage": 942,
       "labels": [
         "대퇴직근",
         "내전근",
@@ -126,22 +124,21 @@
       "angle": 120,
       "view": "front",
       "yaw": 32,
-      "adductorCoverage": 2363,
+      "adductorCoverage": 2248,
       "labels": [
         "봉공근",
         "내전근",
         "대퇴직근",
         "외측광근",
         "내측광근",
-        "대퇴이두근",
-        "중간광근"
+        "대퇴이두근"
       ]
     },
     {
       "angle": 120,
       "view": "side",
       "yaw": 90,
-      "adductorCoverage": 108,
+      "adductorCoverage": 101,
       "labels": [
         "봉공근",
         "내전근",
@@ -156,13 +153,13 @@
       "angle": 120,
       "view": "medial",
       "yaw": 270,
-      "adductorCoverage": 2928,
+      "adductorCoverage": 2792,
       "labels": [
-        "외측광근",
         "내전근",
         "대퇴이두근",
-        "반힘줄근",
+        "외측광근",
         "봉공근",
+        "반힘줄근",
         "대퇴직근",
         "반막근",
         "내측광근"
@@ -172,7 +169,7 @@
       "angle": 120,
       "view": "back",
       "yaw": 148,
-      "adductorCoverage": 905,
+      "adductorCoverage": 861,
       "labels": [
         "내전근",
         "대퇴직근",

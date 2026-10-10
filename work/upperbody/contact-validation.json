@@ -1,0 +1,37 @@
+{
+  "keyframeAngles": [
+    15,
+    20,
+    25,
+    30,
+    35,
+    40,
+    45,
+    50,
+    55,
+    60,
+    65,
+    70,
+    75,
+    80,
+    85,
+    90,
+    95,
+    100,
+    105,
+    110,
+    115,
+    120
+  ],
+  "bones": [
+    "scapula",
+    "clavicle",
+    "humerus",
+    "thorax"
+  ],
+  "additionalInteriorVertexFindings": [],
+  "gridStep": 1.25,
+  "criterion": "SDF < -0.8 and worse than that source vertex by > 0.5; source native intersections retained. Keyframe vertex samples, not a clinical or complete triangle contact certificate.",
+  "posteriorSurfaceMargin": 1.5,
+  "posteriorNeighborhoodCells": 5
+}
