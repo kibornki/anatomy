@@ -52,10 +52,11 @@ assert.equal(plate.v.length,3);assert.equal(plate.f.length,2);assert(plate.v.eve
  const saved=await page.evaluate(()=>JSON.parse(localStorage.getItem('artist-arm-v1')).modelContent);assert.equal(saved.mode,'sculpt');assert.equal(saved.landmark,'radial-tuberosity');
  if(errors.length)throw new Error('browser errors: '+errors.join('\\n'));
  const viewNames=['front','back','side'],viewLabels=['정면','후면','측면'],panels=viewNames.map((view,i)=>'<figure><figcaption>'+viewLabels[i]+'</figcaption><img src="data:image/png;base64,'+fs.readFileSync(path.join(out,'scene-'+view+'-90.png')).toString('base64')+'"></figure>').join('');
- await page.setContent('<!doctype html><html lang="ko"><head><meta charset="utf-8"><style>html,body{margin:0;background:#f2f4f7;font:16px sans-serif}main{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;padding:8px}figure{margin:0;background:white;padding:6px;border:1px solid #d8dde5}figcaption{text-align:center;font-weight:700;padding:4px}img{display:block;width:100%;height:auto}</style></head><body><main>'+panels+'</main></body></html>');
- const preview=await page.screenshot({path:path.join(out,'compare-views-90.jpg'),type:'jpeg',quality:80,fullPage:true});
+ const previewPage=await browser.newPage({viewport:{width:720,height:1450},deviceScaleFactor:1});
+ await previewPage.setContent('<!doctype html><html lang="ko"><head><meta charset="utf-8"><style>html,body{margin:0;width:100%;background:#f2f4f7;font:16px sans-serif}main{display:grid;grid-template-columns:1fr;gap:6px;padding:6px}figure{margin:0;background:white;padding:5px;border:1px solid #d8dde5}figcaption{text-align:center;font-weight:700;padding:4px}img{display:block;width:100%;height:auto}</style></head><body><main>'+panels+'</main></body></html>');
+ const preview=await previewPage.screenshot({path:path.join(out,'compare-views-90.jpg'),type:'jpeg',quality:80,fullPage:true});
  if(process.env.ARM_VISUAL_AUDIT==='1')console.log('ARM_VISUAL_AUDIT_JPEG '+preview.toString('base64'));
- await browser.close();
+ await previewPage.close();await browser.close();
  const report={registration:marks.sourceRegistration,landmarkNearestSurfaceDistances:distances,geometry:geometryStats,views:['front','back','side'],angles:[0,45,90,135],comparisonScreenshots:browserMatrix.length,modeChecks:modes,radialLandmarkMovesWithPose:true,pageErrors:errors,limitations:['Shoulder abduction remains on the separate upperbody motion page; this arm pilot holds scapula, clavicle and humerus fixed during elbow flexion.','Aponeurosis and radial/olecranon insertion points are explicitly identified as authoring guides where the atlas does not provide a segmented landmark.']};
  fs.writeFileSync(path.join(out,'review.json'),JSON.stringify(report,null,2)+'\\n');console.log('ARM_SCULPT_REVIEW '+JSON.stringify({screenshots:browserMatrix.length,forms:geometryStats,landmarkDistances:distances,errors:errors.length}));
 })().catch(e=>{console.error(e);process.exitCode=1;});
