@@ -1,7 +1,7 @@
 /* Same native surface/depth contour drawing as the abdomen and upper body. */
 const data=JSON.parse(document.querySelector('#atlas').textContent),ns='http://www.w3.org/2000/svg';
 const colors={red:'#e02e2a',blue:'#339cff',green:'#00a240',orange:'#e25507',purple:'#924ff7',pink:'#eb77b1',context:'#edb0a7'};
-const names={forearm:{blue:'상완요골근',orange:'굽힘근군',green:'폄근군',pink:'원회내근'},thigh:{'rectus-femoris':'대퇴직근','vastus-lateralis':'외측광근','vastus-medialis':'내측광근','biceps-femoris-long':'대퇴이두근 장두','semitendinosus':'반힘줄근','sartorius':'봉공근','adductor-longus':'내전근'}};
+const names={forearm:{blue:'상완요골근',orange:'굽힘근군',green:'폄근군',pink:'회내근군',purple:'회외근'},thigh:{'rectus-femoris':'대퇴직근','vastus-lateralis':'외측광근','vastus-medialis':'내측광근','biceps-femoris-long':'대퇴이두근 장두','semitendinosus':'반힘줄근','sartorius':'봉공근','adductor-longus':'내전근'}};
 const records=[];
 const curve=ps=>{if(ps.length<3)return '';let d='M'+ps[0].join(',');for(let i=1;i<ps.length-1;i++)d+='Q'+ps[i].join(',')+' '+ps[i].map((v,j)=>(v+ps[i+1][j])/2).join(',');return d+'L'+ps.at(-1).join(',');};
 for(const [region,model]of Object.entries(data.models)){
@@ -35,8 +35,8 @@ for(const [region,model]of Object.entries(data.models)){
    make('path',{d:`M${x},${y+5}L${target.join(',')}`,fill:'none',stroke:'#8593a6','stroke-width':.9},leaders);make('text',{x,y,'text-anchor':l?'start':'end'},leaders).textContent=text;labels.push(text);
   }
   const labelByName={'brachioradialis':'상완요골근','flexor-carpi-radialis':'요측수근굴근','flexor-carpi-ulnaris-humeral':'척측수근굴근 상완두','flexor-carpi-ulnaris-ulnar':'척측수근굴근 척골두','flexor-digitorum-superficialis-humeroulnar':'천지굴근 상완척골두','flexor-digitorum-superficialis-radial':'천지굴근 요골두','flexor-digitorum-profundus':'심지굴근','palmaris-longus':'장장근','extensor-carpi-radialis-longus':'장요측수근신근','extensor-carpi-radialis-brevis':'단요측수근신근','extensor-digitorum':'총지신근','extensor-carpi-ulnaris-humeral':'척측수근신근 상완두','extensor-carpi-ulnaris-ulnar':'척측수근신근 척골두','pronator-teres-humeral':'원회내근 상완두','pronator-teres-ulnar':'원회내근 척골두','supinator':'회외근','pronator-quadratus':'방형회내근',...names.thigh,'vastus-intermedius':'중간광근','biceps-femoris-short':'대퇴이두근 단두','semimembranosus':'반막근'};
-  const groupLabels=model.parts.map((p,id)=>({p,id})).filter(({p,id})=>p.kind==='muscle'&&!p.material&&visible.coverage[id]>100);
-  const legend=document.createElement('div');legend.className='legend';legend.innerHTML=groupLabels.map(({p})=>'<span><i style="background:'+(p.displayColor||colors[p.color])+'"></i>'+(labelByName[p.name]||p.name)+'</span>').join('');section.append(legend);
+  let groupLabels=model.parts.map((p,id)=>({p,id})).filter(({p,id})=>p.kind==='muscle'&&!p.material&&visible.coverage[id]>100);if(region==='forearm')groupLabels=groupLabels.filter(({p},i,a)=>a.findIndex(q=>q.p.color===p.color)===i);
+  const legend=document.createElement('div');legend.className='legend';legend.innerHTML=groupLabels.map(({p})=>'<span><i style="background:'+(p.displayColor||colors[p.color])+'"></i>'+(region==='forearm'?names.forearm[p.color]:(labelByName[p.name]||p.name))+'</span>').join('');section.append(legend);
   records.push({region,view,yaw,labels,coverage:visible.coverage,parts:model.parts.map(p=>({name:p.name,source:p.source,displayCut:p.displayCut}))});
  }
 }

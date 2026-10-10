@@ -1,0 +1,24 @@
+{
+  "poses": 106,
+  "maxApprovedError": 0.014071602609505914,
+  "maxRigidError": 1.1368683772161603e-13,
+  "maxStep": 4.123130278255845,
+  "muscleNames": [
+    "pectoral-clavicular",
+    "pectoral-sternal",
+    "pectoral-abdominal",
+    "serratus",
+    "latissimus",
+    "trapezius-upper",
+    "trapezius-middle",
+    "trapezius-lower",
+    "infraspinatus",
+    "teres-major",
+    "teres-minor"
+  ],
+  "cameraYaw": [
+    0,
+    90,
+    180
+  ]
+}

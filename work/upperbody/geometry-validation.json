@@ -1,0 +1,181 @@
+{
+  "approved60MaxError": 0.014071602609505915,
+  "latissimusFrames": [
+    {
+      "angle": 15,
+      "originVertices": 276,
+      "insertionVertices": 49,
+      "volumeRatio": 1.0265840170208602,
+      "surfaceAreaRatio": 1.0219913336334896,
+      "limitations": "Static attachment-constrained surface fit; not validated muscle physiology."
+    },
+    {
+      "angle": 20,
+      "originVertices": 276,
+      "insertionVertices": 49,
+      "volumeRatio": 1.0414632763791094,
+      "surfaceAreaRatio": 1.0343863933093873,
+      "limitations": "Static attachment-constrained surface fit; not validated muscle physiology."
+    },
+    {
+      "angle": 25,
+      "originVertices": 276,
+      "insertionVertices": 49,
+      "volumeRatio": 1.0574745545004878,
+      "surfaceAreaRatio": 1.0481826777838672,
+      "limitations": "Static attachment-constrained surface fit; not validated muscle physiology."
+    },
+    {
+      "angle": 30,
+      "originVertices": 276,
+      "insertionVertices": 49,
+      "volumeRatio": 1.0743391935580422,
+      "surfaceAreaRatio": 1.0631913030312317,
+      "limitations": "Static attachment-constrained surface fit; not validated muscle physiology."
+    },
+    {
+      "angle": 35,
+      "originVertices": 276,
+      "insertionVertices": 49,
+      "volumeRatio": 1.0917774199680768,
+      "surfaceAreaRatio": 1.079174985708032,
+      "limitations": "Static attachment-constrained surface fit; not validated muscle physiology."
+    },
+    {
+      "angle": 40,
+      "originVertices": 276,
+      "insertionVertices": 49,
+      "volumeRatio": 1.109519425312131,
+      "surfaceAreaRatio": 1.0958733239863776,
+      "limitations": "Static attachment-constrained surface fit; not validated muscle physiology."
+    },
+    {
+      "angle": 45,
+      "originVertices": 276,
+      "insertionVertices": 49,
+      "volumeRatio": 1.1273120904937732,
+      "surfaceAreaRatio": 1.1130577498404832,
+      "limitations": "Static attachment-constrained surface fit; not validated muscle physiology."
+    },
+    {
+      "angle": 50,
+      "originVertices": 276,
+      "insertionVertices": 49,
+      "volumeRatio": 1.1449225202262197,
+      "surfaceAreaRatio": 1.1305285617240945,
+      "limitations": "Static attachment-constrained surface fit; not validated muscle physiology."
+    },
+    {
+      "angle": 55,
+      "originVertices": 276,
+      "insertionVertices": 49,
+      "volumeRatio": 1.1621395708741098,
+      "surfaceAreaRatio": 1.1481106856218721,
+      "limitations": "Static attachment-constrained surface fit; not validated muscle physiology."
+    },
+    {
+      "angle": 60,
+      "originVertices": 276,
+      "insertionVertices": 49,
+      "volumeRatio": 1.1787741958709206,
+      "surfaceAreaRatio": 1.1656523112357693,
+      "limitations": "Static attachment-constrained surface fit; not validated muscle physiology."
+    },
+    {
+      "angle": 65,
+      "originVertices": 276,
+      "insertionVertices": 49,
+      "volumeRatio": 1.1946591148258021,
+      "surfaceAreaRatio": 1.183021577619728,
+      "limitations": "Static attachment-constrained surface fit; not validated muscle physiology."
+    },
+    {
+      "angle": 70,
+      "originVertices": 276,
+      "insertionVertices": 49,
+      "volumeRatio": 1.2096481081944679,
+      "surfaceAreaRatio": 1.2000965499140779,
+      "limitations": "Static attachment-constrained surface fit; not validated muscle physiology."
+    },
+    {
+      "angle": 75,
+      "originVertices": 276,
+      "insertionVertices": 49,
+      "volumeRatio": 1.2236151191776043,
+      "surfaceAreaRatio": 1.2167614582430444,
+      "limitations": "Static attachment-constrained surface fit; not validated muscle physiology."
+    },
+    {
+      "angle": 80,
+      "originVertices": 276,
+      "insertionVertices": 49,
+      "volumeRatio": 1.2364532726525785,
+      "surfaceAreaRatio": 1.2329286353527789,
+      "limitations": "Static attachment-constrained surface fit; not validated muscle physiology."
+    },
+    {
+      "angle": 85,
+      "originVertices": 276,
+      "insertionVertices": 49,
+      "volumeRatio": 1.2480738753852962,
+      "surfaceAreaRatio": 1.2485686983660964,
+      "limitations": "Static attachment-constrained surface fit; not validated muscle physiology."
+    },
+    {
+      "angle": 90,
+      "originVertices": 276,
+      "insertionVertices": 49,
+      "volumeRatio": 1.2584054313756698,
+      "surfaceAreaRatio": 1.2635485217429763,
+      "limitations": "Static attachment-constrained surface fit; not validated muscle physiology."
+    },
+    {
+      "angle": 95,
+      "originVertices": 276,
+      "insertionVertices": 49,
+      "volumeRatio": 1.267392685677942,
+      "surfaceAreaRatio": 1.2777807559064955,
+      "limitations": "Static attachment-constrained surface fit; not validated muscle physiology."
+    },
+    {
+      "angle": 100,
+      "originVertices": 276,
+      "insertionVertices": 49,
+      "volumeRatio": 1.2749956967855574,
+      "surfaceAreaRatio": 1.2912019112515647,
+      "limitations": "Static attachment-constrained surface fit; not validated muscle physiology."
+    },
+    {
+      "angle": 105,
+      "originVertices": 276,
+      "insertionVertices": 49,
+      "volumeRatio": 1.2811889302611281,
+      "surfaceAreaRatio": 1.3037628931594913,
+      "limitations": "Static attachment-constrained surface fit; not validated muscle physiology."
+    },
+    {
+      "angle": 110,
+      "originVertices": 276,
+      "insertionVertices": 49,
+      "volumeRatio": 1.2859603639309574,
+      "surfaceAreaRatio": 1.315426594276541,
+      "limitations": "Static attachment-constrained surface fit; not validated muscle physiology."
+    },
+    {
+      "angle": 115,
+      "originVertices": 276,
+      "insertionVertices": 49,
+      "volumeRatio": 1.289310597104785,
+      "surfaceAreaRatio": 1.3261684333922583,
+      "limitations": "Static attachment-constrained surface fit; not validated muscle physiology."
+    },
+    {
+      "angle": 120,
+      "originVertices": 276,
+      "insertionVertices": 49,
+      "volumeRatio": 1.2912519621494207,
+      "surfaceAreaRatio": 1.3359778289060515,
+      "limitations": "Static attachment-constrained surface fit; not validated muscle physiology."
+    }
+  ]
+}
