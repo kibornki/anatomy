@@ -2,7 +2,7 @@
  * Tendon plate and fascicles: authored from the approved posterior reference.
  * Elbow skinning is illustrative; it does not simulate tissue mechanics. */
 function AtlasArm(root){
- const atlas=JSON.parse(document.getElementById('arm-atlas').textContent),svg=root.querySelector('svg'),defs=svg.querySelector('defs'),drawing=root.querySelector('.diagram-volumes'),labels=root.querySelector('.diagram-labels');
+ const atlas=JSON.parse(document.getElementById('arm-atlas').textContent),landmarks=JSON.parse(document.getElementById('arm-landmarks').textContent),svg=root.querySelector('svg'),defs=svg.querySelector('defs'),drawing=root.querySelector('.diagram-volumes'),labels=root.querySelector('.diagram-labels');
  const ns='http://www.w3.org/2000/svg',make=(tag,attrs,parent)=>{const n=document.createElementNS(ns,tag);for(const [k,v] of Object.entries(attrs))n.setAttribute(k,v);parent.append(n);return n;};
  const composition=AnatomyComposition(root,atlas.parts,'arm');
  const motion=ArmMotion(atlas,JSON.parse(document.getElementById('arm-motion-reference').textContent)),forearm=motion.forearm,collision=ArmBoneCollision(atlas,forearm);
@@ -10,12 +10,13 @@ function AtlasArm(root){
  const colors={'bone':'#e8e9eb','context':'#cbd1d9','tendon':'#f7f7f3'};
  const fiberGuides=JSON.parse(document.getElementById('arm-fiber-guides').textContent).parts;
  const nodes=atlas.parts.map((part,i)=>{
-  const g=make('g',{'data-atlas-part':part.name,'data-muscle':part.kind==='muscle'?part.name:'','data-kind':part.kind},drawing),clip=make('clipPath',{id:'arm-clip-'+i},defs),mask=make('path',{},clip);
+  const g=make('g',{'data-atlas-part':part.name,'data-muscle':part.kind==='muscle'?part.name:'','data-kind':part.kind,'data-display-layer':'anatomy'},drawing),clip=make('clipPath',{id:'arm-clip-'+i},defs),mask=make('path',{},clip);
   const fill=make('path',{class:'atlas-fill '+part.kind,fill:colors[part.color]||(/^(biceps-|triceps-)/.test(part.name)?'color-mix(in srgb,var(--'+part.color+') 85%,white)':'var(--'+part.color+')')},g),outline=make('path',{fill:'none',stroke:'var(--muted-foreground)','stroke-width':part.kind==='bone'?.9:.55,'stroke-opacity':part.kind==='bone'?.8:.4},g),fiber=make('path',{class:'fibers fiber',fill:'none',stroke:'var(--foreground)','clip-path':'url(#arm-clip-'+i+')'},g);
   return {part,g,mask,fill,outline,fiber,i,guides:fiberGuides[part.name]||part.fibers};
  });
  const lightSurfaces=ArmSurfaceLighting(make,nodes);
  composition.mountFat(make,drawing);
+ const sculpt=ArmSculptLayer({atlas,landmarks,make,defs,drawing,svg});
  const specs={
   front:[['deltoid-anterior','삼각근 전면',55,105],['deltoid-middle','삼각근 측면',585,145],['biceps-long','이두근 장두',55,245],['biceps-short','이두근 단두',585,280],['triceps-lateral','삼두근 외측두',55,340]],
   back:[['deltoid-posterior','삼각근 후면',55,105],['triceps-long','삼두근 장두',55,245],['triceps-lateral','삼두근 외측두',585,280],['triceps-medial','삼두근 내측두',585,355],['triceps-aponeurosis','삼두 건막',55,400]],
@@ -25,12 +26,13 @@ function AtlasArm(root){
  const curve=ps=>{if(ps.length<3)return '';let d='M'+ps[0].join(',');for(let i=1;i<ps.length-1;i++)d+='Q'+ps[i].join(',')+' '+ps[i].map((v,j)=>(v+ps[i+1][j])/2).join(',');return d+'L'+ps.at(-1).join(',');};
  const offsets=new Map();for(const [view,degrees]of [['front',16],['side',90],['back',164]]){const a=degrees*Math.PI/180;let min=Infinity,max=-Infinity;for(const p of atlas.parts.filter(p=>p.kind==='bone'))for(const v of p.v){const x=v[0]*Math.cos(a)+v[2]*Math.sin(a);min=Math.min(min,x);max=Math.max(max,x);}offsets.set(view,320-(min+max)*1.05/2);}
  let debug=null,lastVisibility=null,lastKey='',posedAngle=NaN,posedCache=null,posedComposition=-1;
- function render(angle,view='front'){
-  const transparent=root.classList.contains('transparent'),fibersOn=!root.classList.contains('no-fibers'),key=[angle,view,transparent,fibersOn,composition.key].join();if(key===lastKey)return;lastKey=key;
+ function render(angle,view='front',mode='anatomy',landmark='acromioclavicular'){
+  const transparent=root.classList.contains('transparent'),fibersOn=!root.classList.contains('no-fibers'),key=[angle,view,transparent,fibersOn,composition.key,mode,landmark].join();if(key===lastKey)return;lastKey=key;
   const start=performance.now(),degrees=view==='side'?90:view==='back'?164:16,a=degrees*Math.PI/180,c=Math.cos(a),s=Math.sin(a);
   const project=p=>[offsets.get(view)+(p[0]*c+p[2]*s)*1.05,15+(p[1]-29)*1.05],depth=p=>-p[0]*s+p[2]*c;
   if(posedAngle!==angle||posedComposition!==composition.key){posedAngle=angle;posedComposition=composition.key;posedCache=nodes.map(n=>n.part.v.map(p=>skin(p,n.part,angle)));}
   const posed=posedCache,buffer=ArmVisibility({project,depth,step:.9,accept:(ps,wa,wb,wc,id)=>id>=nodes.length||nodes[id].part.kind==='bone'||collision.minimumXYZ(ps[0][0]*wa+ps[1][0]*wb+ps[2][0]*wc,ps[0][1]*wa+ps[1][1]*wb+ps[2][1]*wc,ps[0][2]*wa+ps[1][2]*wb+ps[2][2]*wc,angle)>=.65});
+  sculpt.render({posed,project,depth,angle,view,mode,landmark,transparent,forearm});
   nodes.forEach((n,i)=>n.part.f.forEach(f=>buffer.triangle(...f.map(j=>posed[i][j]),i)));
   const fatCount=composition.paintFat(buffer,posed,nodes.length);
   const visible=buffer.solve(nodes.length+fatCount,{projections:i=>i>=nodes.length||nodes[i].part.kind!=='bone',scanlineClips:false,occludes:i=>i>=nodes.length?!composition.fatTransparent:!transparent||nodes[i].part.kind==='bone'});
@@ -54,5 +56,5 @@ function AtlasArm(root){
   svg.setAttribute('viewBox','0 0 640 430');svg.setAttribute('height',root.clientWidth*430/640);root.dataset.cameraYaw=degrees;
   debug={angle,view,posed:posed.map((v,i)=>({name:nodes[i].part.name,kind:nodes[i].part.kind,forearm:!!nodes[i].part.forearm,v})),coverage:visible.coverage,duration:performance.now()-start};
  }
- return {render,atlas,skin,forearm,collision,motion,composition,get debug(){return debug;},get visibility(){return lastVisibility;}};
+ return {render,atlas,landmarks,skin,forearm,collision,motion,composition,sculpt,get debug(){return debug;},get visibility(){return lastVisibility;}};
 }

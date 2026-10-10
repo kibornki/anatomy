@@ -1,7 +1,7 @@
 name: Validate body composition controls
 on:
   push:
-    branches: [codex/body-composition-controls]
+    branches: [codex/body-composition-controls, gh-pages]
   pull_request:
     paths:
       - 'work/composition/**'
@@ -31,15 +31,20 @@ jobs:
           python work/abdomen/build.py --publish
           python work/limb/build.py --publish
       - name: Verify neutral geometry and tissue controls
-        run: node work/composition/review-geometry.cjs
+        run: |
+          node work/composition/review-geometry.cjs
+          node work/arm/review-motion.cjs
       - name: Install browser
         run: |
           npm install --no-save --package-lock=false playwright
           npx playwright install --with-deps chromium
       - name: Verify browser behavior
+        env:
+          ARM_VISUAL_AUDIT: '1'
         run: |
           python -m http.server 8767 --bind 127.0.0.1 &
           node work/composition/review-browser.cjs
+          node work/arm/review-sculpt.cjs
       - name: Save the validated generated pages on the feature branch
         if: github.event_name == 'push'
         run: |
@@ -48,7 +53,7 @@ jobs:
           git add index.html upperbody.html arm.html abdomen.html forearm.html thigh.html
           if ! git diff --cached --quiet; then
             git commit -m "Build validated body composition pages"
-            git push origin HEAD:refs/heads/codex/body-composition-controls
+            git push origin HEAD:"refs/heads/${GITHUB_REF_NAME}"
           fi
       - uses: actions/upload-artifact@v4
         if: always()
@@ -62,4 +67,5 @@ jobs:
             forearm.html
             thigh.html
             artifacts/composition-*
+            artifacts/arm-sculpt/
           retention-days: 7
