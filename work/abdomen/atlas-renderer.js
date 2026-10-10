@@ -103,10 +103,11 @@ function AbdomenFlexion(host){
  const labelNodes=Object.entries(names).map(([name,[text,x,y]])=>{const g=make('g',{'data-label':name},labels),line=make('path',{fill:'none',stroke:'var(--muted-foreground)','stroke-width':1},g),t=make('text',{x,y,'text-anchor':x<320?'start':'end',fill:'var(--foreground)'},g);t.textContent=text;return {name,x,y,line};});
  const partIndices=new Map(atlas.parts.map(p=>[p,[...new Set(surfaces.filter(m=>m.part===p).flatMap(m=>m.faces.flat()))]]));
  const offsets=new Map();for(const degrees of [16,90]){const a=degrees*Math.PI/180;let min=Infinity,max=-Infinity;for(const p of boneParts)for(const v of p.v){const x=v[0]*Math.cos(a)+v[2]*Math.sin(a);min=Math.min(min,x);max=Math.max(max,x);}offsets.set(degrees,320-(min+max)*1.04/2);}
+ const composition=AnatomyComposition(host,atlas.parts,'abdomen');composition.mountFat(make,volume);
  let lastKey='',lastDebug=null;
  function render(angle,view='front'){
   svg.setAttribute('viewBox','0 0 640 515');svg.setAttribute('height',host.clientWidth*515/640);
-  const transparent=host.classList.contains('transparent'),fibersOn=!host.classList.contains('no-fibers');const key=[angle,view,transparent,fibersOn].join();if(key===lastKey)return;lastKey=key;
+  const transparent=host.classList.contains('transparent'),fibersOn=!host.classList.contains('no-fibers');const key=[angle,view,transparent,fibersOn,composition.key].join();if(key===lastKey)return;lastKey=key;
   const started=performance.now();host.dataset.view=view;host.dataset.angle=angle;pose={angle,view};bodyFrames=new Map();posedCenters=new Map();
   // Integrate the original sagittal spine once at half-unit resolution.
   // Bones and all neighboring tissues consume the same centerline field.
@@ -117,9 +118,10 @@ function AbdomenFlexion(host){
   const offset=offsets.get(view==='side'?90:16);
   const project=p=>{const q=camera(p);return [offset+q[0]*scale,10+(q[1]-110)*scale];},depth=p=>camera(p)[2];
   const buffer=AbdominalVisibility({project,depth,step:1});
-  const posed=new Map();for(const p of atlas.parts){posed.set(p,p.v.map((v,i)=>p.bind?skin(v,p.bind[i]):rigid(frames[p.bone],v)));}
+  const posed=new Map();for(const p of atlas.parts){posed.set(p,p.v.map((v,i)=>p.bind?skin(composition.point(p,v,i),p.bind[i]):rigid(frames[p.bone],v)));}
   for(const m of surfaces){const vs=posed.get(m.part);for(const f of m.faces)buffer.triangle(...f.map(i=>vs[i]),m.id);}
-  const visible=buffer.solve(surfaces.length,{projections:id=>['muscle','context'].includes(surfaces[id].part.kind),scanlineClips:false,occludes:id=>!transparent||!['muscle','context'].includes(surfaces[id].part.kind)});
+  const fatCount=composition.paintFat(buffer,atlas.parts.map(p=>posed.get(p)),surfaces.length);
+  const visible=buffer.solve(surfaces.length+fatCount,{projections:id=>id>=surfaces.length||['muscle','context'].includes(surfaces[id].part.kind),scanlineClips:false,occludes:id=>id>=surfaces.length?!composition.fatTransparent:!transparent||!['muscle','context'].includes(surfaces[id].part.kind)});
   for(const m of surfaces){const soft=['muscle','context'].includes(m.part.kind),local=visible.ownerZ[m.id];
    if(m.part.name==='linea-alba')m.g.setAttribute('opacity',transparent?.32:1);
    const contour=AtlasContour(visible,k=>transparent&&soft?local[k]>-Infinity:visible.owners[k]===m.id,visible.bounds[m.id]);
@@ -127,7 +129,7 @@ function AbdomenFlexion(host){
    m.outline.setAttribute('stroke-opacity',soft?.45:.75);
    const fiberSegments=[];
    if(fibersOn&&m.group!=='aponeurosis'&&m.part.kind!=='context')for(const f of m.part.fibers||[]){
-    const points=f.p.map((v,i)=>skin(v,f.bind[i]));let segment=[];
+    const points=f.p.map((v,i)=>skin(composition.point(m.part,v),f.bind[i]));let segment=[];
     for(const p of points){const q=project(p),x=Math.floor((q[0]-visible.x0)/visible.step),y=Math.floor((q[1]-visible.y0)/visible.step),k=y*visible.w+x;
      const shown=x>=0&&x<visible.w&&y>=0&&y<visible.h&&depth(p)>=local[k]-2.5&&(transparent||visible.owners[k]===m.id);
      if(shown)segment.push(q);else {if(segment.length>2)fiberSegments.push(segment);segment=[];}
@@ -137,12 +139,13 @@ function AbdomenFlexion(host){
    m.fibers.setAttribute('d',fiberSegments.map(curvePath).join(''));m.fibers.setAttribute('clip-path','url(#atlas-clip-'+m.id+')');
    if(m.intersections){let d='';const vs=posed.get(m.part);for(const y of [319,355,390]){const ids=m.part.v.map((v,i)=>[v,i]).filter(([v])=>Math.abs(v[1]-y)<2.5&&v[2]>105).sort((a,b)=>a[0][0]-b[0][0]);const ps=ids.map(([_,i])=>project(vs[i]));if(ps.length>2)d+=curvePath(ps);}m.intersections.setAttribute('d',d);m.intersections.setAttribute('clip-path','url(#atlas-clip-'+m.id+')');}
   }
-  for(const l of labelNodes){const candidates=surfaces.filter(m=>m.muscle===l.name&&m.group!=='aponeurosis').sort((a,b)=>visible.coverage[b.id]-visible.coverage[a.id]),points=visible.centers[candidates[0].id];let target;
+  composition.drawFat(visible,surfaces.length,AtlasContour);
+  for(const l of labelNodes){const candidates=surfaces.filter(m=>m.muscle===l.name&&m.group!=='aponeurosis').sort((a,b)=>visible.coverage[b.id]-visible.coverage[a.id]),points=visible.centers[candidates[0].id];let target;l.line.parentNode.style.display=points.length||transparent?'':'none';
    if(points.length){const ys=points.slice().sort((a,b)=>a[1]-b[1]),mid=ys[Math.floor(ys.length/2)][1],band=points.filter(p=>Math.abs(p[1]-mid)<10),average=band.reduce((s,p)=>add(s,mul(p,1/band.length)),[0,0]);target=band.reduce((best,p)=>Math.hypot(...sub(p,average))<Math.hypot(...sub(best,average))?p:best);}
    else {const m=candidates.find(m=>m.part.side===-1)||candidates[0],ids=[...new Set(m.faces.flat())],v=posed.get(m.part),avg=ids.reduce((s,i)=>add(s,mul(v[i],1/ids.length)),[0,0,0]);target=project(avg);}
    l.line.setAttribute('d',`M${l.x},${l.y+5}L${target[0].toFixed(1)},${target[1].toFixed(1)}`);
   }
   lastDebug={pose:{...pose},atlas,frames,posed:atlas.parts.map(p=>({name:p.name,kind:p.kind,joint:p.joint,vertices:posed.get(p),renderedIndices:partIndices.get(p)})),visible:{coverage:visible.coverage,parts:surfaces.map(m=>({id:m.id,name:m.part.name,group:m.group,muscle:m.muscle}))},duration:performance.now()-started};
  }
- return {render,atlas,get debug(){return lastDebug;},yawFrame:yawAt,frame:body,skin};
+ return {render,atlas,composition,get debug(){return lastDebug;},yawFrame:yawAt,frame:body,skin};
 }

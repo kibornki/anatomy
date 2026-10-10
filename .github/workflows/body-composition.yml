@@ -1,0 +1,65 @@
+name: Validate body composition controls
+on:
+  push:
+    branches: [codex/body-composition-controls]
+  pull_request:
+    paths:
+      - 'work/composition/**'
+      - 'work/upperbody/**'
+      - 'work/arm/**'
+      - 'work/limb/**'
+      - 'work/abdomen/**'
+permissions:
+  contents: write
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Prepare artifact directory
+        run: |
+          sudo install -d -o "$USER" /workspace/artifacts/limb-implementation
+          mkdir -p artifacts
+      - name: Build all five standalone pages and integrated hub
+        run: |
+          python work/upperbody/build.py
+          python work/arm/build.py --publish
+          python work/abdomen/build.py --publish
+          python work/limb/build.py --publish
+      - name: Verify neutral geometry and tissue controls
+        run: node work/composition/review-geometry.cjs
+      - name: Install browser
+        run: |
+          npm install --no-save --package-lock=false playwright
+          npx playwright install --with-deps chromium
+      - name: Verify browser behavior
+        run: |
+          python -m http.server 8767 --bind 127.0.0.1 &
+          node work/composition/review-browser.cjs
+      - name: Save the validated generated pages on the feature branch
+        if: github.event_name == 'push'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add index.html upperbody.html arm.html abdomen.html forearm.html thigh.html
+          if ! git diff --cached --quiet; then
+            git commit -m "Build validated body composition pages"
+            git push origin HEAD:refs/heads/codex/body-composition-controls
+          fi
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: anatomy-body-composition
+          path: |
+            index.html
+            upperbody.html
+            arm.html
+            abdomen.html
+            forearm.html
+            thigh.html
+            artifacts/composition-*
+          retention-days: 7
