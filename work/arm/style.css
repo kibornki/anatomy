@@ -23,9 +23,8 @@
 .diagram[data-mode=sculpt] .diagram-labels{display:none}
 .diagram[data-mode=anatomy] .sculpt-layer{display:none}
 .diagram[data-mode=sculpt] .sculpt-layer{display:inline}
-.diagram[data-mode=compare] [data-display-layer=anatomy]{clip-path:inset(0 50% 0 0)}
-.diagram[data-mode=compare] .sculpt-layer{display:inline;clip-path:inset(0 0 0 50%)}
-.diagram[data-mode=compare] .diagram-labels{clip-path:inset(0 50% 0 0)}
+.diagram[data-mode=compare] .sculpt-layer{display:inline}
+.diagram[data-mode=compare] .diagram-labels{display:block}
 .diagram-mode-labels{display:none;fill:var(--foreground);paint-order:stroke;stroke:var(--background);stroke-width:3px;stroke-linejoin:round}
 .diagram[data-mode=compare] .diagram-mode-labels{display:block}
 .diagram-landmark{pointer-events:none}
