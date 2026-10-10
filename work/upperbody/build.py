@@ -1,8 +1,6 @@
 from pathlib import Path
-import json,re,hashlib
+import json,re
 w=Path(__file__).parent;root=w.parents[1]
-fit=json.loads((w/'body-fit-data.json').read_text())
-assert fit['sourceFingerprint']==hashlib.sha256((w/'atlas-data.json').read_bytes()).hexdigest(), 'Regenerate body-fit-data.json for this atlas before building'
 doc=(w/'page-template.html').read_text()
 doc=doc.replace('aria-pressed="true">일시정지','aria-pressed="false">재생')
 doc=re.sub(r'(<div class="diagram-legend[^\"]*">).*?(</div>)',r'\1\2',doc,count=1,flags=re.S)
@@ -10,9 +8,8 @@ style='<style>.native-labels text{fill:var(--foreground)}.native-labels path{fil
 doc=doc.replace('</head>',style+'</head>')
 credit='<div class="native-credit">자료: <a href="https://github.com/Kevin-Mattheus-Moerman/BodyParts3D/tree/f0eeb6e843380cfe6b83797cf8c3e1af74de5e61" target="_blank" rel="noopener">BodyParts3D</a> © 2008 DBCLS · <a href="https://creativecommons.org/licenses/by-sa/2.1/jp/" target="_blank" rel="noopener">CC BY-SA 2.1 Japan</a> · STL: Kevin Mattheus Moerman</div>'
 lib='\n'.join((root/'work/abdomen'/f).read_text() for f in ['visibility.js','atlas-contours.js'])
-scripts=lib+'\n'+'\n'.join((w/f).read_text() for f in ['body-fit.js','motion.js','renderer.js','controls.js','body-fit-controls.js'])
-doc=doc.replace('<div class="text-small diagram-note">',(w/'body-fit-panel.html').read_text()+'<div class="text-small diagram-note">',1)
-doc=doc.replace('</body>',credit+'<script type="application/json" id="upperbody-body-fit-data">'+(w/'body-fit-data.json').read_text()+'</script>'+ '<script type="application/json" id="upperbody-atlas">'+(w/'atlas-data.json').read_text()+'</script><script>'+scripts+'</script></body>')
+scripts=lib+'\n'+'\n'.join((w/f).read_text() for f in ['motion.js','renderer.js','controls.js'])
+doc=doc.replace('</body>',credit+'<script type="application/json" id="upperbody-atlas">'+(w/'atlas-data.json').read_text()+'</script><script>'+scripts+'</script></body>')
 (root/'upperbody.html').write_text(doc)
 path=root/'index.html';hub=path.read_text();m=re.search(r'(<script type="application/json" id="anatomy-data">)(.*?)(</script>)',hub,re.S);data=json.loads(m[2]);config='<script type="application/json" id="hub-config">__HUB_CONFIG__</script>'
 data['upperbody'].update(document=doc.replace('<body>','<body>'+config,1),sourceFile='work/upperbody/renderer.js',views=['front','back','side'])
