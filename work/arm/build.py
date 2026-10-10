@@ -11,8 +11,8 @@ head=head.replace('0°: 펴짐 · 135°: 굽힘 · 어깨 고정 · 변형은 �
 match=re.search(r'(<script type="application/json" id="diagram-config">)(.*?)(</script>)',head,re.S)
 metadata=json.loads(match[2]);metadata.update(revision='arm-atlas-motion-v3',initialAngle=0,height=430,cameraYaw=16,sourceFile='work/arm/atlas-renderer.js')
 head=head[:match.start(2)]+json.dumps(metadata,ensure_ascii=False)+head[match.end(2):]
-scripts=(root/'work/composition/composition.js').read_text()+'\n'+'\n'.join((root/'work/abdomen'/f).read_text() for f in ['atlas-contours.js'])+'\n'+'\n'.join((w/f).read_text() for f in ['motion.js','collision.js','visibility.js','atlas-renderer.js','controls.js'])
-document=head+'<script type="application/json" id="arm-atlas">'+(w/'atlas-data.json').read_text().replace('<','\\u003c')+'</script><script type="application/json" id="arm-bone-fields">'+(w/'bone-fields.json').read_text()+'</script><script type="application/json" id="arm-motion-reference">'+(w/'motion-reference.json').read_text()+'</script><script>'+scripts+'</script></body></html>'
+scripts=(root/'work/composition/composition.js').read_text()+'\n'+'\n'.join((root/'work/abdomen'/f).read_text() for f in ['atlas-contours.js'])+'\n'+'\n'.join((w/f).read_text() for f in ['motion.js','collision.js','visibility.js','surface-lighting.js','atlas-renderer.js','controls.js'])
+document=head+'<script type="application/json" id="arm-fiber-guides">'+(w/'fiber-guides.json').read_text()+'</script>'+'<script type="application/json" id="arm-atlas">'+(w/'atlas-data.json').read_text().replace('<','\\u003c')+'</script><script type="application/json" id="arm-bone-fields">'+(w/'bone-fields.json').read_text()+'</script><script type="application/json" id="arm-motion-reference">'+(w/'motion-reference.json').read_text()+'</script><script>'+scripts+'</script></body></html>'
 if '--publish' in sys.argv:
  (root/'arm.html').write_text(document)
  hubPath=root/'index.html';hub=hubPath.read_text();match=re.search(r'(<script type="application/json" id="anatomy-data">)(.*?)(</script>)',hub,re.S);data=json.loads(match[2])

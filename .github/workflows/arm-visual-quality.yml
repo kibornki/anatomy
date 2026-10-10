@@ -8,6 +8,23 @@ on:
 permissions:
   contents: write
 jobs:
+  public-reference:
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    steps:
+      - name: Public reference for temporary visual review
+        run: |
+          python - <<'PY'
+          import urllib.request,base64
+          refs={
+           'biceps':'https://r2.anatobase.com/video/126/images/demo-1790264512543-360/001.webp',
+           'arm-layers':'https://r2.anatobase.com/video/127/images/demo-1790268028185-360/001.webp'}
+          for name,url in refs.items():
+           try:
+            data=urllib.request.urlopen(urllib.request.Request(url,headers={'User-Agent':'Mozilla/5.0','Referer':'https://anatobase.com/'})).read()
+            print('REFERENCE_IMAGE '+name+' '+base64.b64encode(data).decode())
+           except Exception as e: print('REFERENCE_UNAVAILABLE',name,str(e))
+          PY
   review:
     runs-on: ubuntu-latest
     timeout-minutes: 25
@@ -30,19 +47,6 @@ jobs:
           python -c "from playwright.sync_api import sync_playwright; p=sync_playwright().start(); print(p.chromium.executable_path)" > /tmp/arm-chromium-path
           sudo ln -sf "$(cat /tmp/arm-chromium-path)" /usr/bin/chromium
           sudo install -d -o "$USER" /workspace/artifacts/arm-implementation
-      - name: Public reference for temporary visual review
-        run: |
-          python - <<'PY'
-          import urllib.request,base64
-          refs={
-           'biceps':'https://r2.anatobase.com/video/126/images/demo-1790264512543-360/001.webp',
-           'arm-layers':'https://r2.anatobase.com/video/127/images/demo-1790268028185-360/001.webp'}
-          for name,url in refs.items():
-           try:
-            data=urllib.request.urlopen(url).read()
-            print('REFERENCE_IMAGE '+name+' '+base64.b64encode(data).decode())
-           except Exception as e: print('REFERENCE_UNAVAILABLE',name,str(e))
-          PY
       - name: Save the unchanged baseline and build arm locally
         run: |
           git show e3aa00e9555e0931b77772af8f41a774d898bb0c:arm.html > baseline-arm.html
@@ -62,6 +66,7 @@ jobs:
         run: |
           mkdir -p work/arm/visual-review
           cp artifacts/arm-visual/*.jpg artifacts/arm-visual/matrix.json work/arm/visual-review/
+          cp artifacts/arm-visual/{before,after}-{front,back,side}-0-f1-t0.png work/arm/visual-review/
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add work/arm/visual-review
@@ -78,4 +83,5 @@ jobs:
             /workspace/artifacts/arm-implementation/
             work/arm/*validation.json
             arm.html
+            baseline-arm.html
           retention-days: 14
