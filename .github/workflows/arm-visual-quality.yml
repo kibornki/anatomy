@@ -1,0 +1,81 @@
+name: Arm visual quality experiment
+on:
+  push:
+    branches: [codex/arm-visual-quality]
+    paths:
+      - 'work/arm/**'
+      - '.github/workflows/arm-visual-quality.yml'
+permissions:
+  contents: write
+jobs:
+  review:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Record instruction availability
+        run: |
+          for p in /AGENTS.md /workspace/AGENTS.md AGENTS.md HANDOFF.md work/AGENTS.md work/HANDOFF.md work/arm/AGENTS.md work/arm/HANDOFF.md; do
+            if [ -f "$p" ]; then cat "$p"; else echo "ABSENT $p"; fi
+          done
+      - name: Install review dependencies
+        run: |
+          pip install numpy scipy pillow playwright
+          python -m playwright install --with-deps chromium
+          python -c "from playwright.sync_api import sync_playwright; p=sync_playwright().start(); print(p.chromium.executable_path)" > /tmp/arm-chromium-path
+          sudo ln -s "$(cat /tmp/arm-chromium-path)" /usr/bin/chromium
+          sudo install -d -o "$USER" /workspace/artifacts/arm-implementation
+      - name: Save the unchanged baseline and build arm locally
+        run: |
+          git show e3aa00e9555e0931b77772af8f41a774d898bb0c:arm.html > baseline-arm.html
+          python work/arm/build.py --publish
+      - name: Existing arm and composition invariants
+        run: |
+          node work/arm/review-motion.cjs
+          node work/composition/review-geometry.cjs
+          python -m http.server 8767 --bind 127.0.0.1 &
+          python work/arm/review.py
+          python work/arm/review-visible.py
+      - name: Matched browser visual matrix
+        run: |
+          python -m http.server 8767 --bind 127.0.0.1 &
+          python work/arm/review-visual.py
+      - name: Public reference for temporary visual review
+        run: |
+          python - <<'PY'
+          import urllib.request,base64
+          refs={
+           'biceps':'https://r2.anatobase.com/video/126/images/demo-1790264512543-360/001.webp',
+           'arm-layers':'https://r2.anatobase.com/video/127/images/demo-1790268028185-360/001.webp'}
+          for name,url in refs.items():
+           try:
+            data=urllib.request.urlopen(url).read()
+            print('REFERENCE_IMAGE '+name+' '+base64.b64encode(data).decode())
+           except Exception as e: print('REFERENCE_UNAVAILABLE',name,str(e))
+          PY
+      - name: Save comparison sheets on experiment branch only
+        run: |
+          mkdir -p work/arm/visual-review
+          cp artifacts/arm-visual/*.jpg artifacts/arm-visual/matrix.json work/arm/visual-review/
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add work/arm/visual-review
+          if ! git diff --cached --quiet; then
+            git commit -m "Record matched arm visual review sheets"
+            git push origin HEAD:refs/heads/codex/arm-visual-quality
+          fi
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: arm-visual-quality
+          path: |
+            artifacts/arm-visual/
+            /workspace/artifacts/arm-implementation/
+            work/arm/*validation.json
+            arm.html
+          retention-days: 14
