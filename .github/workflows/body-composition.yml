@@ -39,6 +39,8 @@ jobs:
           npm install --no-save --package-lock=false playwright
           npx playwright install --with-deps chromium
       - name: Verify browser behavior
+        env:
+          ARM_VISUAL_AUDIT: '1'
         run: |
           python -m http.server 8767 --bind 127.0.0.1 &
           node work/composition/review-browser.cjs
