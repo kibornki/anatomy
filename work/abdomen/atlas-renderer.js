@@ -92,9 +92,9 @@ function AbdomenFlexion(host){
    const muscle=muscles.find(name=>part.name.startsWith(name));if(muscle)g.setAttribute('data-muscle',muscle);
    const clip=make('clipPath',{id:'atlas-clip-'+id,clipPathUnits:'userSpaceOnUse'},defs),mask=make('path',{},clip);
    const type=part.kind==='muscle'?(group==='aponeurosis'||part.name==='linea-alba'?'aponeurosis':'muscle'):part.kind==='context'?'context-muscle':part.kind==='cartilage'?'cartilage':part.kind==='rib'?'rib':'bone';
-   const fill=make('path',{class:type,style:'stroke:none',fill:part.color&&part.color!=='context'&&group!=='aponeurosis'?'var(--'+part.color+')':type==='aponeurosis'||type==='cartilage'?'var(--background)':type==='context-muscle'?'color-mix(in srgb,var(--foreground) 9%,var(--background))':'color-mix(in srgb,var(--foreground) 10%,var(--background))'},g);
+   const fill=make('path',{class:type,style:'stroke:none',fill:part.color&&part.color!=='context'&&group!=='aponeurosis'?'color-mix(in srgb,var(--'+part.color+') 85%,white)':type==='aponeurosis'||type==='cartilage'?'var(--background)':type==='context-muscle'?'color-mix(in srgb,var(--foreground) 9%,var(--background))':'color-mix(in srgb,var(--foreground) 10%,var(--background))'},g);
    const outline=make('path',{fill:'none',stroke:'var(--muted-foreground)','stroke-width':part.kind==='bone'?1.05:.65,'stroke-opacity':.75},g);
-   const fibers=make('path',{class:'fibers fiber',fill:'none',stroke:'var(--foreground)'},g);
+   const fibers=make('path',{class:'fibers fiber',fill:'none',stroke:'var(--foreground)',style:'stroke-width:.55;stroke-opacity:.28'},g);
    const intersections=part.name.startsWith('rectus')?make('path',{fill:'none',stroke:'var(--background)','stroke-width':3.4},g):null;
    surfaces.push({part,faces,group,g,mask,fill,outline,fibers,intersections,id,muscle});
   }
@@ -103,6 +103,7 @@ function AbdomenFlexion(host){
  const labelNodes=Object.entries(names).map(([name,[text,x,y]])=>{const g=make('g',{'data-label':name},labels),line=make('path',{fill:'none',stroke:'var(--muted-foreground)','stroke-width':1},g),t=make('text',{x,y,'text-anchor':x<320?'start':'end',fill:'var(--foreground)'},g);t.textContent=text;return {name,x,y,line};});
  const partIndices=new Map(atlas.parts.map(p=>[p,[...new Set(surfaces.filter(m=>m.part===p).flatMap(m=>m.faces.flat()))]]));
  const offsets=new Map();for(const degrees of [16,90]){const a=degrees*Math.PI/180;let min=Infinity,max=-Infinity;for(const p of boneParts)for(const v of p.v){const x=v[0]*Math.cos(a)+v[2]*Math.sin(a);min=Math.min(min,x);max=Math.max(max,x);}offsets.set(degrees,320-(min+max)*1.04/2);}
+ const lightSurfaces=AnatomySurfaceLighting(make,surfaces.filter(m=>m.part.kind==='muscle'&&m.group!=='aponeurosis'&&m.part.name!=='linea-alba').map(m=>({owner:m.id,g:m.g,clip:'url(#atlas-clip-'+m.id+')',anchor:m.outline,fill:m.fill})),{depthScale:1.04});
  const composition=AnatomyComposition(host,atlas.parts,'abdomen');composition.mountFat(make,volume);
  let lastKey='',lastDebug=null;
  function render(angle,view='front'){
@@ -126,7 +127,7 @@ function AbdomenFlexion(host){
    if(m.part.name==='linea-alba')m.g.setAttribute('opacity',transparent?.32:1);
    const contour=AtlasContour(visible,k=>transparent&&soft?local[k]>-Infinity:visible.owners[k]===m.id,visible.bounds[m.id]);
    m.fill.setAttribute('d',contour);m.outline.setAttribute('d',contour);m.mask.setAttribute('d',contour);m.g.removeAttribute('clip-path');
-   m.outline.setAttribute('stroke-opacity',soft?.45:.75);
+   m.outline.setAttribute('stroke-opacity',soft&&m.group!=='aponeurosis'?.22:soft?.45:.75);
    const fiberSegments=[];
    if(fibersOn&&m.group!=='aponeurosis'&&m.part.kind!=='context')for(const f of m.part.fibers||[]){
     const points=f.p.map((v,i)=>skin(composition.point(m.part,v),f.bind[i]));let segment=[];
@@ -139,6 +140,7 @@ function AbdomenFlexion(host){
    m.fibers.setAttribute('d',fiberSegments.map(curvePath).join(''));m.fibers.setAttribute('clip-path','url(#atlas-clip-'+m.id+')');
    if(m.intersections){let d='';const vs=posed.get(m.part);for(const y of [319,355,390]){const ids=m.part.v.map((v,i)=>[v,i]).filter(([v])=>Math.abs(v[1]-y)<2.5&&v[2]>105).sort((a,b)=>a[0][0]-b[0][0]);const ps=ids.map(([_,i])=>project(vs[i]));if(ps.length>2)d+=curvePath(ps);}m.intersections.setAttribute('d',d);m.intersections.setAttribute('clip-path','url(#atlas-clip-'+m.id+')');}
   }
+  lightSurfaces(visible);
   composition.drawFat(visible,surfaces.length,AtlasContour);
   for(const l of labelNodes){const candidates=surfaces.filter(m=>m.muscle===l.name&&m.group!=='aponeurosis').sort((a,b)=>visible.coverage[b.id]-visible.coverage[a.id]),points=visible.centers[candidates[0].id];let target;l.line.parentNode.style.display=points.length||transparent?'':'none';
    if(points.length){const ys=points.slice().sort((a,b)=>a[1]-b[1]),mid=ys[Math.floor(ys.length/2)][1],band=points.filter(p=>Math.abs(p[1]-mid)<10),average=band.reduce((s,p)=>add(s,mul(p,1/band.length)),[0,0]);target=band.reduce((best,p)=>Math.hypot(...sub(p,average))<Math.hypot(...sub(best,average))?p:best);}

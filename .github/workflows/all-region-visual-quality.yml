@@ -1,0 +1,126 @@
+name: All region visual quality
+on:
+  push:
+    branches: [codex/all-region-visual-quality]
+    paths:
+      - 'work/**'
+      - '.github/workflows/all-region-visual-quality.yml'
+permissions:
+  contents: write
+jobs:
+  review:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install browser review tools
+        run: |
+          pip install numpy scipy pillow playwright
+          python -m playwright install --with-deps chromium
+          python -c "from playwright.sync_api import sync_playwright; p=sync_playwright().start(); print(p.chromium.executable_path)" > /tmp/anatomy-visual-chromium
+          sudo ln -sf "$(cat /tmp/anatomy-visual-chromium)" /usr/bin/chromium
+          sudo install -d -o "$USER" /workspace/artifacts/arm-implementation /workspace/artifacts/limb-implementation /workspace/artifacts/abdomen-atlas-review
+          npm install --no-save --package-lock=false playwright
+          npx playwright install --with-deps chromium
+      - name: Preserve live baseline pages
+        run: |
+          mkdir -p artifacts/visual/baseline
+          for region in upperbody arm abdomen forearm thigh; do
+            git show e3aa00e9555e0931b77772af8f41a774d898bb0c:$region.html > artifacts/visual/baseline/$region.html
+          done
+      - name: Check repository instruction availability
+        run: |
+          for scope in . work work/visual work/arm work/upperbody work/abdomen work/limb; do
+            for guide in AGENTS.md HANDOFF.md; do
+              if [ -f "$scope/$guide" ]; then cat "$scope/$guide"; fi
+            done
+          done
+      - name: Validate arm in isolation
+        run: |
+          python -m http.server 8767 --bind 127.0.0.1 &
+          python work/arm/build.py --publish
+          node work/arm/review-motion.cjs
+          python work/arm/review.py
+          python work/arm/review-visible.py
+          git restore --source=HEAD -- index.html arm.html
+      - name: Validate upperbody in isolation
+        run: |
+          python work/upperbody/build.py
+          node work/upperbody/review-geometry.cjs
+          python work/upperbody/review-latissimus.py
+          git restore --source=HEAD -- index.html upperbody.html
+      - name: Validate abdomen and limb geometry
+        run: |
+          python work/abdomen/build.py --publish
+          python work/abdomen/review.py
+          git restore --source=HEAD -- index.html abdomen.html
+          python work/limb/build.py --publish
+          node work/limb/review-geometry.cjs
+      - name: Build all reviewed pages and validate integrated controls
+        run: |
+          python work/upperbody/build.py
+          python work/arm/build.py --publish
+          python work/abdomen/build.py --publish
+          python work/limb/build.py --publish
+          node work/composition/review-geometry.cjs
+          node work/composition/review-browser.cjs
+      - name: Capture all identical before and after conditions
+        run: python work/visual/review.py
+      - name: Verify protected anatomy inputs and generated hub
+        run: |
+          python - <<'PY'
+          import subprocess,json,re,hashlib
+          from pathlib import Path
+          baseline='e3aa00e9555e0931b77772af8f41a774d898bb0c'
+          protected=[p for p in subprocess.check_output(['git','ls-tree','-r','--name-only',baseline],text=True).splitlines() if p.startswith('work/') and (p.endswith(('atlas-data.json','bone-fields.json','motion-reference.json','motion.js','collision.js','controls.js','composition.js')) or '/reference/' in p)]
+          hashes={}
+          for p in protected:
+              old=subprocess.check_output(['git','show',baseline+':'+p])
+              current=Path(p).read_bytes()
+              assert old==current,p
+              hashes[p]=hashlib.sha256(current).hexdigest()
+          hub=json.loads(re.search(r'<script type="application/json" id="anatomy-data">(.*?)</script>',Path('index.html').read_text(),re.S)[1])
+          for region in ['upperbody','arm','abdomen','forearm','thigh']:
+              doc=hub[region]['document'].replace('<body><script type="application/json" id="hub-config">__HUB_CONFIG__</script>','<body>',1)
+              assert doc==Path(region+'.html').read_text(),region
+          Path('artifacts/visual/preservation.json').write_text(json.dumps({'protectedFiles':hashes,'hubMatchesAllStandalonePages':True},indent=2))
+          print('Preserved',len(hashes),'anatomy, motion, control and reference inputs; all hub entries match.')
+          PY
+      - name: Record validated pages and actual browser comparisons
+        run: |
+          mkdir -p work/visual/review
+          cp artifacts/visual/*.jpg artifacts/visual/matrix.json artifacts/visual/preservation.json work/visual/review/
+          cp artifacts/visual/after-*-front-*-f1-t0.png work/visual/review/
+          cp artifacts/visual/after-upperbody-back-15-f1-t0.png work/visual/review/
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add index.html upperbody.html arm.html abdomen.html forearm.html thigh.html work/visual/review
+          if ! git diff --cached --quiet; then
+            git commit -m "Build validated visual improvements for all five regions [skip ci]"
+            git push origin HEAD:refs/heads/codex/all-region-visual-quality
+          fi
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: anatomy-all-region-visual
+          path: artifacts/visual
+          retention-days: 14
+  references:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Inspect public reference thumbnails without storing in project
+        run: |
+          python - <<'PY'
+          import urllib.request,base64
+          samples={'abdominal-wall':'https://r2.anatobase.com/page/9000529/images/demo-1790264895272-360.webp','pectoral':'https://r2.anatobase.com/video/75/images/demo-1790265281282-360/001.webp','forearm':'https://r2.anatobase.com/video/123/images/demo-1790265494918-360/001.webp','hamstrings':'https://r2.anatobase.com/video/193/images/demo-1790265713907-360/001.webp'}
+          for name,url in samples.items():
+              req=urllib.request.Request(url,headers={'User-Agent':'Mozilla/5.0','Referer':'https://anatobase.com/'})
+              with urllib.request.urlopen(req) as res:
+                  print('REFERENCE_IMAGE',name,res.headers.get_content_type(),base64.b64encode(res.read()).decode())
+          PY
