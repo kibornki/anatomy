@@ -39,4 +39,5 @@ out={**native,'parts':out_parts,'frames':frames,'rig':rig,'revision':'attachment
 print('Prepared',len(out_parts),'native parts;',len(frames),'attachment-constrained 3D frames.')
 # Tissue patches are authored on the final native triangle winding; guides
 # follow these triangles at runtime and consume no displacement offsets.
+runpy.run_path(str(w/'axillary-fit.py'))['main']()
 runpy.run_path(str(w/'latissimus-detail.py'))['main']()

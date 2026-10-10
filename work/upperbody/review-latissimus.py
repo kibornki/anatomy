@@ -25,6 +25,15 @@ for part in data['parts']:
         assert part['fibers'] == before['fibers']
         continue
     v, f = np.asarray(part['v']), np.asarray(part['f'])
+    origins = np.array([path['origin'] for path in part['regionalPathways']])
+    assert np.max(np.abs(origins[:, 0])) <= .8 + 1e-8
+    assert origins[:, 1].min() < 250 and origins[:, 1].max() < 390
+    for path in part['regionalPathways']:
+        target = np.array(path['humeralInsertion'])
+        insertion = v[np.array(part['attachments']['insertion'], dtype=int), :2]
+        assert np.linalg.norm(insertion - target, axis=1).min() < 1e-7
+        fold = np.array(path['axillaryFold'])
+        assert abs(fold[0]) >= 92 and 230 < fold[1] < 244
     areas = np.zeros(len(f))
     for patches in part['tissuePatches'].values():
         for patch in patches:
@@ -51,7 +60,15 @@ for frame, before in zip(data['frames'], old['frames']):
         if part['name'] != 'latissimus':
             count += sum(len(fiber) * 3 for fiber in part['fibers'])
         before_part = previous[part['name']]
-        assert np.array_equal(a[part['frameOffset']:part['frameOffset'] + count], b[before_part['frameOffset']:before_part['frameOffset'] + count])
+        current_slice = a[part['frameOffset']:part['frameOffset'] + count]
+        previous_slice = b[before_part['frameOffset']:before_part['frameOffset'] + count]
+        if part['name'] == 'latissimus':
+            baseline = np.frombuffer(base64.b64decode(frame['latissimusAxillaryBase']), dtype='<i2')
+            assert np.array_equal(baseline, previous_slice)
+            locked = part['attachments']['origin'] + part['attachments']['insertion']
+            assert np.array_equal(current_slice.reshape(-1, 3)[locked], baseline.reshape(-1, 3)[locked])
+        else:
+            assert np.array_equal(current_slice, previous_slice)
 
 def hub(text):
     return json.loads(re.search(r'<script type="application/json" id="anatomy-data">(.*?)</script>', text, re.S)[1])
@@ -63,8 +80,12 @@ for key in before_hub:
         assert current_hub[key] == before_hub[key], key
 report = {'frames': len(data['frames']), 'guidePoints': guide_points,
           'maxMaterialPartitionAreaError': partition_error,
-          'nativeSurfacesAndPosesUnchanged': True, 'otherMusclesUnchanged': True,
+          'nativeNeutralSurfacesUnchanged': True, 'otherMusclesAndPosesUnchanged': True,
+          'latissimusAttachmentsUnchanged': True,
           'otherHubTopicsUnchanged': True,
+          'regionalOriginsAtMedialBand': True,
+          'endpointChosenFromNativeHumeralInsertion': True,
+          'waypointAtLateralAxillaryTransition': True,
           'scope': 'Triangle material partition and surface-attached authored guides; borders and paths are illustrative, not measured anatomical segmentation or fascicle data.'}
 (w / 'latissimus-validation.json').write_text(json.dumps(report, indent=2))
 print(json.dumps(report, indent=2))

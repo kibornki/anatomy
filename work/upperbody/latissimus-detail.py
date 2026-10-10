@@ -21,7 +21,10 @@ def tissue(point):
     x, y, _ = point
     # Lower central aponeurosis and proximal flattened tendon are separate
     # regions of the same source shell, never new overlapping geometry.
-    return max(width(y) - abs(x), (227 - y) * .8)
+    # The posterior axillary fold remains muscle. Only the narrow proximal
+    # insertion becomes pale tendon; a y=255 cutoff amputated the belly
+    # at the scapular inferior edge and produced detached upper-arm islands.
+    return max(width(y) - abs(x), min((219 - y) * .8, (abs(x) - 94) * .8))
 
 
 def author(part):
@@ -72,12 +75,25 @@ def author(part):
             if len(segment) >= 5:
                 guides.append({'kind': kind, 'points': list(segment)})
 
-        for t in np.linspace(0, 1, 110):
+        for t in np.linspace(0, 1, 150):
             if fold is None:
                 xy = (1 - t) * origin + t * target
             else:
-                control = origin * .7 + fold * .3
-                xy = (1 - t)**3 * origin + 3 * (1 - t)**2 * t * control + 3 * (1 - t) * t**2 * fold + t**3 * target
+                # The visible posterior belly leaves the medial origin
+                # laterally first, then sweeps into the axillary fold. It
+                # does not aim straight from the lower border to the arm.
+                # Two joined cubics actually pass through the lateral fold.
+                # A single cubic with the fold as a control point did not.
+                if t <= .8:
+                    s = t / .8
+                    first = np.array([origin[0] + .7 * (fold[0] - origin[0]), origin[1] - .05 * (origin[1] - fold[1])])
+                    second = fold + np.array([-8, 22])
+                    xy = (1 - s)**3 * origin + 3 * (1 - s)**2 * s * first + 3 * (1 - s) * s**2 * second + s**3 * fold
+                else:
+                    s = (t - .8) / .2
+                    first = fold + np.array([2, -5.5])
+                    second = target + np.array([-1, 8])
+                    xy = (1 - s)**3 * fold + 3 * (1 - s)**2 * s * first + 3 * (1 - s) * s**2 * second + s**3 * target
             result = project(xy)
             if result is None:
                 flush(); segment, kind, previous = [], None, None
@@ -92,20 +108,28 @@ def author(part):
             previous = point
         flush()
 
-    # Regional muscle origins along the medial/aponeurotic border, not the
-    # inferior sacral point. A narrow axillary band flows into a white tendon.
-    for i, y in enumerate(np.linspace(244, 400, 60)):
-        origin = np.array([max(1.2, width(y) + .65), y])
-        target = np.array([99.0 + .6 * i / 59, 204.0 + 5 * i / 59])
-        fold = np.array([85 + 3 * i / 59, 244 + 9 * i / 59])
+    # Start the whole regional pathway at the medial thoracolumbar origin.
+    # Its pale proximal part traverses the aponeurosis, and the contractile
+    # part leaves that curved border, rather than starting at the iliac tip.
+    origin_rows = np.r_[np.linspace(244, 375, 38), np.linspace(378, 389, 5)]
+    insertion = v[np.array(part['attachments']['insertion'], dtype=int)]
+    pathways = []
+    for i, y in enumerate(origin_rows):
+        t = i / (len(origin_rows) - 1)
+        origin = np.array([.8, y])
+        desired = np.array([99, 201 + 13 * t])
+        target = insertion[np.argmin(np.linalg.norm(insertion[:, :2] - desired, axis=1))][:2]
+        # Lateral source shell at y=236..240 (x~93..95), outside the
+        # scapular inferior tip, continues into the proximal humeral band.
+        fold = np.array([92.5 + 1.5 * t, 236 + 3 * t])
         trace(origin, target, fold)
+        pathways.append({'origin': origin.tolist(), 'axillaryFold': fold.tolist(), 'humeralInsertion': target.tolist()})
     # Connective-tissue guides have their own pale stroke and material clip.
-    for y in np.linspace(325, 418, 24):
+    for y in np.linspace(340, 408, 8):
         trace(np.array([.8, y]), np.array([max(2, width(y) + 2), y - 12]))
-    for i in range(9):
-        trace(np.array([83 + i * .7, 232 + i * .35]), np.array([99 + i * .1, 199 + i * 1.3]))
     part['tissuePatches'] = patches
     part['surfaceGuides'] = guides
+    part['regionalPathways'] = pathways
     part['fiberDetailSource'] = 'Approved illustrative tissue border and regional directions on BodyParts3D triangles; not measured fascicles or an atlas tissue segmentation.'
     return part
 
@@ -123,6 +147,7 @@ def main():
             if p.get('mirrorOf'):
                 p['tissuePatches'] = {kind: [{'face': q['face'], 'weights': [[b[0], b[2], b[1]] for b in q['weights']]} for q in patches] for kind, patches in left['tissuePatches'].items()}
             p['surfaceGuides'] = left['surfaceGuides']
+            p['regionalPathways'] = [{key: [(-point[0] if p.get('mirrorOf') else point[0]), point[1]] for key, point in path.items()} for path in left['regionalPathways']]
             p['fiberDetailSource'] = left['fiberDetailSource']
             p['fibers'] = []
     # Reuse all previously verified surface displacement frames. Remove the
@@ -149,7 +174,7 @@ def main():
             p['frameOffset'] = next(q['frameOffset'] for q in data['parts'] if q['name'] == p['mirrorOf']) if p['kind'] == 'muscle' else p.get('frameOffset')
             if p['kind'] != 'muscle':
                 p.pop('frameOffset', None)
-    data['revision'] = 'latissimus-tissue-guides-v3'
+    data['revision'] = 'latissimus-axillary-route-v4'
     path.write_text(json.dumps(data, separators=(',', ':')))
     print('Authored latissimus:', len(left['surfaceGuides']), 'surface-bound guide segments; reused', len(data['frames']), 'surface frames.')
 
