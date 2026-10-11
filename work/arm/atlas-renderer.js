@@ -18,9 +18,9 @@ function AtlasArm(root){
  composition.mountFat(make,drawing);
  const sculpt=ArmSculptLayer({atlas,landmarks,make,defs,drawing,svg});
  const specs={
-  front:[['deltoid-anterior','삼각근 전면',55,105],['deltoid-middle','삼각근 측면',585,145],['biceps-long','이두근 장두',55,245],['biceps-short','이두근 단두',585,280],['triceps-lateral','삼두근 외측두',55,340]],
-  back:[['deltoid-posterior','삼각근 후면',55,105],['triceps-long','삼두근 장두',55,245],['triceps-lateral','삼두근 외측두',585,280],['triceps-medial','삼두근 내측두',585,355],['triceps-aponeurosis','삼두 건막',55,400]],
-  side:[['deltoid-middle','삼각근',585,105],['biceps-long','이두근 장두',585,245],['triceps-lateral','삼두근 외측두',55,280],['triceps-long','삼두근 장두',55,340],['triceps-aponeurosis','삼두 건막',55,400]]
+  front:[['deltoid-anterior',ARM_MUSCLE_LABELS.parts['deltoid-anterior'],55,105],['deltoid-middle',ARM_MUSCLE_LABELS.parts['deltoid-middle'],585,145],['biceps-long',ARM_MUSCLE_LABELS.parts['biceps-long'],55,245],['biceps-short',ARM_MUSCLE_LABELS.parts['biceps-short'],585,280],['brachialis',ARM_MUSCLE_LABELS.parts.brachialis,585,330],['triceps-lateral',ARM_MUSCLE_LABELS.parts['triceps-lateral'],55,340]],
+  back:[['deltoid-posterior',ARM_MUSCLE_LABELS.parts['deltoid-posterior'],55,105],['triceps-long',ARM_MUSCLE_LABELS.parts['triceps-long'],55,245],['triceps-lateral',ARM_MUSCLE_LABELS.parts['triceps-lateral'],585,280],['triceps-medial',ARM_MUSCLE_LABELS.parts['triceps-medial'],585,355],['triceps-aponeurosis',ARM_MUSCLE_LABELS.parts['triceps-aponeurosis'],55,400]],
+  side:[['deltoid-middle',ARM_MUSCLE_LABELS.parts['deltoid-middle'],585,105],['biceps-long',ARM_MUSCLE_LABELS.parts['biceps-long'],585,245],['brachialis',ARM_MUSCLE_LABELS.parts.brachialis,585,300],['triceps-lateral',ARM_MUSCLE_LABELS.parts['triceps-lateral'],55,280],['triceps-long',ARM_MUSCLE_LABELS.parts['triceps-long'],55,340],['triceps-aponeurosis',ARM_MUSCLE_LABELS.parts['triceps-aponeurosis'],55,400]]
  };
  const labelNodes=new Map();for(const list of Object.values(specs))for(const [name,text,x,y]of list){if(labelNodes.has(name))continue;const g=make('g',{'data-label':name},labels),line=make('path',{},g),t=make('text',{},g);t.textContent=text;labelNodes.set(name,{g,line,text:t});}
  const curve=ps=>{if(ps.length<3)return '';let d='M'+ps[0].join(',');for(let i=1;i<ps.length-1;i++)d+='Q'+ps[i].join(',')+' '+ps[i].map((v,j)=>(v+ps[i+1][j])/2).join(',');return d+'L'+ps.at(-1).join(',');};
