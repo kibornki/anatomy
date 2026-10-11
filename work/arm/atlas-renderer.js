@@ -27,14 +27,14 @@ function AtlasArm(root){
  const offsets=new Map();for(const [view,degrees]of [['front',16],['side',90],['back',164]]){const a=degrees*Math.PI/180;let min=Infinity,max=-Infinity;for(const p of atlas.parts.filter(p=>p.kind==='bone'))for(const v of p.v){const x=v[0]*Math.cos(a)+v[2]*Math.sin(a);min=Math.min(min,x);max=Math.max(max,x);}offsets.set(view,320-(min+max)*1.05/2);}
  let debug=null,lastVisibility=null,lastKey='',posedAngle=NaN,posedCache=null,posedComposition=-1;
  function render(angle,view='front',mode='anatomy',landmark='acromioclavicular'){
-  const transparent=root.classList.contains('transparent'),fibersOn=!root.classList.contains('no-fibers'),showAnatomyBones=root.dataset.showAnatomyBones!=='false',showAnatomyMuscles=root.dataset.showAnatomyMuscles!=='false',showSculptBones=root.dataset.showSculptBones!=='false',showSculptMuscles=root.dataset.showSculptMuscles!=='false',key=[angle,view,transparent,fibersOn,composition.key,mode,landmark,showAnatomyBones,showAnatomyMuscles,showSculptBones,showSculptMuscles].join();if(key===lastKey)return;lastKey=key;
+  const transparent=root.classList.contains('transparent'),fibersOn=!root.classList.contains('no-fibers'),showMuscles=root.dataset.showMuscles!=='false',key=[angle,view,transparent,fibersOn,composition.key,mode,landmark,showMuscles].join();if(key===lastKey)return;lastKey=key;
   const start=performance.now(),degrees=view==='side'?90:view==='back'?164:16,a=degrees*Math.PI/180,c=Math.cos(a),s=Math.sin(a);
   const baseProject=p=>[offsets.get(view)+(p[0]*c+p[2]*s)*1.05,15+(p[1]-29)*1.05],depth=p=>-p[0]*s+p[2]*c;
   const compareProject=centerX=>p=>{const q=baseProject(p);return[centerX+(q[0]-320),q[1]];},project=mode==='compare'?compareProject(160):baseProject,sculptProject=mode==='compare'?compareProject(480):project;
   if(posedAngle!==angle||posedComposition!==composition.key){posedAngle=angle;posedComposition=composition.key;posedCache=nodes.map(n=>n.part.v.map(p=>skin(p,n.part,angle)));}
   const posed=posedCache,buffer=ArmVisibility({project,depth,step:.9,accept:(ps,wa,wb,wc,id)=>id>=nodes.length||nodes[id].part.kind==='bone'||collision.minimumXYZ(ps[0][0]*wa+ps[1][0]*wb+ps[2][0]*wc,ps[0][1]*wa+ps[1][1]*wb+ps[2][1]*wc,ps[0][2]*wa+ps[1][2]*wb+ps[2][2]*wc,angle)>=.65});
-  sculpt.render({posed,project,sculptProject,depth,angle,view,mode,landmark,transparent,forearm,showBones:showSculptBones,showMuscles:showSculptMuscles});
-  const anatomyVisible=n=>n.part.kind==='bone'?showAnatomyBones:n.part.kind==='muscle'||n.part.kind==='tendon'?showAnatomyMuscles:true;
+  sculpt.render({posed,project,sculptProject,depth,angle,view,mode,landmark,transparent,forearm,showBones:true,showMuscles});
+  const anatomyVisible=n=>n.part.kind==='muscle'||n.part.kind==='tendon'?showMuscles:true;
   nodes.forEach((n,i)=>n.part.f.forEach(f=>buffer.triangle(...f.map(j=>posed[i][j]),i)));
   const fatCount=composition.paintFat(buffer,posed,nodes.length);
   const visible=buffer.solve(nodes.length+fatCount,{projections:i=>i>=nodes.length||nodes[i].part.kind!=='bone',scanlineClips:false,occludes:i=>i>=nodes.length?!composition.fatTransparent:anatomyVisible(nodes[i])&&(!transparent||nodes[i].part.kind==='bone')});
