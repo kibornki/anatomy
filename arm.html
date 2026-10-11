@@ -2053,4 +2053,16 @@ function AtlasArm(root){
   by('landmark').value=landmark;
   root.querySelector('.diagram-caption').textContent=(view==='side'?'측면':view==='front'?'정면 사선':'후면 사선')+' · 오른팔 · 어깨띠·팔꿈치';
  } function capture(){const state={modelContent:{revision:'arm-artist-sculpt-v1',topic,angle:Math.round(angle),camera:view,mode,landmark,fibers:by('fibers').checked,transparent:by('transparent').checked,showMuscles,composition:composition.state},privateContent:{playing}};try{localStorage.setItem(store,JSON.stringify(state));}catch{}if(config)parent.postMessage({type:'anatomy-hub-state',key:config.key,state},'*');}
- function play(on){playing=on;by('play').textContent=on?'일시정지':'재생';by('play').setAttribute('aria-pressed',on);last=0;}
+ function play(on){playing=on;by('play').textContent=on?'일시정지':'재생';by('play').setAttribute('aria-pressed',on);last=0;}
+ function syncPhase(){phase=Math.acos(Math.max(-1,Math.min(1,1-2*angle/135)));}
+ by('angle').addEventListener('input',()=>{play(false);angle=+by('angle').value;render();capture();});
+ by('play').addEventListener('click',()=>{if(!playing)syncPhase();play(!playing);capture();});
+ for(const v of ['front','side','back'])by(v).addEventListener('click',()=>{view=v;render();capture();queueFit();});
+ for(const id of ['fibers','transparent'])by(id).addEventListener('change',()=>{render();capture();});root.querySelectorAll('[data-arm-mode]').forEach(button=>button.addEventListener('click',()=>{mode=button.dataset.armMode;render();capture();}));by('landmark').addEventListener('change',()=>{landmark=by('landmark').value;render();capture();});root.querySelector('[data-arm-toggle-muscles]').addEventListener('click',()=>{showMuscles=!showMuscles;render();capture();});
+ let pending=false;function fit(){pending=false;const available=Math.max(0,document.documentElement.clientWidth-32),width=Math.floor(Math.min(available,700))+'px';if(root.style.width!==width)root.style.width=width;}
+ function queueFit(){if(!pending){pending=true;requestAnimationFrame(fit);}}window.addEventListener('resize',queueFit);new ResizeObserver(queueFit).observe(root);new ResizeObserver(render).observe(root);
+ let lastCapture=0;function tick(t){if(playing&&t-lastDraw>=50){if(last)phase+=Math.min(t-last,120)*Math.PI/5500;angle=135*(1-Math.cos(phase))/2;render();last=t;lastDraw=t;if(t-lastCapture>=500){capture();lastCapture=t;}}requestAnimationFrame(tick);}requestAnimationFrame(tick);
+ window.armAtlas={model,root,setPose(a,v=view){play(false);angle=Math.max(0,Math.min(135,a));if(['front','side','back'].includes(v))view=v;render();capture();},setMode(value){if(['anatomy','sculpt','compare'].includes(value)){mode=value;render();capture();}},setLandmark(value){if(landmarkById.has(value)){landmark=value;render();capture();}},get mode(){return mode;},get landmark(){return landmark;}};
+ syncPhase();play(playing);render();queueFit();capture();
+})();
+</script></body></html>
