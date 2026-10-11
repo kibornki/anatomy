@@ -16,15 +16,15 @@ function ArmSculptGeometry(){
   let u=vec(order[1]);u=unit(sub(u,mul(axis,dot(u,axis))));if(!isFinite(norm(u)))u=unit(cross(axis,[1,0,0]));
   const w=unit(cross(axis,u));return{center,axis,u,w};
  }
- function loft(points,ringCount=9,segments=10){
+ function loft(points,ringCount=9,segments=10,endScale=.22){
   if(!points||points.length<8)return{v:[],f:[],rings:[]};
   const basis=axes(points),projected=points.map(p=>[dot(p,basis.axis),dot(p,basis.u),dot(p,basis.w)]),lo=Math.min(...projected.map(p=>p[0])),hi=Math.max(...projected.map(p=>p[0])),span=Math.max(1e-6,hi-lo),window=span/(ringCount-1)*1.55,v=[],rings=[];
   for(let r=0;r<ringCount;r++){
    const t=r/(ringCount-1),at=lo+span*t;let slice=projected.filter(p=>Math.abs(p[0]-at)<=window/2);
    if(slice.length<8)slice=projected.slice().sort((a,b)=>Math.abs(a[0]-at)-Math.abs(b[0]-at)).slice(0,Math.min(20,projected.length));
-   const c2=median(slice.map(p=>p[1])),c3=median(slice.map(p=>p[2])),r2=quantile(slice.map(p=>Math.abs(p[1]-c2)),.86),r3=quantile(slice.map(p=>Math.abs(p[2]-c3)),.86),cap=t<.001||t>.999?.22:1;
-   const ring=[];
-   for(let j=0;j<segments;j++){const theta=j*2*Math.PI/segments,p=add(add(add(mul(basis.axis,at),mul(basis.u,c2)),mul(basis.w,c3)),add(mul(basis.u,Math.cos(theta)*r2*cap),mul(basis.w,Math.sin(theta)*r3*cap)));ring.push(v.length);v.push(p);}
+   const c2=median(slice.map(p=>p[1])),c3=median(slice.map(p=>p[2])),tau=2*Math.PI,polar=slice.map(p=>({angle:(Math.atan2(p[2]-c3,p[1]-c2)+tau)%tau,radius:Math.hypot(p[1]-c2,p[2]-c3)})),radii=Array.from({length:segments},(_,j)=>{const target=j*tau/segments,near=polar.filter(p=>{const d=Math.abs(p.angle-target);return Math.min(d,tau-d)<=tau/segments*.75;}),samples=near.length?near:polar.slice().sort((a,b)=>{const da=Math.abs(a.angle-target),db=Math.abs(b.angle-target);return Math.min(da,tau-da)-Math.min(db,tau-db);}).slice(0,Math.min(6,polar.length));return quantile(samples.map(p=>p.radius),.86);}),cap=t<.001||t>.999?endScale:1;
+   const ring=[],radialCenter=[radii.reduce((sum,r,j)=>sum+Math.cos(j*tau/segments)*r/segments,0),radii.reduce((sum,r,j)=>sum+Math.sin(j*tau/segments)*r/segments,0)];
+   for(let j=0;j<segments;j++){const theta=j*tau/segments,radius=radii[j]*cap,p=add(add(add(mul(basis.axis,at),mul(basis.u,c2)),mul(basis.w,c3)),add(mul(basis.u,Math.cos(theta)*radius-radialCenter[0]*cap),mul(basis.w,Math.sin(theta)*radius-radialCenter[1]*cap)));ring.push(v.length);v.push(p);}
    rings.push(ring);
   }
   const f=[];for(let r=0;r<ringCount-1;r++)for(let j=0;j<segments;j++){const a=r*segments+j,b=r*segments+(j+1)%segments,c=(r+1)*segments+(j+1)%segments,d=(r+1)*segments+j;f.push([a,b,c],[a,c,d]);}
@@ -43,17 +43,20 @@ function ArmSculptGeometry(){
  }
  function plate(surface,acromion,glenoid,inferior){
   if(!surface||surface.length<8)return{v:[],f:[],rings:[],outlinePoints:[]};
-  const basis=axes(surface),projected=surface.map(p=>{const q=sub(p,basis.center);return[dot(q,basis.axis),dot(q,basis.u),dot(q,basis.w)];}),outline=convexHull(projected.map(p=>[p[0],p[1]]));
+  const fallback=axes(surface),center=acromion?.length===3?acromion:fallback.center,axis=inferior?.length===3?unit(sub(inferior,center)):fallback.axis;
+  let lateral=glenoid?.length===3?sub(glenoid,center):fallback.u;lateral=unit(sub(lateral,mul(axis,dot(lateral,axis))));
+  if(Math.hypot(...lateral)<1e-6)lateral=fallback.u;
+  const basis={center,axis,u:lateral,w:unit(cross(axis,lateral))},projected=surface.map(p=>{const q=sub(p,basis.center);return[dot(q,basis.axis),dot(q,basis.u),dot(q,basis.w)];}),outline=convexHull(projected);
   const centerDepth=median(projected.map(p=>p[2])),depths=projected.map(p=>p[2]).sort((a,b)=>a-b),thickness=Math.max(2.4,Math.min(5.5,(quantile(depths,.9)-quantile(depths,.1))*.12));
   const position=(point,depth)=>add(add(add(basis.center,mul(basis.axis,point[0])),mul(basis.u,point[1])),mul(basis.w,depth)),v=[],f=[];
-  for(const point of outline){v.push(position(point,centerDepth-thickness),position(point,centerDepth+thickness));}
+  for(const point of outline){v.push(position(point,point[2]-thickness),position(point,point[2]+thickness));}
   const center2=outline.reduce((c,p)=>[c[0]+p[0]/outline.length,c[1]+p[1]/outline.length],[0,0]),frontCenter=v.length;v.push(position(center2,centerDepth-thickness));
   const backCenter=v.length;v.push(position(center2,centerDepth+thickness));
   for(let i=0;i<outline.length;i++){
    const next=(i+1)%outline.length,a=i*2,b=next*2;
    f.push([frontCenter,b,a],[backCenter,a+1,b+1],[a,a+1,b+1],[a,b+1,b]);
   }
-  const outlinePoints=outline.map(p=>position(p,centerDepth-thickness));
+  const outlinePoints=outline.map(p=>position(p,p[2]-thickness));
   return{v,f,rings:[],outlinePoints,basis,thickness,spans:[Math.max(...outline.map(p=>p[0]))-Math.min(...outline.map(p=>p[0])),Math.max(...outline.map(p=>p[1]))-Math.min(...outline.map(p=>p[1]))]};
  }
  function nearest(points,target){let best=points[0],d=Infinity;for(const p of points){const n=norm(sub(p,target));if(n<d){d=n;best=p;}}return best.slice();}
@@ -83,7 +86,7 @@ function ArmSculptLayer({atlas,landmarks,make,defs,drawing,svg}){
  const landmarkMap=new Map(landmarks.landmarks.map(p=>[p.id,p]));
  function formMesh(group,posed){
   if(group.shape==='scapula-plate'){const scapula=posed[partIndex.get('scapula')],acromion=landmarkMap.get('acromioclavicular').point,glenoid=geo.nearest(scapula,landmarkMap.get('glenohumeral').point),inferior=landmarks.inferiorAngle.point;return geo.plate(scapula,acromion,glenoid,inferior);}
-  return geo.loft(group.parts.flatMap(name=>posed[partIndex.get(name)]));
+  return geo.loft(group.parts.flatMap(name=>posed[partIndex.get(name)]),9,10,group.kind==='bone'?.72:.22);
  }
  function drawLandmark(id,angle,project,forearm){
   const landmark=landmarkMap.get(id);if(!landmark){markerRoot.style.display='none';return;}
