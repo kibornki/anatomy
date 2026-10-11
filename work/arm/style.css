@@ -32,8 +32,10 @@
 .diagram-landmark{pointer-events:none}
 .diagram-landmark text{paint-order:stroke;stroke:var(--background);stroke-width:3px;stroke-linejoin:round}
 .sculpt-fill{stroke:none}
-.sculpt-outline{stroke-linejoin:round;stroke-opacity:.62}
+.sculpt-facets{pointer-events:none}
+.sculpt-facet{stroke:#493f47;stroke-width:.65;stroke-opacity:.52;stroke-linejoin:round}
+.sculpt-outline{stroke-linejoin:round;stroke-opacity:.94;stroke-width:1.05}
 .sculpt-form-lines{pointer-events:none}
 .diagram.transparent .sculpt-muscle{fill-opacity:.38}
-.sculpt-bone-key{background:#cfc7bb}.sculpt-muscle-key{background:#bec9d3}.diagram-legend .context-key{background:#cbd1d9}
+.sculpt-bone-key{background:#cfc7bb}.sculpt-deltoid-key{background:#e98292}.sculpt-biceps-key{background:#6da8d2}.sculpt-triceps-key{background:#cf7388}.sculpt-brachialis-key{background:#75b6a3}.diagram-legend .context-key{background:#cbd1d9}
 .diagram.no-fibers .sculpt-form-lines{display:none}

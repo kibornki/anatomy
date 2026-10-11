@@ -93,13 +93,36 @@ function ArmSculptLayer({atlas,landmarks,make,defs,drawing,svg}){
   {id:'triceps',label:ARM_MUSCLE_LABELS.forms.triceps,kind:'muscle',parts:['triceps-long','triceps-lateral','triceps-medial']},
   {id:'brachialis',label:ARM_MUSCLE_LABELS.forms.brachialis,kind:'muscle',parts:['brachialis']}
  ];
+ const muscleColors={deltoid:'#e98292',biceps:'#6da8d2',triceps:'#cf7388',brachialis:'#75b6a3'};
+ const sub=(a,b)=>a.map((v,i)=>v-b[i]),cross=(a,b)=>[a[1]*b[2]-a[2]*b[1],a[2]*b[0]-a[0]*b[2],a[0]*b[1]-a[1]*b[0]],dot=(a,b)=>a.reduce((sum,v,i)=>sum+v*b[i],0),unit=a=>{const n=Math.hypot(...a)||1;return a.map(v=>v/n);};const shadeColor=(hex,factor)=>'#'+[1,3,5].map(i=>Math.max(0,Math.min(255,Math.round(parseInt(hex.slice(i,i+2),16)*factor))).toString(16).padStart(2,'0')).join('');
+ function facetPolygons(mesh){
+  const faces=[];
+  for(let r=0;r<mesh.rings.length-1;r++)for(let j=0;j<mesh.rings[r].length;j++){
+   const a=mesh.rings[r],b=mesh.rings[r+1],next=(j+1)%a.length;faces.push([a[j],a[next],b[next],b[j]]);
+  }
+  if(mesh.rings.length){faces.unshift(mesh.rings[0].slice().reverse());faces.push(mesh.rings.at(-1).slice());}
+  return faces;
+ }
+ function facetColor(color,points){
+  const normal=unit(cross(sub(points[1],points[0]),sub(points[2],points[0]))),light=unit([-.42,.58,.70]);
+  return shadeColor(color,.76+Math.max(0,dot(normal,light))*.37);
+ }
  const stop=(gradient,offset,color)=>make('stop',{offset,'stop-color':color},gradient);
  const boneGradient=make('linearGradient',{id:'arm-sculpt-bone-gradient',x1:'0%',y1:'0%',x2:'100%',y2:'100%'},defs);stop(boneGradient,'0%','#e9e3d8');stop(boneGradient,'52%','#cfc7bb');stop(boneGradient,'100%','#a69b8d');
- const muscleGradient=make('linearGradient',{id:'arm-sculpt-muscle-gradient',x1:'0%',y1:'0%',x2:'100%',y2:'100%'},defs);stop(muscleGradient,'0%','#dfe6ec');stop(muscleGradient,'55%','#bec9d3');stop(muscleGradient,'100%','#909daa');
  const root=make('g',{'class':'sculpt-layer','data-display-layer':'sculpt','aria-hidden':'true'},drawing);
- const nodes=groups.map((group,i)=>{const g=make('g',{'data-sculpt-form':group.id,'data-kind':group.kind},root),clip=make('clipPath',{id:'arm-sculpt-clip-'+i},defs),mask=make('path',{},clip),fill=make('path',{class:'sculpt-fill '+(group.kind==='bone'?'sculpt-bone':'sculpt-muscle'),fill:'url(#arm-sculpt-'+group.kind+'-gradient)'},g),outline=make('path',{class:'sculpt-outline',fill:'none',stroke:'var(--muted-foreground)','stroke-width':group.kind==='bone'?.9:.65},g),fiber=make('path',{class:'sculpt-form-lines',fill:'none',stroke:'var(--foreground)','stroke-opacity':'.20','stroke-width':'.65','clip-path':'url(#arm-sculpt-clip-'+i+')'},g);return{g,part:{name:group.id+'-mass'},mask,fill,outline,fiber,artistSculpt:true,group,i};});
- const light=ArmSurfaceLighting(make,nodes);
- const modeHeader=make('g',{'class':'diagram-mode-labels'},svg),leftHeader=make('text',{x:'18',y:'22','font-size':'11','font-weight':'700'},modeHeader),rightHeader=make('text',{x:'622',y:'22','font-size':'11','font-weight':'700','text-anchor':'end'},modeHeader);make('path',{d:'M320 0V430',fill:'none',stroke:'var(--muted-foreground)','stroke-width':'.7','stroke-dasharray':'4 4'},modeHeader);leftHeader.textContent='해부학';rightHeader.textContent='조형 덩어리';
+ const nodes=groups.map((group,i)=>{const g=make('g',{'data-sculpt-form':group.id,'data-kind':group.kind},root),clip=make('clipPath',{id:'arm-sculpt-clip-'+i},defs),mask=make('path',{},clip),fill=make('path',{class:'sculpt-fill '+(group.kind==='bone'?'sculpt-bone':'sculpt-muscle'),fill:group.kind==='bone'?'url(#arm-sculpt-bone-gradient)':muscleColors[group.id]},g),facets=make('g',{'class':'sculpt-facets','clip-path':'url(#arm-sculpt-clip-'+i+')'},g),outline=make('path',{class:'sculpt-outline',fill:'none',stroke:group.kind==='bone'?'#68645e':'#403a43','stroke-width':group.kind==='bone'?.9:1.05,'stroke-opacity':group.kind==='bone'?.72:.92},g),fiber=make('path',{class:'sculpt-form-lines',fill:'none',stroke:'var(--foreground)','stroke-opacity':'.20','stroke-width':'.65','clip-path':'url(#arm-sculpt-clip-'+i+')'},g);return{g,part:{name:group.id+'-mass'},mask,fill,facets,facetPaths:[],outline,fiber,artistSculpt:true,group,i};});
+ function drawFacets(node,mesh,project,depth){
+  const faces=facetPolygons(mesh),ordered=[];
+  while(node.facetPaths.length<faces.length)node.facetPaths.push(make('path',{class:'sculpt-facet'},node.facets));
+  faces.forEach((indices,id)=>{
+   const points=indices.map(i=>mesh.v[i]),path=node.facetPaths[id];
+   path.setAttribute('d','M'+points.map(project).map(p=>p.join(',')).join('L')+'Z');
+   path.setAttribute('fill',facetColor(muscleColors[node.group.id],points));
+   ordered.push({path,z:points.reduce((sum,p)=>sum+depth(p),0)/points.length});
+  });
+  ordered.sort((a,b)=>a.z-b.z);ordered.forEach(item=>node.facets.appendChild(item.path));
+ }
+ const modeHeader=make('g',{'class':'diagram-mode-labels'},svg),leftHeader=make('text',{x:'18',y:'22','font-size':'11','font-weight':'700'},modeHeader),rightHeader=make('text',{x:'622',y:'22','font-size':'11','font-weight':'700','text-anchor':'end'},modeHeader);make('path',{d:'M320 0V430',fill:'none',stroke:'var(--muted-foreground)','stroke-width':'.7','stroke-dasharray':'4 4'},modeHeader);leftHeader.textContent='해부학';rightHeader.textContent='도형화';
  const markerRoot=make('g',{'class':'diagram-landmark','aria-live':'polite'},svg),leader=make('path',{fill:'none',stroke:'var(--orange)','stroke-width':'1.4','stroke-dasharray':'3 2'},markerRoot),dotNode=make('circle',{r:'4.5',fill:'var(--background)',stroke:'var(--orange)','stroke-width':'2'},markerRoot),markerText=make('text',{fill:'var(--foreground)','font-size':'11','font-weight':'600'},markerRoot);
  const landmarkMap=new Map(landmarks.landmarks.map(p=>[p.id,p]));
  function formMesh(group,posed){
@@ -118,8 +141,7 @@ function ArmSculptLayer({atlas,landmarks,make,defs,drawing,svg}){
    const visibleGroup=group=>group.kind==='bone'?showBones:showMuscles,buffer=ArmVisibility({project:sculptProject,depth,step:.9});meshes=groups.map(g=>visibleGroup(g)?formMesh(g,posed):null);
    meshes.forEach((mesh,id)=>mesh?.f.forEach(f=>buffer.triangle(mesh.v[f[0]],mesh.v[f[1]],mesh.v[f[2]],id)));
    visible=buffer.solve(nodes.length,{projections:true,scanlineClips:false});
-   nodes.forEach((n,id)=>{const mesh=meshes[id];if(!mesh){n.mask.setAttribute('d','');n.fill.setAttribute('d','');n.outline.setAttribute('d','');n.fiber.setAttribute('d','');return;}const local=visible.ownerZ[id],inside=k=>transparent&&n.group.kind==='muscle'?local[k]>-Infinity:visible.owners[k]===id,contour=AtlasContour(visible,inside,visible.bounds[id]),plateOutline=mesh.outlinePoints?'M'+mesh.outlinePoints.map(sculptProject).map(p=>p.join(',')).join('L')+'Z':contour;n.mask.setAttribute('d',contour);n.fill.setAttribute('d',contour);n.outline.setAttribute('d',plateOutline);n.fiber.setAttribute('d','');});
-   light(visible);
+   nodes.forEach((n,id)=>{const mesh=meshes[id];if(!mesh){n.mask.setAttribute('d','');n.fill.setAttribute('d','');n.outline.setAttribute('d','');n.fiber.setAttribute('d','');return;}const local=visible.ownerZ[id],inside=k=>transparent&&n.group.kind==='muscle'?local[k]>-Infinity:visible.owners[k]===id,contour=AtlasContour(visible,inside,visible.bounds[id]),plateOutline=mesh.outlinePoints?'M'+mesh.outlinePoints.map(sculptProject).map(p=>p.join(',')).join('L')+'Z':contour;n.mask.setAttribute('d',contour);n.fill.setAttribute('d',contour);n.outline.setAttribute('d',plateOutline);if(n.group.kind==='muscle')drawFacets(n,mesh,sculptProject,depth);n.fiber.setAttribute('d','');});
   }
   sculptLabelRoot.setAttribute('aria-hidden',String(mode!=='sculpt'||!showMuscles));
   sculptLabelNodes.forEach((label,id)=>{label.g.style.display='none';if(mode!=='sculpt'||!showMuscles||!visible)return;const index=groups.findIndex(group=>group.id===id),mesh=meshes[index];if(!mesh)return;const points=visible.centers[index]||[],targets=points.length?points:mesh.v.map(sculptProject),stride=Math.max(1,Math.ceil(targets.length/64));let sx=0,sy=0,count=0;for(let i=0;i<targets.length;i+=stride){sx+=targets[i][0];sy+=targets[i][1];count++;}if(!count)return;const target=[sx/count,sy/count],[x,y]=sculptLabelPositions[view][id],anchor=x<320?'start':'end';label.text.setAttribute('x',x);label.text.setAttribute('y',y);label.text.setAttribute('text-anchor',anchor);label.line.setAttribute('d','M'+x+','+(y+4)+'L'+target.join(','));label.g.style.display='';});

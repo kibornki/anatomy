@@ -37,10 +37,10 @@ const ARM_MUSCLE_LABELS=Object.freeze({
    ])
   }),
   sculpt:Object.freeze([
-   ['sculpt-muscle-key','삼각근 (전면·중부·후면) · 1차 덩어리'],
-   ['sculpt-muscle-key','상완이두근 (장두·단두) · 1차 덩어리'],
-   ['sculpt-muscle-key','상완삼두근 (장두·외측두·내측두) · 1차 덩어리'],
-   ['sculpt-muscle-key','상완근 · 2차 덩어리']
+   ['sculpt-deltoid-key','삼각근 (전면·중부·후면)'],
+   ['sculpt-biceps-key','상완이두근 (장두·단두)'],
+   ['sculpt-triceps-key','상완삼두근 (장두·외측두·내측두)'],
+   ['sculpt-brachialis-key','상완근']
   ])
  })
 });
