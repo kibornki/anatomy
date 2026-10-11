@@ -8,16 +8,14 @@
  const legendItems=ARM_MUSCLE_LABELS.legend.anatomy;
  const landmarkById=new Map(model.landmarks.landmarks.map(item=>[item.id,item]));
  if(!landmarkById.has(landmark))landmark='acromioclavicular';
- const guideNotes=new Map(model.landmarks.landmarks.map(item=>[item.id,item.note]));
  const sculptLegend=[['sculpt-bone-key','쇄골 S곡선'],['sculpt-bone-key','견갑골 판'],['sculpt-bone-key','상완골 블록'],['sculpt-bone-key','요골'],['sculpt-bone-key','척골'],...ARM_MUSCLE_LABELS.legend.sculpt];
- let lastLegendKey='',lastGuide='';
+ let lastLegendKey='';
  function render(){
   root.classList.toggle('no-fibers',!by('fibers').checked);root.classList.toggle('transparent',by('transparent').checked);root.dataset.angle=angle;root.dataset.camera=view;root.dataset.mode=mode;root.dataset.landmark=landmark;root.dataset.revision='arm-artist-sculpt-v1';root.dataset.showMuscles=showMuscles;const muscleButton=root.querySelector('[data-arm-toggle-muscles]');if(muscleButton)muscleButton.textContent=showMuscles?'근육 숨기기':'근육 보이기';const fiberControl=by('fibers').closest('.form-check');if(fiberControl){fiberControl.hidden=mode==='sculpt';fiberControl.style.display=mode==='sculpt'?'none':'';}by('fiber-label').textContent=mode==='compare'?'해부학 근섬유':'근섬유';model.render(angle,view,mode,landmark);
   by('angle').value=angle;by('value').textContent=Math.round(angle)+'°';by('angle').setAttribute('aria-valuetext',Math.round(angle)+'도 굽힘');for(const v of ['front','side','back'])by(v).setAttribute('aria-pressed',v===view);
   for(const button of root.querySelectorAll('[data-arm-mode]'))button.setAttribute('aria-pressed',button.dataset.armMode===mode);
   for(const button of root.querySelectorAll('[data-arm-landmark]'))button.setAttribute('aria-pressed',button.dataset.armLandmark===landmark);
   root.querySelector('.diagram-caption').textContent=(view==='side'?'측면':view==='front'?'정면 사선':'후면 사선')+' · 오른팔 · 어깨띠·팔꿈치';
-  if(lastGuide!==landmark){lastGuide=landmark;by('artist-note').textContent=guideNotes.get(landmark)||'';}
   const legendKey=[view,mode].join('|');if(lastLegendKey!==legendKey){lastLegendKey=legendKey;const legend=root.querySelector('.diagram-legend');legend.replaceChildren();const items=mode==='sculpt'?sculptLegend:mode==='compare'?legendItems[view].concat(sculptLegend):legendItems[view];for(const [color,name]of items){const span=document.createElement('span'),key=document.createElement('i');key.className=color;span.append(key,document.createTextNode(name));legend.append(span);}}
  } function capture(){const state={modelContent:{revision:'arm-artist-sculpt-v1',topic,angle:Math.round(angle),camera:view,mode,landmark,fibers:by('fibers').checked,transparent:by('transparent').checked,showMuscles,composition:composition.state},privateContent:{playing}};try{localStorage.setItem(store,JSON.stringify(state));}catch{}if(config)parent.postMessage({type:'anatomy-hub-state',key:config.key,state},'*');}
  function play(on){playing=on;by('play').textContent=on?'일시정지':'재생';by('play').setAttribute('aria-pressed',on);last=0;}
