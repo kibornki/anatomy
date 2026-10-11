@@ -1,5 +1,5 @@
-/* Lighting only: derive smooth camera-space normals from the existing depth
- * buffer. No mesh, attachment, motion or visibility data is changed. */
+/* Lighting only: derive camera-space normals from the existing depth buffer.
+ * Keep atlas surfaces smooth and let sculpt blockout planes read as facets. */
 function ArmSurfaceLighting(make,nodes){
  const selected=n=>!!n.artistSculpt||/^(biceps-|triceps-)/.test(n.part.name);
  const layers=nodes.map(n=>selected(n)?make('image',{'class':'arm-surface-lighting','clip-path':n.fiber.getAttribute('clip-path'),'pointer-events':'none'},n.g):null);
@@ -10,17 +10,20 @@ function ArmSurfaceLighting(make,nodes){
   layers.forEach((image,id)=>{
    if(!image)return;const source=ownerZ[id],bounds=visible.bounds[id];
    let z=source.slice();
-   // Smooth lighting at atlas triangle edges, retaining the original contour.
-   const weights=Array.from({length:13},(_,i)=>Math.exp(-(((i-6)/2.8)**2)/2));
-   for(const axis of [1,w]){
-    const next=z.slice();
-    for(let y=Math.max(1,bounds[1]);y<=Math.min(h-2,bounds[3]);y++)for(let x=Math.max(1,bounds[0]);x<=Math.min(w-2,bounds[2]);x++){
-     const k=y*w+x;if(!Number.isFinite(z[k]))continue;let total=0,weight=0;
-     for(let d=-6;d<=6;d++){
-      if(axis===1&&(x+d<0||x+d>=w)||axis===w&&(y+d<0||y+d>=h))continue;
-      const j=k+d*axis;if(Number.isFinite(z[j])){total+=z[j]*weights[d+6];weight+=weights[d+6];}
-     }next[k]=total/weight;
-    }z=next;
+   if(!nodes[id].facetedSculpt){
+    // Smooth lighting at atlas triangle edges, retaining the original contour.
+    const weights=Array.from({length:13},(_,i)=>Math.exp(-(((i-6)/2.8)**2)/2));
+    for(const axis of [1,w]){
+     const next=z.slice();
+     for(let y=Math.max(1,bounds[1]);y<=Math.min(h-2,bounds[3]);y++)for(let x=Math.max(1,bounds[0]);x<=Math.min(w-2,bounds[2]);x++){
+      const k=y*w+x;if(!Number.isFinite(z[k]))continue;let total=0,weight=0;
+      for(let d=-6;d<=6;d++){
+       if(axis===1&&(x+d<0||x+d>=w)||axis===w&&(y+d<0||y+d>=h))continue;
+       const j=k+d*axis;if(Number.isFinite(z[j])){total+=z[j]*weights[d+6];weight+=weights[d+6];}
+      }next[k]=total/weight;
+     }z=next;
+    }
+ 
    }
    const pixels=ctx.createImageData(w,h),data=pixels.data;
    for(let y=Math.max(1,bounds[1]);y<=Math.min(h-2,bounds[3]);y++)for(let x=Math.max(1,bounds[0]);x<=Math.min(w-2,bounds[2]);x++){
