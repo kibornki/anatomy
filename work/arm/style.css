@@ -12,8 +12,8 @@
 .diagram [data-atlas-part^="triceps-"]>path[fill="none"]:not(.fiber){stroke-opacity:.22}
 
 .artist-learning{display:grid;gap:6px;margin:8px 0 10px}
-.artist-mode-buttons{display:flex;align-items:center;gap:5px;flex-wrap:wrap}
-.artist-mode-buttons .btn{border:1px solid color-mix(in srgb,var(--muted-foreground) 30%,var(--background));color:var(--foreground);background:var(--background);padding:3px 7px;font-size:11px}
+.artist-mode-buttons{display:flex;align-items:center;gap:3px;flex-wrap:wrap}
+.artist-mode-buttons .btn{border:1px solid color-mix(in srgb,var(--muted-foreground) 30%,var(--background));color:var(--foreground);background:var(--background);padding:3px 4px;font-size:11px}
 .artist-mode-buttons .btn[aria-pressed=true]{border-color:var(--foreground);background:var(--foreground);color:var(--background)}
 .diagram-stage{display:grid;grid-template-columns:minmax(0,1fr);gap:3px;align-items:start}
 .artist-landmark-picker{display:flex;align-items:center;gap:6px;margin:4px 0}
@@ -42,6 +42,6 @@
 .sculpt-bone-key{background:#cfc7bb}.sculpt-deltoid-key{background:#e98292}.sculpt-biceps-key{background:#6da8d2}.sculpt-triceps-key{background:#cf7388}.sculpt-brachialis-key{background:#75b6a3}.diagram-legend .context-key{background:#cbd1d9}
 .diagram.no-fibers .sculpt-form-lines{display:none}
 
-.artist-mode-buttons .artist-toggle-control{display:inline-flex;align-items:center;gap:4px;min-width:0;min-height:28px;margin:0;padding:0 2px;font-size:11px;white-space:nowrap}
+.artist-mode-buttons .artist-toggle-control{display:inline-flex;align-items:center;gap:4px;min-width:0;min-height:28px;margin:0;padding:0 1px;font-size:11px;white-space:nowrap}
 .artist-mode-buttons .artist-toggle-control .form-check-input{width:14px;height:14px;margin:0}
 .artist-mode-buttons .artist-toggle-control .form-check-label{display:inline;min-width:0;min-height:0}
