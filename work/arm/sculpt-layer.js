@@ -16,15 +16,15 @@ function ArmSculptGeometry(){
   let u=vec(order[1]);u=unit(sub(u,mul(axis,dot(u,axis))));if(!isFinite(norm(u)))u=unit(cross(axis,[1,0,0]));
   const w=unit(cross(axis,u));return{center,axis,u,w};
  }
- function loft(points,ringCount=9,segments=10,endScale=.22){
+ function loft(points,ringCount=9,segments=10,endScale=.22,bulge=0){
   if(!points||points.length<8)return{v:[],f:[],rings:[]};
   const basis=axes(points),projected=points.map(p=>[dot(p,basis.axis),dot(p,basis.u),dot(p,basis.w)]),lo=Math.min(...projected.map(p=>p[0])),hi=Math.max(...projected.map(p=>p[0])),span=Math.max(1e-6,hi-lo),window=span/(ringCount-1)*1.55,v=[],rings=[];
   for(let r=0;r<ringCount;r++){
    const t=r/(ringCount-1),at=lo+span*t;let slice=projected.filter(p=>Math.abs(p[0]-at)<=window/2);
    if(slice.length<8)slice=projected.slice().sort((a,b)=>Math.abs(a[0]-at)-Math.abs(b[0]-at)).slice(0,Math.min(20,projected.length));
    const c2=median(slice.map(p=>p[1])),c3=median(slice.map(p=>p[2])),tau=2*Math.PI,polar=slice.map(p=>({angle:(Math.atan2(p[2]-c3,p[1]-c2)+tau)%tau,radius:Math.hypot(p[1]-c2,p[2]-c3)})),radii=Array.from({length:segments},(_,j)=>{const target=j*tau/segments,near=polar.filter(p=>{const d=Math.abs(p.angle-target);return Math.min(d,tau-d)<=tau/segments*.75;}),samples=near.length?near:polar.slice().sort((a,b)=>{const da=Math.abs(a.angle-target),db=Math.abs(b.angle-target);return Math.min(da,tau-da)-Math.min(db,tau-db);}).slice(0,Math.min(6,polar.length));return quantile(samples.map(p=>p.radius),.86);}),cap=t<.001||t>.999?endScale:1;
-   const ring=[],radialCenter=[radii.reduce((sum,r,j)=>sum+Math.cos(j*tau/segments)*r/segments,0),radii.reduce((sum,r,j)=>sum+Math.sin(j*tau/segments)*r/segments,0)];
-   for(let j=0;j<segments;j++){const theta=j*tau/segments,radius=radii[j]*cap,p=add(add(add(mul(basis.axis,at),mul(basis.u,c2)),mul(basis.w,c3)),add(mul(basis.u,Math.cos(theta)*radius-radialCenter[0]*cap),mul(basis.w,Math.sin(theta)*radius-radialCenter[1]*cap)));ring.push(v.length);v.push(p);}
+   const scale=cap*(1+bulge*Math.sin(Math.PI*t)),ring=[],radialCenter=[radii.reduce((sum,r,j)=>sum+Math.cos(j*tau/segments)*r/segments,0),radii.reduce((sum,r,j)=>sum+Math.sin(j*tau/segments)*r/segments,0)];
+   for(let j=0;j<segments;j++){const theta=j*tau/segments,radius=radii[j]*scale,p=add(add(add(mul(basis.axis,at),mul(basis.u,c2)),mul(basis.w,c3)),add(mul(basis.u,Math.cos(theta)*radius-radialCenter[0]*scale),mul(basis.w,Math.sin(theta)*radius-radialCenter[1]*scale)));ring.push(v.length);v.push(p);}
    rings.push(ring);
   }
   const f=[];for(let r=0;r<ringCount-1;r++)for(let j=0;j<segments;j++){const a=r*segments+j,b=r*segments+(j+1)%segments,c=(r+1)*segments+(j+1)%segments,d=(r+1)*segments+j;f.push([a,b,c],[a,c,d]);}
@@ -94,18 +94,35 @@ function ArmSculptLayer({atlas,landmarks,make,defs,drawing,svg}){
   {id:'brachialis',label:ARM_MUSCLE_LABELS.forms.brachialis,kind:'muscle',parts:['brachialis']}
  ];
  const muscleColors={deltoid:'#69a79a',biceps:'#a68bc1',triceps:'#8e79aa',brachialis:'#a59c68'};
+ const sub=(a,b)=>a.map((v,i)=>v-b[i]),cross=(a,b)=>[a[1]*b[2]-a[2]*b[1],a[2]*b[0]-a[0]*b[2],a[0]*b[1]-a[1]*b[0]],dot=(a,b)=>a.reduce((sum,v,i)=>sum+v*b[i],0),unit=a=>{const n=Math.hypot(...a)||1;return a.map(v=>v/n);};
  const shadeColor=(hex,factor)=>'#'+[1,3,5].map(i=>Math.max(0,Math.min(255,Math.round(parseInt(hex.slice(i,i+2),16)*factor))).toString(16).padStart(2,'0')).join('');
+ function facetPolygons(mesh){
+  if(!mesh.rings.length)return mesh.f.map(face=>face.slice());
+  const faces=[];
+  for(let r=0;r<mesh.rings.length-1;r++)for(let j=0;j<mesh.rings[r].length;j++){const a=mesh.rings[r],b=mesh.rings[r+1],next=(j+1)%a.length;faces.push([a[j],a[next],b[next],b[j]]);}
+  faces.unshift(mesh.rings[0].slice().reverse());faces.push(mesh.rings.at(-1).slice());return faces;
+ }
+ function facetColor(color,points){
+  const normal=unit(cross(sub(points[1],points[0]),sub(points[2],points[0]))),light=unit([-.42,.58,.70]);
+  return shadeColor(color,.82+Math.max(0,dot(normal,light))*.28);
+ }
  const stop=(gradient,offset,color)=>make('stop',{offset,'stop-color':color},gradient);
  const boneGradient=make('linearGradient',{id:'arm-sculpt-bone-gradient',x1:'0%',y1:'0%',x2:'100%',y2:'100%'},defs);stop(boneGradient,'0%','#e9e3d8');stop(boneGradient,'52%','#cfc7bb');stop(boneGradient,'100%','#a69b8d');
  groups.filter(group=>group.kind==='muscle').forEach(group=>{const gradient=make('radialGradient',{id:'arm-sculpt-'+group.id+'-gradient',cx:'28%',cy:'22%',r:'92%'},defs);stop(gradient,'0%',shadeColor(muscleColors[group.id],1.2));stop(gradient,'48%',muscleColors[group.id]);stop(gradient,'100%',shadeColor(muscleColors[group.id],.72));});
  const root=make('g',{'class':'sculpt-layer','data-display-layer':'sculpt','aria-hidden':'true'},drawing);
- const nodes=groups.map((group,i)=>{const g=make('g',{'data-sculpt-form':group.id,'data-kind':group.kind},root),clip=make('clipPath',{id:'arm-sculpt-clip-'+i},defs),mask=make('path',{},clip),fill=make('path',{class:'sculpt-fill '+(group.kind==='bone'?'sculpt-bone':'sculpt-muscle'),fill:group.kind==='bone'?'url(#arm-sculpt-bone-gradient)':'url(#arm-sculpt-'+group.id+'-gradient)'},g),outline=make('path',{class:'sculpt-outline',fill:'none',stroke:group.kind==='bone'?'#68645e':'#403a43','stroke-width':group.kind==='bone'?.9:1.05,'stroke-opacity':group.kind==='bone'?.72:.72},g),fiber=make('path',{class:'sculpt-form-lines',fill:'none',stroke:'var(--foreground)','stroke-opacity':'.20','stroke-width':'.65','clip-path':'url(#arm-sculpt-clip-'+i+')'},g);return{g,part:{name:group.id+'-mass'},mask,fill,outline,fiber,artistSculpt:true,group,i};});
+ const nodes=groups.map((group,i)=>{const g=make('g',{'data-sculpt-form':group.id,'data-kind':group.kind},root),clip=make('clipPath',{id:'arm-sculpt-clip-'+i},defs),mask=make('path',{},clip),fill=make('path',{class:'sculpt-fill '+(group.kind==='bone'?'sculpt-bone':'sculpt-muscle'),fill:group.kind==='bone'?'url(#arm-sculpt-bone-gradient)':'url(#arm-sculpt-'+group.id+'-gradient)'},g),facets=make('g',{'class':'sculpt-facets','clip-path':'url(#arm-sculpt-clip-'+i+')'},g),outline=make('path',{class:'sculpt-outline',fill:'none',stroke:group.kind==='bone'?'#68645e':'#403a43','stroke-width':group.kind==='bone'?.9:1.05,'stroke-opacity':group.kind==='bone'?.72:.72},g),fiber=make('path',{class:'sculpt-form-lines',fill:'none',stroke:'var(--foreground)','stroke-opacity':'.20','stroke-width':'.65','clip-path':'url(#arm-sculpt-clip-'+i+')'},g);return{g,part:{name:group.id+'-mass'},mask,fill,facets,facetPaths:[],outline,fiber,artistSculpt:true,group,i};});
+ function drawFacets(node,mesh,project,depth){
+  const faces=facetPolygons(mesh),ordered=[];
+  while(node.facetPaths.length<faces.length)node.facetPaths.push(make('path',{class:'sculpt-facet'},node.facets));
+  faces.forEach((indices,id)=>{const points=indices.map(i=>mesh.v[i]),path=node.facetPaths[id];path.setAttribute('d','M'+points.map(project).map(p=>p.join(',')).join('L')+'Z');path.setAttribute('fill',facetColor(node.group.kind==='muscle'?muscleColors[node.group.id]:'#c9c0ad',points));ordered.push({path,z:points.reduce((sum,p)=>sum+depth(p),0)/points.length});});
+  ordered.sort((a,b)=>a.z-b.z);ordered.forEach(item=>node.facets.appendChild(item.path));
+ }
  const modeHeader=make('g',{'class':'diagram-mode-labels'},svg),leftHeader=make('text',{x:'18',y:'22','font-size':'11','font-weight':'700'},modeHeader),rightHeader=make('text',{x:'622',y:'22','font-size':'11','font-weight':'700','text-anchor':'end'},modeHeader);make('path',{d:'M320 0V430',fill:'none',stroke:'var(--muted-foreground)','stroke-width':'.7','stroke-dasharray':'4 4'},modeHeader);leftHeader.textContent='해부학';rightHeader.textContent='도형화';
  const markerRoot=make('g',{'class':'diagram-landmark','aria-live':'polite'},svg),leader=make('path',{fill:'none',stroke:'var(--orange)','stroke-width':'1.4','stroke-dasharray':'3 2'},markerRoot),dotNode=make('circle',{r:'4.5',fill:'var(--background)',stroke:'var(--orange)','stroke-width':'2'},markerRoot),markerText=make('text',{fill:'var(--foreground)','font-size':'11','font-weight':'600'},markerRoot);
  const landmarkMap=new Map(landmarks.landmarks.map(p=>[p.id,p]));
  function formMesh(group,posed){
   if(group.shape==='scapula-plate'){const scapula=posed[partIndex.get('scapula')],acromion=landmarkMap.get('acromioclavicular').point,glenoid=geo.nearest(scapula,landmarkMap.get('glenohumeral').point),inferior=landmarks.inferiorAngle.point;return geo.plate(scapula,acromion,glenoid,inferior);}
-  const points=group.parts.flatMap(name=>posed[partIndex.get(name)]);return group.kind==='muscle'?geo.loft(points,10,12,.34):geo.loft(points,10,12,.72);
+  const points=group.parts.flatMap(name=>posed[partIndex.get(name)]),profile={deltoid:[8,9,.42,.26],biceps:[9,9,.34,.24],triceps:[9,9,.34,.2],brachialis:[8,8,.3,.16]}[group.id];return profile?geo.loft(points,...profile):geo.loft(points,9,10,.72,.04);
  }
  const sculptLabelRoot=make('g',{'class':'sculpt-labels','aria-hidden':'true'},svg),sculptNames=ARM_MUSCLE_LABELS.forms,sculptLabelPositions={front:{deltoid:[55,125],biceps:[55,250],brachialis:[585,270],triceps:[585,360]},back:{deltoid:[55,115],triceps:[55,280],biceps:[585,250],brachialis:[585,360]},side:{deltoid:[585,110],biceps:[585,245],triceps:[55,285],brachialis:[55,360]}},sculptLabelNodes=new Map(groups.filter(g=>g.kind==='muscle').map(group=>{const g=make('g',{'data-sculpt-label':group.id},sculptLabelRoot),line=make('path',{},g),text=make('text',{'font-size':'11','font-weight':'600'},g);text.textContent=sculptNames[group.id];return[group.id,{g,line,text}];}));
  function drawLandmark(id,angle,project,forearm,mode){
@@ -119,7 +136,7 @@ function ArmSculptLayer({atlas,landmarks,make,defs,drawing,svg}){
    const visibleGroup=group=>group.kind==='bone'?showBones:showMuscles,buffer=ArmVisibility({project:sculptProject,depth,step:.9});meshes=groups.map(g=>visibleGroup(g)?formMesh(g,posed):null);
    meshes.forEach((mesh,id)=>mesh?.f.forEach(f=>buffer.triangle(mesh.v[f[0]],mesh.v[f[1]],mesh.v[f[2]],id)));
    visible=buffer.solve(nodes.length,{projections:true,scanlineClips:false});
-   nodes.forEach((n,id)=>{const mesh=meshes[id];if(!mesh){n.mask.setAttribute('d','');n.fill.setAttribute('d','');n.outline.setAttribute('d','');n.fiber.setAttribute('d','');return;}const local=visible.ownerZ[id],inside=k=>transparent&&n.group.kind==='muscle'?local[k]>-Infinity:visible.owners[k]===id,contour=AtlasContour(visible,inside,visible.bounds[id]),plateOutline=mesh.outlinePoints?'M'+mesh.outlinePoints.map(sculptProject).map(p=>p.join(',')).join('L')+'Z':contour;n.mask.setAttribute('d',contour);n.fill.setAttribute('d',contour);n.outline.setAttribute('d',plateOutline);n.fiber.setAttribute('d','');});
+   nodes.forEach((n,id)=>{const mesh=meshes[id];if(!mesh){n.mask.setAttribute('d','');n.fill.setAttribute('d','');n.outline.setAttribute('d','');n.fiber.setAttribute('d','');return;}const local=visible.ownerZ[id],inside=k=>transparent&&n.group.kind==='muscle'?local[k]>-Infinity:visible.owners[k]===id,contour=AtlasContour(visible,inside,visible.bounds[id]),plateOutline=mesh.outlinePoints?'M'+mesh.outlinePoints.map(sculptProject).map(p=>p.join(',')).join('L')+'Z':contour;n.mask.setAttribute('d',contour);n.fill.setAttribute('d',contour);n.outline.setAttribute('d',plateOutline);drawFacets(n,mesh,sculptProject,depth);n.fiber.setAttribute('d','');});
   }
   sculptLabelRoot.setAttribute('aria-hidden',String(mode!=='sculpt'||!showMuscles));
   sculptLabelNodes.forEach((label,id)=>{label.g.style.display='none';if(mode!=='sculpt'||!showMuscles||!visible)return;const index=groups.findIndex(group=>group.id===id),mesh=meshes[index];if(!mesh)return;const points=visible.centers[index]||[],targets=points.length?points:mesh.v.map(sculptProject),stride=Math.max(1,Math.ceil(targets.length/64));let sx=0,sy=0,count=0;for(let i=0;i<targets.length;i+=stride){sx+=targets[i][0];sy+=targets[i][1];count++;}if(!count)return;const target=[sx/count,sy/count],[x,y]=sculptLabelPositions[view][id],anchor=x<320?'start':'end';label.text.setAttribute('x',x);label.text.setAttribute('y',y);label.text.setAttribute('text-anchor',anchor);label.line.setAttribute('d','M'+x+','+(y+4)+'L'+target.join(','));label.g.style.display='';});

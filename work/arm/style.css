@@ -34,6 +34,8 @@
 .diagram-landmark{pointer-events:none}
 .diagram-landmark text{paint-order:stroke;stroke:var(--background);stroke-width:3px;stroke-linejoin:round}
 .sculpt-fill{stroke:none}
+.sculpt-facets{pointer-events:none}
+.sculpt-facet{stroke:#453e45;stroke-width:.48;stroke-opacity:.38;stroke-linejoin:round;fill-opacity:.96}
 .sculpt-outline{stroke-linejoin:round;stroke-opacity:.94;stroke-width:1.05}
 .sculpt-form-lines{pointer-events:none}
 .diagram.transparent .sculpt-layer [data-kind=muscle]{opacity:.38}
