@@ -93,15 +93,10 @@ function ArmSculptLayer({atlas,landmarks,make,defs,drawing,svg}){
   {id:'triceps',label:ARM_MUSCLE_LABELS.forms.triceps,kind:'muscle',parts:['triceps-long','triceps-lateral','triceps-medial']},
   {id:'brachialis',label:ARM_MUSCLE_LABELS.forms.brachialis,kind:'muscle',parts:['brachialis']}
  ];
- const muscleColors={deltoid:'#e98292',biceps:'#6da8d2',triceps:'#cf7388',brachialis:'#75b6a3'};
+ const muscleColors={deltoid:'#69a79a',biceps:'#a68bc1',triceps:'#8e79aa',brachialis:'#a59c68'};
  const sub=(a,b)=>a.map((v,i)=>v-b[i]),cross=(a,b)=>[a[1]*b[2]-a[2]*b[1],a[2]*b[0]-a[0]*b[2],a[0]*b[1]-a[1]*b[0]],dot=(a,b)=>a.reduce((sum,v,i)=>sum+v*b[i],0),unit=a=>{const n=Math.hypot(...a)||1;return a.map(v=>v/n);};const shadeColor=(hex,factor)=>'#'+[1,3,5].map(i=>Math.max(0,Math.min(255,Math.round(parseInt(hex.slice(i,i+2),16)*factor))).toString(16).padStart(2,'0')).join('');
  function facetPolygons(mesh){
-  const faces=[];
-  for(let r=0;r<mesh.rings.length-1;r++)for(let j=0;j<mesh.rings[r].length;j++){
-   const a=mesh.rings[r],b=mesh.rings[r+1],next=(j+1)%a.length;faces.push([a[j],a[next],b[next],b[j]]);
-  }
-  if(mesh.rings.length){faces.unshift(mesh.rings[0].slice().reverse());faces.push(mesh.rings.at(-1).slice());}
-  return faces;
+  return mesh.f.map(face=>face.slice());
  }
  function facetColor(color,points){
   const normal=unit(cross(sub(points[1],points[0]),sub(points[2],points[0]))),light=unit([-.42,.58,.70]);
@@ -117,7 +112,7 @@ function ArmSculptLayer({atlas,landmarks,make,defs,drawing,svg}){
   faces.forEach((indices,id)=>{
    const points=indices.map(i=>mesh.v[i]),path=node.facetPaths[id];
    path.setAttribute('d','M'+points.map(project).map(p=>p.join(',')).join('L')+'Z');
-   path.setAttribute('fill',facetColor(muscleColors[node.group.id],points));
+   path.setAttribute('fill',facetColor(node.group.kind==='muscle'?muscleColors[node.group.id]:'#c9c0ad',points));
    ordered.push({path,z:points.reduce((sum,p)=>sum+depth(p),0)/points.length});
   });
   ordered.sort((a,b)=>a.z-b.z);ordered.forEach(item=>node.facets.appendChild(item.path));
@@ -127,7 +122,7 @@ function ArmSculptLayer({atlas,landmarks,make,defs,drawing,svg}){
  const landmarkMap=new Map(landmarks.landmarks.map(p=>[p.id,p]));
  function formMesh(group,posed){
   if(group.shape==='scapula-plate'){const scapula=posed[partIndex.get('scapula')],acromion=landmarkMap.get('acromioclavicular').point,glenoid=geo.nearest(scapula,landmarkMap.get('glenohumeral').point),inferior=landmarks.inferiorAngle.point;return geo.plate(scapula,acromion,glenoid,inferior);}
-  const points=group.parts.flatMap(name=>posed[partIndex.get(name)]);return group.kind==='muscle'?geo.blockout(points,group.id):geo.loft(points,9,10,.72);
+  const points=group.parts.flatMap(name=>posed[partIndex.get(name)]);return group.kind==='muscle'?geo.loft(points,8,9,.16):geo.loft(points,9,10,.72);
  }
  const sculptLabelRoot=make('g',{'class':'sculpt-labels','aria-hidden':'true'},svg),sculptNames=ARM_MUSCLE_LABELS.forms,sculptLabelPositions={front:{deltoid:[55,125],biceps:[55,250],brachialis:[585,270],triceps:[585,360]},back:{deltoid:[55,115],triceps:[55,280],biceps:[585,250],brachialis:[585,360]},side:{deltoid:[585,110],biceps:[585,245],triceps:[55,285],brachialis:[55,360]}},sculptLabelNodes=new Map(groups.filter(g=>g.kind==='muscle').map(group=>{const g=make('g',{'data-sculpt-label':group.id},sculptLabelRoot),line=make('path',{},g),text=make('text',{'font-size':'11','font-weight':'600'},g);text.textContent=sculptNames[group.id];return[group.id,{g,line,text}];}));
  function drawLandmark(id,angle,project,forearm,mode){
@@ -141,7 +136,7 @@ function ArmSculptLayer({atlas,landmarks,make,defs,drawing,svg}){
    const visibleGroup=group=>group.kind==='bone'?showBones:showMuscles,buffer=ArmVisibility({project:sculptProject,depth,step:.9});meshes=groups.map(g=>visibleGroup(g)?formMesh(g,posed):null);
    meshes.forEach((mesh,id)=>mesh?.f.forEach(f=>buffer.triangle(mesh.v[f[0]],mesh.v[f[1]],mesh.v[f[2]],id)));
    visible=buffer.solve(nodes.length,{projections:true,scanlineClips:false});
-   nodes.forEach((n,id)=>{const mesh=meshes[id];if(!mesh){n.mask.setAttribute('d','');n.fill.setAttribute('d','');n.outline.setAttribute('d','');n.fiber.setAttribute('d','');return;}const local=visible.ownerZ[id],inside=k=>transparent&&n.group.kind==='muscle'?local[k]>-Infinity:visible.owners[k]===id,contour=AtlasContour(visible,inside,visible.bounds[id]),plateOutline=mesh.outlinePoints?'M'+mesh.outlinePoints.map(sculptProject).map(p=>p.join(',')).join('L')+'Z':contour;n.mask.setAttribute('d',contour);n.fill.setAttribute('d',contour);n.outline.setAttribute('d',plateOutline);if(n.group.kind==='muscle')drawFacets(n,mesh,sculptProject,depth);n.fiber.setAttribute('d','');});
+   nodes.forEach((n,id)=>{const mesh=meshes[id];if(!mesh){n.mask.setAttribute('d','');n.fill.setAttribute('d','');n.outline.setAttribute('d','');n.fiber.setAttribute('d','');return;}const local=visible.ownerZ[id],inside=k=>transparent&&n.group.kind==='muscle'?local[k]>-Infinity:visible.owners[k]===id,contour=AtlasContour(visible,inside,visible.bounds[id]),plateOutline=mesh.outlinePoints?'M'+mesh.outlinePoints.map(sculptProject).map(p=>p.join(',')).join('L')+'Z':contour;n.mask.setAttribute('d',contour);n.fill.setAttribute('d',contour);n.outline.setAttribute('d',plateOutline);drawFacets(n,mesh,sculptProject,depth);n.fiber.setAttribute('d','');});
   }
   sculptLabelRoot.setAttribute('aria-hidden',String(mode!=='sculpt'||!showMuscles));
   sculptLabelNodes.forEach((label,id)=>{label.g.style.display='none';if(mode!=='sculpt'||!showMuscles||!visible)return;const index=groups.findIndex(group=>group.id===id),mesh=meshes[index];if(!mesh)return;const points=visible.centers[index]||[],targets=points.length?points:mesh.v.map(sculptProject),stride=Math.max(1,Math.ceil(targets.length/64));let sx=0,sy=0,count=0;for(let i=0;i<targets.length;i+=stride){sx+=targets[i][0];sy+=targets[i][1];count++;}if(!count)return;const target=[sx/count,sy/count],[x,y]=sculptLabelPositions[view][id],anchor=x<320?'start':'end';label.text.setAttribute('x',x);label.text.setAttribute('y',y);label.text.setAttribute('text-anchor',anchor);label.line.setAttribute('d','M'+x+','+(y+4)+'L'+target.join(','));label.g.style.display='';});
