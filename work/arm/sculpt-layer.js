@@ -70,10 +70,10 @@ function ArmSculptLayer({atlas,landmarks,make,defs,drawing,svg}){
   {id:'humerus',label:'상완골 관절 블록',kind:'bone',parts:['humerus']},
   {id:'radius',label:'요골 테이퍼',kind:'bone',parts:['radius']},
   {id:'ulna',label:'척골 테이퍼',kind:'bone',parts:['ulna']},
-  {id:'deltoid',label:'삼각근 어깨 캡',kind:'muscle',parts:['deltoid-anterior','deltoid-middle','deltoid-posterior']},
-  {id:'biceps',label:'이두근 primary mass',kind:'muscle',parts:['biceps-long','biceps-short']},
-  {id:'triceps',label:'삼두근 primary mass',kind:'muscle',parts:['triceps-long','triceps-lateral','triceps-medial']},
-  {id:'brachialis',label:'상완근 secondary mass',kind:'muscle',parts:['brachialis']}
+  {id:'deltoid',label:ARM_MUSCLE_LABELS.forms.deltoid,kind:'muscle',parts:['deltoid-anterior','deltoid-middle','deltoid-posterior']},
+  {id:'biceps',label:ARM_MUSCLE_LABELS.forms.biceps,kind:'muscle',parts:['biceps-long','biceps-short']},
+  {id:'triceps',label:ARM_MUSCLE_LABELS.forms.triceps,kind:'muscle',parts:['triceps-long','triceps-lateral','triceps-medial']},
+  {id:'brachialis',label:ARM_MUSCLE_LABELS.forms.brachialis,kind:'muscle',parts:['brachialis']}
  ];
  const stop=(gradient,offset,color)=>make('stop',{offset,'stop-color':color},gradient);
  const boneGradient=make('linearGradient',{id:'arm-sculpt-bone-gradient',x1:'0%',y1:'0%',x2:'100%',y2:'100%'},defs);stop(boneGradient,'0%','#e9e3d8');stop(boneGradient,'52%','#cfc7bb');stop(boneGradient,'100%','#a69b8d');
@@ -88,7 +88,7 @@ function ArmSculptLayer({atlas,landmarks,make,defs,drawing,svg}){
   if(group.shape==='scapula-plate'){const scapula=posed[partIndex.get('scapula')],acromion=landmarkMap.get('acromioclavicular').point,glenoid=geo.nearest(scapula,landmarkMap.get('glenohumeral').point),inferior=landmarks.inferiorAngle.point;return geo.plate(scapula,acromion,glenoid,inferior);}
   return geo.loft(group.parts.flatMap(name=>posed[partIndex.get(name)]),9,10,group.kind==='bone'?.72:.22);
  }
- const sculptLabelRoot=make('g',{'class':'sculpt-labels','aria-hidden':'true'},svg),sculptNames={deltoid:'삼각근 덩어리',biceps:'이두근 덩어리',triceps:'삼두근 덩어리',brachialis:'상완근 · Secondary'},sculptLabelPositions={front:{deltoid:[55,125],biceps:[55,250],brachialis:[585,270],triceps:[585,360]},back:{deltoid:[55,115],triceps:[55,280],biceps:[585,250],brachialis:[585,360]},side:{deltoid:[585,110],biceps:[585,245],triceps:[55,285],brachialis:[55,360]}},sculptLabelNodes=new Map(groups.filter(g=>g.kind==='muscle').map(group=>{const g=make('g',{'data-sculpt-label':group.id},sculptLabelRoot),line=make('path',{},g),text=make('text',{'font-size':'11','font-weight':'600'},g);text.textContent=sculptNames[group.id];return[group.id,{g,line,text}];}));
+ const sculptLabelRoot=make('g',{'class':'sculpt-labels','aria-hidden':'true'},svg),sculptNames=ARM_MUSCLE_LABELS.forms,sculptLabelPositions={front:{deltoid:[55,125],biceps:[55,250],brachialis:[585,270],triceps:[585,360]},back:{deltoid:[55,115],triceps:[55,280],biceps:[585,250],brachialis:[585,360]},side:{deltoid:[585,110],biceps:[585,245],triceps:[55,285],brachialis:[55,360]}},sculptLabelNodes=new Map(groups.filter(g=>g.kind==='muscle').map(group=>{const g=make('g',{'data-sculpt-label':group.id},sculptLabelRoot),line=make('path',{},g),text=make('text',{'font-size':'11','font-weight':'600'},g);text.textContent=sculptNames[group.id];return[group.id,{g,line,text}];}));
  function drawLandmark(id,angle,project,forearm,mode){
   const landmark=landmarkMap.get(id);if(!landmark){markerRoot.style.display='none';return;}
   const point=landmark.motion==='forearm'?forearm(landmark.point,angle):landmark.point,q=project(point),center=mode==='compare'?160:320,anchor=q[0]<center?'start':'end',limit=mode==='compare'?310:625,lx=Math.max(10,Math.min(limit,q[0]+(q[0]<center?12:-12))),ly=Math.max(18,Math.min(420,q[1]-10));

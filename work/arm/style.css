@@ -35,5 +35,5 @@
 .sculpt-outline{stroke-linejoin:round;stroke-opacity:.62}
 .sculpt-form-lines{pointer-events:none}
 .diagram.transparent .sculpt-muscle{fill-opacity:.38}
-.sculpt-bone-key{background:#cfc7bb}.sculpt-muscle-key{background:#bec9d3}
+.sculpt-bone-key{background:#cfc7bb}.sculpt-muscle-key{background:#bec9d3}.diagram-legend .context-key{background:#cbd1d9}
 .diagram.no-fibers .sculpt-form-lines{display:none}
