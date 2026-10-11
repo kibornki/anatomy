@@ -18,6 +18,11 @@
 .artist-landmark-buttons>span{margin-right:3px;color:var(--muted-foreground)}
 .artist-note{margin:0;padding:7px 10px;border-left:3px solid var(--orange);background:color-mix(in srgb,var(--orange) 5%,var(--background));line-height:1.55}
 .artist-method{margin:0;color:var(--muted-foreground);line-height:1.5}
+.diagram-stage{display:grid;grid-template-columns:clamp(96px,18%,124px) minmax(0,1fr);gap:4px;align-items:start}
+.diagram-stage .artist-landmark-buttons{flex-direction:column;align-items:stretch;flex-wrap:nowrap;gap:4px;margin:8px 0 10px}
+.diagram-stage .artist-landmark-buttons>span{margin:0 0 2px}
+.diagram-stage .artist-landmark-buttons .btn{text-align:left;white-space:normal;line-height:1.25}
+.diagram-stage .diagram-scene{grid-column:2;grid-row:1;min-width:0}
 .diagram [data-display-layer=anatomy]{transition:none}
 .diagram[data-show-muscles=false] [data-display-layer=anatomy]:is([data-kind=muscle],[data-kind=tendon]),.diagram[data-show-muscles=false] .sculpt-layer [data-kind=muscle]{display:none}
 .diagram[data-mode=sculpt] [data-display-layer=anatomy]:not([data-kind=tendon]){display:none}
@@ -36,6 +41,6 @@
 .sculpt-facet{stroke:#493f47;stroke-width:.65;stroke-opacity:.52;stroke-linejoin:round}
 .sculpt-outline{stroke-linejoin:round;stroke-opacity:.94;stroke-width:1.05}
 .sculpt-form-lines{pointer-events:none}
-.diagram.transparent .sculpt-muscle{fill-opacity:.38}
+.diagram.transparent .sculpt-layer [data-kind=muscle]{opacity:.38}
 .sculpt-bone-key{background:#cfc7bb}.sculpt-deltoid-key{background:#e98292}.sculpt-biceps-key{background:#6da8d2}.sculpt-triceps-key{background:#cf7388}.sculpt-brachialis-key{background:#75b6a3}.diagram-legend .context-key{background:#cbd1d9}
 .diagram.no-fibers .sculpt-form-lines{display:none}
