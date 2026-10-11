@@ -27,16 +27,17 @@ function AtlasArm(root){
  const offsets=new Map();for(const [view,degrees]of [['front',16],['side',90],['back',164]]){const a=degrees*Math.PI/180;let min=Infinity,max=-Infinity;for(const p of atlas.parts.filter(p=>p.kind==='bone'))for(const v of p.v){const x=v[0]*Math.cos(a)+v[2]*Math.sin(a);min=Math.min(min,x);max=Math.max(max,x);}offsets.set(view,320-(min+max)*1.05/2);}
  let debug=null,lastVisibility=null,lastKey='',posedAngle=NaN,posedCache=null,posedComposition=-1;
  function render(angle,view='front',mode='anatomy',landmark='acromioclavicular'){
-  const transparent=root.classList.contains('transparent'),fibersOn=!root.classList.contains('no-fibers'),key=[angle,view,transparent,fibersOn,composition.key,mode,landmark].join();if(key===lastKey)return;lastKey=key;
+  const transparent=root.classList.contains('transparent'),fibersOn=!root.classList.contains('no-fibers'),showAnatomyBones=root.dataset.showAnatomyBones!=='false',showAnatomyMuscles=root.dataset.showAnatomyMuscles!=='false',showSculptBones=root.dataset.showSculptBones!=='false',showSculptMuscles=root.dataset.showSculptMuscles!=='false',key=[angle,view,transparent,fibersOn,composition.key,mode,landmark,showAnatomyBones,showAnatomyMuscles,showSculptBones,showSculptMuscles].join();if(key===lastKey)return;lastKey=key;
   const start=performance.now(),degrees=view==='side'?90:view==='back'?164:16,a=degrees*Math.PI/180,c=Math.cos(a),s=Math.sin(a);
   const baseProject=p=>[offsets.get(view)+(p[0]*c+p[2]*s)*1.05,15+(p[1]-29)*1.05],depth=p=>-p[0]*s+p[2]*c;
   const compareProject=centerX=>p=>{const q=baseProject(p);return[centerX+(q[0]-320),q[1]];},project=mode==='compare'?compareProject(160):baseProject,sculptProject=mode==='compare'?compareProject(480):project;
   if(posedAngle!==angle||posedComposition!==composition.key){posedAngle=angle;posedComposition=composition.key;posedCache=nodes.map(n=>n.part.v.map(p=>skin(p,n.part,angle)));}
   const posed=posedCache,buffer=ArmVisibility({project,depth,step:.9,accept:(ps,wa,wb,wc,id)=>id>=nodes.length||nodes[id].part.kind==='bone'||collision.minimumXYZ(ps[0][0]*wa+ps[1][0]*wb+ps[2][0]*wc,ps[0][1]*wa+ps[1][1]*wb+ps[2][1]*wc,ps[0][2]*wa+ps[1][2]*wb+ps[2][2]*wc,angle)>=.65});
-  sculpt.render({posed,project,sculptProject,depth,angle,view,mode,landmark,transparent,forearm});
+  sculpt.render({posed,project,sculptProject,depth,angle,view,mode,landmark,transparent,forearm,showBones:showSculptBones,showMuscles:showSculptMuscles});
+  const anatomyVisible=n=>n.part.kind==='bone'?showAnatomyBones:n.part.kind==='muscle'||n.part.kind==='tendon'?showAnatomyMuscles:true;
   nodes.forEach((n,i)=>n.part.f.forEach(f=>buffer.triangle(...f.map(j=>posed[i][j]),i)));
   const fatCount=composition.paintFat(buffer,posed,nodes.length);
-  const visible=buffer.solve(nodes.length+fatCount,{projections:i=>i>=nodes.length||nodes[i].part.kind!=='bone',scanlineClips:false,occludes:i=>i>=nodes.length?!composition.fatTransparent:!transparent||nodes[i].part.kind==='bone'});
+  const visible=buffer.solve(nodes.length+fatCount,{projections:i=>i>=nodes.length||nodes[i].part.kind!=='bone',scanlineClips:false,occludes:i=>i>=nodes.length?!composition.fatTransparent:anatomyVisible(nodes[i])&&(!transparent||nodes[i].part.kind==='bone')});
   lastVisibility={...visible,offset:offsets.get(view),degrees};
   nodes.forEach((n,i)=>{
    const soft=n.part.kind!=='bone',local=visible.ownerZ[i],inside=k=>transparent&&soft?local[k]>-Infinity:visible.owners[k]===i;
@@ -49,10 +50,10 @@ function AtlasArm(root){
   composition.drawFat(visible,nodes.length,AtlasContour);
   labelNodes.forEach(n=>n.g.style.display='none');
   for(const [name,text,x,y]of specs[view]){
-   const id=nodes.findIndex(n=>n.part.name===name);let points=visible.centers[id];if(transparent){points=[];const b=visible.bounds[id],local=visible.ownerZ[id];for(let iy=b[1];iy<=b[3];iy+=6)for(let ix=b[0];ix<=b[2];ix+=6)if(local[iy*visible.w+ix]>-Infinity)points.push([visible.x0+(ix+.5)*visible.step,visible.y0+(iy+.5)*visible.step]);}
+   const id=nodes.findIndex(n=>n.part.name===name);if(!anatomyVisible(nodes[id]))continue;let points=visible.centers[id];if(transparent){points=[];const b=visible.bounds[id],local=visible.ownerZ[id];for(let iy=b[1];iy<=b[3];iy+=6)for(let ix=b[0];ix<=b[2];ix+=6)if(local[iy*visible.w+ix]>-Infinity)points.push([visible.x0+(ix+.5)*visible.step,visible.y0+(iy+.5)*visible.step]);}
    const hit=svg.createSVGPoint();points=points.filter(p=>{hit.x=p[0];hit.y=p[1];return nodes[id].fill.isPointInFill(hit);});
    if(points.length<3||!transparent&&visible.coverage[id]<80)continue;const avg=points.reduce((sum,p)=>sum.map((v,j)=>v+p[j]/points.length),[0,0]),target=points.reduce((best,p)=>Math.hypot(...p.map((v,j)=>v-avg[j]))<Math.hypot(...best.map((v,j)=>v-avg[j]))?p:best);
-   const n=labelNodes.get(name),labelX=mode==='compare'?(x<320?14:306):x,labelY=mode==='compare'?Math.max(24,Math.min(420,y)):y;n.g.style.display='';n.text.textContent=text;n.text.setAttribute('x',labelX);n.text.setAttribute('y',labelY);n.text.setAttribute('text-anchor',labelX<320?'start':'end');n.line.setAttribute('d',`M${labelX},${labelY+5}L${target.join(',')}`);
+   const n=labelNodes.get(name),labelX=mode==='compare'?(x<320?14:306):x,labelY=mode==='compare'?Math.max(24,Math.min(420,y)):y;n.g.style.display='';n.text.textContent=text;n.text.setAttribute('x',labelX);n.text.setAttribute('y',labelY);n.text.setAttribute('text-anchor',mode==='compare'?(x<320?'start':'end'):labelX<320?'start':'end');n.line.setAttribute('d',`M${labelX},${labelY+5}L${target.join(',')}`);
   }
   svg.setAttribute('viewBox','0 0 640 430');svg.setAttribute('height',root.clientWidth*430/640);root.dataset.cameraYaw=degrees;
   debug={angle,view,posed:posed.map((v,i)=>({name:nodes[i].part.name,kind:nodes[i].part.kind,forearm:!!nodes[i].part.forearm,v})),coverage:visible.coverage,duration:performance.now()-start};

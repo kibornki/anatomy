@@ -12,19 +12,21 @@
 .diagram [data-atlas-part^="triceps-"]>path[fill="none"]:not(.fiber){stroke-opacity:.22}
 
 .artist-learning{display:grid;gap:8px;margin:8px 0 14px}
-.artist-mode-buttons,.artist-landmark-buttons{display:flex;align-items:center;gap:5px;flex-wrap:wrap}
-.artist-mode-buttons .btn,.artist-landmark-buttons .btn{border:1px solid color-mix(in srgb,var(--muted-foreground) 30%,var(--background));color:var(--foreground);background:var(--background);padding:4px 9px;font-size:12px}
-.artist-mode-buttons .btn[aria-pressed=true],.artist-landmark-buttons .btn[aria-pressed=true]{border-color:var(--foreground);background:var(--foreground);color:var(--background)}
+.artist-mode-buttons,.artist-landmark-buttons,.artist-anatomy-layers,.artist-sculpt-layers{display:flex;align-items:center;gap:5px;flex-wrap:wrap}.artist-layer-row{display:grid;gap:5px}
+.artist-mode-buttons .btn,.artist-landmark-buttons .btn,.artist-anatomy-layers .btn,.artist-sculpt-layers .btn{border:1px solid color-mix(in srgb,var(--muted-foreground) 30%,var(--background));color:var(--foreground);background:var(--background);padding:4px 9px;font-size:12px}
+.artist-mode-buttons .btn[aria-pressed=true],.artist-landmark-buttons .btn[aria-pressed=true],.artist-anatomy-layers .btn[aria-pressed=true],.artist-sculpt-layers .btn[aria-pressed=true]{border-color:var(--foreground);background:var(--foreground);color:var(--background)}
 .artist-landmark-buttons>span{margin-right:3px;color:var(--muted-foreground)}
 .artist-note{margin:0;padding:7px 10px;border-left:3px solid var(--orange);background:color-mix(in srgb,var(--orange) 5%,var(--background));line-height:1.55}
 .artist-method{margin:0;color:var(--muted-foreground);line-height:1.5}
 .diagram [data-display-layer=anatomy]{transition:none}
+.diagram[data-show-anatomy-bones=false] [data-display-layer=anatomy][data-kind=bone],.diagram[data-show-anatomy-muscles=false] [data-display-layer=anatomy]:is([data-kind=muscle],[data-kind=tendon]){display:none}.diagram[data-show-sculpt-bones=false] .sculpt-layer [data-kind=bone],.diagram[data-show-sculpt-muscles=false] .sculpt-layer [data-kind=muscle]{display:none}
 .diagram[data-mode=sculpt] [data-display-layer=anatomy]:not([data-kind=tendon]){display:none}
 .diagram[data-mode=sculpt] .diagram-labels{display:none}
 .diagram[data-mode=anatomy] .sculpt-layer{display:none}
 .diagram[data-mode=sculpt] .sculpt-layer{display:inline}
 .diagram[data-mode=compare] .sculpt-layer{display:inline}
 .diagram[data-mode=compare] .diagram-labels{display:block}
+.sculpt-labels{display:none;pointer-events:none;fill:var(--foreground);paint-order:stroke;stroke:var(--background);stroke-width:3px;stroke-linejoin:round}.sculpt-labels path{fill:none;stroke:var(--muted-foreground);stroke-width:.9}.sculpt-labels text{font-size:11px;font-weight:600}.diagram[data-mode=sculpt] .sculpt-labels{display:block}.diagram[data-mode=compare] .sculpt-labels{display:none}
 .diagram-mode-labels{display:none;fill:var(--foreground);paint-order:stroke;stroke:var(--background);stroke-width:3px;stroke-linejoin:round}
 .diagram[data-mode=compare] .diagram-mode-labels{display:block}
 .diagram-landmark{pointer-events:none}
