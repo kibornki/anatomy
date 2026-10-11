@@ -26,6 +26,7 @@
 .diagram[data-mode=sculpt] .sculpt-layer{display:inline}
 .diagram[data-mode=compare] .sculpt-layer{display:inline}
 .diagram[data-mode=compare] .diagram-labels{display:block}
+.sculpt-labels{display:none;pointer-events:none;fill:var(--foreground);paint-order:stroke;stroke:var(--background);stroke-width:3px;stroke-linejoin:round}.sculpt-labels path{fill:none;stroke:var(--muted-foreground);stroke-width:.9}.sculpt-labels text{font-size:11px;font-weight:600}.diagram[data-mode=sculpt] .sculpt-labels{display:block}.diagram[data-mode=compare] .sculpt-labels{display:none}
 .diagram-mode-labels{display:none;fill:var(--foreground);paint-order:stroke;stroke:var(--background);stroke-width:3px;stroke-linejoin:round}
 .diagram[data-mode=compare] .diagram-mode-labels{display:block}
 .diagram-landmark{pointer-events:none}

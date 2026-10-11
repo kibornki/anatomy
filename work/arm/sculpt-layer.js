@@ -88,20 +88,24 @@ function ArmSculptLayer({atlas,landmarks,make,defs,drawing,svg}){
   if(group.shape==='scapula-plate'){const scapula=posed[partIndex.get('scapula')],acromion=landmarkMap.get('acromioclavicular').point,glenoid=geo.nearest(scapula,landmarkMap.get('glenohumeral').point),inferior=landmarks.inferiorAngle.point;return geo.plate(scapula,acromion,glenoid,inferior);}
   return geo.loft(group.parts.flatMap(name=>posed[partIndex.get(name)]),9,10,group.kind==='bone'?.72:.22);
  }
- function drawLandmark(id,angle,project,forearm){
+ const sculptLabelRoot=make('g',{'class':'sculpt-labels','aria-hidden':'true'},svg),sculptNames={deltoid:'삼각근 덩어리',biceps:'이두근 덩어리',triceps:'삼두근 덩어리',brachialis:'상완근 · Secondary'},sculptLabelPositions={front:{deltoid:[55,125],biceps:[55,250],brachialis:[585,270],triceps:[585,360]},back:{deltoid:[55,115],triceps:[55,280],biceps:[585,250],brachialis:[585,360]},side:{deltoid:[585,110],biceps:[585,245],triceps:[55,285],brachialis:[55,360]}},sculptLabelNodes=new Map(groups.filter(g=>g.kind==='muscle').map(group=>{const g=make('g',{'data-sculpt-label':group.id},sculptLabelRoot),line=make('path',{},g),text=make('text',{'font-size':'11','font-weight':'600'},g);text.textContent=sculptNames[group.id];return[group.id,{g,line,text}];}));
+ function drawLandmark(id,angle,project,forearm,mode){
   const landmark=landmarkMap.get(id);if(!landmark){markerRoot.style.display='none';return;}
-  const point=landmark.motion==='forearm'?forearm(landmark.point,angle):landmark.point,q=project(point),lx=Math.max(10,Math.min(625,q[0]+(q[0]<320?12:-12))),ly=Math.max(18,Math.min(420,q[1]-10)),anchor=lx<320?'start':'end';
+  const point=landmark.motion==='forearm'?forearm(landmark.point,angle):landmark.point,q=project(point),center=mode==='compare'?160:320,anchor=q[0]<center?'start':'end',limit=mode==='compare'?310:625,lx=Math.max(10,Math.min(limit,q[0]+(q[0]<center?12:-12))),ly=Math.max(18,Math.min(420,q[1]-10));
   markerRoot.style.display='';dotNode.setAttribute('cx',q[0]);dotNode.setAttribute('cy',q[1]);markerText.setAttribute('x',lx);markerText.setAttribute('y',ly);markerText.setAttribute('text-anchor',anchor);markerText.textContent=landmark.short;markerText.setAttribute('aria-label',landmark.label);leader.setAttribute('d','M'+q.join(',')+' L'+(lx+(anchor==='start'?-3:3))+','+(ly+3));dotNode.setAttribute('data-landmark',id);dotNode.setAttribute('data-point',point.map(v=>v.toFixed(3)).join(','));
  }
- function render({posed,project,sculptProject=project,depth,angle,view,mode,landmark,transparent,forearm}){
+ function render({posed,project,sculptProject=project,depth,angle,view,mode,landmark,transparent,forearm,showBones=true,showMuscles=true}){
+  let visible=null,meshes=[];
   if(mode!=='anatomy'){
-   const buffer=ArmVisibility({project:sculptProject,depth,step:.9}),meshes=groups.map(g=>formMesh(g,posed));
-   meshes.forEach((mesh,id)=>mesh.f.forEach(f=>buffer.triangle(mesh.v[f[0]],mesh.v[f[1]],mesh.v[f[2]],id)));
-   const visible=buffer.solve(nodes.length,{projections:true,scanlineClips:false});
-   nodes.forEach((n,id)=>{const local=visible.ownerZ[id],inside=k=>transparent&&n.group.kind==='muscle'?local[k]>-Infinity:visible.owners[k]===id,contour=AtlasContour(visible,inside,visible.bounds[id]),mesh=meshes[id],plateOutline=mesh.outlinePoints?'M'+mesh.outlinePoints.map(sculptProject).map(p=>p.join(',')).join('L')+'Z':contour;n.mask.setAttribute('d',contour);n.fill.setAttribute('d',contour);n.outline.setAttribute('d',plateOutline);n.fiber.setAttribute('d','');});
+   const visibleGroup=group=>group.kind==='bone'?showBones:showMuscles,buffer=ArmVisibility({project:sculptProject,depth,step:.9});meshes=groups.map(g=>visibleGroup(g)?formMesh(g,posed):null);
+   meshes.forEach((mesh,id)=>mesh?.f.forEach(f=>buffer.triangle(mesh.v[f[0]],mesh.v[f[1]],mesh.v[f[2]],id)));
+   visible=buffer.solve(nodes.length,{projections:true,scanlineClips:false});
+   nodes.forEach((n,id)=>{const mesh=meshes[id];if(!mesh){n.mask.setAttribute('d','');n.fill.setAttribute('d','');n.outline.setAttribute('d','');n.fiber.setAttribute('d','');return;}const local=visible.ownerZ[id],inside=k=>transparent&&n.group.kind==='muscle'?local[k]>-Infinity:visible.owners[k]===id,contour=AtlasContour(visible,inside,visible.bounds[id]),plateOutline=mesh.outlinePoints?'M'+mesh.outlinePoints.map(sculptProject).map(p=>p.join(',')).join('L')+'Z':contour;n.mask.setAttribute('d',contour);n.fill.setAttribute('d',contour);n.outline.setAttribute('d',plateOutline);n.fiber.setAttribute('d','');});
    light(visible);
   }
-  drawLandmark(landmark,angle,mode==='compare'?sculptProject:project,forearm);
+  sculptLabelRoot.setAttribute('aria-hidden',String(mode!=='sculpt'||!showMuscles));
+  sculptLabelNodes.forEach((label,id)=>{label.g.style.display='none';if(mode!=='sculpt'||!showMuscles||!visible)return;const index=groups.findIndex(group=>group.id===id),mesh=meshes[index];if(!mesh)return;const points=visible.centers[index]||[],targets=points.length?points:mesh.v.map(sculptProject);if(!targets.length)return;const target=targets.reduce((sum,p)=>sum.map((v,i)=>v+p[i]/targets.length),[0,0]),[x,y]=sculptLabelPositions[view][id],anchor=x<320?'start':'end';label.text.setAttribute('x',x);label.text.setAttribute('y',y);label.text.setAttribute('text-anchor',anchor);label.line.setAttribute('d','M'+x+','+(y+4)+'L'+target.join(','));label.g.style.display='';});
+  drawLandmark(landmark,angle,project,forearm,mode);
  }
  return{render,groups,landmarks};
 }
