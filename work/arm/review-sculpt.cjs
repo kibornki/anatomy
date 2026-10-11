@@ -65,4 +65,4 @@ assert(plate.outlinePoints.length>=8,'scapula blockout lost its atlas outline');
  await previewPage.close();await browser.close();
  const report={registration:marks.sourceRegistration,landmarkNearestSurfaceDistances:distances,geometry:geometryStats,views:['front','back','side'],angles:[0,45,90,135],comparisonScreenshots:browserMatrix.length,modeChecks:modes,radialLandmarkMovesWithPose:true,pageErrors:errors,limitations:['Shoulder abduction remains on the separate upperbody motion page; this arm pilot holds scapula, clavicle and humerus fixed during elbow flexion.','Aponeurosis and radial/olecranon insertion points are explicitly identified as authoring guides where the atlas does not provide a segmented landmark.']};
  fs.writeFileSync(path.join(out,'review.json'),JSON.stringify(report,null,2)+'\\n');console.log('ARM_SCULPT_REVIEW '+JSON.stringify({screenshots:browserMatrix.length,forms:geometryStats,landmarkDistances:distances,errors:errors.length}));
-})().catch(e=>{console.error(e);process.exitCode=1;});
+})().catch(e=>{console.error(e);process.exit(1);});
