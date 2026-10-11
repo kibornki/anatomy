@@ -12,7 +12,7 @@
  const sculptLegend=[['sculpt-bone-key','단순 골격'],['sculpt-muscle-key','Primary / Secondary 근육 덩어리']];
  let lastLegendKey='',lastGuide='';
  function render(){
-  root.classList.toggle('no-fibers',!by('fibers').checked);root.classList.toggle('transparent',by('transparent').checked);root.dataset.angle=angle;root.dataset.camera=view;root.dataset.mode=mode;root.dataset.landmark=landmark;root.dataset.revision='arm-artist-sculpt-v1';by('fiber-label').textContent=mode==='sculpt'?'단면 가이드':mode==='compare'?'근섬유·단면 가이드':'근섬유';model.render(angle,view,mode,landmark);
+  root.classList.toggle('no-fibers',!by('fibers').checked);root.classList.toggle('transparent',by('transparent').checked);root.dataset.angle=angle;root.dataset.camera=view;root.dataset.mode=mode;root.dataset.landmark=landmark;root.dataset.revision='arm-artist-sculpt-v1';const fiberControl=by('fibers').closest('.form-check');if(fiberControl){fiberControl.hidden=mode==='sculpt';fiberControl.style.display=mode==='sculpt'?'none':'';}by('fiber-label').textContent=mode==='compare'?'해부학 근섬유':'근섬유';model.render(angle,view,mode,landmark);
   by('angle').value=angle;by('value').textContent=Math.round(angle)+'°';by('angle').setAttribute('aria-valuetext',Math.round(angle)+'도 굽힘');for(const v of ['front','side','back'])by(v).setAttribute('aria-pressed',v===view);
   for(const button of root.querySelectorAll('[data-arm-mode]'))button.setAttribute('aria-pressed',button.dataset.armMode===mode);
   for(const button of root.querySelectorAll('[data-arm-landmark]'))button.setAttribute('aria-pressed',button.dataset.armLandmark===landmark);

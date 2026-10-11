@@ -95,7 +95,7 @@ function ArmSculptLayer({atlas,landmarks,make,defs,drawing,svg}){
    const buffer=ArmVisibility({project:sculptProject,depth,step:.9}),meshes=groups.map(g=>formMesh(g,posed));
    meshes.forEach((mesh,id)=>mesh.f.forEach(f=>buffer.triangle(mesh.v[f[0]],mesh.v[f[1]],mesh.v[f[2]],id)));
    const visible=buffer.solve(nodes.length,{projections:true,scanlineClips:false});
-   nodes.forEach((n,id)=>{const local=visible.ownerZ[id],inside=k=>transparent&&n.group.kind==='muscle'?local[k]>-Infinity:visible.owners[k]===id,contour=AtlasContour(visible,inside,visible.bounds[id]),mesh=meshes[id],plateOutline=mesh.outlinePoints?'M'+mesh.outlinePoints.map(project).map(p=>p.join(',')).join('L')+'Z':contour;n.mask.setAttribute('d',contour);n.fill.setAttribute('d',contour);n.outline.setAttribute('d',plateOutline);n.fiber.setAttribute('d','');});
+   nodes.forEach((n,id)=>{const local=visible.ownerZ[id],inside=k=>transparent&&n.group.kind==='muscle'?local[k]>-Infinity:visible.owners[k]===id,contour=AtlasContour(visible,inside,visible.bounds[id]),mesh=meshes[id],plateOutline=mesh.outlinePoints?'M'+mesh.outlinePoints.map(sculptProject).map(p=>p.join(',')).join('L')+'Z':contour;n.mask.setAttribute('d',contour);n.fill.setAttribute('d',contour);n.outline.setAttribute('d',plateOutline);n.fiber.setAttribute('d','');});
    light(visible);
   }
   drawLandmark(landmark,angle,mode==='compare'?sculptProject:project,forearm);
