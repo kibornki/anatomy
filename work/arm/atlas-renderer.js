@@ -36,7 +36,7 @@ function AtlasArm(root){
   sculpt.render({posed,project,sculptProject,depth,angle,view,mode,landmark,transparent,forearm,showBones:true,showMuscles});
   const anatomyVisible=n=>n.part.kind==='muscle'||n.part.kind==='tendon'?showMuscles:true;
   nodes.forEach((n,i)=>n.part.f.forEach(f=>buffer.triangle(...f.map(j=>posed[i][j]),i)));
-  const fatCount=composition.paintFat(buffer,posed,nodes.length);
+  const fatCount=mode==='sculpt'?0:composition.paintFat(buffer,posed,nodes.length);
   const visible=buffer.solve(nodes.length+fatCount,{projections:i=>i>=nodes.length||nodes[i].part.kind!=='bone',scanlineClips:false,occludes:i=>i>=nodes.length?!composition.fatTransparent:anatomyVisible(nodes[i])&&(!transparent||nodes[i].part.kind==='bone')});
   lastVisibility={...visible,offset:offsets.get(view),degrees};
   nodes.forEach((n,i)=>{
@@ -47,7 +47,7 @@ function AtlasArm(root){
    n.fiber.setAttribute('d',path);n.fiber.setAttribute('stroke-opacity',n.part.kind==='tendon'?.18:.28);
   });
   lightSurfaces(visible);
-  composition.drawFat(visible,nodes.length,AtlasContour);
+  composition.drawFat(visible,nodes.length,AtlasContour,mode!=='sculpt');
   labelNodes.forEach(n=>n.g.style.display='none');
   for(const [name,text,x,y]of specs[view]){
    const id=nodes.findIndex(n=>n.part.name===name);if(!anatomyVisible(nodes[id]))continue;let points=visible.centers[id];if(transparent){points=[];const b=visible.bounds[id],local=visible.ownerZ[id];for(let iy=b[1];iy<=b[3];iy+=6)for(let ix=b[0];ix<=b[2];ix+=6)if(local[iy*visible.w+ix]>-Infinity)points.push([visible.x0+(ix+.5)*visible.step,visible.y0+(iy+.5)*visible.step]);}
