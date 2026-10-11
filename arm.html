@@ -1850,6 +1850,24 @@ function ArmSculptGeometry(){
   for(let j=0;j<segments;j++){f.push([cap0,rings[0][(j+1)%segments],rings[0][j]]);f.push([cap1,rings.at(-1)[j],rings.at(-1)[(j+1)%segments]]);}
   return{v,f,rings,basis};
  }
+
+ function blockout(points,profile='biceps',ringCount=5){
+  if(!points||points.length<8)return{v:[],f:[],rings:[],profile};
+  const basis=axes(points),projected=points.map(p=>[dot(p,basis.axis),dot(p,basis.u),dot(p,basis.w)]),lo=Math.min(...projected.map(p=>p[0])),hi=Math.max(...projected.map(p=>p[0])),span=Math.max(1e-6,hi-lo),window=span/(ringCount-1)*1.8,section=[[1,0],[.5,1],[-.5,1],[-1,0],[-.5,-1],[.5,-1]],taper={deltoid:[.38,.86,1,.78,.2],biceps:[.18,.78,1,.78,.18],triceps:[.28,.82,1,.74,.24],brachialis:[.22,.8,.92,.68,.2]}[profile]||[.22,.8,1,.8,.22],v=[],rings=[],centers=[];
+  for(let r=0;r<ringCount;r++){
+   const t=r/(ringCount-1),at=lo+span*t;let slice=projected.filter(p=>Math.abs(p[0]-at)<=window/2);
+   if(slice.length<8)slice=projected.slice().sort((a,b)=>Math.abs(a[0]-at)-Math.abs(b[0]-at)).slice(0,Math.min(24,projected.length));
+   const c2=median(slice.map(p=>p[1])),c3=median(slice.map(p=>p[2])),halfWidth=Math.max(.8,(quantile(slice.map(p=>p[1]),.94)-quantile(slice.map(p=>p[1]),.06))/2),halfDepth=Math.max(.8,(quantile(slice.map(p=>p[2]),.94)-quantile(slice.map(p=>p[2]),.06))/2),factor=taper[Math.min(r,taper.length-1)],ring=[];
+   centers.push(add(add(mul(basis.axis,at),mul(basis.u,c2)),mul(basis.w,c3)));
+   for(const [u,w]of section){ring.push(v.length);v.push(add(add(add(mul(basis.axis,at),mul(basis.u,c2)),mul(basis.w,c3)),add(mul(basis.u,u*halfWidth*factor),mul(basis.w,w*halfDepth*factor))));}
+   rings.push(ring);
+  }
+  const f=[],segments=section.length;
+  for(let r=0;r<ringCount-1;r++)for(let j=0;j<segments;j++){const a=r*segments+j,b=r*segments+(j+1)%segments,c=(r+1)*segments+(j+1)%segments,d=(r+1)*segments+j;f.push([a,b,c],[a,c,d]);}
+  const cap0=v.length;v.push(centers[0]);const cap1=v.length;v.push(centers.at(-1));
+  for(let j=0;j<segments;j++){f.push([cap0,rings[0][(j+1)%segments],rings[0][j]]);f.push([cap1,rings.at(-1)[j],rings.at(-1)[(j+1)%segments]]);}
+  return{v,f,rings,basis,profile,faceted:true};
+ }
  function convexHull(points){
   const sorted=points.slice().sort((a,b)=>a[0]-b[0]||a[1]-b[1]),turn=(o,a,b)=>(a[0]-o[0])*(b[1]-o[1])-(a[1]-o[1])*(b[0]-o[0]);
   const lower=[],upper=[];
@@ -1876,7 +1894,7 @@ function ArmSculptGeometry(){
   return{v,f,rings:[],outlinePoints,basis,thickness,spans:[Math.max(...outline.map(p=>p[0]))-Math.min(...outline.map(p=>p[0])),Math.max(...outline.map(p=>p[1]))-Math.min(...outline.map(p=>p[1]))]};
  }
  function nearest(points,target){let best=points[0],d=Infinity;for(const p of points){const n=norm(sub(p,target));if(n<d){d=n;best=p;}}return best.slice();}
- return{loft,plate,nearest,axes};
+ return{loft,blockout,plate,nearest,axes};
 }
 function ArmSculptLayer({atlas,landmarks,make,defs,drawing,svg}){
  const geo=ArmSculptGeometry(),partIndex=new Map(atlas.parts.map((p,i)=>[p.name,i])),ns='http://www.w3.org/2000/svg';
@@ -1902,7 +1920,7 @@ function ArmSculptLayer({atlas,landmarks,make,defs,drawing,svg}){
  const landmarkMap=new Map(landmarks.landmarks.map(p=>[p.id,p]));
  function formMesh(group,posed){
   if(group.shape==='scapula-plate'){const scapula=posed[partIndex.get('scapula')],acromion=landmarkMap.get('acromioclavicular').point,glenoid=geo.nearest(scapula,landmarkMap.get('glenohumeral').point),inferior=landmarks.inferiorAngle.point;return geo.plate(scapula,acromion,glenoid,inferior);}
-  return geo.loft(group.parts.flatMap(name=>posed[partIndex.get(name)]),9,10,group.kind==='bone'?.72:.22);
+  const points=group.parts.flatMap(name=>posed[partIndex.get(name)]);return group.kind==='muscle'?geo.blockout(points,group.id):geo.loft(points,9,10,.72);
  }
  const sculptLabelRoot=make('g',{'class':'sculpt-labels','aria-hidden':'true'},svg),sculptNames=ARM_MUSCLE_LABELS.forms,sculptLabelPositions={front:{deltoid:[55,125],biceps:[55,250],brachialis:[585,270],triceps:[585,360]},back:{deltoid:[55,115],triceps:[55,280],biceps:[585,250],brachialis:[585,360]},side:{deltoid:[585,110],biceps:[585,245],triceps:[55,285],brachialis:[55,360]}},sculptLabelNodes=new Map(groups.filter(g=>g.kind==='muscle').map(group=>{const g=make('g',{'data-sculpt-label':group.id},sculptLabelRoot),line=make('path',{},g),text=make('text',{'font-size':'11','font-weight':'600'},g);text.textContent=sculptNames[group.id];return[group.id,{g,line,text}];}));
  function drawLandmark(id,angle,project,forearm,mode){
