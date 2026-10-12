@@ -14,9 +14,9 @@ const {chromium}=require('playwright'),assert=require('node:assert/strict'),fs=r
   if(region!=='forearm'){
    await set('fat',65);const fat=target.locator('[data-tissue="fat"] path');
    let visible=await fat.evaluateAll(nodes=>nodes.some(n=>(n.getAttribute('d')||'').length>10));if(!visible){await target.locator('#'+region+'-side').click();await page.waitForTimeout(200);visible=await fat.evaluateAll(nodes=>nodes.some(n=>(n.getAttribute('d')||'').length>10));}assert(visible,region+' visible fat');
-   await target.locator('#'+prefix+'fat-transparent').check();assert.equal(await target.locator('[data-tissue="fat"]').first().getAttribute('opacity'),'0.32');
+   await target.locator('#'+prefix+'fat-transparent').check();assert.equal(await target.locator('[data-tissue="fat"]:visible').first().getAttribute('opacity'),'0.32');
    await target.locator('#'+region+'-transparent').check();await page.waitForTimeout(100);
-   await target.locator('#'+prefix+'fat-transparent').uncheck();assert.equal(await target.locator('[data-tissue="fat"]').first().getAttribute('opacity'),'1',region+' fat transparency independent');
+   await target.locator('#'+prefix+'fat-transparent').uncheck();assert.equal(await target.locator('[data-tissue="fat"]:visible').first().getAttribute('opacity'),'1',region+' fat transparency independent');
   }else assert.equal(await target.locator('#'+prefix+'fat').count(),0);
  }
  for(const region of ['upperbody','arm','abdomen','forearm','thigh']){
