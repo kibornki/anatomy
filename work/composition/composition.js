@@ -54,45 +54,61 @@ function AnatomyComposition(root, parts, region) {
    return q.map((n,k)=>n+weights.reduce((sum,w,j)=>sum+w*b[j][k],0));
   });
  }
+ // Surface-attached pads. Chest pads share one authored breast profile in both
+ // torso views: a gradual upper slope, lower fullness and a rounded lower fold.
+ const breast={names:['pectoral-sternal','pectoral-clavicular','pectoral-abdominal'],normal:2,sign:1,center:[52,232],radius:[43,62],height:62,breast:true};
  const specifications={
-  upperbody:[['pectoral-sternal',.5,.55,1,2,1,.38,.25,.14],['latissimus',1,.78,.65,0,1,.18,.22,.10]],
-  abdomen:[['rectus',.35,.76,1,2,1,.65,.25,.25],['external-oblique',1,.72,.62,0,1,.22,.22,.20]],
-  arm:[['triceps-long',.45,.52,0,2,-1,.38,.30,.30]],
-  thigh:[['vastus-lateralis',0,.28,.52,0,-1,.35,.24,.35],['vastus-medialis',1,.34,.58,0,1,.38,.24,.38]],
+  upperbody:[breast,{names:['latissimus'],normal:2,sign:-1,center:[65,280],radius:[28,43],height:12}],
+  abdomen:[breast,{names:['rectus','external-oblique'],normal:2,sign:1,center:[0,376],radius:[83,90],height:26,joined:true},{names:['external-oblique'],normal:0,sign:1,center:[70,381],radius:[38,65],height:15}],
+  arm:[{names:['triceps-long','triceps-lateral'],normal:2,sign:-1,center:[-7,184],radius:[27,82],height:17}],
+  thigh:[{names:['vastus-lateralis'],normal:0,sign:-1,center:[9,206],radius:[37,149],height:27},{names:['vastus-medialis'],normal:0,sign:1,center:[18,247],radius:[32,126],height:20}],
   forearm:[]
  };
  const depots=[];
- for(const spec of specifications[region]||[]) {
-  const [name,fx,fy,fz,normal,sign,rx,ry,rz]=spec;
-  for(const part of parts.filter(p=>p.name===name||p.name===name+'-right')) {
-   const b=bounds(part),fractions=[fx,fy,fz];if(part.name.endsWith('-right'))fractions[0]=1-fx;
-   const target=b.map(([a,z],k)=>a+(z-a)*fractions[k]),axisSign=normal===0&&part.name.endsWith('-right')?-sign:sign;
-   let anchor=0,distance=Infinity;part.v.forEach((v,i)=>{const d=v.reduce((sum,n,k)=>sum+(n-target[k])**2,0);if(d<distance){distance=d;anchor=i;}});
-   const radii=b.map(([a,z],k)=>Math.max(3,(z-a)*[rx,ry,rz][k]));
-   const directions=[],faces=[],bindings=[];
-   const rows=8,columns=16;
-   for(let row=0;row<=rows;row++)for(let col=0;col<columns;col++){const theta=Math.PI*row/rows,phi=2*Math.PI*col/columns;directions.push([Math.sin(theta)*Math.cos(phi),Math.cos(theta),Math.sin(theta)*Math.sin(phi)]);}
-   for(let row=0;row<rows;row++)for(let col=0;col<columns;col++){const a=row*columns+col,b=row*columns+(col+1)%columns,c=b+columns,d=a+columns;faces.push([a,b,c],[a,c,d]);}
-   for(const direction of directions){const target=part.v[anchor].map((n,k)=>n+direction[k]*radii[k]);target[normal]+=axisSign*radii[normal]*.25;const ids=part.v.map((v,i)=>({i,d:v.reduce((sum,n,k)=>sum+(n-target[k])**2,0)})).sort((a,b)=>a.d-b.d).slice(0,3),weights=ids.map(x=>1/(x.d+1)),sum=weights.reduce((s,n)=>s+n,0);bindings.push(ids.map((x,i)=>[x.i,weights[i]/sum]));}
-   depots.push({part,index:parts.indexOf(part),anchor,normal,sign:axisSign,radii,directions,faces,bindings});
+ for(const spec of specifications[region]||[])for(const suffix of spec.joined?['']:['','-right']){
+  const sources=parts.flatMap((part,index)=>(spec.joined?spec.names.includes(part.name.replace(/-right$/,'')):spec.names.some(name=>part.name===name+suffix))?part.v.map((p,i)=>({p,index,i})):[]);if(!sources.length)continue;
+  const tangent=spec.normal===2?0:2,mirror=suffix?-1:1,sign=spec.normal===0?spec.sign*mirror:spec.sign,center=spec.center.map((n,k)=>k===0&&tangent===0?n*mirror:n),radii=spec.radius;
+  const sample=(u,y)=>{const near=sources.map(q=>({...q,d:((q.p[tangent]-u)/radii[0])**2+((q.p[1]-y)/radii[1])**2})).sort((a,b)=>a.d-b.d).slice(0,24),heights=near.map(q=>q.p[spec.normal]*sign).sort((a,b)=>a-b);return heights[Math.floor(heights.length*.85)]*sign;};
+  const baseCenter=sample(...center),controls=[],faces=[],rows=16,columns=24;
+  for(let row=0;row<=rows;row++)for(let col=0;col<columns;col++){
+   const theta=Math.PI*row/rows,phi=2*Math.PI*col/columns,r=Math.sin(theta),dx=r*Math.cos(phi),dy=r*Math.sin(phi),front=Math.cos(theta),width=spec.breast?1+.16*dy:1,u=center[0]+dx*radii[0]*width,y=center[1]+dy*radii[1]+(spec.breast?14*(1-r*r):0),base=sample(u,y),p=[0,y,0];p[tangent]=u;p[spec.normal]=base;
+   const links=sources.map(q=>({...q,d:q.p.reduce((n,v,k)=>n+(v-p[k])**2,0)})).sort((a,b)=>a.d-b.d).slice(0,6),sum=links.reduce((n,q)=>n+1/(q.d+4),0);
+   controls.push({p,lift:front>0?Math.pow(front,spec.breast?1.2:1.4)*spec.height*(spec.breast?1+.18*dy:1):-2*Math.abs(front),links:links.map(q=>({...q,w:1/(q.d+4)/sum}))});
   }
+  for(let row=0;row<rows;row++)for(let col=0;col<columns;col++){const a=row*columns+col,b=row*columns+(col+1)%columns,c=b+columns,d=a+columns;faces.push([a,b,c],[a,c,d]);}
+  depots.push({spec,normal:spec.normal,tangent,sign,center,baseCenter,controls,faces});
  }
- function fatMeshes(vertices) {
+ // Project onto the actual displayed tissue, including authored sculpt cages.
+ // A local grid keeps the outward surface queries bounded during animation.
+ function surfaceField(meshes,normal){
+  const tangent=normal===2?0:2,cell=12,grid=new Map();
+  for(const mesh of meshes)if(mesh)for(const face of mesh.f||mesh.faces||mesh.polygons)for(let i=1;i<face.length-1;i++){
+   const tri=[face[0],face[i],face[i+1]].map(j=>mesh.v[j]),xs=tri.map(p=>p[tangent]),ys=tri.map(p=>p[1]),loX=Math.floor(Math.min(...xs)/cell),hiX=Math.floor(Math.max(...xs)/cell),loY=Math.floor(Math.min(...ys)/cell),hiY=Math.floor(Math.max(...ys)/cell),den=(ys[1]-ys[2])*(xs[0]-xs[2])+(xs[2]-xs[1])*(ys[0]-ys[2]);if(Math.abs(den)<1e-8)continue;
+   const entry={tri,xs,ys,den};for(let x=loX;x<=hiX;x++)for(let y=loY;y<=hiY;y++){const key=x+','+y;if(!grid.has(key))grid.set(key,[]);grid.get(key).push(entry);}
+  }
+  return(point,sign)=>{let outer=-Infinity;const x=point[tangent],y=point[1];for(const {tri,xs,ys,den}of grid.get(Math.floor(x/cell)+','+Math.floor(y/cell))||[]){const a=((ys[1]-ys[2])*(x-xs[2])+(xs[2]-xs[1])*(y-ys[2]))/den,b=((ys[2]-ys[0])*(x-xs[2])+(xs[0]-xs[2])*(y-ys[2]))/den,c=1-a-b;if(a>=-1e-6&&b>=-1e-6&&c>=-1e-6)outer=Math.max(outer,sign*(a*tri[0][normal]+b*tri[1][normal]+c*tri[2][normal]));}return outer;};
+ }
+ function fatMeshes(vertices,surfaces=null) {
   if(!settings.fat)return [];
-  const amount=settings.fat/100;
-  return depots.map(d=>({f:d.faces,v:d.directions.map((direction,index)=>{
-   const neutral=d.part.v[d.anchor].map((n,k)=>n+direction[k]*d.radii[k]*(k===d.normal?amount:Math.sqrt(amount)));
-   neutral[d.normal]+=d.sign*d.radii[d.normal]*amount*.25;
-   const weights=d.bindings[index];
-   return neutral.map((n,k)=>n+weights.reduce((sum,[id,w])=>sum+w*(vertices[d.index][id][k]-d.part.v[id][k]),0));
-  })}));
+  const amount=settings.fat/100,spread=.55+.45*Math.sqrt(amount);
+  const meshes=surfaces||parts.map((p,i)=>({v:vertices[i],f:p.f})),fields=new Map([...new Set(depots.map(d=>d.normal))].map(normal=>[normal,surfaceField(meshes,normal)]));
+  return depots.map(d=>{const field=fields.get(d.normal),v=d.controls.map(control=>{
+   const neutral=control.p.slice();neutral[d.tangent]=d.center[0]+(neutral[d.tangent]-d.center[0])*spread;neutral[1]=d.center[1]+(neutral[1]-d.center[1])*spread;neutral[d.normal]=d.baseCenter+(neutral[d.normal]-d.baseCenter)*spread+d.sign*(control.lift*amount+.6);
+   const point=neutral.map((n,k)=>n+control.links.reduce((sum,q)=>sum+q.w*(vertices[q.index][q.i][k]-q.p[k]),0)),outer=field(point,d.sign);
+   if(Number.isFinite(outer))point[d.normal]=d.sign*(control.lift>=0?Math.max(point[d.normal]*d.sign,outer+1.5+control.lift*amount):outer-1);
+   return point;
+  });
+  // Check the front triangles between controls too: a cage ridge can protrude
+  // through a pad even when all of the pad's control vertices are outside it.
+  for(let pass=0;pass<2;pass++)for(const face of d.faces){if(face.some(i=>d.controls[i].lift<0))continue;const points=face.map(i=>v[i]);let deficit=0;for(const weights of [[1/3,1/3,1/3],[.5,.5,0],[0,.5,.5],[.5,0,.5]]){const point=[0,1,2].map(k=>points.reduce((n,p,i)=>n+p[k]*weights[i],0)),outer=field(point,d.sign);if(Number.isFinite(outer))deficit=Math.max(deficit,outer+1.5-point[d.normal]*d.sign);}if(deficit>0)for(const i of face)v[i][d.normal]+=d.sign*deficit;}
+  return{f:d.faces,v};});
  }
  const fiberBindings=new Map();
  function posedFibers(part,raw,scaled,fibers){if(settings.muscle===100)return fibers;let links=fiberBindings.get(part.name);if(!links){links=part.fibers.map(line=>line.map(v=>{let id=0,distance=Infinity;part.v.forEach((q,i)=>{const d=q.reduce((sum,n,k)=>sum+(n-v[k])**2,0);if(d<distance){distance=d;id=i;}});return id;}));fiberBindings.set(part.name,links);}return fibers.map((line,i)=>line.map((v,j)=>v.map((n,k)=>n+scaled[links[i][j]][k]-raw[links[i][j]][k])));}
- const fatNodes=[];
- function mountFat(make,parent){for(let i=0;i<depots.length;i++){const g=make('g',{'data-tissue':'fat','aria-label':'지방','data-fat-depot':i},parent),fill=make('path',{fill:'#f4cc45',stroke:'#b28a20','stroke-width':.7,'stroke-opacity':.55},g);fatNodes.push({g,fill});}}
- function paintFat(buffer,vertices,offset){const meshes=fatMeshes(vertices);meshes.forEach((m,i)=>m.f.forEach(f=>buffer.triangle(...f.map(j=>m.v[j]),offset+i)));return meshes.length;}
- function drawFat(visible,offset,contour,enabled=true){fatNodes.forEach((n,i)=>{const owner=offset+i;n.g.style.display=settings.fat&&enabled?'':'none';if(!settings.fat||!enabled)return;const local=visible.ownerZ[owner];n.fill.setAttribute('d',contour(visible,k=>settings.fatTransparent?local[k]>-Infinity:visible.owners[k]===owner,visible.bounds[owner]));n.g.setAttribute('opacity',settings.fatTransparent?.3:1);});}
+ const fatLayers=new Map();
+ function mountFat(make,parent,layer='anatomy'){const nodes=[],defs=root.querySelector('svg defs');for(let i=0;i<depots.length;i++){const id=region+'-fat-'+layer+'-'+i,gradient=make('radialGradient',{id,cx:'34%',cy:'28%',r:'75%'},defs);for(const [offset,color]of [['0%','#fff1b5'],['38%','#f7d66d'],['78%','#dfaa3e'],['100%','#b97c25']])make('stop',{offset,'stop-color':color},gradient);const g=make('g',{'data-tissue':'fat','aria-label':depots[i].spec.breast?'유방 형태 지방':'지방','data-fat-depot':i},parent),fill=make('path',{fill:'url(#'+id+')',stroke:'#ad7c2b','stroke-width':.65,'stroke-opacity':.45},g);nodes.push({g,fill});}fatLayers.set(layer,nodes);}
+ function paintFat(buffer,vertices,offset,surfaces=null){const meshes=fatMeshes(vertices,surfaces);meshes.forEach((m,i)=>m.f.forEach(f=>buffer.triangle(...f.map(j=>m.v[j]),offset+i)));return meshes.length;}
+ function drawFat(visible,offset,contour,enabled=true,layer='anatomy'){(fatLayers.get(layer)||[]).forEach((n,i)=>{const owner=offset+i;n.g.style.display=settings.fat&&enabled?'':'none';if(!settings.fat||!enabled)return;const local=visible.ownerZ[owner];n.fill.setAttribute('d',contour(visible,k=>settings.fatTransparent?local[k]>-Infinity&&local[k]>=visible.zbuf[k]-.8:visible.owners[k]===owner,visible.bounds[owner]));n.g.setAttribute('opacity',settings.fatTransparent?.32:1);n.g.parentNode.appendChild(n.g);});}
  function mountControls(onChange) {
   const doc=root.ownerDocument,box=doc.createElement('fieldset');box.className='composition-controls';
   const style=doc.createElement('style');style.textContent='.composition-controls{border:1px solid var(--border,#d3dae3);border-radius:10px;padding:10px 12px;margin:12px 0;min-width:0;font-size:12px}.composition-controls legend{padding:0 5px;font-weight:600}.composition-row{display:grid;grid-template-columns:minmax(80px,1fr) auto;gap:5px 10px;margin:7px 0}.composition-row input[type=range]{grid-column:1/-1;width:100%;min-width:0;accent-color:var(--foreground,#596579)}.composition-check{display:flex;align-items:center;gap:7px;margin-top:8px}.composition-note{margin:8px 0 0;color:var(--muted-foreground,#718096);font-size:11px;line-height:1.5}.composition-controls button{font:inherit;border:1px solid var(--border,#d3dae3);border-radius:6px;background:var(--background,#fff);color:var(--foreground,#233047);padding:4px 10px;margin-top:8px}.composition-fat-key{display:inline-block;width:9px;height:9px;background:#f4cc45;border-radius:50%;margin-right:4px}';

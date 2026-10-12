@@ -1,0 +1,67 @@
+[
+  {
+    "id": "thigh-front-posed",
+    "label": "허벅지 · 정면",
+    "detail": "1번 · 정면 포즈",
+    "original": "assets/photo-comparison/thigh-front-posed-original.png",
+    "sketch": "assets/photo-comparison/thigh-front-posed-sketch.png"
+  },
+  {
+    "id": "thigh-front-close",
+    "label": "허벅지 · 가까이",
+    "detail": "3번 · 정면 포즈",
+    "original": "assets/photo-comparison/thigh-front-close-original.png",
+    "sketch": "assets/photo-comparison/thigh-front-close-sketch.png"
+  },
+  {
+    "id": "thigh-press",
+    "label": "허벅지 · 레그프레스",
+    "detail": "4번 · 굽힌 다리",
+    "original": "assets/photo-comparison/thigh-press-original.png",
+    "sketch": "assets/photo-comparison/thigh-press-sketch.png"
+  },
+  {
+    "id": "back-raised",
+    "label": "등 · 풀업",
+    "detail": "후면 · 팔 올리기",
+    "original": "assets/photo-comparison/back-raised-original.png",
+    "sketch": "assets/photo-comparison/back-raised-sketch.png"
+  },
+  {
+    "id": "back-spread",
+    "label": "등 · 펼치기",
+    "detail": "후면 · 광배근 펼치기",
+    "original": "assets/photo-comparison/back-spread-original.png",
+    "sketch": "assets/photo-comparison/back-spread-sketch.png"
+  },
+  {
+    "id": "back-oblique",
+    "label": "등 · 사선 풀업",
+    "detail": "사선 · 등과 어깨",
+    "original": "assets/photo-comparison/back-oblique-original.png",
+    "sketch": "assets/photo-comparison/back-oblique-sketch.png"
+  },
+  {
+    "id": "front-hang",
+    "label": "정면 · 매달리기",
+    "detail": "정면 · 팔 위로 뻗기",
+    "original": "assets/photo-comparison/front-hang-original.png",
+    "sketch": "assets/photo-comparison/front-hang-sketch.png"
+  },
+  {
+    "id": "biceps",
+    "label": "팔 · 이두근",
+    "detail": "굽힌 팔 · 전면",
+    "original": "assets/photo-comparison/biceps-original.png",
+    "sketch": "assets/photo-comparison/biceps-sketch.png",
+    "cropTop": 0
+  },
+  {
+    "id": "triceps",
+    "label": "팔 · 삼두근",
+    "detail": "편 팔 · 후면",
+    "original": "assets/photo-comparison/triceps-original.png",
+    "sketch": "assets/photo-comparison/triceps-sketch.png",
+    "cropTop": 0
+  }
+]

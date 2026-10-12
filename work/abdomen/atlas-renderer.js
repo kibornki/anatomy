@@ -6,6 +6,9 @@ function AbdomenFlexion(host){
  const atlas=JSON.parse(document.getElementById('abdomen-atlas').textContent);
  const svg=host.querySelector('svg'),defs=svg.querySelector('defs'),volume=svg.querySelector('.diagram-volumes'),labels=svg.querySelector('.diagram-labels');
  const ns='http://www.w3.org/2000/svg',make=(tag,attrs,parent)=>{const n=document.createElementNS(ns,tag);for(const [k,v]of Object.entries(attrs))n.setAttribute(k,v);parent?.append(n);return n;};
+ const sculptDrawing=make('g',{'class':'sculpt-volumes','data-display-layer':'sculpt'},volume.parentNode);svg.insertBefore(sculptDrawing,labels);
+ const anatomyClip=make('clipPath',{id:'abdomen-anatomy-half',clipPathUnits:'userSpaceOnUse'},defs),sculptClip=make('clipPath',{id:'abdomen-sculpt-half',clipPathUnits:'userSpaceOnUse'},defs);make('rect',{x:0,y:0,width:320,height:515},anatomyClip);make('rect',{x:320,y:0,width:320,height:515},sculptClip);
+ const modeHeader=make('g',{class:'abdomen-mode-header','aria-hidden':'true'},svg);make('path',{d:'M320 0V515',class:'sculpt-divider'},modeHeader);make('text',{x:16,y:19},modeHeader).textContent='해부학';make('text',{x:624,y:19,'text-anchor':'end'},modeHeader).textContent='도형화';
  const add=(a,b)=>a.map((v,i)=>v+b[i]),sub=(a,b)=>a.map((v,i)=>v-b[i]),mul=(a,n)=>a.map(v=>v*n),dot=(a,b)=>a.reduce((s,v,i)=>s+v*b[i],0),cross=(a,b)=>[a[1]*b[2]-a[2]*b[1],a[2]*b[0]-a[0]*b[2],a[0]*b[1]-a[1]*b[0]];
  const qm=(a,b)=>[a[3]*b[0]+a[0]*b[3]+a[1]*b[2]-a[2]*b[1],a[3]*b[1]-a[0]*b[2]+a[1]*b[3]+a[2]*b[0],a[3]*b[2]+a[0]*b[1]-a[1]*b[0]+a[2]*b[3],a[3]*b[3]-dot(a.slice(0,3),b.slice(0,3))];
  const qr=(q,p)=>{const t=mul(cross(q.slice(0,3),p),2);return add(p,add(mul(t,q[3]),cross(q.slice(0,3),t)));};
@@ -100,29 +103,61 @@ function AbdomenFlexion(host){
   }
  }
  const names={'serratus':['전거근',558,183],'external-oblique':['외복사근',82,262],'internal-oblique':['내복사근',558,367],'rectus':['복직근',82,430],'latissimus':['광배근',82,335]};
- const labelNodes=Object.entries(names).map(([name,[text,x,y]])=>{const g=make('g',{'data-label':name},labels),line=make('path',{fill:'none',stroke:'var(--muted-foreground)','stroke-width':1},g),t=make('text',{x,y,'text-anchor':x<320?'start':'end',fill:'var(--foreground)'},g);t.textContent=text;return {name,x,y,line};});
+ const labelNodes=Object.entries(names).map(([name,[text,x,y]])=>{const g=make('g',{'data-label':name},labels),line=make('path',{fill:'none',stroke:'var(--muted-foreground)','stroke-width':1},g),t=make('text',{x,y,'text-anchor':x<320?'start':'end',fill:'var(--foreground)'},g);t.textContent=text;return {name,x,y,line,text:t};});
  const partIndices=new Map(atlas.parts.map(p=>[p,[...new Set(surfaces.filter(m=>m.part===p).flatMap(m=>m.faces.flat()))]]));
- const offsets=new Map();for(const degrees of [16,90]){const a=degrees*Math.PI/180;let min=Infinity,max=-Infinity;for(const p of boneParts)for(const v of p.v){const x=v[0]*Math.cos(a)+v[2]*Math.sin(a);min=Math.min(min,x);max=Math.max(max,x);}offsets.set(degrees,320-(min+max)*1.04/2);}
+ const offsets=new Map();for(const degrees of [0,16,90]){const a=degrees*Math.PI/180;let min=Infinity,max=-Infinity;for(const p of boneParts)for(const v of p.v){const x=v[0]*Math.cos(a)+v[2]*Math.sin(a);min=Math.min(min,x);max=Math.max(max,x);}offsets.set(degrees,degrees===0?320:320-(min+max)*1.04/2);}
  const lightSurfaces=AnatomySurfaceLighting(make,surfaces.filter(m=>m.part.kind==='muscle'&&m.group!=='aponeurosis'&&m.part.name!=='linea-alba').map(m=>({owner:m.id,g:m.g,clip:'url(#atlas-clip-'+m.id+')',anchor:m.outline,fill:m.fill})),{depthScale:1.04});
- const composition=AnatomyComposition(host,atlas.parts,'abdomen');composition.mountFat(make,volume);
- let lastKey='',lastDebug=null;
- function render(angle,view='front'){
+ const composition=AnatomyComposition(host,atlas.parts,'abdomen'),landmarks=AnatomyLandmarks(host,atlas.parts,'abdomen');composition.mountFat(make,volume);
+ composition.mountFat(make,sculptDrawing,'sculpt');
+ const partIndex=new Map(atlas.parts.map((part,id)=>[part.name,id])),sculptGeometry=AbdomenSculptForms(atlas),families=[
+   {id:'pectoral-major',parts:['pectoral-clavicular','pectoral-sternal','pectoral-abdominal'],color:'#e8e9eb',normal:()=>[0,0,1]},
+   {id:'serratus',color:'#4fcfa5',thickness:9,normal:side=>[side,0,.42]},
+   {id:'rectus',color:'#fa687c',thickness:14,normal:()=>[0,0,1]},
+   {id:'latissimus',color:'#b68cf0',thickness:14,normal:()=>[0,0,-1]}
+ ],muscleGroups=[];
+ for(const family of families)for(const suffix of ['','-right']){const name=family.id+suffix,partIds=(family.parts||[family.id]).map(part=>partIndex.get(part+suffix)).filter(Number.isInteger);if(!partIds.length)continue;const part=atlas.parts[partIds[0]],group={id:name,family:family.id,kind:'muscle',partIds,color:family.color,thickness:family.thickness,normal:family.normal(part.side||1)};group.form=sculptGeometry.bind(group);muscleGroups.push(group);}
+ const sculptColors={bone:'#ddd7ce',rib:'#e3ddd3',cartilage:'#c9ded7',context:'#d8d7d4'},sculptGroups=[{id:'torso-mass',family:'torso',kind:'muscle',color:'#efb965'},...muscleGroups,...atlas.parts.flatMap((part,id)=>['muscle','context'].includes(part.kind)?[]:[{id:part.name,family:'skeleton',kind:part.kind,partIds:[id],color:sculptColors[part.kind]||sculptColors.bone,native:true}])];
+ const sculptNodes=sculptGroups.map((group,id)=>{const g=make('g',{'data-part':group.id,'data-kind':group.kind,'data-display-layer':'sculpt'},sculptDrawing),clip=make('clipPath',{id:'abdomen-sculpt-part-'+id},defs),mask=make('path',{},clip),fill=make('path',{class:'sculpt-fill',fill:group.color},g),facets=make('g',{'class':'sculpt-facets','clip-path':'url(#abdomen-sculpt-part-'+id+')'},g),outline=make('path',{class:'sculpt-outline',fill:'none'},g),fiber=make('path',{class:'sculpt-form-lines',fill:'none','clip-path':'url(#abdomen-sculpt-part-'+id+')'},g);return{g,mask,fill,facets,outline,fiber,facetPaths:[],group,id,color:group.color};});
+ const shadeColor=(hex,factor)=>'#'+[1,3,5].map(i=>Math.max(0,Math.min(255,Math.round(parseInt(hex.slice(i,i+2),16)*factor))).toString(16).padStart(2,'0')).join('');
+  sculptNodes.forEach((node,id)=>{if(node.group.kind!=='muscle')return;const gradient=make('radialGradient',{id:'abdomen-sculpt-muscle-'+id,cx:'28%',cy:'22%',r:'92%'},defs);for(const [offset,color]of [['0%',shadeColor(node.color,1.08)],['48%',node.color],['100%',shadeColor(node.color,.98)]])make('stop',{offset,'stop-color':color},gradient);node.fill.setAttribute('fill','url(#abdomen-sculpt-muscle-'+id+')');});
+ const cross3=(a,b)=>cross(a,b),unit3=a=>mul(a,1/(Math.hypot(...a)||1));
+ function drawSculptFacets(node,mesh,project,depth){
+  const faces=mesh.polygons,ordered=[],light=unit3([-.4,-.55,.73]);while(node.facetPaths.length<faces.length)node.facetPaths.push(make('path',{class:'sculpt-facet'},node.facets));
+  faces.forEach((indices,id)=>{const points=indices.map(i=>mesh.v[i]),normal=unit3(points.reduce((sum,p,i)=>add(sum,cross3(p,points[(i+1)%points.length])),[0,0,0])),path=node.facetPaths[id],factor=node.group.family==='rectus'?.88+Math.max(0,dot(normal,light))*.28:.97+Math.max(0,dot(normal,light))*.1;path.setAttribute('d','M'+points.map(project).map(p=>p.join(',')).join('L')+'Z');path.setAttribute('fill',shadeColor(node.color,factor));ordered.push({path,z:points.reduce((sum,p)=>sum+depth(p),0)/points.length});});
+  node.facetPaths.slice(faces.length).forEach(path=>path.setAttribute('d',''));ordered.sort((a,b)=>a.z-b.z).forEach(item=>node.facets.appendChild(item.path));
+ }
+ let lastKey='',lastDebug=null,sculptKey='',sculptMeshes=null;
+ function render(angle,view='front',mode='anatomy',showMuscles=true){
   svg.setAttribute('viewBox','0 0 640 515');svg.setAttribute('height',host.clientWidth*515/640);
-  const transparent=host.classList.contains('transparent'),fibersOn=!host.classList.contains('no-fibers');const key=[angle,view,transparent,fibersOn,composition.key].join();if(key===lastKey)return;lastKey=key;
+  const transparent=host.classList.contains('transparent'),fibersOn=!host.classList.contains('no-fibers'),key=[angle,view,mode,showMuscles,transparent,fibersOn,host.clientWidth,composition.key,landmarks.value].join();if(key===lastKey)return;lastKey=key;
+  host.dataset.mode=mode;host.dataset.showMuscles=showMuscles;host.dataset.view=view;
+  if(mode==='compare'){volume.setAttribute('clip-path','url(#abdomen-anatomy-half)');sculptDrawing.setAttribute('clip-path','url(#abdomen-sculpt-half)');}else{volume.removeAttribute('clip-path');sculptDrawing.removeAttribute('clip-path');}sculptDrawing.style.display=mode==='anatomy'?'none':'';modeHeader.style.display=mode==='compare'?'':'none';
   const started=performance.now();host.dataset.view=view;host.dataset.angle=angle;pose={angle,view};bodyFrames=new Map();posedCenters=new Map();
   // Integrate the original sagittal spine once at half-unit resolution.
   // Bones and all neighboring tissues consume the same centerline field.
   if(view!=='twist'){let pc=center(bottom),previous=bottom;for(let y=Math.floor(bottom*2)/2;y>=50;y-=.5){const theta=bendAt((previous+y)/2,angle*.6);pc=add(pc,qr([-Math.sin(theta/2),0,0,Math.cos(theta/2)],sub(center(y),center(previous))));posedCenters.set(y,pc);previous=y;}}
   skeleton();
-  const a=(view==='side'?90:16)*Math.PI/180,c=Math.cos(a),s=Math.sin(a),scale=1.04;
+  const degrees=view==='front'?0:view==='side'?90:16,a=degrees*Math.PI/180,c=Math.cos(a),s=Math.sin(a),scale=1.04,paired=mode==='compare'&&view!=='front';
   const camera=p=>[p[0]*c+p[2]*s,p[1],-p[0]*s+p[2]*c];
-  const offset=offsets.get(view==='side'?90:16);
-  const project=p=>{const q=camera(p);return [offset+q[0]*scale,10+(q[1]-110)*scale];},depth=p=>camera(p)[2];
+  const offset=offsets.get(degrees),projectAt=shift=>p=>{const q=camera(p);return [offset+shift+q[0]*scale,10+(q[1]-110)*scale];},project=projectAt(paired?-160:0),sculptProject=projectAt(paired?160:0),depth=p=>camera(p)[2];
   const buffer=AbdominalVisibility({project,depth,step:1});
   const posed=new Map();for(const p of atlas.parts){posed.set(p,p.v.map((v,i)=>p.bind?skin(composition.point(p,v,i),p.bind[i]):rigid(frames[p.bone],v)));}
   for(const m of surfaces){const vs=posed.get(m.part);for(const f of m.faces)buffer.triangle(...f.map(i=>vs[i]),m.id);}
   const fatCount=composition.paintFat(buffer,atlas.parts.map(p=>posed.get(p)),surfaces.length);
   const visible=buffer.solve(surfaces.length+fatCount,{projections:id=>id>=surfaces.length||['muscle','context'].includes(surfaces[id].part.kind),scanlineClips:false,occludes:id=>id>=surfaces.length?!composition.fatTransparent:!transparent||!['muscle','context'].includes(surfaces[id].part.kind)});
+  let sculptVisible=null;
+  if(mode!=='anatomy'){
+   const nextSculptKey=[angle,view,composition.key].join();if(nextSculptKey!==sculptKey){sculptMeshes=sculptGroups.map(group=>group.family==='torso'?sculptGeometry.torso(point=>skin(point,[0,0,0,0,0,0])):group.kind==='muscle'?sculptGeometry.mesh(group,atlas.parts.map(part=>({v:posed.get(part)})),composition.state.muscle,point=>skin(point,[0,0,0,0,0,0])):{v:posed.get(atlas.parts[group.partIds[0]]),polygons:atlas.parts[group.partIds[0]].f});sculptKey=nextSculptKey;}
+   const sculptBuffer=AbdominalVisibility({project:sculptProject,depth,step:1});
+   sculptGroups.forEach((group,id)=>{if(group.kind==='muscle'&&!showMuscles)return;const mesh=sculptMeshes[id];for(const face of mesh.polygons)sculptBuffer.polygon(face.map(index=>mesh.v[index]),id);});
+   const sculptFatCount=composition.paintFat(sculptBuffer,atlas.parts.map(p=>posed.get(p)),sculptGroups.length,sculptMeshes);
+   sculptVisible=sculptBuffer.solve(sculptGroups.length+sculptFatCount,{projections:true,scanlineClips:false,occludes:id=>id>=sculptGroups.length?!composition.fatTransparent:!transparent||sculptGroups[id]?.kind!=='muscle'});
+   sculptNodes.forEach((node,id)=>{const group=node.group,mesh=sculptMeshes[id],soft=group.kind==='muscle',show=!soft||showMuscles;if(!show){node.g.style.display='none';node.fill.setAttribute('d','');node.outline.setAttribute('d','');node.facetPaths.forEach(path=>path.setAttribute('d',''));node.fiber.setAttribute('d','');return;}node.g.style.display='';node.g.setAttribute('opacity',transparent&&soft?.44:1);
+    const local=sculptVisible.ownerZ[id],outline=AtlasContour(sculptVisible,k=>transparent&&soft?local[k]>-Infinity:sculptVisible.owners[k]===id,sculptVisible.bounds[id]);node.mask.setAttribute('d',outline);node.fill.setAttribute('d',outline);node.outline.setAttribute('d',outline);
+    if(soft&&group.family!=='pectoral-major')drawSculptFacets(node,mesh,sculptProject,depth);else node.facetPaths.forEach(path=>path.setAttribute('d',''));
+    if(soft&&fibersOn&&!['torso','pectoral-major'].includes(group.family)){const paths=[];if(group.family==='serratus'){for(let row=0;row<mesh.frontIds.length-1;row++){const points=mesh.frontIds[row].map((index,column)=>sculptProject(mesh.v[index].map((value,axis)=>(value+mesh.v[mesh.frontIds[row+1][column]][axis])*.5)));paths.push('M'+points.map(point=>point.join(',')).join('L'));}}else{for(const column of group.family==='rectus'?[1,2,3]:[2,4,6]){const points=mesh.frontIds.map(row=>sculptProject(mesh.v[row[column]]));paths.push('M'+points.map(point=>point.join(',')).join('L'));}}node.fiber.setAttribute('d',paths.join(''));}else node.fiber.setAttribute('d','');
+   });
+  }
   for(const m of surfaces){const soft=['muscle','context'].includes(m.part.kind),local=visible.ownerZ[m.id];
    if(m.part.name==='linea-alba')m.g.setAttribute('opacity',transparent?.32:1);
    const contour=AtlasContour(visible,k=>transparent&&soft?local[k]>-Infinity:visible.owners[k]===m.id,visible.bounds[m.id]);
@@ -142,12 +177,14 @@ function AbdomenFlexion(host){
   }
   lightSurfaces(visible);
   composition.drawFat(visible,surfaces.length,AtlasContour);
+  if(sculptVisible)composition.drawFat(sculptVisible,sculptGroups.length,AtlasContour,true,'sculpt');
   for(const l of labelNodes){const candidates=surfaces.filter(m=>m.muscle===l.name&&m.group!=='aponeurosis').sort((a,b)=>visible.coverage[b.id]-visible.coverage[a.id]),points=visible.centers[candidates[0].id];let target;l.line.parentNode.style.display=points.length||transparent?'':'none';
    if(points.length){const ys=points.slice().sort((a,b)=>a[1]-b[1]),mid=ys[Math.floor(ys.length/2)][1],band=points.filter(p=>Math.abs(p[1]-mid)<10),average=band.reduce((s,p)=>add(s,mul(p,1/band.length)),[0,0]);target=band.reduce((best,p)=>Math.hypot(...sub(p,average))<Math.hypot(...sub(best,average))?p:best);}
    else {const m=candidates.find(m=>m.part.side===-1)||candidates[0],ids=[...new Set(m.faces.flat())],v=posed.get(m.part),avg=ids.reduce((s,i)=>add(s,mul(v[i],1/ids.length)),[0,0,0]);target=project(avg);}
-   l.line.setAttribute('d',`M${l.x},${l.y+5}L${target[0].toFixed(1)},${target[1].toFixed(1)}`);
+   AnatomyLabelLeader(l.line,l.text,target);
   }
+  landmarks.render(new Map(atlas.parts.map(p=>[p.name,posed.get(p)])),paired?[{project,min:0,max:320},{project:sculptProject,min:320,max:640}]:[{project}]);
   lastDebug={pose:{...pose},atlas,frames,posed:atlas.parts.map(p=>({name:p.name,kind:p.kind,joint:p.joint,vertices:posed.get(p),renderedIndices:partIndices.get(p)})),visible:{coverage:visible.coverage,parts:surfaces.map(m=>({id:m.id,name:m.part.name,group:m.group,muscle:m.muscle}))},duration:performance.now()-started};
  }
- return {render,atlas,composition,get debug(){return lastDebug;},yawFrame:yawAt,frame:body,skin};
+ return {render,atlas,composition,landmarks,get debug(){return lastDebug;},yawFrame:yawAt,frame:body,skin};
 }

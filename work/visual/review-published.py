@@ -27,6 +27,8 @@ with sync_playwright() as pw:
     page=browser.new_page(viewport={'width':1100,'height':1100})
     page.on('pageerror',lambda e:errors.append(str(e)))
     page.goto(base+'?visual-review='+revision,timeout=120000)
+    if page.locator('#dashboard-tab-anatomy').count():
+        page.locator('#dashboard-tab-anatomy').click()
     for region,api in apis.items():
         page.locator('#tab-'+region).click()
         frame=page.locator('#anatomy-frame').element_handle().content_frame()

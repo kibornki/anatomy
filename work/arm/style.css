@@ -16,9 +16,10 @@
 .artist-mode-buttons .btn{border:1px solid color-mix(in srgb,var(--muted-foreground) 30%,var(--background));color:var(--foreground);background:var(--background);padding:3px 4px;font-size:11px}
 .artist-mode-buttons .btn[aria-pressed=true]{border-color:var(--foreground);background:var(--foreground);color:var(--background)}
 .diagram-stage{display:grid;grid-template-columns:minmax(0,1fr);gap:3px;align-items:start}
-.artist-landmark-picker{display:flex;align-items:center;gap:6px;margin:4px 0}
+.artist-landmark-picker{display:flex;align-items:center;gap:6px;margin:4px 0;font-size:11px}
 .artist-landmark-picker label{margin:0;color:var(--muted-foreground);white-space:nowrap}
-.diagram-stage .artist-landmark-select{width:auto;max-width:min(100%,190px);min-width:0;min-height:34px;padding:2px 25px 2px 7px;font-size:11px}
+.diagram-stage .artist-landmark-select{width:auto;max-width:min(100%,190px);min-width:0;min-height:30px;padding:2px 24px 2px 7px;font-size:11px}
+.artist-landmark-picker .form-select,.artist-landmark-picker .form-select:hover{background-color:var(--background);color:var(--foreground);border:1px solid var(--border);border-radius:8px}
 .diagram-stage .diagram-scene{grid-column:1;grid-row:2;min-width:0}
 .diagram [data-display-layer=anatomy]{transition:none}
 .diagram[data-show-muscles=false] [data-display-layer=anatomy]:is([data-kind=muscle],[data-kind=tendon]),.diagram[data-show-muscles=false] .sculpt-layer [data-kind=muscle]{display:none}
@@ -36,6 +37,8 @@
 .sculpt-fill{stroke:none}
 .sculpt-facets{pointer-events:none}
 .sculpt-facet{stroke:#453e45;stroke-width:.48;stroke-opacity:.38;stroke-linejoin:round;fill-opacity:.96}
+.sculpt-layer [data-kind=muscle] .sculpt-facet{stroke:#443a50;stroke-width:.5px;stroke-opacity:.42;vector-effect:non-scaling-stroke}
+.sculpt-layer [data-kind=bone] .sculpt-facet{stroke:none}
 .sculpt-outline{stroke-linejoin:round;stroke-opacity:.94;stroke-width:1.05}
 .sculpt-form-lines{pointer-events:none}
 .diagram.transparent .sculpt-layer [data-kind=muscle]{opacity:.38}

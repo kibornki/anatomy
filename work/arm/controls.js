@@ -6,7 +6,7 @@
  const composition=model.composition;composition.restore(content?.composition);composition.mountControls(()=>{render();capture();queueFit();});
  if(['front','side','back'].includes(location.hash.slice(1)))view=location.hash.slice(1);
  const landmarkById=new Map(model.landmarks.landmarks.map(item=>[item.id,item]));
- if(!landmarkById.has(landmark))landmark='acromioclavicular';
+ if(landmark!=='none'&&!landmarkById.has(landmark))landmark='acromioclavicular';
  function render(){
   root.classList.toggle('no-fibers',!by('fibers').checked);root.classList.toggle('transparent',by('transparent').checked);root.dataset.angle=angle;root.dataset.camera=view;root.dataset.mode=mode;root.dataset.landmark=landmark;root.dataset.revision='arm-artist-sculpt-v1';root.dataset.showMuscles=showMuscles;const muscleButton=root.querySelector('[data-arm-toggle-muscles]');if(muscleButton)muscleButton.textContent=showMuscles?'근육 숨기기':'근육 보이기';const fiberControl=by('fibers').closest('.form-check');if(fiberControl){fiberControl.hidden=mode==='sculpt';fiberControl.style.display=mode==='sculpt'?'none':'';}by('fiber-label').textContent='근섬유';model.render(angle,view,mode,landmark);
   by('angle').value=angle;by('value').textContent=Math.round(angle)+'°';by('angle').setAttribute('aria-valuetext',Math.round(angle)+'도 굽힘');for(const v of ['front','side','back'])by(v).setAttribute('aria-pressed',v===view);

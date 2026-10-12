@@ -1,0 +1,32 @@
+<!-- dashboard-start -->
+<div class="dashboard">
+  <header class="dashboard-header">
+    <div class="brand"><h1>근육과 움직임</h1></div>
+    <div class="dashboard-tabs" role="tablist" aria-label="학습 방식">
+      <button type="button" role="tab" id="dashboard-tab-photo" aria-controls="dashboard-photo" aria-selected="true" tabindex="0" data-dashboard-mode="photo">실사비교</button>
+      <button type="button" role="tab" id="dashboard-tab-anatomy" aria-controls="dashboard-anatomy" aria-selected="false" tabindex="-1" data-dashboard-mode="anatomy">해부학•도형화</button>
+    </div>
+  </header>
+  <section class="dashboard-panel" id="dashboard-photo" role="tabpanel" aria-labelledby="dashboard-tab-photo">
+    <div class="photo-layout">
+      <aside class="photo-library" aria-label="비교 사진 선택">
+        <h2>비교 사진</h2>
+        <div class="photo-list" id="photo-list"></div>
+      </aside>
+      <main class="photo-viewer">
+        <header class="viewer-header"><strong id="photo-title"></strong><span>원본 ↔ 근육 스케치</span></header>
+        <div class="photo-viewport">
+          <div class="photo-labels"><span>원본</span><span>근육 스케치</span></div>
+          <div class="photo-compare" id="photo-compare" style="--photo-split:50%">
+            <img id="photo-original" alt="원본 사진" draggable="false">
+            <img id="photo-sketch" class="photo-sketch" alt="사진 위 근육 스케치" draggable="false">
+            <svg id="photo-muscle-labels" class="photo-muscle-labels" role="img" aria-label="스케치 근육 명칭" hidden></svg>
+            <div class="photo-divider" aria-hidden="true"><span>↔</span></div>
+            <input id="photo-wipe" type="range" min="0" max="100" step="0.1" value="50" aria-label="원본과 근육 스케치 비교 경계">
+          </div>
+        </div>
+      </main>
+    </div>
+  </section>
+  <section class="dashboard-panel" id="dashboard-anatomy" role="tabpanel" aria-labelledby="dashboard-tab-anatomy" hidden>
+<!-- dashboard-anatomy-start -->

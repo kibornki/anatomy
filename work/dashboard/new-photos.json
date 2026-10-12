@@ -1,0 +1,23 @@
+[
+  {
+    "id": "thigh-front-posed",
+    "label": "허벅지 · 정면",
+    "detail": "1번 · 정면 포즈",
+    "original": "assets/photo-comparison/thigh-front-posed-original.png",
+    "sketch": "assets/photo-comparison/thigh-front-posed-sketch.png"
+  },
+  {
+    "id": "thigh-front-close",
+    "label": "허벅지 · 가까이",
+    "detail": "3번 · 정면 포즈",
+    "original": "assets/photo-comparison/thigh-front-close-original.png",
+    "sketch": "assets/photo-comparison/thigh-front-close-sketch.png"
+  },
+  {
+    "id": "thigh-press",
+    "label": "허벅지 · 레그프레스",
+    "detail": "4번 · 굽힌 다리",
+    "original": "assets/photo-comparison/thigh-press-original.png",
+    "sketch": "assets/photo-comparison/thigh-press-sketch.png"
+  }
+]
