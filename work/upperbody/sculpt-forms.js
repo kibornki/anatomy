@@ -9,8 +9,8 @@ function UpperbodySculptForms(data){
    outline:[[3,103,32],[25,119,34],[74,146,24],[88,165,7],[52,185,-8],[28,255,-13],[2,317,-8],[2,181,3]]},
   {id:'serratus',corners:[0,2,4,6],grid:[4,7],parts:['serratus'],color:'#a8a171',normal:[.91,0,.4],thickness:10,center:[68,232,43],
    outline:[[56,166,10],[74,183,18],[83,214,42],[79,260,76],[51,300,93],[37,282,88],[61,240,44],[55,194,8]]},
-  {id:'latissimus',corners:[0,2,3,7],grid:[7,7],parts:['latissimus'],color:'#9985b3',normal:[.35,.05,-1],thickness:13,center:[36,299,0],
-   outline:[[26,204,8],[60,205,2],[99,197,34],[95,234,27],[74,286,-2],[56,354,7],[27,406,28],[3,422,31],[3,300,0],[8,241,0]]},
+  {id:'latissimus',corners:[0,2,3,8],humeralBand:[2,3],grid:[7,7],parts:['latissimus'],color:'#9985b3',normal:[.35,.05,-1],thickness:13,center:[36,299,0],
+   outline:[[26,204,8],[60,205,2],[99,197,44],[99,214,44],[95,234,27],[74,286,-2],[56,354,7],[27,406,28],[3,422,31],[3,300,0],[8,241,0]]},
   {id:'infraspinatus',corners:[0,2,4,6],grid:[5,4],parts:['infraspinatus'],color:'#83afa1',normal:[.35,-.12,-1],thickness:11,center:[68,189,9],
    outline:[[39,173,1],[68,163,11],[100,170,37],[108,185,35],[85,210,9],[54,224,-5],[39,204,-8]]},
   {id:'teres-major',corners:[0,3,4,6],grid:[7,3],parts:['teres-major'],color:'#b9878d',normal:[.45,.1,-1],thickness:8,center:[74,220,16],
@@ -20,8 +20,18 @@ function UpperbodySculptForms(data){
  ];
  function bind(group){
   const mirror=p=>[p[0]*(group.side?-1:1),p[1],p[2]],outline=group.outline.map(mirror),center=mirror(group.center),normal=unit(mirror(group.normal));
+  let insertion=null;
+  if(group.humeralBand){
+   const id=group.partIds[0],part=data.parts[id],ids=part.attachments.insertion,z=ids.map(i=>part.v[i][2]);insertion={id,front:[],back:[]};
+   for(const index of group.humeralBand){
+    const closest=depth=>{const target=[outline[index][0],outline[index][1],depth];return ids.reduce((best,i)=>Math.hypot(...sub(part.v[i],target))<Math.hypot(...sub(part.v[best],target))?i:best);};
+    const front=closest(Math.min(...z)),back=closest(Math.max(...z));insertion.front.push(front);insertion.back.push(back);outline[index]=mul(add(part.v[front],part.v[back]),.5);
+   }
+  }
   const sources=group.partIds.flatMap(id=>data.parts[id].v.map((p,index)=>({p,id,index})));
-  const controls=[...outline,center].map(point=>{
+  const controls=[...outline,center].map((point,index)=>{
+   const row=group.humeralBand?.indexOf(index)??-1;
+   if(row>=0)return{point,weights:[insertion.front[row],insertion.back[row]].map(index=>({id:insertion.id,index,point:data.parts[insertion.id].v[index],weight:.5}))};
    const near=sources.map(source=>({...source,d:dot(sub(source.p,point),sub(source.p,point))})).sort((a,b)=>a.d-b.d).slice(0,12),sum=near.reduce((s,q)=>s+1/(q.d+16),0);
    return{point,weights:near.map(q=>({id:q.id,index:q.index,point:q.p,weight:1/(q.d+16)/sum}))};
   });
@@ -33,7 +43,7 @@ function UpperbodySculptForms(data){
    return Array.from({length:count+1},(_,i)=>{const at=distances.at(-1)*i/count;let j=1;while(j<distances.length-1&&distances[j]<at)j++;return{a:ids[j-1],b:ids[j],t:(at-distances[j-1])/(distances[j]-distances[j-1])};});
   };
   const [a,b,c,d]=group.corners,[columns,rows]=group.grid,edges=[sample(a,b,columns),sample(b,c,rows),sample(c,d,columns).reverse(),sample(d,a,rows).reverse()];
-  return{controls,normal,thickness:group.thickness,edges};
+  return{controls,normal,thickness:group.thickness,edges,insertion};
  }
  function mesh(group,posed,muscle=100){
   const {controls,normal,thickness}=group.form,points=controls.map(control=>control.weights.reduce((point,q)=>add(point,mul(sub(posed[q.id].v[q.index],q.point),q.weight)),control.point.slice())),center=points.pop();
@@ -46,11 +56,14 @@ function UpperbodySculptForms(data){
   // A four-sided patch carries the rows from origin to insertion. Both broad
   // surfaces and the rim are quads; there is no center cap or radial pole.
   for(let row=0;row<=rows;row++){
-   front.push([]);back.push([]);const t=row/rows;
+   front.push([]);back.push([]);const t=row/rows,band=group.form.insertion,tip=band?['front','back'].map(side=>add(mul(posed[band.id].v[band[side][0]],1-t),mul(posed[band.id].v[band[side][1]],t))):null;
    for(let col=0;col<=columns;col++){
     const u=col/columns,bilinear=add(mul(add(mul(top[0],1-u),mul(top.at(-1),u)),1-t),mul(add(mul(bottom[0],1-u),mul(bottom.at(-1),u)),t)),base=sub(add(add(mul(top[col],1-t),mul(bottom[col],t)),add(mul(left[row],1-u),mul(right[row],u))),bilinear),bulge=Math.pow(Math.max(0,Math.sin(Math.PI*u)*Math.sin(Math.PI*t)),.65),edge=smooth(Math.min(u,1-u,t,1-t)/.18),height=depth*(-.12+1.06*bulge)-dot(sub(base,center),n)*edge*.22;
-    front[row].push(v.length);v.push(add(base,mul(n,height)));
-    back[row].push(v.length);v.push(add(add(center,mul(sub(base,center),.94)),mul(n,-depth*.36)));
+    // Preserve the native humeral strip on both sides. The rear surface must
+    // not shrink toward the torso at the insertion when the arm is raised.
+    const join=tip?smooth((u-.65)/.35):0;
+    front[row].push(v.length);v.push(add(add(base,mul(n,height*(1-join))),tip?mul(sub(tip[0],right[row]),join):[0,0,0]));
+    back[row].push(v.length);v.push(add(add(add(base,mul(sub(center,base),.06*(1-join))),mul(n,-depth*.36*(1-join))),tip?mul(sub(tip[1],right[row]),join):[0,0,0]));
    }
   }
   const reverse=dot(area(current),n)<0;
