@@ -13,7 +13,7 @@ for(const [region,parts]of all){
  else if(d>.001)changed++;
  if(p.attachments&&(p.attachments.origin.includes(i)||p.attachments.insertion.includes(i)))assert.equal(d,0,region+' attachment');}
  assert(changed>0,region+' muscle growth');
- const fat=c.fatMeshes(parts.map(p=>p.v));assert.equal(fat.length,region==='forearm'?0:region==='arm'?1:region==='thigh'?2:4);
+ const fat=c.fatMeshes(parts.map(p=>p.v));assert.equal(fat.length,{forearm:0,arm:1,thigh:2,abdomen:5,upperbody:4}[region]);
  for(const m of fat)for(const q of m.v)assert(q.every(Number.isFinite));
  c.restore({muscle:60,fat:0});assert.equal(c.fatMeshes(parts.map(p=>p.v)).length,0);
  c.restore({muscle:NaN,fat:Infinity,fatTransparent:'true'});assert.equal(c.state.muscle,100);assert.equal(c.state.fat,0);assert.equal(c.state.fatTransparent,false);
