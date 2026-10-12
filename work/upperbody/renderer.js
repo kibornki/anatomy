@@ -13,37 +13,11 @@ function NativeUpperbodyRenderer(root,data){
  composition.mountFat(make,drawing);
  const sculptColors={'pectoral-clavicular':'#cf788b','pectoral-sternal':'#917daf','pectoral-abdominal':'#aaa06a',serratus:'#70a79b',latissimus:'#9982b2','trapezius-upper':'#6b9d92','trapezius-middle':'#917daf','trapezius-lower':'#aaa06a',infraspinatus:'#70a79b','teres-major':'#b37e83','teres-minor':'#799f9a'};
  const baseSculptColor=part=>{const name=part.name.replace(/-right$/,'');return part.kind==='muscle'?sculptColors[name]||'#9181a4':part.kind==='cartilage'?'#b5d1c8':part.kind==='rib'?'#d5cec1':'#cfc7bb';};
- const subtract=(a,b)=>a.map((v,i)=>v-b[i]),cross=(a,b)=>[a[1]*b[2]-a[2]*b[1],a[2]*b[0]-a[0]*b[2],a[0]*b[1]-a[1]*b[0]],dot=(a,b)=>a.reduce((sum,v,i)=>sum+v*b[i],0),unit=a=>{const size=Math.hypot(...a)||1;return a.map(v=>v/size);};
+ const cross=(a,b)=>[a[1]*b[2]-a[2]*b[1],a[2]*b[0]-a[0]*b[2],a[0]*b[1]-a[1]*b[0]],dot=(a,b)=>a.reduce((sum,v,i)=>sum+v*b[i],0),unit=a=>{const size=Math.hypot(...a)||1;return a.map(v=>v/size);};
  const shadeColor=(hex,factor)=>'#'+[1,3,5].map(i=>Math.max(0,Math.min(255,Math.round(parseInt(hex.slice(i,i+2),16)*factor))).toString(16).padStart(2,'0')).join('');
- const sculptGeometry=(()=>{
-  const add=(a,b)=>a.map((v,i)=>v+b[i]),sub=(a,b)=>a.map((v,i)=>v-b[i]),mul=(a,s)=>a.map(v=>v*s),norm=a=>Math.hypot(...a)||1,median=a=>{const b=a.slice().sort((x,y)=>x-y);return b[Math.floor((b.length-1)/2)]||0;},quantile=(a,t)=>{const b=a.slice().sort((x,y)=>x-y);return b[Math.min(b.length-1,Math.max(0,Math.floor((b.length-1)*t)))]||0;};
-  function axes(points){
-   const center=[0,1,2].map(k=>points.reduce((sum,p)=>sum+p[k],0)/points.length),cov=[[0,0,0],[0,0,0],[0,0,0]];
-   for(const p of points){const q=sub(p,center);for(let r=0;r<3;r++)for(let c=0;c<3;c++)cov[r][c]+=q[r]*q[c]/points.length;}
-   const a=cov.map(row=>row.slice()),v=[[1,0,0],[0,1,0],[0,0,1]];
-   for(let iter=0;iter<32;iter++){let p=0,q=1,largest=Math.abs(a[0][1]);if(Math.abs(a[0][2])>largest){p=0;q=2;largest=Math.abs(a[0][2]);}if(Math.abs(a[1][2])>largest){p=1;q=2;largest=Math.abs(a[1][2]);}if(largest<1e-10)break;const apq=a[p][q],tau=(a[q][q]-a[p][p])/(2*apq),t=(tau>=0?1:-1)/(Math.abs(tau)+Math.sqrt(1+tau*tau)),c=1/Math.sqrt(1+t*t),s=t*c,app=a[p][p],aqq=a[q][q];a[p][p]=app-t*apq;a[q][q]=aqq+t*apq;a[p][q]=a[q][p]=0;for(let k=0;k<3;k++)if(k!==p&&k!==q){const kp=a[k][p],kq=a[k][q];a[k][p]=a[p][k]=c*kp-s*kq;a[k][q]=a[q][k]=s*kp+c*kq;}for(let k=0;k<3;k++){const vp=v[k][p],vq=v[k][q];v[k][p]=c*vp-s*vq;v[k][q]=s*vp+c*vq;}}
-   const order=[0,1,2].sort((i,j)=>a[j][j]-a[i][i]),vec=i=>unit([v[0][i],v[1][i],v[2][i]]),axis=vec(order[0]);if(axis[1]<0||(Math.abs(axis[1])<.2&&axis[0]<0))for(let k=0;k<3;k++)axis[k]*=-1;let u=vec(order[1]);u=unit(sub(u,mul(axis,dot(u,axis))));if(!isFinite(norm(u)))u=unit(cross(axis,[1,0,0]));return{center,axis,u,w:unit(cross(axis,u))};
-  }
-  function loft(points,ringCount=9,segments=10,endScale=.22,bulge=0){
-   if(!points||points.length<8)return{v:[],f:[],rings:[]};
-   const basis=axes(points),projected=points.map(p=>[dot(p,basis.axis),dot(p,basis.u),dot(p,basis.w)]),lo=Math.min(...projected.map(p=>p[0])),hi=Math.max(...projected.map(p=>p[0])),span=Math.max(1e-6,hi-lo),window=span/(ringCount-1)*1.55,v=[],rings=[];
-   for(let r=0;r<ringCount;r++){const t=r/(ringCount-1),at=lo+span*t;let slice=projected.filter(p=>Math.abs(p[0]-at)<=window/2);if(slice.length<8)slice=projected.slice().sort((a,b)=>Math.abs(a[0]-at)-Math.abs(b[0]-at)).slice(0,Math.min(20,projected.length));const c2=median(slice.map(p=>p[1])),c3=median(slice.map(p=>p[2])),tau=2*Math.PI,polar=slice.map(p=>({angle:(Math.atan2(p[2]-c3,p[1]-c2)+tau)%tau,radius:Math.hypot(p[1]-c2,p[2]-c3)})),radii=Array.from({length:segments},(_,j)=>{const target=j*tau/segments,near=polar.filter(p=>{const d=Math.abs(p.angle-target);return Math.min(d,tau-d)<=tau/segments*.75;}),samples=near.length?near:polar.slice().sort((a,b)=>{const da=Math.abs(a.angle-target),db=Math.abs(b.angle-target);return Math.min(da,tau-da)-Math.min(db,tau-db);}).slice(0,Math.min(6,polar.length));return quantile(samples.map(p=>p.radius),.86);}),cap=t<.001||t>.999?endScale:1,scale=cap*(1+bulge*Math.sin(Math.PI*t)),ring=[],radialCenter=[radii.reduce((sum,r,j)=>sum+Math.cos(j*tau/segments)*r/segments,0),radii.reduce((sum,r,j)=>sum+Math.sin(j*tau/segments)*r/segments,0)];for(let j=0;j<segments;j++){const theta=j*tau/segments,radius=radii[j]*scale,p=add(add(add(mul(basis.axis,at),mul(basis.u,c2)),mul(basis.w,c3)),add(mul(basis.u,Math.cos(theta)*radius-radialCenter[0]*scale),mul(basis.w,Math.sin(theta)*radius-radialCenter[1]*scale)));ring.push(v.length);v.push(p);}rings.push(ring);}
-   const f=[];for(let r=0;r<ringCount-1;r++)for(let j=0;j<segments;j++){const a=r*segments+j,b=r*segments+(j+1)%segments,c=(r+1)*segments+(j+1)%segments,d=(r+1)*segments+j;f.push([a,b,c],[a,c,d]);}
-   const ringCenter=r=>{const at=lo+span*r/(ringCount-1),near=projected.filter(p=>Math.abs(p[0]-at)<=window/2),sample=near.length>=8?near:projected.slice().sort((a,b)=>Math.abs(a[0]-at)-Math.abs(b[0]-at)).slice(0,Math.min(20,projected.length));return add(add(mul(basis.axis,at),mul(basis.u,median(sample.map(p=>p[1])))),mul(basis.w,median(sample.map(p=>p[2]))));},cap0=v.length;v.push(ringCenter(0));const cap1=v.length;v.push(ringCenter(ringCount-1));for(let j=0;j<segments;j++){f.push([cap0,rings[0][(j+1)%segments],rings[0][j]],[cap1,rings.at(-1)[j],rings.at(-1)[(j+1)%segments]]);}return{v,f,rings};
-  }
-  return{loft};
- })();
- const muscleFamilies=[
-  {id:'pectoral-major',parts:['pectoral-clavicular','pectoral-sternal','pectoral-abdominal'],color:'#cf788b',profile:[8,10,.34,.20]},
-  {id:'trapezius',parts:['trapezius-upper','trapezius-middle','trapezius-lower'],color:'#6b9d92',profile:[9,10,.28,.12]},
-  {id:'serratus',parts:['serratus'],color:sculptColors.serratus,profile:[9,9,.24,.12]},
-  {id:'latissimus',parts:['latissimus'],color:sculptColors.latissimus,profile:[10,10,.30,.12]},
-  {id:'infraspinatus',parts:['infraspinatus'],color:sculptColors.infraspinatus,profile:[8,9,.30,.10]},
-  {id:'teres-major',parts:['teres-major'],color:sculptColors['teres-major'],profile:[7,8,.28,.10]},
-  {id:'teres-minor',parts:['teres-minor'],color:sculptColors['teres-minor'],profile:[7,8,.24,.08]}
- ];
+ const sculptGeometry=UpperbodySculptForms(data),muscleFamilies=sculptGeometry.families;
  const partIndex=new Map(data.parts.map((part,id)=>[part.name,id])),muscleGroups=[];
- for(const family of muscleFamilies)for(const suffix of ['','-right']){const partIds=family.parts.map(name=>partIndex.get(name+suffix)).filter(Number.isInteger);if(partIds.length)muscleGroups.push({...family,id:family.id+suffix,family:family.id,side:suffix,partIds,kind:'muscle'});}
+ for(const family of muscleFamilies)for(const suffix of ['','-right']){const partIds=family.parts.map(name=>partIndex.get(name+suffix)).filter(Number.isInteger);if(partIds.length){const group={...family,id:family.id+suffix,family:family.id,side:suffix,partIds,kind:'muscle'};group.form=sculptGeometry.bind(group);muscleGroups.push(group);}}
  const sculptGroups=[...muscleGroups,...data.parts.flatMap((part,id)=>part.kind==='muscle'?[]:[{id:part.name,kind:part.kind,partIds:[id],color:baseSculptColor(part),native:true}])];
  const sculptNodes=sculptGroups.map((group,id)=>{const g=make('g',{'data-part':group.id,'data-kind':group.kind,'data-display-layer':'sculpt'},sculptDrawing),clip=make('clipPath',{id:'upper-sculpt-part-'+id},defs),mask=make('path',{},clip),fill=make('path',{class:'sculpt-fill',fill:group.color},g),facets=make('g',{'class':'sculpt-facets','clip-path':'url(#upper-sculpt-part-'+id+')'},g),outline=make('path',{class:'sculpt-outline',fill:'none'},g);return{g,mask,fill,facets,outline,facetPaths:[],group,id,color:group.color};});
  sculptNodes.forEach((node,id)=>{if(node.group.kind!=='muscle')return;const gradient=make('radialGradient',{id:'upper-sculpt-muscle-'+id,cx:'28%',cy:'22%',r:'92%'},defs);for(const [offset,color]of [['0%',shadeColor(node.color,1.2)],['48%',node.color],['100%',shadeColor(node.color,.72)]])make('stop',{offset,'stop-color':color},gradient);node.fill.setAttribute('fill','url(#upper-sculpt-muscle-'+id+')');});
@@ -52,11 +26,9 @@ function NativeUpperbodyRenderer(root,data){
  const curve=ps=>{if(ps.length<3)return '';let d='M'+ps[0].join(',');for(let i=1;i<ps.length-1;i++)d+='Q'+ps[i].join(',')+' '+ps[i].map((v,j)=>(v+ps[i+1][j])/2).join(',');return d+'L'+ps.at(-1).join(',');};
  function clipNeck(ps){const result=[];for(let i=0;i<ps.length;i++){const a=ps[i],b=ps[(i+1)%ps.length],ina=a[1]>=data.neckTop,inb=b[1]>=data.neckTop;if(ina)result.push(a);if(ina!==inb){const t=(data.neckTop-a[1])/(b[1]-a[1]);result.push(a.map((v,j)=>v+(b[j]-v)*t));}}return result;}
  let lastKey='',lastAngle=null,posed,sculptMeshes=null,debug;
- function facetPolygons(mesh){if(!mesh.rings?.length)return mesh.f.map(face=>face.slice());const faces=[];for(let r=0;r<mesh.rings.length-1;r++)for(let j=0;j<mesh.rings[r].length;j++){const a=mesh.rings[r],b=mesh.rings[r+1],next=(j+1)%a.length;faces.push([a[j],a[next],b[next],b[j]]);}faces.unshift(mesh.rings[0].slice().reverse());faces.push(mesh.rings.at(-1).slice());return faces;}
- function facetColor(color,points){const normal=unit(cross(subtract(points[1],points[0]),subtract(points[2],points[0]))),light=unit([-.42,.58,.70]);return shadeColor(color,.82+Math.max(0,dot(normal,light))*.28);}
  function drawFacets(node,mesh,project,depth){
-  const faces=facetPolygons(mesh),ordered=[];while(node.facetPaths.length<faces.length)node.facetPaths.push(make('path',{class:'sculpt-facet'},node.facets));
-  faces.forEach((indices,id)=>{const points=indices.map(i=>mesh.v[i]),path=node.facetPaths[id];path.setAttribute('d','M'+points.map(project).map(p=>p.join(',')).join('L')+'Z');path.setAttribute('fill',facetColor(node.color,points));ordered.push({path,z:points.reduce((sum,p)=>sum+depth(p),0)/points.length});});
+  const faces=mesh.polygons,ordered=[],viewNormal=[depth([1,0,0]),0,depth([0,0,1])],right=[viewNormal[2],0,-viewNormal[0]],light=unit([-.4,-.6,.7]);while(node.facetPaths.length<faces.length)node.facetPaths.push(make('path',{class:'sculpt-facet'},node.facets));
+  faces.forEach((indices,id)=>{const points=indices.map(i=>mesh.v[i]),normal=unit(points.reduce((sum,p,i)=>{const q=points[(i+1)%points.length];return sum.map((n,k)=>n+cross(p,q)[k]);},[0,0,0])),path=node.facetPaths[id];if(dot(normal,viewNormal)<=0){path.setAttribute('d','');return;}const cameraNormal=[dot(normal,right),normal[1],dot(normal,viewNormal)];path.setAttribute('d','M'+points.map(project).map(p=>p.join(',')).join('L')+'Z');path.setAttribute('fill',shadeColor(node.color,.68+Math.max(0,dot(cameraNormal,light))*.46));ordered.push({path,z:points.reduce((sum,p)=>sum+depth(p),0)/points.length});});
   for(let id=faces.length;id<node.facetPaths.length;id++)node.facetPaths[id].setAttribute('d','');ordered.sort((a,b)=>a.z-b.z);ordered.forEach(item=>node.facets.appendChild(item.path));
  }
  function render(angle,view,mode='anatomy',showMuscles=true){
@@ -69,7 +41,7 @@ function NativeUpperbodyRenderer(root,data){
   const visible=buffer.solve(ownerCount+fatCount,{projections:id=>id>=ownerCount||isSoft(id),scanlineClips:false,occludes:id=>id>=ownerCount?!composition.fatTransparent:!transparent||!isSoft(id)});
   let sculptVisible=null;
   if(mode!=='anatomy'){
-   if(!sculptMeshes)sculptMeshes=sculptGroups.map(group=>{if(group.kind==='muscle')return sculptGeometry.loft(group.partIds.flatMap(id=>posed[id].v),...group.profile);const id=group.partIds[0];return{v:posed[id].v,f:data.parts[id].f,rings:[]};});
+   if(!sculptMeshes)sculptMeshes=sculptGroups.map(group=>{if(group.kind==='muscle')return sculptGeometry.mesh(group,posed,composition.state.muscle);const id=group.partIds[0];return{v:posed[id].v,f:data.parts[id].f,rings:[]};});
    const sculptBuffer=AbdominalVisibility({project,depth,step:1}),shownInView=group=>group.kind!=='muscle'||view==='side'||(view==='front'?group.family==='pectoral-major'||group.family==='serratus':group.family!=='pectoral-major'&&group.family!=='serratus');
    sculptGroups.forEach((group,id)=>{if(group.kind==='muscle'&&!showMuscles||!shownInView(group))return;const mesh=sculptMeshes[id];mesh.f.forEach(face=>paint(sculptBuffer,face.map(index=>mesh.v[index]),id));});
    sculptVisible=sculptBuffer.solve(sculptGroups.length,{projections:true,scanlineClips:false,occludes:id=>!transparent||sculptGroups[id]?.kind!=='muscle'});
