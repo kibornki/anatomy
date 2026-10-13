@@ -1238,7 +1238,24 @@ body{padding:16px!important;overflow-x:hidden}
 button,input{accent-color:#2675db}
 </style><style>.native-labels{fill:var(--foreground)}.native-labels text{font-size:12px}.native-labels path{fill:none;stroke:var(--muted-foreground);stroke-width:.9}.native-legend{display:none!important}.native-credit{font-size:10px;line-height:1.5;color:var(--muted-foreground);margin-top:12px}.native-credit a{color:inherit}.no-fibers .native-volumes .fiber,.no-fibers .sculpt-volumes .sculpt-form-lines{display:none}
 .artist-learning{display:grid;gap:6px;margin:8px 0 10px}.artist-mode-buttons{display:flex;align-items:center;gap:3px;flex-wrap:wrap}.artist-mode-buttons .btn{border:1px solid color-mix(in srgb,var(--muted-foreground) 30%,var(--background));color:var(--foreground);background:var(--background);padding:3px 5px;font-size:11px}.artist-mode-buttons .btn[aria-pressed=true]{border-color:var(--foreground);background:var(--foreground);color:var(--background)}.artist-mode-buttons .artist-toggle-control{display:inline-flex;align-items:center;gap:4px;min-width:0;min-height:28px;margin:0;padding:0 1px;font-size:11px;white-space:nowrap}.artist-mode-buttons .artist-toggle-control .form-check-input{width:14px;height:14px;margin:0}.artist-mode-buttons .artist-toggle-control .form-check-label{display:inline;min-width:0;min-height:0}
-#forearm-motion[data-mode=anatomy] .sculpt-volumes,#forearm-motion[data-mode=anatomy] .sculpt-mode-header{display:none}#forearm-motion[data-mode=sculpt] .native-volumes,#forearm-motion[data-mode=sculpt] .native-labels,#forearm-motion[data-mode=compare] .native-labels{display:none}#forearm-motion[data-mode=compare] .native-volumes{clip-path:url(#limb-anatomy-panel)}#forearm-motion[data-mode=compare] .sculpt-volumes{clip-path:url(#limb-sculpt-panel)}.sculpt-mode-header{fill:var(--foreground);font-size:11px;font-weight:700;paint-order:stroke;stroke:var(--background);stroke-width:3px;stroke-linejoin:round}.sculpt-divider{fill:none;stroke:var(--muted-foreground);stroke-width:.7;stroke-dasharray:4 4}.sculpt-facet{stroke:#737985;stroke-width:.55;stroke-opacity:.18;stroke-linejoin:round}.sculpt-outline{stroke:#697486;stroke-width:.85;stroke-opacity:.38}.sculpt-form-lines{stroke:var(--foreground);stroke-width:.55;stroke-opacity:.12;pointer-events:none}.transparent .sculpt-volumes [data-kind=muscle]{opacity:.48}#forearm-motion .sculpt-facet{stroke:#443a50;stroke-width:.5px;stroke-opacity:.42;vector-effect:non-scaling-stroke}</style></head><body><div id="forearm-motion">
+#forearm-motion[data-mode=anatomy] .sculpt-volumes,#forearm-motion[data-mode=anatomy] .sculpt-mode-header{display:none}#forearm-motion[data-mode=sculpt] .native-volumes,#forearm-motion[data-mode=sculpt] .native-labels,#forearm-motion[data-mode=compare] .native-labels{display:none}#forearm-motion[data-mode=compare] .native-volumes{clip-path:url(#limb-anatomy-panel)}#forearm-motion[data-mode=compare] .sculpt-volumes{clip-path:url(#limb-sculpt-panel)}.sculpt-mode-header{fill:var(--foreground);font-size:11px;font-weight:700;paint-order:stroke;stroke:var(--background);stroke-width:3px;stroke-linejoin:round}.sculpt-divider{fill:none;stroke:var(--muted-foreground);stroke-width:.7;stroke-dasharray:4 4}.sculpt-facet{stroke:#737985;stroke-width:.55;stroke-opacity:.18;stroke-linejoin:round}.sculpt-outline{stroke:#697486;stroke-width:.85;stroke-opacity:.38}.sculpt-form-lines{stroke:var(--foreground);stroke-width:.55;stroke-opacity:.12;pointer-events:none}.transparent .sculpt-volumes [data-kind=muscle]{opacity:.48}#forearm-motion .sculpt-facet{stroke:#443a50;stroke-width:.5px;stroke-opacity:.42;vector-effect:non-scaling-stroke}</style><style>@media (min-width:640px){
+ #arm.diagram,#abdomen.diagram,#forearm-motion,#thigh-motion{display:grid;grid-template-columns:minmax(0,1fr) minmax(260px,320px);column-gap:16px;align-content:start;align-items:start;width:100%!important;max-width:none;margin:0}
+ #arm.diagram,#abdomen.diagram{grid-template-areas:"title title" "caption caption" "scene composition" "scene landmark" "scene learning" "scene controls" "scene note" "credit credit"}
+ #forearm-motion,#thigh-motion{grid-template-areas:"title title" "caption caption" "scene composition" "scene landmark" "scene learning" "scene controls" "scene note"}
+ #arm>h2,#abdomen>h2{grid-area:title}
+ #forearm-motion>h2,#thigh-motion>h2{grid-area:title}
+ #arm>.diagram-caption,#abdomen>.diagram-caption,#forearm-motion>.diagram-caption,#thigh-motion>.diagram-caption{grid-area:caption}
+ #arm>.diagram-stage{display:contents}
+ #arm>.diagram-stage>.diagram-scene{grid-area:scene;align-self:center;display:block;width:100%;height:clamp(480px,68vh,740px)!important;min-width:0;margin:0}
+ #arm>.diagram-stage>.artist-landmark-picker,#abdomen>.anatomy-landmark-picker,#forearm-motion>.anatomy-landmark-picker,#thigh-motion>.anatomy-landmark-picker{grid-area:landmark;align-self:start;min-width:0;margin:0}
+ #abdomen>.diagram-scene,#forearm-motion>.forearm-scene,#thigh-motion>.thigh-scene{grid-area:scene;align-self:center;display:block;width:100%;height:clamp(480px,68vh,740px)!important;min-width:0;margin:0}
+ #arm>.composition-controls,#abdomen>.composition-controls,#forearm-motion>.composition-controls,#thigh-motion>.composition-controls{grid-area:composition;margin:0}
+ #arm>.artist-learning,#abdomen>.artist-learning,#forearm-motion>.artist-learning,#thigh-motion>.artist-learning{grid-area:learning;align-self:end;margin:6px 0}
+ #arm>.diagram-controls,#abdomen>.diagram-controls,#forearm-motion>.forearm-controls,#thigh-motion>.thigh-controls{grid-area:controls;min-width:0;margin:0;gap:12px}
+ #arm>.diagram-note,#abdomen>.diagram-note,#forearm-motion>.forearm-note,#thigh-motion>.thigh-note{grid-area:note;min-width:0}
+ #arm>.atlas-credit,#abdomen>.atlas-credit{grid-area:credit;margin:0}
+}
+</style></head><body><div id="forearm-motion">
   <h2>전완과 손의 회전</h2>
   <div class="text-small diagram-caption" id="forearm-view-caption">정면에서 본 오른팔 · 팔꿈치 고정 · 회외 80°–회내 80°</div>
   <svg class="forearm-scene" role="img" aria-labelledby="forearm-title forearm-desc"><title id="forearm-title">전완 회전에 따른 근육 덩어리의 배열 변화</title><desc id="forearm-desc">상완 하단과 팔꿈치 연결부를 포함한 오른팔 도해입니다. 요골이 척골 주위를 돌면서 손의 방향이 바뀝니다. 아티스트를 위한 근육 덩어리 표현이며 정면, 엄지 쪽 측면, 후면을 선택할 수 있습니다.</desc><defs></defs><g class="native-volumes"></g><g class="native-labels"></g></svg>
@@ -1852,10 +1869,59 @@ function NativeLimbRenderer(root,model,region,reference,fields){
  by('angle').addEventListener('input',()=>{play(false);angle=+by('angle').value;render();capture();});by('play').addEventListener('click',()=>{if(!playing)syncPhase();play(!playing);capture();});
  for(const v of views)by(v).addEventListener('click',()=>{view=v;render();capture();queueFit();});for(const id of ['fibers','transparent'])by(id).addEventListener('change',()=>{render();capture();queueFit();});
  root.querySelectorAll('[data-limb-mode]').forEach(button=>button.addEventListener('click',()=>{mode=button.dataset.limbMode;render();capture();queueFit();}));root.querySelector('[data-limb-toggle-muscles]').addEventListener('click',()=>{showMuscles=!showMuscles;render();capture();queueFit();});
- let pending=false;function fit(){pending=false;if(!root.isConnected)return;const svg=root.querySelector('svg'),available=Math.max(0,document.documentElement.clientWidth-32),overhead=root.scrollHeight-svg.getBoundingClientRect().height,width=Math.floor(available<=680?available:Math.min(available,700,Math.max(220,(innerHeight-overhead-48)*600/630)))+'px';if(root.style.width!==width)root.style.width=width;}
+ let pending=false;function fit(){pending=false;if(!root.isConnected)return;const svg=root.querySelector('svg'),viewportWidth=document.documentElement.clientWidth,available=Math.max(0,viewportWidth-32),overhead=root.scrollHeight-svg.getBoundingClientRect().height,width=Math.floor(viewportWidth>=640?available:available<=680?available:Math.min(available,700,Math.max(220,(innerHeight-overhead-48)*600/630)))+'px';if(root.style.width!==width)root.style.width=width;}
  function queueFit(){if(!pending){pending=true;requestAnimationFrame(fit);}}window.addEventListener('resize',queueFit);new ResizeObserver(queueFit).observe(root);new ResizeObserver(render).observe(root);
  function tick(t){if(!root.isConnected)return;if(playing&&!document.hidden&&t-lastDraw>=85){if(last)phase+=Math.min(t-last,160)*Math.PI/5500;angle=config.min+(config.max-config.min)*(1-Math.cos(phase))/2;render();last=t;lastDraw=t;if(t-lastCapture>=500){capture();lastCapture=t;}}requestAnimationFrame(tick);}requestAnimationFrame(tick);
  window.nativeLimb={model,sculpt,root,setPose(a,v=view){play(false);angle=Math.max(config.min,Math.min(config.max,a));if(views.includes(v))view=v;render();capture();},setMode(value){if(['anatomy','sculpt','compare'].includes(value)){mode=value;render();capture();}},setShowMuscles(value){showMuscles=!!value;render();capture();},get mode(){return mode;}};
  syncPhase();play(playing);render();queueFit();capture();
+})();
+
+/* One dashboard control surface drives the selected self-contained model frame. */
+(()=>{
+ const configNode=document.getElementById('hub-config');if(!configNode)return;
+ const config=JSON.parse(configNode.textContent),key=config.key,root=document.getElementById(key)||document.getElementById(key+'-motion');
+ if(!root)return;
+ const sceneStyle=document.createElement('style');sceneStyle.id='anatomy-hub-scene-only';sceneStyle.textContent=`
+html,body{width:100%!important;height:100%!important;min-height:0!important;margin:0!important;padding:0!important;overflow:hidden!important}
+body{display:block!important}
+#${root.id}{display:grid!important;grid-template-columns:minmax(0,1fr)!important;grid-template-rows:minmax(0,1fr)!important;grid-template-areas:none!important;align-content:stretch!important;align-items:stretch!important;width:100%!important;max-width:none!important;height:100%!important;min-height:0!important;margin:0!important;padding:0!important;overflow:hidden!important}
+#${root.id} h2,#${root.id} .diagram-caption,#${root.id} .composition-controls,#${root.id} .artist-learning,#${root.id} .diagram-controls,#${root.id} .forearm-controls,#${root.id} .thigh-controls,#${root.id} .diagram-note,#${root.id} .forearm-note,#${root.id} .thigh-note,#${root.id} .atlas-credit,#${root.id} .native-credit,#${root.id} .native-legend,#${root.id} .diagram-legend,#${root.id} .anatomy-landmark-picker,#${root.id} .artist-landmark-picker,body>.atlas-credit,body>.native-credit{display:none!important}
+#arm>.diagram-stage{display:contents!important}
+#upperbody>.diagram-scene,#arm>.diagram-stage>.diagram-scene,#abdomen>.diagram-scene,#forearm-motion>.forearm-scene,#thigh-motion>.thigh-scene{display:block!important;grid-area:auto!important;align-self:stretch!important;place-self:stretch!important;width:100%!important;height:100%!important;max-width:none!important;max-height:none!important;min-width:0!important;min-height:0!important;margin:0!important;padding:0!important}
+`;document.head.append(sceneStyle);
+ const by=id=>document.getElementById(key+'-'+id),labelFor=input=>{
+  if(!input)return'';const label=input.labels?.[0]||document.querySelector('label[for="'+input.id+'"]');if(!label)return input.getAttribute('aria-label')||'';
+  const copy=label.cloneNode(true);copy.querySelectorAll('input,output').forEach(node=>node.remove());return copy.textContent.trim();
+ };
+ function rangeInfo(input){if(!input)return null;const output=document.getElementById(input.id+'-value');return{id:input.id,label:labelFor(input),min:Number(input.min)||0,max:Number(input.max)||100,step:Number(input.step)||1,value:Number(input.value),output:output?.textContent.trim()||''};}
+ function snapshot(){
+  const views=['front','side','medial','back','twist'].map(value=>by(value)).filter(Boolean).map(button=>({value:button.id.slice(key.length+1),label:button.textContent.trim(),selected:button.getAttribute('aria-pressed')==='true'}));
+  const modeButtons=[...root.querySelectorAll('button[data-'+key+'-mode],button[data-limb-mode]')].map(button=>({value:button.getAttribute('data-'+key+'-mode')||button.getAttribute('data-limb-mode'),label:button.textContent.trim(),selected:button.getAttribute('aria-pressed')==='true'}));
+  const landmark=by('landmark'),muscleToggle=root.querySelector('[data-'+key+'-toggle-muscles],[data-limb-toggle-muscles]'),play=by('play'),angle=by('angle');
+  const credit=document.querySelector('.atlas-credit,.native-credit');
+  const creditParts=credit?[...credit.childNodes].map(node=>node.nodeType===1&&node.tagName==='A'?{href:node.href,text:node.textContent}:{text:node.textContent}).filter(part=>part.text):[];
+  const muscle=by('composition-muscle'),fat=by('composition-fat'),fatTransparent=by('composition-fat-transparent'),reset=by('composition-reset');
+  const composition=muscle||fat?{muscle:rangeInfo(muscle),fat:rangeInfo(fat),fatTransparent:fatTransparent?{id:fatTransparent.id,label:labelFor(fatTransparent),checked:fatTransparent.checked}:null,reset:reset?{id:reset.id,label:reset.textContent.trim()}:null,note:root.querySelector('.composition-note')?.textContent.trim()||''}:null;
+  const output=angle?document.getElementById(angle.id.replace(/-angle$/,'-value')):null;
+  const note=root.querySelector('.diagram-note,.forearm-note,.thigh-note');
+  return{key,title:root.querySelector('h2')?.textContent.trim()||document.title,caption:root.querySelector('.diagram-caption')?.textContent.trim()||'',modes:modeButtons,muscleToggle:muscleToggle?{label:muscleToggle.textContent.trim(),showing:root.dataset.showMuscles!=='false'}:null,transparent:by('transparent')?{id:by('transparent').id,label:labelFor(by('transparent')),checked:by('transparent').checked}:null,fibers:by('fibers')?{id:by('fibers').id,label:labelFor(by('fibers')),checked:by('fibers').checked}:null,landmark:landmark?{id:landmark.id,label:labelmarkLabel(),value:landmark.value,options:[...landmark.options].map(option=>({value:option.value,label:option.textContent.trim()}))}:null,composition,views,play:play?{label:play.textContent.trim(),playing:play.getAttribute('aria-pressed')==='true'}:null,angle:angle?{...rangeInfo(angle),output:output?.textContent.trim()||'',ariaLabel:angle.getAttribute('aria-label')||''}:null,note:note?.textContent.trim()||'',credit:creditParts};
+ }
+ function labelmarkLabel(){const label=document.querySelector('label[for="'+key+'-landmark"]');return label?.textContent.trim()||'랜드마크';}
+ function sendInfo(){parent.postMessage({type:'anatomy-hub-ui',key,info:snapshot()},'*');}
+ function clickSelector(selector){const button=root.querySelector(selector);if(button)button.click();}
+ function apply(command){
+  if(!command||typeof command!=='object')return;
+  if(command.action==='mode')clickSelector('button[data-'+key+'-mode="'+command.value+'"],button[data-limb-mode="'+command.value+'"]');
+  else if(command.action==='view'){const button=by(command.value);button?.click();}
+  else if(command.action==='toggle-muscles')clickSelector('[data-'+key+'-toggle-muscles],[data-limb-toggle-muscles]');
+  else if(command.action==='play'){const button=by('play');if(button&&(button.getAttribute('aria-pressed')==='true')!==Boolean(command.value))button.click();}
+  else if(command.action==='range'&&typeof command.id==='string'){const input=document.getElementById(command.id);if(input?.type==='range'){input.value=String(command.value);input.dispatchEvent(new Event('input',{bubbles:true}));}}
+  else if(command.action==='check'&&typeof command.id==='string'){const input=document.getElementById(command.id);if(input?.type==='checkbox'&&input.checked!==Boolean(command.value)){input.checked=Boolean(command.value);input.dispatchEvent(new Event('change',{bubbles:true}));}}
+  else if(command.action==='select'&&typeof command.id==='string'){const select=document.getElementById(command.id);if(select?.tagName==='SELECT'&&[...select.options].some(option=>option.value===command.value)){select.value=command.value;select.dispatchEvent(new Event('change',{bubbles:true}));}}
+  else if(command.action==='click'&&typeof command.id==='string'){document.getElementById(command.id)?.click();}
+ }
+ window.addEventListener('message',event=>{if(event.source!==parent)return;const data=event.data;if(data?.key!==key)return;if(data.type==='anatomy-hub-ui-request')sendInfo();else if(data.type==='anatomy-hub-ui-command')apply(data.command);});
+ for(const type of ['input','change','click'])document.addEventListener(type,event=>{if(root.contains(event.target))queueMicrotask(sendInfo);});
+ sendInfo();
 })();
 </script></body></html>

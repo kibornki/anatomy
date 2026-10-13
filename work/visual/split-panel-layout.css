@@ -1,0 +1,17 @@
+@media (min-width:640px){
+ #arm.diagram,#abdomen.diagram,#forearm-motion,#thigh-motion{display:grid;grid-template-columns:minmax(0,1fr) minmax(260px,320px);column-gap:16px;align-content:start;align-items:start;width:100%!important;max-width:none;margin:0}
+ #arm.diagram,#abdomen.diagram{grid-template-areas:"title title" "caption caption" "scene composition" "scene landmark" "scene learning" "scene controls" "scene note" "credit credit"}
+ #forearm-motion,#thigh-motion{grid-template-areas:"title title" "caption caption" "scene composition" "scene landmark" "scene learning" "scene controls" "scene note"}
+ #arm>h2,#abdomen>h2{grid-area:title}
+ #forearm-motion>h2,#thigh-motion>h2{grid-area:title}
+ #arm>.diagram-caption,#abdomen>.diagram-caption,#forearm-motion>.diagram-caption,#thigh-motion>.diagram-caption{grid-area:caption}
+ #arm>.diagram-stage{display:contents}
+ #arm>.diagram-stage>.diagram-scene{grid-area:scene;align-self:center;display:block;width:100%;height:clamp(480px,68vh,740px)!important;min-width:0;margin:0}
+ #arm>.diagram-stage>.artist-landmark-picker,#abdomen>.anatomy-landmark-picker,#forearm-motion>.anatomy-landmark-picker,#thigh-motion>.anatomy-landmark-picker{grid-area:landmark;align-self:start;min-width:0;margin:0}
+ #abdomen>.diagram-scene,#forearm-motion>.forearm-scene,#thigh-motion>.thigh-scene{grid-area:scene;align-self:center;display:block;width:100%;height:clamp(480px,68vh,740px)!important;min-width:0;margin:0}
+ #arm>.composition-controls,#abdomen>.composition-controls,#forearm-motion>.composition-controls,#thigh-motion>.composition-controls{grid-area:composition;margin:0}
+ #arm>.artist-learning,#abdomen>.artist-learning,#forearm-motion>.artist-learning,#thigh-motion>.artist-learning{grid-area:learning;align-self:end;margin:6px 0}
+ #arm>.diagram-controls,#abdomen>.diagram-controls,#forearm-motion>.forearm-controls,#thigh-motion>.thigh-controls{grid-area:controls;min-width:0;margin:0;gap:12px}
+ #arm>.diagram-note,#abdomen>.diagram-note,#forearm-motion>.forearm-note,#thigh-motion>.thigh-note{grid-area:note;min-width:0}
+ #arm>.atlas-credit,#abdomen>.atlas-credit{grid-area:credit;margin:0}
+}

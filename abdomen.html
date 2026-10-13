@@ -1280,6 +1280,23 @@ html{color-scheme:light;background:white!important}:root{--background:#fff;--for
 
 .artist-learning{display:grid;gap:6px;margin:8px 0 10px}.artist-mode-buttons{display:flex;align-items:center;gap:3px;flex-wrap:wrap}.artist-mode-buttons .btn{border:1px solid color-mix(in srgb,var(--muted-foreground) 30%,var(--background));color:var(--foreground);background:var(--background);padding:3px 5px;font-size:11px}.artist-mode-buttons .btn[aria-pressed=true]{border-color:var(--foreground);background:var(--foreground);color:var(--background)}.artist-mode-buttons .artist-toggle-control{display:inline-flex;align-items:center;gap:4px;min-width:0;min-height:28px;margin:0;padding:0 1px;font-size:11px;white-space:nowrap}.artist-mode-buttons .artist-toggle-control .form-check-input{width:14px;height:14px;margin:0}.artist-mode-buttons .artist-toggle-control .form-check-label{display:inline;min-width:0;min-height:0}
 #abdomen[data-mode=anatomy] .sculpt-volumes,#abdomen[data-mode=anatomy] .abdomen-mode-header{display:none}#abdomen[data-mode=sculpt] .diagram-volumes,#abdomen[data-mode=sculpt] .diagram-labels,#abdomen[data-mode=compare] .diagram-labels{display:none}#abdomen[data-mode=compare] .diagram-volumes{clip-path:url(#abdomen-anatomy-half)}#abdomen[data-mode=compare] .sculpt-volumes{clip-path:url(#abdomen-sculpt-half)}#abdomen[data-show-muscles=false] [data-muscle],#abdomen[data-show-muscles=false] .sculpt-volumes [data-kind=muscle]{display:none}.abdomen-mode-header{fill:var(--foreground);font-size:11px;font-weight:700;paint-order:stroke;stroke:var(--background);stroke-width:3px;stroke-linejoin:round}.sculpt-divider{fill:none;stroke:var(--muted-foreground);stroke-width:.7;stroke-dasharray:4 4}.sculpt-facet{stroke:#443a50;stroke-width:.5px;stroke-opacity:.42;vector-effect:non-scaling-stroke;stroke-linejoin:round}.sculpt-outline{stroke:#697486;stroke-width:.8;stroke-opacity:.38}.sculpt-form-lines{fill:none;stroke:var(--foreground);stroke-width:.65;stroke-opacity:.14}.transparent .sculpt-volumes [data-kind=muscle]{opacity:.42}
+</style><style>@media (min-width:640px){
+ #arm.diagram,#abdomen.diagram,#forearm-motion,#thigh-motion{display:grid;grid-template-columns:minmax(0,1fr) minmax(260px,320px);column-gap:16px;align-content:start;align-items:start;width:100%!important;max-width:none;margin:0}
+ #arm.diagram,#abdomen.diagram{grid-template-areas:"title title" "caption caption" "scene composition" "scene landmark" "scene learning" "scene controls" "scene note" "credit credit"}
+ #forearm-motion,#thigh-motion{grid-template-areas:"title title" "caption caption" "scene composition" "scene landmark" "scene learning" "scene controls" "scene note"}
+ #arm>h2,#abdomen>h2{grid-area:title}
+ #forearm-motion>h2,#thigh-motion>h2{grid-area:title}
+ #arm>.diagram-caption,#abdomen>.diagram-caption,#forearm-motion>.diagram-caption,#thigh-motion>.diagram-caption{grid-area:caption}
+ #arm>.diagram-stage{display:contents}
+ #arm>.diagram-stage>.diagram-scene{grid-area:scene;align-self:center;display:block;width:100%;height:clamp(480px,68vh,740px)!important;min-width:0;margin:0}
+ #arm>.diagram-stage>.artist-landmark-picker,#abdomen>.anatomy-landmark-picker,#forearm-motion>.anatomy-landmark-picker,#thigh-motion>.anatomy-landmark-picker{grid-area:landmark;align-self:start;min-width:0;margin:0}
+ #abdomen>.diagram-scene,#forearm-motion>.forearm-scene,#thigh-motion>.thigh-scene{grid-area:scene;align-self:center;display:block;width:100%;height:clamp(480px,68vh,740px)!important;min-width:0;margin:0}
+ #arm>.composition-controls,#abdomen>.composition-controls,#forearm-motion>.composition-controls,#thigh-motion>.composition-controls{grid-area:composition;margin:0}
+ #arm>.artist-learning,#abdomen>.artist-learning,#forearm-motion>.artist-learning,#thigh-motion>.artist-learning{grid-area:learning;align-self:end;margin:6px 0}
+ #arm>.diagram-controls,#abdomen>.diagram-controls,#forearm-motion>.forearm-controls,#thigh-motion>.thigh-controls{grid-area:controls;min-width:0;margin:0;gap:12px}
+ #arm>.diagram-note,#abdomen>.diagram-note,#forearm-motion>.forearm-note,#thigh-motion>.thigh-note{grid-area:note;min-width:0}
+ #arm>.atlas-credit,#abdomen>.atlas-credit{grid-area:credit;margin:0}
+}
 </style></head><body><div id="abdomen" class="diagram"><h2>복부 근육과 몸통 움직임</h2><div class="text-small diagram-caption">전거근·외복사근·내복사근·복직근·광배근</div><svg class="diagram-scene" role="img" aria-labelledby="abdomen-title abdomen-desc"><title id="abdomen-title">복부 근육과 몸통 움직임</title><desc id="abdomen-desc">복부와 광배근 도해. 정면과 측면의 상체 척추 C자 말기, 골반을 고정하고 척추 축을 따라 흉추에 주로 회전을 나누고 요추의 회전은 작게 유지하는 비틀기를 제공합니다. 정면은 좌우대칭의 0도 시점이며, 비틀기는 16도 사선 시점입니다. 근육 외형과 운동 분포는 작화용 근사입니다.</desc><defs></defs><g class="diagram-volumes"></g><g class="diagram-labels"></g></svg><div class="artist-learning"><div class="artist-mode-buttons" role="group" aria-label="표시 모드">
 <button type="button" class="btn" data-abdomen-mode="anatomy" aria-pressed="true">해부학</button><button type="button" class="btn" data-abdomen-mode="sculpt" aria-pressed="false">도형화</button><button type="button" class="btn" data-abdomen-mode="compare" aria-pressed="false">비교</button><button type="button" class="btn" data-abdomen-toggle-muscles>근육 숨기기</button>
 <label class="form-check artist-toggle-control"><input type="checkbox" class="form-check-input" id="abdomen-transparent"><span class="form-check-label">근육 반투명</span></label><label class="form-check artist-toggle-control" data-fibers-control><input type="checkbox" class="form-check-input" id="abdomen-fibers" checked><span class="form-check-label">근섬유</span></label>
@@ -1883,11 +1900,60 @@ function AbdomenTwist(host,flexion){
  for(const id of ['fibers','transparent'])by(id).addEventListener('change',()=>{root.classList.toggle('no-fibers',!by('fibers').checked);root.classList.toggle('transparent',by('transparent').checked);render();capture();queueFit();});
  root.querySelectorAll('[data-abdomen-mode]').forEach(button=>button.addEventListener('click',()=>{mode=button.dataset.abdomenMode;render();capture();queueFit();}));
  root.querySelector('[data-abdomen-toggle-muscles]').addEventListener('click',()=>{showMuscles=!showMuscles;render();capture();queueFit();});
- let fitPending=false;function fit(){fitPending=false;const svg=root.querySelector('svg'),available=Math.max(0,document.documentElement.clientWidth-32),overhead=root.scrollHeight-svg.getBoundingClientRect().height,heightWidth=(innerHeight-overhead-48)*640/515,next=Math.floor(available<=680?available:Math.min(available,760,Math.max(220,heightWidth)))+'px';if(root.style.width!==next)root.style.width=next;}
+ let fitPending=false;function fit(){fitPending=false;const svg=root.querySelector('svg'),viewportWidth=document.documentElement.clientWidth,available=Math.max(0,viewportWidth-32),overhead=root.scrollHeight-svg.getBoundingClientRect().height,heightWidth=(innerHeight-overhead-48)*640/515,next=Math.floor(viewportWidth>=640?available:available<=680?available:Math.min(available,760,Math.max(220,heightWidth)))+'px';if(root.style.width!==next)root.style.width=next;}
  const queueFit=()=>{if(!fitPending){fitPending=true;requestAnimationFrame(fit);}};window.addEventListener('resize',queueFit);new ResizeObserver(queueFit).observe(root);new ResizeObserver(render).observe(root);
  for(const event of ['input','change','click'])document.addEventListener(event,()=>queueMicrotask(capture));
  let lastCapture=0,lastDraw=0;function tick(t){if(playing&&t-lastDraw>40){if(last)phase+=(Math.min(t-last,100))*.00065;if(view==='twist')twist=60*Math.sin(phase);else curl=100*(1-Math.cos(phase))/2;render();last=t;lastDraw=t;if(t-lastCapture>500){capture();lastCapture=t;}}requestAnimationFrame(tick);}requestAnimationFrame(tick);
  window.abdomenDraft={model:{flexion,twisting},root,setPose(a,v=view){play(false);if(['front','side','twist'].includes(v))view=v;if(view==='twist')twist=Math.max(-60,Math.min(60,a));else curl=Math.max(0,Math.min(100,a));render();capture();},setMode(value){if(['anatomy','sculpt','compare'].includes(value)){mode=value;render();capture();}},setShowMuscles(value){showMuscles=!!value;render();capture();}};
  root.classList.toggle('no-fibers',!by('fibers').checked);root.classList.toggle('transparent',by('transparent').checked);syncPhase();play(playing);render();queueFit();capture();
+})();
+
+/* One dashboard control surface drives the selected self-contained model frame. */
+(()=>{
+ const configNode=document.getElementById('hub-config');if(!configNode)return;
+ const config=JSON.parse(configNode.textContent),key=config.key,root=document.getElementById(key)||document.getElementById(key+'-motion');
+ if(!root)return;
+ const sceneStyle=document.createElement('style');sceneStyle.id='anatomy-hub-scene-only';sceneStyle.textContent=`
+html,body{width:100%!important;height:100%!important;min-height:0!important;margin:0!important;padding:0!important;overflow:hidden!important}
+body{display:block!important}
+#${root.id}{display:grid!important;grid-template-columns:minmax(0,1fr)!important;grid-template-rows:minmax(0,1fr)!important;grid-template-areas:none!important;align-content:stretch!important;align-items:stretch!important;width:100%!important;max-width:none!important;height:100%!important;min-height:0!important;margin:0!important;padding:0!important;overflow:hidden!important}
+#${root.id} h2,#${root.id} .diagram-caption,#${root.id} .composition-controls,#${root.id} .artist-learning,#${root.id} .diagram-controls,#${root.id} .forearm-controls,#${root.id} .thigh-controls,#${root.id} .diagram-note,#${root.id} .forearm-note,#${root.id} .thigh-note,#${root.id} .atlas-credit,#${root.id} .native-credit,#${root.id} .native-legend,#${root.id} .diagram-legend,#${root.id} .anatomy-landmark-picker,#${root.id} .artist-landmark-picker,body>.atlas-credit,body>.native-credit{display:none!important}
+#arm>.diagram-stage{display:contents!important}
+#upperbody>.diagram-scene,#arm>.diagram-stage>.diagram-scene,#abdomen>.diagram-scene,#forearm-motion>.forearm-scene,#thigh-motion>.thigh-scene{display:block!important;grid-area:auto!important;align-self:stretch!important;place-self:stretch!important;width:100%!important;height:100%!important;max-width:none!important;max-height:none!important;min-width:0!important;min-height:0!important;margin:0!important;padding:0!important}
+`;document.head.append(sceneStyle);
+ const by=id=>document.getElementById(key+'-'+id),labelFor=input=>{
+  if(!input)return'';const label=input.labels?.[0]||document.querySelector('label[for="'+input.id+'"]');if(!label)return input.getAttribute('aria-label')||'';
+  const copy=label.cloneNode(true);copy.querySelectorAll('input,output').forEach(node=>node.remove());return copy.textContent.trim();
+ };
+ function rangeInfo(input){if(!input)return null;const output=document.getElementById(input.id+'-value');return{id:input.id,label:labelFor(input),min:Number(input.min)||0,max:Number(input.max)||100,step:Number(input.step)||1,value:Number(input.value),output:output?.textContent.trim()||''};}
+ function snapshot(){
+  const views=['front','side','medial','back','twist'].map(value=>by(value)).filter(Boolean).map(button=>({value:button.id.slice(key.length+1),label:button.textContent.trim(),selected:button.getAttribute('aria-pressed')==='true'}));
+  const modeButtons=[...root.querySelectorAll('button[data-'+key+'-mode],button[data-limb-mode]')].map(button=>({value:button.getAttribute('data-'+key+'-mode')||button.getAttribute('data-limb-mode'),label:button.textContent.trim(),selected:button.getAttribute('aria-pressed')==='true'}));
+  const landmark=by('landmark'),muscleToggle=root.querySelector('[data-'+key+'-toggle-muscles],[data-limb-toggle-muscles]'),play=by('play'),angle=by('angle');
+  const credit=document.querySelector('.atlas-credit,.native-credit');
+  const creditParts=credit?[...credit.childNodes].map(node=>node.nodeType===1&&node.tagName==='A'?{href:node.href,text:node.textContent}:{text:node.textContent}).filter(part=>part.text):[];
+  const muscle=by('composition-muscle'),fat=by('composition-fat'),fatTransparent=by('composition-fat-transparent'),reset=by('composition-reset');
+  const composition=muscle||fat?{muscle:rangeInfo(muscle),fat:rangeInfo(fat),fatTransparent:fatTransparent?{id:fatTransparent.id,label:labelFor(fatTransparent),checked:fatTransparent.checked}:null,reset:reset?{id:reset.id,label:reset.textContent.trim()}:null,note:root.querySelector('.composition-note')?.textContent.trim()||''}:null;
+  const output=angle?document.getElementById(angle.id.replace(/-angle$/,'-value')):null;
+  const note=root.querySelector('.diagram-note,.forearm-note,.thigh-note');
+  return{key,title:root.querySelector('h2')?.textContent.trim()||document.title,caption:root.querySelector('.diagram-caption')?.textContent.trim()||'',modes:modeButtons,muscleToggle:muscleToggle?{label:muscleToggle.textContent.trim(),showing:root.dataset.showMuscles!=='false'}:null,transparent:by('transparent')?{id:by('transparent').id,label:labelFor(by('transparent')),checked:by('transparent').checked}:null,fibers:by('fibers')?{id:by('fibers').id,label:labelFor(by('fibers')),checked:by('fibers').checked}:null,landmark:landmark?{id:landmark.id,label:labelmarkLabel(),value:landmark.value,options:[...landmark.options].map(option=>({value:option.value,label:option.textContent.trim()}))}:null,composition,views,play:play?{label:play.textContent.trim(),playing:play.getAttribute('aria-pressed')==='true'}:null,angle:angle?{...rangeInfo(angle),output:output?.textContent.trim()||'',ariaLabel:angle.getAttribute('aria-label')||''}:null,note:note?.textContent.trim()||'',credit:creditParts};
+ }
+ function labelmarkLabel(){const label=document.querySelector('label[for="'+key+'-landmark"]');return label?.textContent.trim()||'랜드마크';}
+ function sendInfo(){parent.postMessage({type:'anatomy-hub-ui',key,info:snapshot()},'*');}
+ function clickSelector(selector){const button=root.querySelector(selector);if(button)button.click();}
+ function apply(command){
+  if(!command||typeof command!=='object')return;
+  if(command.action==='mode')clickSelector('button[data-'+key+'-mode="'+command.value+'"],button[data-limb-mode="'+command.value+'"]');
+  else if(command.action==='view'){const button=by(command.value);button?.click();}
+  else if(command.action==='toggle-muscles')clickSelector('[data-'+key+'-toggle-muscles],[data-limb-toggle-muscles]');
+  else if(command.action==='play'){const button=by('play');if(button&&(button.getAttribute('aria-pressed')==='true')!==Boolean(command.value))button.click();}
+  else if(command.action==='range'&&typeof command.id==='string'){const input=document.getElementById(command.id);if(input?.type==='range'){input.value=String(command.value);input.dispatchEvent(new Event('input',{bubbles:true}));}}
+  else if(command.action==='check'&&typeof command.id==='string'){const input=document.getElementById(command.id);if(input?.type==='checkbox'&&input.checked!==Boolean(command.value)){input.checked=Boolean(command.value);input.dispatchEvent(new Event('change',{bubbles:true}));}}
+  else if(command.action==='select'&&typeof command.id==='string'){const select=document.getElementById(command.id);if(select?.tagName==='SELECT'&&[...select.options].some(option=>option.value===command.value)){select.value=command.value;select.dispatchEvent(new Event('change',{bubbles:true}));}}
+  else if(command.action==='click'&&typeof command.id==='string'){document.getElementById(command.id)?.click();}
+ }
+ window.addEventListener('message',event=>{if(event.source!==parent)return;const data=event.data;if(data?.key!==key)return;if(data.type==='anatomy-hub-ui-request')sendInfo();else if(data.type==='anatomy-hub-ui-command')apply(data.command);});
+ for(const type of ['input','change','click'])document.addEventListener(type,event=>{if(root.contains(event.target))queueMicrotask(sendInfo);});
+ sendInfo();
 })();
 </script></body></html>

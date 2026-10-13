@@ -30,3 +30,23 @@
   </section>
   <section class="dashboard-panel" id="dashboard-anatomy" role="tabpanel" aria-labelledby="dashboard-tab-anatomy" hidden>
 <!-- dashboard-anatomy-start -->
+<div class="app">
+  <aside class="sidebar" aria-label="부위 선택">
+    <div class="cards" role="tablist" aria-label="근육 부위" aria-orientation="vertical">
+      <button class="card" id="tab-upperbody" type="button" role="tab" data-topic="upperbody" aria-controls="anatomy-panel" aria-selected="true" tabindex="0"><svg viewBox="0 0 50 70" aria-hidden="true"><path d="M18 5h14v10l11 7-4 18-4 25H15l-4-25-4-18 11-7Z" fill="#e3e7ed" stroke="#96a3b3"/><path d="M24 21 14 22 10 30 22 38 24 36ZM26 21 36 22 40 30 28 38 26 36Z" fill="#e47976" stroke="#b85858"/><path d="M25 20v25" stroke="#96a3b3"/></svg><span><strong>상체</strong><small>정면 · 후면 · 측면</small><span class="movement">팔 외전 각도</span></span></button>
+      <button class="card" id="tab-arm" type="button" role="tab" data-topic="arm" aria-controls="anatomy-panel" aria-selected="false" tabindex="-1"><svg viewBox="0 0 50 70" aria-hidden="true"><path d="M23 6h11l-3 33 11-10 5 6-20 20-9-7Z" fill="#e3e7ed" stroke="#96a3b3"/><path d="M25 12C16 21 16 31 23 39 29 31 30 19 25 12Z" fill="#e47976" stroke="#b85858"/><path d="M30 12C24 20 24 31 26 38 33 29 34 19 30 12Z" fill="#80b2e8" stroke="#568cc5"/></svg><span><strong>팔</strong><small>정면 · 후면 · 측면</small><span class="movement">팔꿈치 굽힘</span></span></button>
+      <button class="card" id="tab-abdomen" type="button" role="tab" data-topic="abdomen" aria-controls="anatomy-panel" aria-selected="false" tabindex="-1"><svg viewBox="0 0 50 70" aria-hidden="true"><path d="M10 6h30l-3 22-6 15 7 18-13 5-13-5 7-18-6-15Z" fill="#e3e7ed" stroke="#96a3b3"/><path d="M12 24 19 34 22 52 15 57 17 41Z" fill="#80b2e8" stroke="#568cc5"/><path d="M37 29 31 34 28 50 35 56 33 40Z" fill="#8ac3ac" stroke="#61a188"/></svg><span><strong>복부</strong><small>정면 · 측면</small><span class="movement">말기 · 비틀기</span></span></button>
+      <button class="card" id="tab-forearm" type="button" role="tab" data-topic="forearm" aria-controls="anatomy-panel" aria-selected="false" tabindex="-1"><svg viewBox="0 0 50 70" aria-hidden="true"><path d="M16 5h18l-4 38 6 8 2 12-6 3-15-3-3-12 6-8Z" fill="#e3e7ed" stroke="#96a3b3"/><path d="M20 9C13 16 15 30 21 41L24 45 26 34C26 23 24 14 20 9Z" fill="#e47976" stroke="#b85858"/><path d="M28 9C22 17 23 29 25 42L28 45C34 29 35 18 28 9Z" fill="#80b2e8" stroke="#568cc5"/></svg><span><strong>전완</strong><small>정면 · 후면 · 측면</small><span class="movement">회내 · 회외</span></span></button>
+      <button class="card" id="tab-thigh" type="button" role="tab" data-topic="thigh" aria-controls="anatomy-panel" aria-selected="false" tabindex="-1"><svg viewBox="0 0 50 70" aria-hidden="true"><path d="M15 5h20l-5 24 4 10-4 24H17l-4-23 5-12Z" fill="#e3e7ed" stroke="#96a3b3"/><path d="M19 12C12 20 17 31 22 41L26 43 28 31 24 13Z" fill="#e47976" stroke="#b85858"/><path d="M29 12C37 21 33 32 29 41L26 43 23 30 26 13Z" fill="#80b2e8" stroke="#568cc5"/></svg><span><strong>허벅지</strong><small>정면 · 후면 · 측면</small><span class="movement">무릎 굽힘</span></span></button>
+    </div>
+    <p class="sidebar-note">부위를 선택한 뒤<br>각도와 근육 층을 살펴보세요.</p>
+  </aside>
+  <main class="viewer">
+    <header class="viewer-header"><strong id="selected-name">상체 · 팔 외전 각도</strong><span id="selected-caption">정면 · 근육 표시 조절</span></header>
+    <section class="anatomy-layout" id="anatomy-panel" role="tabpanel" aria-labelledby="tab-upperbody">
+      <div class="anatomy-scene"><iframe id="anatomy-frame" title="상체 애니메이션" sandbox="allow-scripts" referrerpolicy="no-referrer"></iframe></div>
+      <aside class="anatomy-controls" id="anatomy-controls" aria-label="해부학 공통 조작"><p class="anatomy-controls-loading">모델을 불러오는 중입니다.</p></aside>
+      <footer class="anatomy-credit" id="anatomy-credit" hidden></footer>
+    </section>
+  </main>
+</div>
