@@ -36,7 +36,7 @@ const {chromium}=require('playwright'),assert=require('node:assert/strict'),fs=r
  for(const region of Object.keys(data)){assert(data[region].document.includes('function AnatomyComposition'));assert(data[region].document.includes('composition:composition.state'));}
  // Inspect the actual embedded documents with their hub messages and storage blocked.
  for(const region of Object.keys(data)){
-  await page.goto('http://127.0.0.1:8767/',{waitUntil:'load',timeout:120000});
+  await page.goto('about:blank');
   await page.evaluate(({document,region})=>{
    document=document.replace('__HUB_CONFIG__',JSON.stringify({key:region,state:null}));
    const iframe=window.document.createElement('iframe');iframe.id='composition-test-frame';iframe.setAttribute('sandbox','allow-scripts');iframe.style.cssText='width:100%;height:900px';iframe.srcdoc=document;
