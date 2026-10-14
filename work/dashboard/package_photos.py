@@ -25,6 +25,17 @@ def preview(source, target, bounds, quality):
 
 for study in studies:
     key = study['id']
+    # Display supplied comparison sheets through CSS viewports, preserving their pixels.
+    if study.get('originalRect'):
+        source = ROOT / study['original']
+        with Image.open(source) as image:
+            source_size = list(image.size)
+        photos.append(dict(id=key, label=study['label'], detail=study['detail'],
+            width=study['originalRect'][2], height=study['originalRect'][3], cropTop=0,
+            original=asset_url(source), sketch=asset_url(ROOT / study['sketch']),
+            thumbnail=asset_url(source), sourceSize=source_size,
+            originalRect=study['originalRect'], sketchRect=study['sketchRect']))
+        continue
     urls = {}
     for kind in ('original', 'sketch'):
         if not study.get(kind):

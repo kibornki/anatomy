@@ -4,6 +4,7 @@
   const list=document.getElementById('photo-list'),stage=document.getElementById('photo-compare');
   const viewport=stage.parentElement,slider=document.getElementById('photo-wipe');
   const original=document.getElementById('photo-original'),sketch=document.getElementById('photo-sketch');
+  const sketchLayer=document.getElementById('photo-sketch-layer');
   const muscleLabels=document.getElementById('photo-muscle-labels');
   const title=document.getElementById('photo-title'),status=document.getElementById('selection-status');
   const storeKey='anatomy-dashboard-v1';
@@ -48,11 +49,19 @@
     stage.style.width=Math.max(1,Math.min(availableWidth,availableHeight*item.width/height,900))+'px';
     renderMuscleLabels(item);
   }
+  function frameImage(image,rect,size){
+    image.style.left=rect?-100*rect[0]/rect[2]+'%':'';
+    image.style.top=rect?-100*rect[1]/rect[3]+'%':'';
+    image.style.width=rect?100*size[0]/rect[2]+'%':'';
+    image.style.height=rect?100*size[1]/rect[3]+'%':'';
+  }
   function selectPhoto(id,save=true){
     const item=photos.find(p=>p.id===id);if(!item)return;
     const hasSketch=!!item.sketch;
     state.photo=id;original.src=item.original;
     if(hasSketch)sketch.src=item.sketch;else sketch.removeAttribute('src');
+    frameImage(original,item.originalRect,item.sourceSize);frameImage(sketch,item.sketchRect,item.sourceSize);
+    sketchLayer.hidden=!hasSketch;
     sketch.hidden=!hasSketch;slider.hidden=!hasSketch;slider.disabled=!hasSketch;
     stage.querySelector('.photo-divider').hidden=!hasSketch;
     viewport.querySelector('.photo-labels span:last-child').textContent=hasSketch?'근육 스케치':'원본만';
@@ -65,7 +74,9 @@
   }
   for(const item of photos){
     const button=document.createElement('button');button.type='button';button.className='photo-choice';button.dataset.photo=item.id;button.setAttribute('aria-pressed','false');
-    const thumb=document.createElement('img');thumb.src=item.thumbnail;thumb.alt='';thumb.loading='lazy';
+    const thumb=document.createElement(item.originalRect?'span':'img');
+    if(item.originalRect){const image=document.createElement('img');image.src=item.thumbnail;image.alt='';image.loading='lazy';frameImage(image,item.originalRect,item.sourceSize);thumb.className='photo-choice-sheet';thumb.setAttribute('aria-hidden','true');thumb.append(image);}
+    else{thumb.src=item.thumbnail;thumb.alt='';thumb.loading='lazy';}
     const text=document.createElement('span'),label=document.createElement('strong'),detail=document.createElement('small');label.textContent=item.label;detail.textContent=item.detail+(item.sketch?'':' · 원본만');button.setAttribute('aria-label',item.label+' '+detail.textContent);text.append(label,detail);button.append(thumb,text);button.addEventListener('click',()=>selectPhoto(item.id));list.append(button);
   }
   function selectMode(mode,save=true){

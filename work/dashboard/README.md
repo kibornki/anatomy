@@ -12,6 +12,8 @@ The current release contains nine corrected raster studies. The six previously b
 
 The selected originals and corrected sketch PNGs live in `assets/photo-comparison/`. `assets.json` uses project-relative paths so the release can be rebuilt without the author's local generated-image folder. WebP URLs include a content hash to refresh updated images in cached browsers.
 
+Supplied comparison sheets can use `originalRect` and `sketchRect` as `[x, y, width, height]` source pixel rectangles. Packaging keeps the sheet unchanged and records `sourceSize`; the viewer clips each rectangle inside the comparison frame. The character front/back entries use this format.
+
 After changing photo assets or dashboard source:
 
 Generated raster studies have muscle callouts in `muscle-labels.json`. The dashboard builder embeds these into photo data; `controls.js` reveals complete callouts only on the sketch side of the wipe. Uncertain subdivisions are deliberately left unnamed. See `PHOTO_ANATOMY_REVIEW.md` for the initial review, corrections and verification limits. Changing callouts only requires running `build.py`, without repackaging images.
