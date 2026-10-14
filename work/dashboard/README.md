@@ -12,7 +12,7 @@ The current release contains nine corrected raster studies. The six previously b
 
 The selected originals and corrected sketch PNGs live in `assets/photo-comparison/`. `assets.json` uses project-relative paths so the release can be rebuilt without the author's local generated-image folder. WebP URLs include a content hash to refresh updated images in cached browsers.
 
-Supplied comparison sheets can use `originalRect` and `sketchRect` as `[x, y, width, height]` source pixel rectangles. Packaging keeps the sheet unchanged and records `sourceSize`; the viewer clips each rectangle inside the comparison frame. The character front/back entries use this format.
+Supplied comparison sheets can use `originalRect` and `sketchRect` as `[x, y, width, height]` source pixel rectangles. Packaging keeps the sheet unchanged and records `sourceSize`; the viewer clips each rectangle inside the comparison frame. Current character entries use the separately supplied original/sketch images.
 
 After changing photo assets or dashboard source:
 

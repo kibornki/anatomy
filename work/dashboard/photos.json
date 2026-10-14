@@ -102,12 +102,12 @@
     "id": "female-back-final",
     "label": "여성 · 후면",
     "detail": "등·어깨·둔부",
-    "width": 1024,
-    "height": 1536,
+    "width": 670,
+    "height": 939,
     "cropTop": 0,
-    "original": "assets/photo-comparison/female-back-final-original.webp?v=fc13abd3b192",
-    "sketch": "assets/photo-comparison/female-back-final-sketch.webp?v=19894ec6d34a",
-    "thumbnail": "assets/photo-comparison/female-back-final-thumb.webp?v=ee29726fee19"
+    "original": "assets/photo-comparison/female-back-final-original.webp?v=bcf7d369f4ca",
+    "sketch": "assets/photo-comparison/female-back-final-sketch.webp?v=285b3bd3f138",
+    "thumbnail": "assets/photo-comparison/female-back-final-thumb.webp?v=57b25fbc364e"
   },
   {
     "id": "female-front-final",
@@ -116,73 +116,63 @@
     "width": 400,
     "height": 520,
     "cropTop": 0,
-    "original": "assets/photo-comparison/female-front-final-original.webp?v=da36e498326f",
-    "sketch": "assets/photo-comparison/female-front-final-sketch.webp?v=30009c380163",
-    "thumbnail": "assets/photo-comparison/female-front-final-thumb.webp?v=272f517a5af5"
+    "original": "assets/photo-comparison/female-front-final-original.webp?v=622566572e0a",
+    "sketch": "assets/photo-comparison/female-front-final-sketch.webp?v=145d6ed2aa80",
+    "thumbnail": "assets/photo-comparison/female-front-final-thumb.webp?v=00d9947ee5f5"
   },
   {
     "id": "female-arms-up-final",
     "label": "여성 · 팔 올리기",
     "detail": "사선 · 몸통·팔·허벅지",
-    "width": 1199,
-    "height": 1312,
+    "width": 527,
+    "height": 596,
     "cropTop": 0,
-    "original": "assets/photo-comparison/female-arms-up-final-original.webp?v=0bc69c113e31",
-    "sketch": "assets/photo-comparison/female-arms-up-final-sketch.webp?v=b3ecf1fceebd",
-    "thumbnail": "assets/photo-comparison/female-arms-up-final-thumb.webp?v=763aa833a0ab"
+    "original": "assets/photo-comparison/female-arms-up-final-original.webp?v=7c24603426f0",
+    "sketch": "assets/photo-comparison/female-arms-up-final-sketch.webp?v=b3481604d862",
+    "thumbnail": "assets/photo-comparison/female-arms-up-final-thumb.webp?v=8380aaf99a49"
   },
   {
     "id": "figure-character-front",
     "label": "캐릭터 · 정면",
     "detail": "피규어 · 원본/근육 그림",
-    "width": 1000,
-    "height": 1400,
+    "width": 914,
+    "height": 1280,
     "cropTop": 0,
-    "original": "assets/photo-comparison/figure-character-sheet.png?v=3da9a490dfcf",
-    "sketch": "assets/photo-comparison/figure-character-sheet.png?v=3da9a490dfcf",
-    "thumbnail": "assets/photo-comparison/figure-character-sheet.png?v=3da9a490dfcf",
-    "sourceSize": [
-      2024,
-      2702
-    ],
-    "originalRect": [
-      0,
-      0,
-      1000,
-      1400
-    ],
-    "sketchRect": [
-      1044,
-      41,
-      980,
-      1372
-    ]
+    "original": "assets/photo-comparison/figure-character-front-original.webp?v=d17d61cf0cd7",
+    "sketch": "assets/photo-comparison/figure-character-front-sketch.webp?v=9b09046399a3",
+    "thumbnail": "assets/photo-comparison/figure-character-front-thumb.webp?v=642bb25a061b"
   },
   {
     "id": "figure-character-back",
     "label": "캐릭터 · 후면",
     "detail": "피규어 · 원본/근육 그림",
-    "width": 939,
-    "height": 1276,
+    "width": 365,
+    "height": 547,
     "cropTop": 0,
-    "original": "assets/photo-comparison/figure-character-sheet.png?v=3da9a490dfcf",
-    "sketch": "assets/photo-comparison/figure-character-sheet.png?v=3da9a490dfcf",
-    "thumbnail": "assets/photo-comparison/figure-character-sheet.png?v=3da9a490dfcf",
-    "sourceSize": [
-      2024,
-      2702
-    ],
-    "originalRect": [
-      44,
-      1424,
-      939,
-      1276
-    ],
-    "sketchRect": [
-      1071,
-      1432,
-      935,
-      1270
-    ]
+    "original": "assets/photo-comparison/figure-character-back-original.webp?v=94db9b5f3cdf",
+    "sketch": "assets/photo-comparison/figure-character-back-sketch.webp?v=3e43ae3ff21c",
+    "thumbnail": "assets/photo-comparison/figure-character-back-thumb.webp?v=cd6f30163b8e"
+  },
+  {
+    "id": "figure-blue-front",
+    "label": "캐릭터 · 파란 머리",
+    "detail": "드레스 · 정면",
+    "width": 402,
+    "height": 604,
+    "cropTop": 0,
+    "original": "assets/photo-comparison/figure-blue-front-original.webp?v=689317342c9e",
+    "sketch": "assets/photo-comparison/figure-blue-front-sketch.webp?v=8eef0efa974f",
+    "thumbnail": "assets/photo-comparison/figure-blue-front-thumb.webp?v=58b1b87950a1"
+  },
+  {
+    "id": "figure-pirate-crouch",
+    "label": "캐릭터 · 앉은 자세",
+    "detail": "피규어 · 굽힌 다리",
+    "width": 402,
+    "height": 402,
+    "cropTop": 0,
+    "original": "assets/photo-comparison/figure-pirate-crouch-original.webp?v=d04dbbe0d2b6",
+    "sketch": "assets/photo-comparison/figure-pirate-crouch-sketch.webp?v=782647762539",
+    "thumbnail": "assets/photo-comparison/figure-pirate-crouch-thumb.webp?v=bf78a3d27483"
   }
 ]

@@ -89,38 +89,28 @@
     "id": "figure-character-front",
     "label": "캐릭터 · 정면",
     "detail": "피규어 · 원본/근육 그림",
-    "original": "assets/photo-comparison/figure-character-sheet.png",
-    "sketch": "assets/photo-comparison/figure-character-sheet.png",
-    "originalRect": [
-      0,
-      0,
-      1000,
-      1400
-    ],
-    "sketchRect": [
-      1044,
-      41,
-      980,
-      1372
-    ]
+    "original": "assets/photo-comparison/figure-character-front-original.png",
+    "sketch": "assets/photo-comparison/figure-character-front-sketch.png"
   },
   {
     "id": "figure-character-back",
     "label": "캐릭터 · 후면",
     "detail": "피규어 · 원본/근육 그림",
-    "original": "assets/photo-comparison/figure-character-sheet.png",
-    "sketch": "assets/photo-comparison/figure-character-sheet.png",
-    "originalRect": [
-      44,
-      1424,
-      939,
-      1276
-    ],
-    "sketchRect": [
-      1071,
-      1432,
-      935,
-      1270
-    ]
+    "original": "assets/photo-comparison/figure-character-back-original.png",
+    "sketch": "assets/photo-comparison/figure-character-back-sketch.png"
+  },
+  {
+    "id": "figure-blue-front",
+    "label": "캐릭터 · 파란 머리",
+    "detail": "드레스 · 정면",
+    "original": "assets/photo-comparison/figure-blue-front-original.png",
+    "sketch": "assets/photo-comparison/figure-blue-front-sketch.png"
+  },
+  {
+    "id": "figure-pirate-crouch",
+    "label": "캐릭터 · 앉은 자세",
+    "detail": "피규어 · 굽힌 다리",
+    "original": "assets/photo-comparison/figure-pirate-crouch-original.png",
+    "sketch": "assets/photo-comparison/figure-pirate-crouch-sketch.png"
   }
 ]
