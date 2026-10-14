@@ -1352,7 +1352,7 @@ function AnatomySurfaceLighting(make,entries,{depthScale=1}={}){
     let total=0,n=0;
     for(let dy=0;dy<stride;dy++)for(let dx=0;dx<stride;dx++){
      const ix=left+x*stride+dx,iy=top+y*stride+dy;
-     if(ix>=w||iy>=h)continue;const v=source[iy*w+ix];if(Number.isFinite(v)){total+=v;n++;}
+     if(ix>=w||iy>=h)continue;const v=visible.depthAt(owner,iy*w+ix);if(Number.isFinite(v)){total+=v;n++;}
     }if(n)z[y*width+x]=total/n;
    }
    for(const axis of [1,width]){
@@ -1490,7 +1490,7 @@ function AnatomyComposition(root, parts, region) {
  const fatLayers=new Map();
  function mountFat(make,parent,layer='anatomy'){const nodes=[],defs=root.querySelector('svg defs');for(let i=0;i<depots.length;i++){const id=region+'-fat-'+layer+'-'+i,gradient=make('radialGradient',{id,cx:'34%',cy:'28%',r:'75%'},defs);for(const [offset,color]of [['0%','#fff1b5'],['38%','#f7d66d'],['78%','#dfaa3e'],['100%','#b97c25']])make('stop',{offset,'stop-color':color},gradient);const g=make('g',{'data-tissue':'fat','aria-label':depots[i].spec.breast?'유방 형태 지방':'지방','data-fat-depot':i},parent),fill=make('path',{fill:'url(#'+id+')',stroke:'#ad7c2b','stroke-width':.65,'stroke-opacity':.45},g);nodes.push({g,fill});}fatLayers.set(layer,nodes);}
  function paintFat(buffer,vertices,offset,surfaces=null){const meshes=fatMeshes(vertices,surfaces);meshes.forEach((m,i)=>m.f.forEach(f=>buffer.triangle(...f.map(j=>m.v[j]),offset+i)));return meshes.length;}
- function drawFat(visible,offset,contour,enabled=true,layer='anatomy'){(fatLayers.get(layer)||[]).forEach((n,i)=>{const owner=offset+i;n.g.style.display=settings.fat&&enabled?'':'none';if(!settings.fat||!enabled)return;const local=visible.ownerZ[owner];n.fill.setAttribute('d',contour(visible,k=>settings.fatTransparent?local[k]>-Infinity&&local[k]>=visible.zbuf[k]-.8:visible.owners[k]===owner,visible.bounds[owner]));n.g.setAttribute('opacity',settings.fatTransparent?.32:1);n.g.parentNode.appendChild(n.g);});}
+ function drawFat(visible,offset,contour,enabled=true,layer='anatomy'){(fatLayers.get(layer)||[]).forEach((n,i)=>{const owner=offset+i;n.g.style.display=settings.fat&&enabled?'':'none';if(!settings.fat||!enabled)return;n.fill.setAttribute('d',contour(visible,k=>settings.fatTransparent?visible.depthAt(owner,k)>-Infinity&&visible.depthAt(owner,k)>=visible.zbuf[k]-.8:visible.owners[k]===owner,visible.bounds[owner]));n.g.setAttribute('opacity',settings.fatTransparent?.32:1);n.g.parentNode.appendChild(n.g);});}
  function mountControls(onChange) {
   const doc=root.ownerDocument,box=doc.createElement('fieldset');box.className='composition-controls';
   const style=doc.createElement('style');style.textContent='.composition-controls{border:1px solid var(--border,#d3dae3);border-radius:10px;padding:10px 12px;margin:12px 0;min-width:0;font-size:12px}.composition-controls legend{padding:0 5px;font-weight:600}.composition-row{display:grid;grid-template-columns:minmax(80px,1fr) auto;gap:5px 10px;margin:7px 0}.composition-row input[type=range]{grid-column:1/-1;width:100%;min-width:0;accent-color:var(--foreground,#596579)}.composition-check{display:flex;align-items:center;gap:7px;margin-top:8px}.composition-note{margin:8px 0 0;color:var(--muted-foreground,#718096);font-size:11px;line-height:1.5}.composition-controls button{font:inherit;border:1px solid var(--border,#d3dae3);border-radius:6px;background:var(--background,#fff);color:var(--foreground,#233047);padding:4px 10px;margin-top:8px}.composition-fat-key{display:inline-block;width:9px;height:9px;background:#f4cc45;border-radius:50%;margin-right:4px}';
@@ -1514,13 +1514,17 @@ function AnatomyComposition(root, parts, region) {
 /* Per-sample camera depth for the existing vector artwork. This buffer only
    supplies SVG clip paths; colors, fibers, bones and opacity stay native SVG.
    Facing the camera alone cannot establish that a muscle is in front of ribs. */
-function AbdominalVisibility({project,depth,step=1}){
+function AbdominalVisibility({project,depth,step=1,accept=null}){
  const triangles=[];
- function triangle(a,b,c,owner){triangles.push({p:[a,b,c].map(project),z:[a,b,c].map(depth),owner});}
+ function triangle(a,b,c,owner){triangles.push({p:[a,b,c].map(project),z:[a,b,c].map(depth),world:accept?[a,b,c]:null,owner});}
  function quad(ps,owner){triangle(ps[0],ps[1],ps[2],owner);triangle(ps[0],ps[2],ps[3],owner);}
  function polygon(ps,owner){
   // Ear clipping retains concave outlines instead of filling their convex hull.
   if(ps.length<3)return;
+  if(ps.length===3){
+   const p=ps.map(project),z=ps.map(depth),area=p.reduce((sum,q,i)=>sum+q[0]*p[(i+1)%3][1]-q[1]*p[(i+1)%3][0],0),world=accept?ps.slice():null;
+   if(area<0){p.reverse();z.reverse();world?.reverse();}triangles.push({p,z,world,owner});return;
+  }
   const q=ps.map(project),cross=(a,b,c)=>(b[0]-a[0])*(c[1]-a[1])-(b[1]-a[1])*(c[0]-a[0]);
   let indices=ps.map((_,i)=>i),area=q.reduce((s,p,i)=>s+p[0]*q[(i+1)%q.length][1]-p[1]*q[(i+1)%q.length][0],0);
   if(area<0)indices.reverse();
@@ -1549,20 +1553,47 @@ function AbdominalVisibility({project,depth,step=1}){
   const x0=Math.floor(minX/step)*step,y0=Math.floor(minY/step)*step;
   const w=Math.ceil((maxX-x0)/step)+1,h=Math.ceil((maxY-y0)/step)+1;
   const zbuf=new Float32Array(w*h).fill(-Infinity),owners=new Int16Array(w*h).fill(-2);
-  const ownerZ=projections?Array.from({length:count},(_,id)=>projections===true||projections(id)?new Float32Array(w*h).fill(-Infinity):null):null;
   const bounds=Array.from({length:count},()=>[w,h,0,0]);
+  const prepared=[];
   for(const t of triangles){
    const p=t.p.map(q=>[(q[0]-x0)/step,(q[1]-y0)/step]),[a,b,c]=p;
    const den=(b[1]-c[1])*(a[0]-c[0])+(c[0]-b[0])*(a[1]-c[1]);if(Math.abs(den)<1e-7)continue;
-   const minX=Math.max(0,Math.floor(Math.min(...p.map(q=>q[0])))),maxX=Math.min(w-1,Math.ceil(Math.max(...p.map(q=>q[0])))),minY=Math.max(0,Math.floor(Math.min(...p.map(q=>q[1])))),maxY=Math.min(h-1,Math.ceil(Math.max(...p.map(q=>q[1]))));
+   const minX=Math.max(0,Math.floor(Math.min(a[0],b[0],c[0]))),maxX=Math.min(w-1,Math.ceil(Math.max(a[0],b[0],c[0]))),minY=Math.max(0,Math.floor(Math.min(a[1],b[1],c[1]))),maxY=Math.min(h-1,Math.ceil(Math.max(a[1],b[1],c[1])));
    if(t.owner>=0){const b=bounds[t.owner];b[0]=Math.min(b[0],minX);b[1]=Math.min(b[1],minY);b[2]=Math.max(b[2],maxX);b[3]=Math.max(b[3],maxY);}
-   for(let y=minY;y<=maxY;y++)for(let x=minX;x<=maxX;x++){
-    const px=x+.5,py=y+.5,wa=((b[1]-c[1])*(px-c[0])+(c[0]-b[0])*(py-c[1]))/den,wb=((c[1]-a[1])*(px-c[0])+(a[0]-c[0])*(py-c[1]))/den,wc=1-wa-wb;
+   prepared.push({t,a,b,c,den,minX,maxX,minY,maxY});
+  }
+  // Per-tissue depth needs only that tissue's projected rectangle, rather
+  // than a full-frame allocation for every muscle and tendon on every pose.
+  const projectionStrides=bounds.map(b=>Math.max(0,b[2]-b[0]+1));
+  const ownerZ=projections?Array.from({length:count},(_,id)=>projections===true||projections(id)?new Float32Array(projectionStrides[id]*Math.max(0,bounds[id][3]-bounds[id][1]+1)).fill(-Infinity):null):null;
+  function depthAt(owner,k){
+   const local=ownerZ?.[owner];if(!local)return -Infinity;
+   const b=bounds[owner],x=k%w,y=Math.floor(k/w);
+   return x<b[0]||x>b[2]||y<b[1]||y>b[3]?-Infinity:local[(y-b[1])*projectionStrides[owner]+x-b[0]];
+  }
+  for(const {t,a,b,c,den,minX,maxX,minY,maxY}of prepared){
+   const owner=t.owner,local=ownerZ&&owner>=0?ownerZ[owner]:null,occluding=occludes(owner),box=bounds[owner],stride=projectionStrides[owner];
+   const waX=(b[1]-c[1])/den,wbX=(c[1]-a[1])/den,wcX=-waX-wbX;
+   for(let y=minY;y<=maxY;y++){
+    const py=y+.5,wa0=((b[1]-c[1])*(.5-c[0])+(c[0]-b[0])*(py-c[1]))/den,wb0=((c[1]-a[1])*(.5-c[0])+(a[0]-c[0])*(py-c[1]))/den,wc0=1-wa0-wb0;
+    let left=minX,right=maxX;
+    // Reject empty scanline spans, retaining a pixel guard and the original
+    // per-sample arithmetic and edge tolerance for the visible samples.
+    for(let edge=0;edge<3;edge++){
+     const slope=edge===0?waX:edge===1?wbX:wcX,value=edge===0?wa0:edge===1?wb0:wc0;
+     if(slope>0)left=Math.max(left,Math.ceil((-1e-6-value)/slope)-1);
+     else if(slope<0)right=Math.min(right,Math.floor((-1e-6-value)/slope)+1);
+     else if(value< -1e-6){right=-1;break;}
+    }
+    for(let x=left;x<=right;x++){
+    const px=x+.5,wa=((b[1]-c[1])*(px-c[0])+(c[0]-b[0])*(py-c[1]))/den,wb=((c[1]-a[1])*(px-c[0])+(a[0]-c[0])*(py-c[1]))/den,wc=1-wa-wb;
     if(wa< -1e-6||wb< -1e-6||wc< -1e-6)continue;
+    if(t.world&&!accept(t.world,wa,wb,wc,owner))continue;
     const z=wa*t.z[0]+wb*t.z[1]+wc*t.z[2],k=y*w+x;
-    if(ownerZ&&t.owner>=0&&ownerZ[t.owner]&&z>ownerZ[t.owner][k])ownerZ[t.owner][k]=z;
-    if(!occludes(t.owner))continue;
-    if(z>zbuf[k]+.02||(Math.abs(z-zbuf[k])<=.02&&t.owner>=0)){zbuf[k]=z;owners[k]=t.owner;}
+    if(local){const index=(y-box[1])*stride+x-box[0];if(z>local[index])local[index]=z;}
+    if(!occluding)continue;
+    if(z>zbuf[k]+.02||(Math.abs(z-zbuf[k])<=.02&&owner>=0)){zbuf[k]=z;owners[k]=owner;}
+    }
    }
   }
   const clips=Array(count).fill(''),centers=Array.from({length:count},()=>[]),coverage=Array(count).fill(0);
@@ -1576,7 +1607,7 @@ function AbdominalVisibility({project,depth,step=1}){
    coverage[id]+=x-start;
    if(y%6===0)centers[id].push([px+length/2,py+step/2]);
   }
-  return {clips,centers,coverage,owners,zbuf,w,h,x0,y0,step,ownerZ,bounds};
+  return {clips,centers,coverage,owners,zbuf,w,h,x0,y0,step,ownerZ,bounds,projectionStrides,depthAt};
  }
  return {triangle,quad,polygon,line,solve};
 }
@@ -1614,13 +1645,15 @@ function NativeLimbMotion(model,region,reference){
  const band=(p,end)=>{const ys=p.v.map(v=>v[1]).sort((a,b)=>a-b),limit=ys[Math.floor(ys.length*(end?.97:.03))];return mean(p.v.filter(v=>end?v[1]>=limit:v[1]<=limit));};
  const rotation=(p,pivot,degrees)=>{const a=degrees*Math.PI/180,c=Math.cos(a),s=Math.sin(a),y=p[1]-pivot[1],z=p[2]-pivot[2];return[p[0],pivot[1]+y*c+z*s,pivot[2]-y*s+z*c];};
  if(region==='forearm'){
-  const A=band(part('radius'),false),B=band(part('ulna'),true),distalRadius=band(part('radius'),true),axis=sub(B,A),length=Math.hypot(...axis),u=axis.map(v=>v/length),cross=(a,b)=>[a[1]*b[2]-a[2]*b[1],a[2]*b[0]-a[0]*b[2],a[0]*b[1]-a[1]*b[0]],dot=(a,b)=>a.reduce((n,v,i)=>n+v*b[i],0);
-  function turn(p,degrees){const q=sub(p,A),a=degrees*Math.PI/180,c=Math.cos(a),s=Math.sin(a),v=cross(u,q),d=dot(u,q);return q.map((x,i)=>A[i]+x*c+v[i]*s+u[i]*d*(1-c));}
+  const A=band(part('radius'),false),B=band(part('ulna'),true),distalRadius=band(part('radius'),true),axis=sub(B,A),length=Math.hypot(...axis),u=axis.map(v=>v/length),dot=(a,b)=>a.reduce((n,v,i)=>n+v*b[i],0);
+  function turn(p,degrees){const x=p[0]-A[0],y=p[1]-A[1],z=p[2]-A[2],a=degrees*Math.PI/180,c=Math.cos(a),s=Math.sin(a),d=u[0]*x+u[1]*y+u[2]*z;return[A[0]+x*c+(u[1]*z-u[2]*y)*s+u[0]*d*(1-c),A[1]+y*c+(u[2]*x-u[0]*z)*s+u[1]*d*(1-c),A[2]+z*c+(u[0]*y-u[1]*x)*s+u[2]*d*(1-c)];}
   const spans=new Map(model.parts.map(p=>{const ts=p.v.map(v=>dot(sub(v,A),u));return[p.name,[Math.min(...ts),Math.max(...ts)]];}));
+  const wrist=dot(axis,u),descriptors=new WeakMap();
+  function descriptor(part){let value=descriptors.get(part);if(!value){const name=part.name.replace(/-tendon-material$/,'');value={name,span:spans.get(name)};descriptors.set(part,value);}return value;}
   function bone(p,name,angle,inverse=false){if(['ulna','humerus'].includes(name))return p.slice();return turn(p,(angle+80)*(inverse?-1:1));}
   function deform(p,part,angle){
    if(part.kind==='bone')return bone(p,part.name,angle);
-   if(angle===-80)return p.slice();const name=part.name.replace(/-tendon-material$/,''),t=dot(sub(p,A),u),[lo,hi]=spans.get(name),wrist=dot(sub(B,A),u);
+   if(angle===-80)return p.slice();const {name,span:[lo,hi]}=descriptor(part),t=(p[0]-A[0])*u[0]+(p[1]-A[1])*u[1]+(p[2]-A[2])*u[2];
    if(part.kind==='context')return name.startsWith('biceps')?turn(p,(angle+80)*smooth((t+10)/35)):p.slice();
    let w=smooth((t-Math.max(lo,0))/(Math.min(hi,wrist)-Math.max(lo,0)||1));
    if(name==='brachioradialis')w=smooth((t-lo)/(hi-lo));
@@ -1646,10 +1679,11 @@ function NativeLimbMotion(model,region,reference){
   const center=y=>{const t=clamp((y-lo)/(hi-lo))*60,i=Math.floor(t),j=Math.min(60,i+1);return mix(centers[i],centers[j],t-i);};families[p.name]={lo,hi,center,bodyEnd:p.materialGuide?.thresholdY||hi-20,quad:p.name.startsWith('vastus')||p.name==='rectus-femoris',fixed:p.name==='adductor-longus'};
  }
  function ratio(name,angle){const ls=reference?.lengths[names[name]];if(!ls)return 1;const a=Math.max(0,Math.min(120,angle)),i=Math.floor(a),j=Math.min(120,i+1);return(ls[i]+(ls[j]-ls[i])*(a-i))/ls[0];}
- function bellyStretch(name,angle){const f=families[name],ref=ratio(name,angle);if(!f.quad)return ref;const patella=bone(pc,'patella',angle);return Math.min(ref,1+(patella[1]-pc[1])/(f.bodyEnd-f.lo));}
+ let stretchAngle=NaN;const stretchCache=new Map();
+ function bellyStretch(name,angle){if(angle!==stretchAngle){stretchAngle=angle;stretchCache.clear();}if(stretchCache.has(name))return stretchCache.get(name);const f=families[name],ref=ratio(name,angle),patella=f.quad?bone(pc,'patella',angle):null,value=f.quad?Math.min(ref,1+(patella[1]-pc[1])/(f.bodyEnd-f.lo)):ref;stretchCache.set(name,value);return value;}
  function deform(p,part,angle){
   if(part.kind==='bone')return bone(p,part.name,angle);if(angle===0)return p.slice();const name=part.name.replace(/-tendon-material$/,''),f=families[name];if(!f||f.fixed)return p.slice();
-  const patella=bone(pc,'patella',angle),stretch=bellyStretch(name,angle);
+  const stretch=bellyStretch(name,angle);
   const body=q=>{const center=f.center(q[1]),w=smooth((q[1]-f.lo)/20),radial=1+w*(1/Math.sqrt(stretch)-1);return[center[0]+(q[0]-center[0])*radial,f.lo+(q[1]-f.lo)*(1+w*(stretch-1)),center[2]+(q[2]-center[2])*radial];};
   if(p[1]<=f.bodyEnd)return body(p);
   // Keep the colored belly proximal to the native tendon transition; route
@@ -1670,11 +1704,11 @@ function NativeLimbMotion(model,region,reference){
 /* Native source bone SDFs in neutral frames, shared by every camera. */
 function NativeLimbCollision(raw,motion){
  const fields=raw.map(f=>{const b=Uint8Array.from(atob(f.data),c=>c.charCodeAt(0));return{...f,values:new Int16Array(b.buffer)};});
- function distance(f,p){const q=p.map((v,i)=>(v-f.origin[i])/f.step),[nx,ny,nz]=f.shape;if(q.some((v,i)=>v<0||v>=f.shape[i]-1))return 20;
-  const [x,y,z]=q.map(Math.floor),[tx,ty,tz]=q.map((v,i)=>v-[x,y,z][i]),k=(x*ny+y)*nz+z,dx=ny*nz,v=f.values;
+ function distance(f,p){const qx=(p[0]-f.origin[0])/f.step,qy=(p[1]-f.origin[1])/f.step,qz=(p[2]-f.origin[2])/f.step,[nx,ny,nz]=f.shape;if(qx<0||qx>=nx-1||qy<0||qy>=ny-1||qz<0||qz>=nz-1)return 20;
+  const x=Math.floor(qx),y=Math.floor(qy),z=Math.floor(qz),tx=qx-x,ty=qy-y,tz=qz-z,k=(x*ny+y)*nz+z,dx=ny*nz,v=f.values;
   const a=v[k]*(1-tz)+v[k+1]*tz,b=v[k+nz]*(1-tz)+v[k+nz+1]*tz,c=v[k+dx]*(1-tz)+v[k+dx+1]*tz,d=v[k+dx+nz]*(1-tz)+v[k+dx+nz+1]*tz;return((a*(1-ty)+b*ty)*(1-tx)+(c*(1-ty)+d*ty)*tx)/f.units;
  }
- const minimum=(p,angle)=>Math.min(...fields.map(f=>distance(f,motion.bone(p,f.name,angle,true))));
+ const minimum=(p,angle)=>{let result=Infinity;for(const f of fields)result=Math.min(result,distance(f,motion.bone(p,f.name,angle,true)));return result;};
  function constrain(point,angle){if(minimum(point,angle)>=1)return point;let p=point.slice();
   for(let pass=0;pass<3;pass++)for(const f of fields){let q=motion.bone(p,f.name,angle,true);
    for(let i=0;i<4;i++){const d=distance(f,q);if(d>=1)break;const gradient=q.map((_,k)=>{const a=q.slice(),b=q.slice();a[k]+=.9;b[k]-=.9;return(distance(f,a)-distance(f,b))/1.8;}),n=Math.hypot(...gradient);if(n<1e-8)break;q=q.map((v,k)=>v+gradient[k]/n*Math.min(2.5,1-d+.05));}
@@ -1781,6 +1815,7 @@ function NativeLimbSculptLayer(root,model,region,composition){
   header.style.display=mode==='compare'?'':'none';
   leftTitle.setAttribute('x','16');rightTitle.setAttribute('x','584');
   if(mode==='compare'){leftTitle.textContent='해부학';rightTitle.textContent='도형화';}
+  if(mode==='anatomy')return;
   const yaw=model.pose.cameraYawByView?.[view]??model.pose.cameraYaw[['front','side','back'].indexOf(view)],a=yaw*Math.PI/180,c=Math.cos(a),s=Math.sin(a),all=model.parts.flatMap(p=>p.v),lo=Math.min(...all.map(p=>p[1])),hi=Math.max(...all.map(p=>p[1])),scale=565/(hi-lo),cx=all.reduce((n,p)=>n+p[0]/all.length,0),cz=all.reduce((n,p)=>n+p[2]/all.length,0),center=mode==='compare'?450:300,project=p=>[center+((p[0]-cx)*c+(p[2]-cz)*s)*scale,20+(p[1]-lo)*scale],depth=p=>-p[0]*s+p[2]*c;
   const posedByName=new Map((debug?.posed||[]).map(p=>[p.name,p.v])),pointsFor=part=>part.members?part.members.flatMap(member=>posedByName.get(member.name)||member.v):posedByName.get(part.name)||part.v,meshes=nodes.map(n=>n.part.kind==='muscle'&&!showMuscles?null:n.form?poseForearmForm(n.form,posedByName):n.nativeFaces?{v:pointsFor(n.part),faces:n.nativeFaces,rings:[]}:blockout(pointsFor(n.part),n.part.kind==='bone'));
   const buffer=AbdominalVisibility({project,depth,step:1});meshes.forEach((mesh,id)=>mesh?.faces.forEach(face=>{if(face.length===4)buffer.quad(face.map(i=>mesh.v[i]),id);else for(let j=1;j<face.length-1;j++)buffer.triangle(mesh.v[face[0]],mesh.v[face[j]],mesh.v[face[j+1]],id);}));
@@ -1788,7 +1823,7 @@ function NativeLimbSculptLayer(root,model,region,composition){
   const visible=buffer.solve(nodes.length+fatCount,{projections:true,scanlineClips:false,occludes:id=>id>=nodes.length?!composition.fatTransparent:id<0||nodes[id].part.kind==='bone'||!transparent});
   nodes.forEach((node,id)=>{
    const mesh=meshes[id];if(!mesh){node.g.style.display='none';return;}node.g.style.display='';node.g.setAttribute('opacity',transparent&&node.part.kind==='muscle'?.48:1);
-   const local=visible.ownerZ[id],inside=k=>transparent&&node.part.kind==='muscle'?local[k]>-Infinity:visible.owners[k]===id,contour=AtlasContour(visible,inside,visible.bounds[id]);node.mask.setAttribute('d',contour);node.fill.setAttribute('d',contour);node.outline.setAttribute('d',contour);
+   const inside=k=>transparent&&node.part.kind==='muscle'?visible.depthAt(id,k)>-Infinity:visible.owners[k]===id,contour=AtlasContour(visible,inside,visible.bounds[id]);node.mask.setAttribute('d',contour);node.fill.setAttribute('d',contour);node.outline.setAttribute('d',contour);
    const faces=node.nativeFaces?[]:mesh.faces,ordered=[];while(node.paths.length<faces.length)node.paths.push(make('path',{class:'sculpt-facet'},node.facets));
    faces.forEach((face,i)=>{const path=node.paths[i],points=face.map(k=>mesh.v[k]);path.setAttribute('d','M'+points.map(project).map(p=>p.join(',')).join('L')+'Z');path.setAttribute('fill',colorFor(node,face,mesh));ordered.push({path,z:points.reduce((sum,p)=>sum+depth(p),0)/points.length});});
    node.paths.slice(faces.length).forEach(path=>path.setAttribute('d',''));ordered.sort((x,y)=>x.z-y.z).forEach(item=>node.facets.appendChild(item.path));
@@ -1820,21 +1855,24 @@ function NativeLimbRenderer(root,model,region,reference,fields){
  const curve=ps=>{if(ps.length<3)return '';let d='M'+ps[0].join(',');for(let i=1;i<ps.length-1;i++)d+='Q'+ps[i].join(',')+' '+ps[i].map((v,j)=>(v+ps[i+1][j])/2).join(',');return d+'L'+ps.at(-1).join(',');};
  function pose(angle){const key=angle+':'+composition.key;if(cache.has(key))return cache.get(key);const raw=model.parts.map(p=>({p,v:p.v.map(q=>{const v=motion.deform(composition.point(p,q),p,angle);return p.kind==='bone'?v:collision.constrain(v,angle);})})),byName=new Map(raw.map(x=>[x.p.name,x.v])),result=nodes.map(n=>byName.get(n.part.name.replace(/-tendon-material$/,'')));cache.set(key,result);if(cache.size>3)cache.delete(cache.keys().next().value);return result;}
  function render(angle,view,mode='anatomy'){angle=Math.round(angle);const transparent=root.classList.contains('transparent'),fibers=!root.classList.contains('no-fibers'),key=[angle,view,mode,transparent,fibers,root.clientWidth,composition.key,landmarks.value].join();if(key===lastKey)return;lastKey=key;const start=performance.now(),posed=pose(angle),yaw=model.pose.cameraYawByView?.[view]??model.pose.cameraYaw[['front','side','back'].indexOf(view)],a=yaw*Math.PI/180,c=Math.cos(a),s=Math.sin(a),center=mode==='compare'?150:300,project=p=>[center+((p[0]-cx)*c+(p[2]-cz)*s)*scale,20+(p[1]-lo)*scale],depth=p=>-p[0]*s+p[2]*c;
-  const buffer=AbdominalVisibility({project,depth,step:1});nodes.forEach((n,id)=>n.part.f.forEach(f=>buffer.polygon(f.map(j=>posed[id][j]),id)));const byName=new Map(nodes.map((n,id)=>[n.part.name,posed[id]])),fatCount=composition.paintFat(buffer,model.parts.map(p=>byName.get(p.name)),nodes.length);
+  const byName=new Map(nodes.map((n,id)=>[n.part.name,posed[id]]));
+  const finish=coverage=>{svg.setAttribute('viewBox','0 0 600 630');svg.style.height='auto';labelNodes.forEach(n=>n.text.style.fontSize=(11*600/Math.max(1,root.clientWidth))+'px');landmarks.render(byName,mode==='compare'?[{project,min:0,max:300},{project:p=>{const q=project(p);return[q[0]+300,q[1]];},min:300,max:600}]:[{project}]);root.dataset.cameraYaw=yaw;debug={angle,view,coverage,duration:performance.now()-start,metrics:motion.metrics(angle),posed:posed.map((v,id)=>({name:nodes[id].part.name,kind:nodes[id].part.kind,v}))};};
+  if(mode==='sculpt'){finish([]);return;}
+  const buffer=AbdominalVisibility({project,depth,step:1});nodes.forEach((n,id)=>n.part.f.forEach(f=>buffer.polygon(f.map(j=>posed[id][j]),id)));const fatCount=composition.paintFat(buffer,model.parts.map(p=>byName.get(p.name)),nodes.length);
   const visible=buffer.solve(nodes.length+fatCount,{projections:id=>id>=nodes.length||nodes[id].part.kind!=='bone',scanlineClips:false,occludes:id=>id>=nodes.length?!composition.fatTransparent:!transparent||nodes[id].part.kind==='bone'});
-  nodes.forEach((n,id)=>{const soft=n.part.kind!=='bone',local=visible.ownerZ[id],contour=AtlasContour(visible,k=>transparent&&soft?local[k]>-Infinity:visible.owners[k]===id,visible.bounds[id]);for(const el of [n.fill,n.outline,n.mask])el.setAttribute('d',contour);n.g.setAttribute('opacity',transparent&&soft?.3:1);let path='';
-   if(fibers)for(const fiber of n.part.fibers){let segment=[];const flush=()=>{let length=0;for(let j=1;j<segment.length;j++)length+=Math.hypot(...segment[j].map((v,k)=>v-segment[j-1][k]));if(length>=5)path+=curve(segment);segment=[];};for(const p of fiber){const point=collision.constrain(motion.deform(composition.point(n.part,p),n.part,angle),angle),q=project(point),x=Math.floor((q[0]-visible.x0)/visible.step),y=Math.floor((q[1]-visible.y0)/visible.step),k=y*visible.w+x;if(x>=0&&x<visible.w&&y>=0&&y<visible.h&&depth(point)>=local[k]-2&&(transparent||visible.owners[k]===id))segment.push(q);else flush();}flush();}n.fiber.setAttribute('d',path);
+  nodes.forEach((n,id)=>{const soft=n.part.kind!=='bone',contour=AtlasContour(visible,k=>transparent&&soft?visible.depthAt(id,k)>-Infinity:visible.owners[k]===id,visible.bounds[id]);for(const el of [n.fill,n.outline,n.mask])el.setAttribute('d',contour);n.g.setAttribute('opacity',transparent&&soft?.3:1);let path='';
+   if(fibers)for(const fiber of n.part.fibers){let segment=[];const flush=()=>{let length=0;for(let j=1;j<segment.length;j++)length+=Math.hypot(...segment[j].map((v,k)=>v-segment[j-1][k]));if(length>=5)path+=curve(segment);segment=[];};for(const p of fiber){const point=collision.constrain(motion.deform(composition.point(n.part,p),n.part,angle),angle),q=project(point),x=Math.floor((q[0]-visible.x0)/visible.step),y=Math.floor((q[1]-visible.y0)/visible.step),k=y*visible.w+x;if(x>=0&&x<visible.w&&y>=0&&y<visible.h&&depth(point)>=visible.depthAt(id,k)-2&&(transparent||visible.owners[k]===id))segment.push(q);else flush();}flush();}n.fiber.setAttribute('d',path);
   });
   lightSurfaces(visible);
   composition.drawFat(visible,nodes.length,AtlasContour);
   labelNodes.forEach(n=>n.g.style.display='none');const shown=[];
-  nodes.forEach((n,id)=>{if(n.part.kind!=='muscle'||n.part.material)return;let points=visible.centers[id];if(transparent){points=[];const local=visible.ownerZ[id],b=visible.bounds[id];for(let y=b[1];y<=b[3];y+=8)for(let x=b[0];x<=b[2];x+=8)if(local[y*visible.w+x]>-Infinity)points.push([visible.x0+(x+.5)*visible.step,visible.y0+(y+.5)*visible.step]);}if(points.length<3||!transparent&&visible.coverage[id]<100)return;
+  nodes.forEach((n,id)=>{if(n.part.kind!=='muscle'||n.part.material)return;let points=visible.centers[id];if(transparent){points=[];const b=visible.bounds[id];for(let y=b[1];y<=b[3];y+=8)for(let x=b[0];x<=b[2];x+=8)if(visible.depthAt(id,y*visible.w+x)>-Infinity)points.push([visible.x0+(x+.5)*visible.step,visible.y0+(y+.5)*visible.step]);}if(points.length<3||!transparent&&visible.coverage[id]<100)return;
    const avg=points.reduce((sum,p)=>sum.map((v,j)=>v+p[j]/points.length),[0,0]),target=points.reduce((best,p)=>Math.hypot(...p.map((v,j)=>v-avg[j]))<Math.hypot(...best.map((v,j)=>v-avg[j]))?p:best);const name=groupName(n.part.name),existing=shown.find(item=>groupName(item.n.part.name)===name);if(!existing)shown.push({n,id,target,coverage:visible.coverage[id]});else if(visible.coverage[id]>existing.coverage)Object.assign(existing,{n,id,target,coverage:visible.coverage[id]});
   });
   // Fixed side columns sorted by the actual visible attachment target.
   shown.sort((a,b)=>a.target[1]-b.target[1]);let left=0,right=0;for(const item of shown){const l=item.target[0]<300,slot=l?left++:right++,x=l?12:588,y=75+slot*46,label=labelNodes.get(groupName(item.n.part.name));label.g.style.display='';label.text.setAttribute('x',x);label.text.setAttribute('y',y);label.text.setAttribute('text-anchor',l?'start':'end');label.text.style.fontSize=(11*600/Math.max(1,root.clientWidth))+'px';AnatomyLabelLeader(label.line,label.text,item.target);}
   const legend=root.querySelector('.native-legend');legend.replaceChildren();for(const item of shown){const span=document.createElement('span'),key=document.createElement('i');key.style.background=item.n.part.displayColor;span.append(key,document.createTextNode(labelNames[groupName(item.n.part.name)]));legend.append(span);}
-  svg.setAttribute('viewBox','0 0 600 630');svg.style.height='auto';labelNodes.forEach(n=>n.text.style.fontSize=(11*600/Math.max(1,root.clientWidth))+'px');landmarks.render(byName,mode==='compare'?[{project,min:0,max:300},{project:p=>{const q=project(p);return[q[0]+300,q[1]];},min:300,max:600}]:[{project}]);root.dataset.cameraYaw=yaw;debug={angle,view,coverage:visible.coverage,duration:performance.now()-start,metrics:motion.metrics(angle),posed:posed.map((v,id)=>({name:nodes[id].part.name,kind:nodes[id].part.kind,v}))};
+  finish(visible.coverage);
  }
  return{render,motion,collision,model,nodes,composition,landmarks,get debug(){return debug;}};
 }
@@ -1860,7 +1898,7 @@ function NativeLimbRenderer(root,model,region,reference,fields){
  root.querySelectorAll('[data-limb-mode]').forEach(button=>button.addEventListener('click',()=>{mode=button.dataset.limbMode;render();capture();queueFit();}));root.querySelector('[data-limb-toggle-muscles]').addEventListener('click',()=>{showMuscles=!showMuscles;render();capture();queueFit();});
  let pending=false;function fit(){pending=false;if(!root.isConnected)return;const svg=root.querySelector('svg'),viewportWidth=document.documentElement.clientWidth,available=Math.max(0,viewportWidth-32),overhead=root.scrollHeight-svg.getBoundingClientRect().height,width=Math.floor(viewportWidth>=640?available:available<=680?available:Math.min(available,700,Math.max(220,(innerHeight-overhead-48)*600/630)))+'px';if(root.style.width!==width)root.style.width=width;}
  function queueFit(){if(!pending){pending=true;requestAnimationFrame(fit);}}window.addEventListener('resize',queueFit);new ResizeObserver(queueFit).observe(root);new ResizeObserver(render).observe(root);
- function tick(t){if(!root.isConnected)return;if(playing&&!document.hidden&&t-lastDraw>=85){if(last)phase+=Math.min(t-last,160)*Math.PI/5500;angle=config.min+(config.max-config.min)*(1-Math.cos(phase))/2;render();last=t;lastDraw=t;if(t-lastCapture>=500){capture();lastCapture=t;}}requestAnimationFrame(tick);}requestAnimationFrame(tick);
+ function tick(t){if(!root.isConnected)return;if(!playing||document.hidden||root.dataset.hubVisible==='false')last=0;if(playing&&!document.hidden&&root.dataset.hubVisible!=='false'&&t-lastDraw>=1000/30){if(last)phase+=Math.min(t-last,160)*Math.PI/5500;angle=config.min+(config.max-config.min)*(1-Math.cos(phase))/2;render();last=t;lastDraw=t;if(t-lastCapture>=500){capture();lastCapture=t;}}requestAnimationFrame(tick);}requestAnimationFrame(tick);
  window.nativeLimb={model,sculpt,root,setPose(a,v=view){play(false);angle=Math.max(config.min,Math.min(config.max,a));if(views.includes(v))view=v;render();capture();},setMode(value){if(['anatomy','sculpt','compare'].includes(value)){mode=value;render();capture();}},setShowMuscles(value){showMuscles=!!value;render();capture();},get mode(){return mode;}};
  syncPhase();play(playing);render();queueFit();capture();
 })();
@@ -1870,6 +1908,7 @@ function NativeLimbRenderer(root,model,region,reference,fields){
  const configNode=document.getElementById('hub-config');if(!configNode)return;
  const config=JSON.parse(configNode.textContent),key=config.key,root=document.getElementById(key)||document.getElementById(key+'-motion');
  if(!root)return;
+ root.dataset.hubVisible='false';
  const sceneStyle=document.createElement('style');sceneStyle.id='anatomy-hub-scene-only';sceneStyle.textContent=`
 html,body{width:100%!important;height:100%!important;min-height:0!important;margin:0!important;padding:0!important;overflow:hidden!important}
 body{display:block!important}
@@ -1909,7 +1948,7 @@ body{display:block!important}
   else if(command.action==='select'&&typeof command.id==='string'){const select=document.getElementById(command.id);if(select?.tagName==='SELECT'&&[...select.options].some(option=>option.value===command.value)){select.value=command.value;select.dispatchEvent(new Event('change',{bubbles:true}));}}
   else if(command.action==='click'&&typeof command.id==='string'){document.getElementById(command.id)?.click();}
  }
- window.addEventListener('message',event=>{if(event.source!==parent)return;const data=event.data;if(data?.key!==key)return;if(data.type==='anatomy-hub-ui-request')sendInfo();else if(data.type==='anatomy-hub-ui-command')apply(data.command);});
+ window.addEventListener('message',event=>{if(event.source!==parent)return;const data=event.data;if(data?.type==='anatomy-hub-visibility'){root.dataset.hubVisible=String(!!data.visible);return;}if(data?.key!==key)return;if(data.type==='anatomy-hub-ui-request')sendInfo();else if(data.type==='anatomy-hub-ui-command')apply(data.command);});
  for(const type of ['input','change','click'])document.addEventListener(type,event=>{if(root.contains(event.target))queueMicrotask(sendInfo);});
  sendInfo();
 })();

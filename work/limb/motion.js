@@ -5,13 +5,15 @@ function NativeLimbMotion(model,region,reference){
  const band=(p,end)=>{const ys=p.v.map(v=>v[1]).sort((a,b)=>a-b),limit=ys[Math.floor(ys.length*(end?.97:.03))];return mean(p.v.filter(v=>end?v[1]>=limit:v[1]<=limit));};
  const rotation=(p,pivot,degrees)=>{const a=degrees*Math.PI/180,c=Math.cos(a),s=Math.sin(a),y=p[1]-pivot[1],z=p[2]-pivot[2];return[p[0],pivot[1]+y*c+z*s,pivot[2]-y*s+z*c];};
  if(region==='forearm'){
-  const A=band(part('radius'),false),B=band(part('ulna'),true),distalRadius=band(part('radius'),true),axis=sub(B,A),length=Math.hypot(...axis),u=axis.map(v=>v/length),cross=(a,b)=>[a[1]*b[2]-a[2]*b[1],a[2]*b[0]-a[0]*b[2],a[0]*b[1]-a[1]*b[0]],dot=(a,b)=>a.reduce((n,v,i)=>n+v*b[i],0);
-  function turn(p,degrees){const q=sub(p,A),a=degrees*Math.PI/180,c=Math.cos(a),s=Math.sin(a),v=cross(u,q),d=dot(u,q);return q.map((x,i)=>A[i]+x*c+v[i]*s+u[i]*d*(1-c));}
+  const A=band(part('radius'),false),B=band(part('ulna'),true),distalRadius=band(part('radius'),true),axis=sub(B,A),length=Math.hypot(...axis),u=axis.map(v=>v/length),dot=(a,b)=>a.reduce((n,v,i)=>n+v*b[i],0);
+  function turn(p,degrees){const x=p[0]-A[0],y=p[1]-A[1],z=p[2]-A[2],a=degrees*Math.PI/180,c=Math.cos(a),s=Math.sin(a),d=u[0]*x+u[1]*y+u[2]*z;return[A[0]+x*c+(u[1]*z-u[2]*y)*s+u[0]*d*(1-c),A[1]+y*c+(u[2]*x-u[0]*z)*s+u[1]*d*(1-c),A[2]+z*c+(u[0]*y-u[1]*x)*s+u[2]*d*(1-c)];}
   const spans=new Map(model.parts.map(p=>{const ts=p.v.map(v=>dot(sub(v,A),u));return[p.name,[Math.min(...ts),Math.max(...ts)]];}));
+  const wrist=dot(axis,u),descriptors=new WeakMap();
+  function descriptor(part){let value=descriptors.get(part);if(!value){const name=part.name.replace(/-tendon-material$/,'');value={name,span:spans.get(name)};descriptors.set(part,value);}return value;}
   function bone(p,name,angle,inverse=false){if(['ulna','humerus'].includes(name))return p.slice();return turn(p,(angle+80)*(inverse?-1:1));}
   function deform(p,part,angle){
    if(part.kind==='bone')return bone(p,part.name,angle);
-   if(angle===-80)return p.slice();const name=part.name.replace(/-tendon-material$/,''),t=dot(sub(p,A),u),[lo,hi]=spans.get(name),wrist=dot(sub(B,A),u);
+   if(angle===-80)return p.slice();const {name,span:[lo,hi]}=descriptor(part),t=(p[0]-A[0])*u[0]+(p[1]-A[1])*u[1]+(p[2]-A[2])*u[2];
    if(part.kind==='context')return name.startsWith('biceps')?turn(p,(angle+80)*smooth((t+10)/35)):p.slice();
    let w=smooth((t-Math.max(lo,0))/(Math.min(hi,wrist)-Math.max(lo,0)||1));
    if(name==='brachioradialis')w=smooth((t-lo)/(hi-lo));
@@ -37,10 +39,11 @@ function NativeLimbMotion(model,region,reference){
   const center=y=>{const t=clamp((y-lo)/(hi-lo))*60,i=Math.floor(t),j=Math.min(60,i+1);return mix(centers[i],centers[j],t-i);};families[p.name]={lo,hi,center,bodyEnd:p.materialGuide?.thresholdY||hi-20,quad:p.name.startsWith('vastus')||p.name==='rectus-femoris',fixed:p.name==='adductor-longus'};
  }
  function ratio(name,angle){const ls=reference?.lengths[names[name]];if(!ls)return 1;const a=Math.max(0,Math.min(120,angle)),i=Math.floor(a),j=Math.min(120,i+1);return(ls[i]+(ls[j]-ls[i])*(a-i))/ls[0];}
- function bellyStretch(name,angle){const f=families[name],ref=ratio(name,angle);if(!f.quad)return ref;const patella=bone(pc,'patella',angle);return Math.min(ref,1+(patella[1]-pc[1])/(f.bodyEnd-f.lo));}
+ let stretchAngle=NaN;const stretchCache=new Map();
+ function bellyStretch(name,angle){if(angle!==stretchAngle){stretchAngle=angle;stretchCache.clear();}if(stretchCache.has(name))return stretchCache.get(name);const f=families[name],ref=ratio(name,angle),patella=f.quad?bone(pc,'patella',angle):null,value=f.quad?Math.min(ref,1+(patella[1]-pc[1])/(f.bodyEnd-f.lo)):ref;stretchCache.set(name,value);return value;}
  function deform(p,part,angle){
   if(part.kind==='bone')return bone(p,part.name,angle);if(angle===0)return p.slice();const name=part.name.replace(/-tendon-material$/,''),f=families[name];if(!f||f.fixed)return p.slice();
-  const patella=bone(pc,'patella',angle),stretch=bellyStretch(name,angle);
+  const stretch=bellyStretch(name,angle);
   const body=q=>{const center=f.center(q[1]),w=smooth((q[1]-f.lo)/20),radial=1+w*(1/Math.sqrt(stretch)-1);return[center[0]+(q[0]-center[0])*radial,f.lo+(q[1]-f.lo)*(1+w*(stretch-1)),center[2]+(q[2]-center[2])*radial];};
   if(p[1]<=f.bodyEnd)return body(p);
   // Keep the colored belly proximal to the native tendon transition; route

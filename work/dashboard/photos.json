@@ -29,7 +29,7 @@
     "height": 951,
     "cropTop": 0,
     "original": "assets/photo-comparison/thigh-press-original.webp?v=8fba041012c7",
-    "sketch": "assets/photo-comparison/thigh-press-sketch.webp?v=547b0d8bdc10",
+    "sketch": "assets/photo-comparison/thigh-press-sketch.webp?v=16daf4b50ce1",
     "thumbnail": "assets/photo-comparison/thigh-press-thumb.webp?v=4cbdac3bd1f4"
   },
   {
@@ -97,5 +97,38 @@
     "original": "assets/photo-comparison/triceps-original.webp?v=abfe65aa3c00",
     "sketch": "assets/photo-comparison/triceps-sketch.webp?v=661b1addc4bc",
     "thumbnail": "assets/photo-comparison/triceps-thumb.webp?v=132afd23ffa9"
+  },
+  {
+    "id": "female-back-final",
+    "label": "여성 · 후면",
+    "detail": "등·어깨·둔부",
+    "width": 1024,
+    "height": 1536,
+    "cropTop": 0,
+    "original": "assets/photo-comparison/female-back-final-original.webp?v=fc13abd3b192",
+    "sketch": "assets/photo-comparison/female-back-final-sketch.webp?v=19894ec6d34a",
+    "thumbnail": "assets/photo-comparison/female-back-final-thumb.webp?v=ee29726fee19"
+  },
+  {
+    "id": "female-front-final",
+    "label": "여성 · 정면",
+    "detail": "복부·어깨",
+    "width": 400,
+    "height": 520,
+    "cropTop": 0,
+    "original": "assets/photo-comparison/female-front-final-original.webp?v=da36e498326f",
+    "sketch": "assets/photo-comparison/female-front-final-sketch.webp?v=30009c380163",
+    "thumbnail": "assets/photo-comparison/female-front-final-thumb.webp?v=272f517a5af5"
+  },
+  {
+    "id": "female-arms-up-final",
+    "label": "여성 · 팔 올리기",
+    "detail": "사선 · 몸통·팔·허벅지",
+    "width": 1199,
+    "height": 1312,
+    "cropTop": 0,
+    "original": "assets/photo-comparison/female-arms-up-final-original.webp?v=0bc69c113e31",
+    "sketch": "assets/photo-comparison/female-arms-up-final-sketch.webp?v=b3ecf1fceebd",
+    "thumbnail": "assets/photo-comparison/female-arms-up-final-thumb.webp?v=763aa833a0ab"
   }
 ]

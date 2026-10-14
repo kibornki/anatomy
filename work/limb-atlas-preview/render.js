@@ -19,10 +19,10 @@ for(const [region,model]of Object.entries(data.models)){
    const outline=AtlasContour(visible,k=>visible.owners[k]===id,visible.bounds[id]);if(!outline)return;
    const bone=part.kind==='bone',clip=make('clipPath',{id:region+view+id},defs);make('path',{d:outline},clip);
    const g=make('g',{'data-part':part.name,'data-kind':part.kind},surfaces);make('path',{d:outline,fill:bone?'#e8e9eb':part.material==='tendon'?'#fafafa':part.displayColor||colors[part.color],stroke:'#89919e','stroke-width':bone?.9:.6,'stroke-opacity':bone?.85:.45},g);
-   if(bone)return;let path='',local=visible.ownerZ[id];
+   if(bone)return;let path='';
    for(const fiber of part.fibers){let segment=[];const flush=()=>{let len=0;for(let j=1;j<segment.length;j++)len+=Math.hypot(...segment[j].map((v,k)=>v-segment[j-1][k]));if(len>=5)path+=curve(segment);segment=[];};
     for(const p of fiber){const q=project(p),x=Math.floor((q[0]-visible.x0)/visible.step),y=Math.floor((q[1]-visible.y0)/visible.step),k=y*visible.w+x;
-     if(x>=0&&x<visible.w&&y>=0&&y<visible.h&&visible.owners[k]===id&&depth(p)>=local[k]-2)segment.push(q);else flush();}flush();
+     if(x>=0&&x<visible.w&&y>=0&&y<visible.h&&visible.owners[k]===id&&depth(p)>=visible.depthAt(id,k)-2)segment.push(q);else flush();}flush();
    }make('path',{d:path,fill:'none',stroke:'#1a1c1f','stroke-width':.65,'stroke-opacity':.28,'clip-path':'url(#'+region+view+id+')'},g);
   });
   const labels=[];let left=0,right=0;

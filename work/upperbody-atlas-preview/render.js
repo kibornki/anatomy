@@ -20,10 +20,10 @@ for(const [view,title,yaw]of [['front','정면',0],['side','측면',90],['back',
   const outline=AtlasContour(visible,k=>visible.owners[k]===id,visible.bounds[id]);if(!outline)return;
   const muscle=part.kind==='muscle',clip=make('clipPath',{id:view+'-'+id},defs);make('path',{d:outline},clip);
   const g=make('g',{'data-part':part.name,'data-kind':part.kind},surfaces);make('path',{d:outline,fill:muscle?colors[part.color]:part.kind==='cartilage'?'#fafafa':'#e8e9eb',stroke:muscle?'#89919e':'#89919e','stroke-width':muscle?.6:.9,'stroke-opacity':muscle?.45:.85},g);
-  if(!muscle)return;let fiberPath='',local=visible.ownerZ[id];
+  if(!muscle)return;let fiberPath='';
   for(const fiber of part.fibers){let segment=[];const flush=()=>{let len=0;for(let j=1;j<segment.length;j++)len+=Math.hypot(...segment[j].map((v,k)=>v-segment[j-1][k]));if(len>=5)fiberPath+=curve(segment);segment=[];};
    for(const p of fiber){const q=project(p),x=Math.floor((q[0]-visible.x0)/visible.step),y=Math.floor((q[1]-visible.y0)/visible.step),k=y*visible.w+x;
-    if(p[1]>=data.neckTop&&x>=0&&x<visible.w&&y>=0&&y<visible.h&&visible.owners[k]===id&&depth(p)>=local[k]-2.5)segment.push(q);else flush();}flush();
+    if(p[1]>=data.neckTop&&x>=0&&x<visible.w&&y>=0&&y<visible.h&&visible.owners[k]===id&&depth(p)>=visible.depthAt(id,k)-2.5)segment.push(q);else flush();}flush();
   }make('path',{d:fiberPath,fill:'none',stroke:'#1a1c1f','stroke-width':.65,'stroke-opacity':.28,'clip-path':'url(#'+view+'-'+id+')'},g);
  });
  const labels=[];for(const [name,text,x,y]of specs[view]){

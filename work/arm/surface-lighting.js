@@ -9,7 +9,8 @@ function ArmSurfaceLighting(make,nodes){
   const {w,h,step,x0,y0,ownerZ}=visible;canvas.width=w;canvas.height=h;
   layers.forEach((image,id)=>{
    if(!image)return;const source=ownerZ[id],bounds=visible.bounds[id];
-   let z=source.slice();
+   let z=new Float32Array(w*h).fill(-Infinity);const span=visible.projectionStrides[id];
+   for(let y=bounds[1];y<=bounds[3];y++){const row=(y-bounds[1])*span;z.set(source.subarray(row,row+span),y*w+bounds[0]);}
    // Smooth lighting at atlas triangle edges, retaining the original contour.
    const weights=Array.from({length:13},(_,i)=>Math.exp(-(((i-6)/2.8)**2)/2));
    for(const axis of [1,w]){

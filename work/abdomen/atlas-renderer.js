@@ -142,9 +142,12 @@ function AbdomenFlexion(host){
   const offset=offsets.get(degrees),projectAt=shift=>p=>{const q=camera(p);return [offset+shift+q[0]*scale,10+(q[1]-110)*scale];},project=projectAt(paired?-160:0),sculptProject=projectAt(paired?160:0),depth=p=>camera(p)[2];
   const buffer=AbdominalVisibility({project,depth,step:1});
   const posed=new Map();for(const p of atlas.parts){posed.set(p,p.v.map((v,i)=>p.bind?skin(composition.point(p,v,i),p.bind[i]):rigid(frames[p.bone],v)));}
+  let visible=null;
+  if(mode!=='sculpt'){
   for(const m of surfaces){const vs=posed.get(m.part);for(const f of m.faces)buffer.triangle(...f.map(i=>vs[i]),m.id);}
   const fatCount=composition.paintFat(buffer,atlas.parts.map(p=>posed.get(p)),surfaces.length);
-  const visible=buffer.solve(surfaces.length+fatCount,{projections:id=>id>=surfaces.length||['muscle','context'].includes(surfaces[id].part.kind),scanlineClips:false,occludes:id=>id>=surfaces.length?!composition.fatTransparent:!transparent||!['muscle','context'].includes(surfaces[id].part.kind)});
+  visible=buffer.solve(surfaces.length+fatCount,{projections:id=>id>=surfaces.length||['muscle','context'].includes(surfaces[id].part.kind),scanlineClips:false,occludes:id=>id>=surfaces.length?!composition.fatTransparent:!transparent||!['muscle','context'].includes(surfaces[id].part.kind)});
+  }
   let sculptVisible=null;
   if(mode!=='anatomy'){
    const nextSculptKey=[angle,view,composition.key].join();if(nextSculptKey!==sculptKey){sculptMeshes=sculptGroups.map(group=>group.family==='torso'?sculptGeometry.torso(point=>skin(point,[0,0,0,0,0,0])):group.kind==='muscle'?sculptGeometry.mesh(group,atlas.parts.map(part=>({v:posed.get(part)})),composition.state.muscle,point=>skin(point,[0,0,0,0,0,0])):{v:posed.get(atlas.parts[group.partIds[0]]),polygons:atlas.parts[group.partIds[0]].f});sculptKey=nextSculptKey;}
@@ -153,21 +156,22 @@ function AbdomenFlexion(host){
    const sculptFatCount=composition.paintFat(sculptBuffer,atlas.parts.map(p=>posed.get(p)),sculptGroups.length,sculptMeshes);
    sculptVisible=sculptBuffer.solve(sculptGroups.length+sculptFatCount,{projections:true,scanlineClips:false,occludes:id=>id>=sculptGroups.length?!composition.fatTransparent:!transparent||sculptGroups[id]?.kind!=='muscle'});
    sculptNodes.forEach((node,id)=>{const group=node.group,mesh=sculptMeshes[id],soft=group.kind==='muscle',show=!soft||showMuscles;if(!show){node.g.style.display='none';node.fill.setAttribute('d','');node.outline.setAttribute('d','');node.facetPaths.forEach(path=>path.setAttribute('d',''));node.fiber.setAttribute('d','');return;}node.g.style.display='';node.g.setAttribute('opacity',transparent&&soft?.44:1);
-    const local=sculptVisible.ownerZ[id],outline=AtlasContour(sculptVisible,k=>transparent&&soft?local[k]>-Infinity:sculptVisible.owners[k]===id,sculptVisible.bounds[id]);node.mask.setAttribute('d',outline);node.fill.setAttribute('d',outline);node.outline.setAttribute('d',outline);
+    const outline=AtlasContour(sculptVisible,k=>transparent&&soft?sculptVisible.depthAt(id,k)>-Infinity:sculptVisible.owners[k]===id,sculptVisible.bounds[id]);node.mask.setAttribute('d',outline);node.fill.setAttribute('d',outline);node.outline.setAttribute('d',outline);
     if(soft&&group.family!=='pectoral-major')drawSculptFacets(node,mesh,sculptProject,depth);else node.facetPaths.forEach(path=>path.setAttribute('d',''));
     if(soft&&fibersOn&&!['torso','pectoral-major'].includes(group.family)){const paths=[];if(group.family==='serratus'){for(let row=0;row<mesh.frontIds.length-1;row++){const points=mesh.frontIds[row].map((index,column)=>sculptProject(mesh.v[index].map((value,axis)=>(value+mesh.v[mesh.frontIds[row+1][column]][axis])*.5)));paths.push('M'+points.map(point=>point.join(',')).join('L'));}}else{for(const column of group.family==='rectus'?[1,2,3]:[2,4,6]){const points=mesh.frontIds.map(row=>sculptProject(mesh.v[row[column]]));paths.push('M'+points.map(point=>point.join(',')).join('L'));}}node.fiber.setAttribute('d',paths.join(''));}else node.fiber.setAttribute('d','');
    });
   }
-  for(const m of surfaces){const soft=['muscle','context'].includes(m.part.kind),local=visible.ownerZ[m.id];
+  if(mode!=='sculpt'){
+  for(const m of surfaces){const soft=['muscle','context'].includes(m.part.kind);
    if(m.part.name==='linea-alba')m.g.setAttribute('opacity',transparent?.32:1);
-   const contour=AtlasContour(visible,k=>transparent&&soft?local[k]>-Infinity:visible.owners[k]===m.id,visible.bounds[m.id]);
+   const contour=AtlasContour(visible,k=>transparent&&soft?visible.depthAt(m.id,k)>-Infinity:visible.owners[k]===m.id,visible.bounds[m.id]);
    m.fill.setAttribute('d',contour);m.outline.setAttribute('d',contour);m.mask.setAttribute('d',contour);m.g.removeAttribute('clip-path');
    m.outline.setAttribute('stroke-opacity',soft&&m.group!=='aponeurosis'?.22:soft?.45:.75);
    const fiberSegments=[];
    if(fibersOn&&m.group!=='aponeurosis'&&m.part.kind!=='context')for(const f of m.part.fibers||[]){
     const points=f.p.map((v,i)=>skin(composition.point(m.part,v),f.bind[i]));let segment=[];
     for(const p of points){const q=project(p),x=Math.floor((q[0]-visible.x0)/visible.step),y=Math.floor((q[1]-visible.y0)/visible.step),k=y*visible.w+x;
-     const shown=x>=0&&x<visible.w&&y>=0&&y<visible.h&&depth(p)>=local[k]-2.5&&(transparent||visible.owners[k]===m.id);
+     const shown=x>=0&&x<visible.w&&y>=0&&y<visible.h&&depth(p)>=visible.depthAt(m.id,k)-2.5&&(transparent||visible.owners[k]===m.id);
      if(shown)segment.push(q);else {if(segment.length>2)fiberSegments.push(segment);segment=[];}
     }if(segment.length>2)fiberSegments.push(segment);
    }
@@ -177,14 +181,15 @@ function AbdomenFlexion(host){
   }
   lightSurfaces(visible);
   composition.drawFat(visible,surfaces.length,AtlasContour);
-  if(sculptVisible)composition.drawFat(sculptVisible,sculptGroups.length,AtlasContour,true,'sculpt');
   for(const l of labelNodes){const candidates=surfaces.filter(m=>m.muscle===l.name&&m.group!=='aponeurosis').sort((a,b)=>visible.coverage[b.id]-visible.coverage[a.id]),points=visible.centers[candidates[0].id];let target;l.line.parentNode.style.display=points.length||transparent?'':'none';
    if(points.length){const ys=points.slice().sort((a,b)=>a[1]-b[1]),mid=ys[Math.floor(ys.length/2)][1],band=points.filter(p=>Math.abs(p[1]-mid)<10),average=band.reduce((s,p)=>add(s,mul(p,1/band.length)),[0,0]);target=band.reduce((best,p)=>Math.hypot(...sub(p,average))<Math.hypot(...sub(best,average))?p:best);}
    else {const m=candidates.find(m=>m.part.side===-1)||candidates[0],ids=[...new Set(m.faces.flat())],v=posed.get(m.part),avg=ids.reduce((s,i)=>add(s,mul(v[i],1/ids.length)),[0,0,0]);target=project(avg);}
    AnatomyLabelLeader(l.line,l.text,target);
   }
+  }
+  if(sculptVisible)composition.drawFat(sculptVisible,sculptGroups.length,AtlasContour,true,'sculpt');
   landmarks.render(new Map(atlas.parts.map(p=>[p.name,posed.get(p)])),paired?[{project,min:0,max:320},{project:sculptProject,min:320,max:640}]:[{project}]);
-  lastDebug={pose:{...pose},atlas,frames,posed:atlas.parts.map(p=>({name:p.name,kind:p.kind,joint:p.joint,vertices:posed.get(p),renderedIndices:partIndices.get(p)})),visible:{coverage:visible.coverage,parts:surfaces.map(m=>({id:m.id,name:m.part.name,group:m.group,muscle:m.muscle}))},duration:performance.now()-started};
+  lastDebug={pose:{...pose},atlas,frames,posed:atlas.parts.map(p=>({name:p.name,kind:p.kind,joint:p.joint,vertices:posed.get(p),renderedIndices:partIndices.get(p)})),visible:{coverage:(visible||sculptVisible).coverage,parts:surfaces.map(m=>({id:m.id,name:m.part.name,group:m.group,muscle:m.muscle}))},duration:performance.now()-started};
  }
  return {render,atlas,composition,landmarks,get debug(){return lastDebug;},yawFrame:yawAt,frame:body,skin};
 }

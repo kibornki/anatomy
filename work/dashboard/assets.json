@@ -63,5 +63,26 @@
     "original": "assets/photo-comparison/triceps-original.png",
     "sketch": "assets/photo-comparison/triceps-sketch.png",
     "cropTop": 0
+  },
+  {
+    "id": "female-back-final",
+    "label": "여성 · 후면",
+    "detail": "등·어깨·둔부",
+    "original": "assets/photo-comparison/female-back-final-original.png",
+    "sketch": "assets/photo-comparison/female-back-final-sketch.png"
+  },
+  {
+    "id": "female-front-final",
+    "label": "여성 · 정면",
+    "detail": "복부·어깨",
+    "original": "assets/photo-comparison/female-front-final-original.png",
+    "sketch": "assets/photo-comparison/female-front-final-sketch.png"
+  },
+  {
+    "id": "female-arms-up-final",
+    "label": "여성 · 팔 올리기",
+    "detail": "사선 · 몸통·팔·허벅지",
+    "original": "assets/photo-comparison/female-arms-up-final-original.png",
+    "sketch": "assets/photo-comparison/female-arms-up-final-sketch.png"
   }
 ]

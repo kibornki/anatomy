@@ -4,7 +4,8 @@
  const name=document.getElementById('selected-name'),caption=document.getElementById('selected-caption'),status=document.getElementById('selection-status');
  const controls=document.getElementById('anatomy-controls'),credit=document.getElementById('anatomy-credit'),list=document.querySelector('.cards');
  const keys=cards.map(card=>card.dataset.topic),storeKey='anatomy-hub-v1';
- let active=null,states={},saved,uiKey=null;
+ let active=null,states={},saved,uiKey=null,rangeFrame=0;
+ const pendingRanges=new Map();
  try{saved=JSON.parse(localStorage.getItem(storeKey)||'null');if(saved?.states&&typeof saved.states==='object')states=saved.states;}catch{}
  const aliases={chest:['upperbody','front','상체 팔 올리기'],back:['upperbody','back','상체 팔 올리기'],biceps:['arm','front','팔 팔꿈치 굽힘'],triceps:['arm','back','팔 팔꿈치 굽힘']};
  for(const old of [saved?.active,...Object.keys(aliases)]){
@@ -26,6 +27,7 @@
   if(info.modes?.length||info.muscleToggle||info.transparent||info.fibers||info.composition?.fatTransparent){const box=group('표시 방식'),buttons=document.createElement('div');buttons.className='anatomy-control-buttons';for(const mode of info.modes||[])addButton(buttons,mode.label,'mode',mode.value,mode.selected);box.append(buttons);const toggles=document.createElement('div');toggles.className='anatomy-control-buttons anatomy-toggle-buttons';if(info.muscleToggle)addButton(toggles,info.muscleToggle.label,'toggle-muscles',undefined,info.muscleToggle.showing);addCheckToggle(toggles,info.transparent);addCheckToggle(toggles,info.fibers);addCheckToggle(toggles,info.composition?.fatTransparent);if(toggles.childElementCount)box.append(toggles);}
   const motion=group('보기와 움직임'),row=document.createElement('div');row.className='anatomy-play-view-row';if(info.play)addButton(row,info.play.label,'play',undefined,info.play.playing);const views=document.createElement('div');views.className='anatomy-view-row';for(const view of info.views||[])addButton(views,view.label,'view',view.value,view.selected);row.append(views);motion.append(row);addRange(motion,info.angle);
   if(info.note){const note=document.createElement('p');note.className='anatomy-control-note';note.textContent=info.note;motion.append(note);}
+  credit.replaceChildren();for(const part of info.credit||[]){if(part.href){const link=document.createElement('a');link.href=part.href;link.target='_blank';link.rel='noopener';link.textContent=part.text;credit.append(link);}else credit.append(document.createTextNode(part.text));}credit.hidden=!(info.credit||[]).length;
   syncControls(info);
  }
  function syncControls(info){
@@ -39,12 +41,12 @@
   const muscleButton=controls.querySelector('[data-hub-action=toggle-muscles]');if(muscleButton&&info.muscleToggle){muscleButton.textContent=info.muscleToggle.label;muscleButton.setAttribute('aria-pressed',String(info.muscleToggle.showing));}
   const playButton=controls.querySelector('[data-hub-action=play]');if(playButton&&info.play){playButton.textContent=info.play.label;playButton.setAttribute('aria-pressed',String(info.play.playing));}
   const motionNote=controls.querySelector('.anatomy-control-group:last-child .anatomy-control-note');if(motionNote)motionNote.textContent=info.note||'';
-  credit.replaceChildren();for(const part of info.credit||[]){if(part.href){const link=document.createElement('a');link.href=part.href;link.target='_blank';link.rel='noopener';link.textContent=part.text;credit.append(link);}else credit.append(document.createTextNode(part.text));}credit.hidden=!(info.credit||[]).length;
  }
  function requestUi(){if(active)frame.contentWindow?.postMessage({type:'anatomy-hub-ui-request',key:active},'*');}
  frame.addEventListener('load',requestUi);
  function select(key){
   if(!Object.hasOwn(topics,key)||active===key)return;
+  cancelAnimationFrame(rangeFrame);rangeFrame=0;pendingRanges.clear();
   active=key;uiKey=null;
   for(const card of cards){const selected=card.dataset.topic===key;card.setAttribute('aria-selected',String(selected));card.tabIndex=selected?0:-1;}
   const topic=topics[key];panel.setAttribute('aria-labelledby','tab-'+key);name.textContent=topic.label+' · '+topic.movement;caption.textContent='모델을 불러오는 중입니다.';
@@ -54,7 +56,7 @@
   frame.srcdoc=child;persist();
  }
  controls.addEventListener('click',event=>{const button=event.target.closest('[data-hub-action]');if(!button)return;const action=button.dataset.hubAction;if(action==='mode'||action==='view')frameCommand({action,value:button.dataset.hubValue});else if(action==='play')frameCommand({action,value:button.getAttribute('aria-pressed')!=='true'});else if(action==='toggle-muscles')frameCommand({action});else if(action==='check-toggle'){const value=button.getAttribute('aria-pressed')!=='true';button.setAttribute('aria-pressed',String(value));frameCommand({action:'check',id:button.dataset.hubTarget,value});}else if(action==='click')frameCommand({action,id:button.dataset.hubValue});});
- controls.addEventListener('input',event=>{const input=event.target.closest('[data-hub-action=range]');if(input)frameCommand({action:'range',id:input.dataset.hubTarget,value:Number(input.value)});});
+ controls.addEventListener('input',event=>{const input=event.target.closest('[data-hub-action=range]');if(!input)return;pendingRanges.set(input.dataset.hubTarget,Number(input.value));if(!rangeFrame)rangeFrame=requestAnimationFrame(()=>{rangeFrame=0;for(const [id,value]of pendingRanges)frameCommand({action:'range',id,value});pendingRanges.clear();});});
  controls.addEventListener('change',event=>{const input=event.target.closest('[data-hub-action=check],[data-hub-action=select]');if(!input)return;frameCommand({action:input.dataset.hubAction,id:input.dataset.hubTarget,value:input.type==='checkbox'?input.checked:input.value});});
  cards.forEach((card,index)=>{
   card.addEventListener('click',()=>select(card.dataset.topic));

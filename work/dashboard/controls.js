@@ -9,6 +9,9 @@
   const storeKey='anatomy-dashboard-v1';
   let saved;try{saved=JSON.parse(localStorage.getItem(storeKey)||'null')}catch{}
   const state={mode:saved?.mode==='anatomy'?'anatomy':'photo',photo:photos.some(p=>p.id===saved?.photo)?saved.photo:photos[0].id,split:Number.isFinite(saved?.split)?Math.max(0,Math.min(100,saved.split)):50};
+  const anatomyFrame=document.getElementById('anatomy-frame');
+  function syncAnatomyVisibility(){anatomyFrame.contentWindow?.postMessage({type:'anatomy-hub-visibility',visible:state.mode==='anatomy'},'*');}
+  anatomyFrame.addEventListener('load',syncAnatomyVisibility);
   function persist(){try{localStorage.setItem(storeKey,JSON.stringify(state))}catch{}}
   function renderSplit(){stage.style.setProperty('--photo-split',state.split+'%');slider.value=state.split;slider.setAttribute('aria-valuetext',`원본 ${Math.round(state.split)}%, 근육 스케치 ${Math.round(100-state.split)}%`);for(const group of muscleLabels.children)group.style.visibility=state.split<=Number(group.dataset.reveal)?'visible':'hidden'}
   function renderMuscleLabels(item){
@@ -67,6 +70,7 @@
   }
   function selectMode(mode,save=true){
     state.mode=mode;
+    syncAnatomyVisibility();
     for(const tab of tabs){const active=tab.dataset.dashboardMode===mode;tab.setAttribute('aria-selected',String(active));tab.tabIndex=active?0:-1;document.getElementById(tab.getAttribute('aria-controls')).hidden=!active}
     if(mode==='photo')requestAnimationFrame(fit);
     if(save)persist();

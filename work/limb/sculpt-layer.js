@@ -94,6 +94,7 @@ function NativeLimbSculptLayer(root,model,region,composition){
   header.style.display=mode==='compare'?'':'none';
   leftTitle.setAttribute('x','16');rightTitle.setAttribute('x','584');
   if(mode==='compare'){leftTitle.textContent='해부학';rightTitle.textContent='도형화';}
+  if(mode==='anatomy')return;
   const yaw=model.pose.cameraYawByView?.[view]??model.pose.cameraYaw[['front','side','back'].indexOf(view)],a=yaw*Math.PI/180,c=Math.cos(a),s=Math.sin(a),all=model.parts.flatMap(p=>p.v),lo=Math.min(...all.map(p=>p[1])),hi=Math.max(...all.map(p=>p[1])),scale=565/(hi-lo),cx=all.reduce((n,p)=>n+p[0]/all.length,0),cz=all.reduce((n,p)=>n+p[2]/all.length,0),center=mode==='compare'?450:300,project=p=>[center+((p[0]-cx)*c+(p[2]-cz)*s)*scale,20+(p[1]-lo)*scale],depth=p=>-p[0]*s+p[2]*c;
   const posedByName=new Map((debug?.posed||[]).map(p=>[p.name,p.v])),pointsFor=part=>part.members?part.members.flatMap(member=>posedByName.get(member.name)||member.v):posedByName.get(part.name)||part.v,meshes=nodes.map(n=>n.part.kind==='muscle'&&!showMuscles?null:n.form?poseForearmForm(n.form,posedByName):n.nativeFaces?{v:pointsFor(n.part),faces:n.nativeFaces,rings:[]}:blockout(pointsFor(n.part),n.part.kind==='bone'));
   const buffer=AbdominalVisibility({project,depth,step:1});meshes.forEach((mesh,id)=>mesh?.faces.forEach(face=>{if(face.length===4)buffer.quad(face.map(i=>mesh.v[i]),id);else for(let j=1;j<face.length-1;j++)buffer.triangle(mesh.v[face[0]],mesh.v[face[j]],mesh.v[face[j+1]],id);}));
@@ -101,7 +102,7 @@ function NativeLimbSculptLayer(root,model,region,composition){
   const visible=buffer.solve(nodes.length+fatCount,{projections:true,scanlineClips:false,occludes:id=>id>=nodes.length?!composition.fatTransparent:id<0||nodes[id].part.kind==='bone'||!transparent});
   nodes.forEach((node,id)=>{
    const mesh=meshes[id];if(!mesh){node.g.style.display='none';return;}node.g.style.display='';node.g.setAttribute('opacity',transparent&&node.part.kind==='muscle'?.48:1);
-   const local=visible.ownerZ[id],inside=k=>transparent&&node.part.kind==='muscle'?local[k]>-Infinity:visible.owners[k]===id,contour=AtlasContour(visible,inside,visible.bounds[id]);node.mask.setAttribute('d',contour);node.fill.setAttribute('d',contour);node.outline.setAttribute('d',contour);
+   const inside=k=>transparent&&node.part.kind==='muscle'?visible.depthAt(id,k)>-Infinity:visible.owners[k]===id,contour=AtlasContour(visible,inside,visible.bounds[id]);node.mask.setAttribute('d',contour);node.fill.setAttribute('d',contour);node.outline.setAttribute('d',contour);
    const faces=node.nativeFaces?[]:mesh.faces,ordered=[];while(node.paths.length<faces.length)node.paths.push(make('path',{class:'sculpt-facet'},node.facets));
    faces.forEach((face,i)=>{const path=node.paths[i],points=face.map(k=>mesh.v[k]);path.setAttribute('d','M'+points.map(project).map(p=>p.join(',')).join('L')+'Z');path.setAttribute('fill',colorFor(node,face,mesh));ordered.push({path,z:points.reduce((sum,p)=>sum+depth(p),0)/points.length});});
    node.paths.slice(faces.length).forEach(path=>path.setAttribute('d',''));ordered.sort((x,y)=>x.z-y.z).forEach(item=>node.facets.appendChild(item.path));

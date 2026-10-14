@@ -3,6 +3,7 @@
  const configNode=document.getElementById('hub-config');if(!configNode)return;
  const config=JSON.parse(configNode.textContent),key=config.key,root=document.getElementById(key)||document.getElementById(key+'-motion');
  if(!root)return;
+ root.dataset.hubVisible='false';
  const sceneStyle=document.createElement('style');sceneStyle.id='anatomy-hub-scene-only';sceneStyle.textContent=`
 html,body{width:100%!important;height:100%!important;min-height:0!important;margin:0!important;padding:0!important;overflow:hidden!important}
 body{display:block!important}
@@ -42,7 +43,7 @@ body{display:block!important}
   else if(command.action==='select'&&typeof command.id==='string'){const select=document.getElementById(command.id);if(select?.tagName==='SELECT'&&[...select.options].some(option=>option.value===command.value)){select.value=command.value;select.dispatchEvent(new Event('change',{bubbles:true}));}}
   else if(command.action==='click'&&typeof command.id==='string'){document.getElementById(command.id)?.click();}
  }
- window.addEventListener('message',event=>{if(event.source!==parent)return;const data=event.data;if(data?.key!==key)return;if(data.type==='anatomy-hub-ui-request')sendInfo();else if(data.type==='anatomy-hub-ui-command')apply(data.command);});
+ window.addEventListener('message',event=>{if(event.source!==parent)return;const data=event.data;if(data?.type==='anatomy-hub-visibility'){root.dataset.hubVisible=String(!!data.visible);return;}if(data?.key!==key)return;if(data.type==='anatomy-hub-ui-request')sendInfo();else if(data.type==='anatomy-hub-ui-command')apply(data.command);});
  for(const type of ['input','change','click'])document.addEventListener(type,event=>{if(root.contains(event.target))queueMicrotask(sendInfo);});
  sendInfo();
 })();

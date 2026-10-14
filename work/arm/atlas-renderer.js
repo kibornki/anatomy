@@ -40,17 +40,17 @@ function AtlasArm(root){
   const visible=buffer.solve(nodes.length+fatCount,{projections:i=>i>=nodes.length||nodes[i].part.kind!=='bone',scanlineClips:false,occludes:i=>i>=nodes.length?!composition.fatTransparent:anatomyVisible(nodes[i])&&(!transparent||nodes[i].part.kind==='bone')});
   lastVisibility={...visible,offset:offsets.get(view),degrees};
   nodes.forEach((n,i)=>{
-   const soft=n.part.kind!=='bone',local=visible.ownerZ[i],inside=k=>transparent&&soft?local[k]>-Infinity:visible.owners[k]===i;
+   const soft=n.part.kind!=='bone',inside=k=>transparent&&soft?visible.depthAt(i,k)>-Infinity:visible.owners[k]===i;
    const contour=AtlasContour(visible,inside,visible.bounds[i]);n.fill.setAttribute('d',contour);n.outline.setAttribute('d',contour);n.mask.setAttribute('d',contour);n.g.setAttribute('opacity',transparent&&soft?.32:1);
    let path='';if(fibersOn)for(const fiber of n.guides){let segment=[];const flush=()=>{let length=0;for(let j=1;j<segment.length;j++)length+=Math.hypot(...segment[j].map((v,k)=>v-segment[j-1][k]));if(length>=5)path+=curve(segment);segment=[];};for(const p of fiber){const point=skin(p,n.part,angle),q=project(point),x=Math.floor((q[0]-visible.x0)/visible.step),y=Math.floor((q[1]-visible.y0)/visible.step),k=y*visible.w+x;
-     if(x>=0&&x<visible.w&&y>=0&&y<visible.h&&depth(point)>=local[k]-2.5&&(transparent||visible.owners[k]===i))segment.push(q);else flush();}flush();}
+     if(x>=0&&x<visible.w&&y>=0&&y<visible.h&&depth(point)>=visible.depthAt(i,k)-2.5&&(transparent||visible.owners[k]===i))segment.push(q);else flush();}flush();}
    n.fiber.setAttribute('d',path);n.fiber.setAttribute('stroke-opacity',n.part.kind==='tendon'?.18:.28);
   });
   lightSurfaces(visible);
   composition.drawFat(visible,nodes.length,AtlasContour,mode!=='sculpt');
   labelNodes.forEach(n=>n.g.style.display='none');
   for(const [name,text,x,y]of specs[view]){
-   const id=nodes.findIndex(n=>n.part.name===name);if(!anatomyVisible(nodes[id]))continue;let points=visible.centers[id];if(transparent){points=[];const b=visible.bounds[id],local=visible.ownerZ[id];for(let iy=b[1];iy<=b[3];iy+=6)for(let ix=b[0];ix<=b[2];ix+=6)if(local[iy*visible.w+ix]>-Infinity)points.push([visible.x0+(ix+.5)*visible.step,visible.y0+(iy+.5)*visible.step]);}
+   const id=nodes.findIndex(n=>n.part.name===name);if(!anatomyVisible(nodes[id]))continue;let points=visible.centers[id];if(transparent){points=[];const b=visible.bounds[id];for(let iy=b[1];iy<=b[3];iy+=6)for(let ix=b[0];ix<=b[2];ix+=6)if(visible.depthAt(id,iy*visible.w+ix)>-Infinity)points.push([visible.x0+(ix+.5)*visible.step,visible.y0+(iy+.5)*visible.step]);}
    const hit=svg.createSVGPoint();points=points.filter(p=>{hit.x=p[0];hit.y=p[1];return nodes[id].fill.isPointInFill(hit);});
    if(points.length<3||!transparent&&visible.coverage[id]<80)continue;const avg=points.reduce((sum,p)=>sum.map((v,j)=>v+p[j]/points.length),[0,0]),target=points.reduce((best,p)=>Math.hypot(...p.map((v,j)=>v-avg[j]))<Math.hypot(...best.map((v,j)=>v-avg[j]))?p:best);
    const n=labelNodes.get(name),labelX=mode==='compare'?(x<320?14:306):x,labelY=mode==='compare'?Math.max(24,Math.min(420,y)):y;n.g.style.display='';n.text.textContent=text;n.text.setAttribute('x',labelX);n.text.setAttribute('y',labelY);n.text.setAttribute('text-anchor',mode==='compare'?(x<320?'start':'end'):labelX<320?'start':'end');AnatomyLabelLeader(n.line,n.text,target);

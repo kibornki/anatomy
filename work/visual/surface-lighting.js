@@ -20,7 +20,7 @@ function AnatomySurfaceLighting(make,entries,{depthScale=1}={}){
     let total=0,n=0;
     for(let dy=0;dy<stride;dy++)for(let dx=0;dx<stride;dx++){
      const ix=left+x*stride+dx,iy=top+y*stride+dy;
-     if(ix>=w||iy>=h)continue;const v=source[iy*w+ix];if(Number.isFinite(v)){total+=v;n++;}
+     if(ix>=w||iy>=h)continue;const v=visible.depthAt(owner,iy*w+ix);if(Number.isFinite(v)){total+=v;n++;}
     }if(n)z[y*width+x]=total/n;
    }
    for(const axis of [1,width]){

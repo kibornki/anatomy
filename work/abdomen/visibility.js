@@ -1,13 +1,17 @@
 /* Per-sample camera depth for the existing vector artwork. This buffer only
    supplies SVG clip paths; colors, fibers, bones and opacity stay native SVG.
    Facing the camera alone cannot establish that a muscle is in front of ribs. */
-function AbdominalVisibility({project,depth,step=1}){
+function AbdominalVisibility({project,depth,step=1,accept=null}){
  const triangles=[];
- function triangle(a,b,c,owner){triangles.push({p:[a,b,c].map(project),z:[a,b,c].map(depth),owner});}
+ function triangle(a,b,c,owner){triangles.push({p:[a,b,c].map(project),z:[a,b,c].map(depth),world:accept?[a,b,c]:null,owner});}
  function quad(ps,owner){triangle(ps[0],ps[1],ps[2],owner);triangle(ps[0],ps[2],ps[3],owner);}
  function polygon(ps,owner){
   // Ear clipping retains concave outlines instead of filling their convex hull.
   if(ps.length<3)return;
+  if(ps.length===3){
+   const p=ps.map(project),z=ps.map(depth),area=p.reduce((sum,q,i)=>sum+q[0]*p[(i+1)%3][1]-q[1]*p[(i+1)%3][0],0),world=accept?ps.slice():null;
+   if(area<0){p.reverse();z.reverse();world?.reverse();}triangles.push({p,z,world,owner});return;
+  }
   const q=ps.map(project),cross=(a,b,c)=>(b[0]-a[0])*(c[1]-a[1])-(b[1]-a[1])*(c[0]-a[0]);
   let indices=ps.map((_,i)=>i),area=q.reduce((s,p,i)=>s+p[0]*q[(i+1)%q.length][1]-p[1]*q[(i+1)%q.length][0],0);
   if(area<0)indices.reverse();
@@ -36,20 +40,47 @@ function AbdominalVisibility({project,depth,step=1}){
   const x0=Math.floor(minX/step)*step,y0=Math.floor(minY/step)*step;
   const w=Math.ceil((maxX-x0)/step)+1,h=Math.ceil((maxY-y0)/step)+1;
   const zbuf=new Float32Array(w*h).fill(-Infinity),owners=new Int16Array(w*h).fill(-2);
-  const ownerZ=projections?Array.from({length:count},(_,id)=>projections===true||projections(id)?new Float32Array(w*h).fill(-Infinity):null):null;
   const bounds=Array.from({length:count},()=>[w,h,0,0]);
+  const prepared=[];
   for(const t of triangles){
    const p=t.p.map(q=>[(q[0]-x0)/step,(q[1]-y0)/step]),[a,b,c]=p;
    const den=(b[1]-c[1])*(a[0]-c[0])+(c[0]-b[0])*(a[1]-c[1]);if(Math.abs(den)<1e-7)continue;
-   const minX=Math.max(0,Math.floor(Math.min(...p.map(q=>q[0])))),maxX=Math.min(w-1,Math.ceil(Math.max(...p.map(q=>q[0])))),minY=Math.max(0,Math.floor(Math.min(...p.map(q=>q[1])))),maxY=Math.min(h-1,Math.ceil(Math.max(...p.map(q=>q[1]))));
+   const minX=Math.max(0,Math.floor(Math.min(a[0],b[0],c[0]))),maxX=Math.min(w-1,Math.ceil(Math.max(a[0],b[0],c[0]))),minY=Math.max(0,Math.floor(Math.min(a[1],b[1],c[1]))),maxY=Math.min(h-1,Math.ceil(Math.max(a[1],b[1],c[1])));
    if(t.owner>=0){const b=bounds[t.owner];b[0]=Math.min(b[0],minX);b[1]=Math.min(b[1],minY);b[2]=Math.max(b[2],maxX);b[3]=Math.max(b[3],maxY);}
-   for(let y=minY;y<=maxY;y++)for(let x=minX;x<=maxX;x++){
-    const px=x+.5,py=y+.5,wa=((b[1]-c[1])*(px-c[0])+(c[0]-b[0])*(py-c[1]))/den,wb=((c[1]-a[1])*(px-c[0])+(a[0]-c[0])*(py-c[1]))/den,wc=1-wa-wb;
+   prepared.push({t,a,b,c,den,minX,maxX,minY,maxY});
+  }
+  // Per-tissue depth needs only that tissue's projected rectangle, rather
+  // than a full-frame allocation for every muscle and tendon on every pose.
+  const projectionStrides=bounds.map(b=>Math.max(0,b[2]-b[0]+1));
+  const ownerZ=projections?Array.from({length:count},(_,id)=>projections===true||projections(id)?new Float32Array(projectionStrides[id]*Math.max(0,bounds[id][3]-bounds[id][1]+1)).fill(-Infinity):null):null;
+  function depthAt(owner,k){
+   const local=ownerZ?.[owner];if(!local)return -Infinity;
+   const b=bounds[owner],x=k%w,y=Math.floor(k/w);
+   return x<b[0]||x>b[2]||y<b[1]||y>b[3]?-Infinity:local[(y-b[1])*projectionStrides[owner]+x-b[0]];
+  }
+  for(const {t,a,b,c,den,minX,maxX,minY,maxY}of prepared){
+   const owner=t.owner,local=ownerZ&&owner>=0?ownerZ[owner]:null,occluding=occludes(owner),box=bounds[owner],stride=projectionStrides[owner];
+   const waX=(b[1]-c[1])/den,wbX=(c[1]-a[1])/den,wcX=-waX-wbX;
+   for(let y=minY;y<=maxY;y++){
+    const py=y+.5,wa0=((b[1]-c[1])*(.5-c[0])+(c[0]-b[0])*(py-c[1]))/den,wb0=((c[1]-a[1])*(.5-c[0])+(a[0]-c[0])*(py-c[1]))/den,wc0=1-wa0-wb0;
+    let left=minX,right=maxX;
+    // Reject empty scanline spans, retaining a pixel guard and the original
+    // per-sample arithmetic and edge tolerance for the visible samples.
+    for(let edge=0;edge<3;edge++){
+     const slope=edge===0?waX:edge===1?wbX:wcX,value=edge===0?wa0:edge===1?wb0:wc0;
+     if(slope>0)left=Math.max(left,Math.ceil((-1e-6-value)/slope)-1);
+     else if(slope<0)right=Math.min(right,Math.floor((-1e-6-value)/slope)+1);
+     else if(value< -1e-6){right=-1;break;}
+    }
+    for(let x=left;x<=right;x++){
+    const px=x+.5,wa=((b[1]-c[1])*(px-c[0])+(c[0]-b[0])*(py-c[1]))/den,wb=((c[1]-a[1])*(px-c[0])+(a[0]-c[0])*(py-c[1]))/den,wc=1-wa-wb;
     if(wa< -1e-6||wb< -1e-6||wc< -1e-6)continue;
+    if(t.world&&!accept(t.world,wa,wb,wc,owner))continue;
     const z=wa*t.z[0]+wb*t.z[1]+wc*t.z[2],k=y*w+x;
-    if(ownerZ&&t.owner>=0&&ownerZ[t.owner]&&z>ownerZ[t.owner][k])ownerZ[t.owner][k]=z;
-    if(!occludes(t.owner))continue;
-    if(z>zbuf[k]+.02||(Math.abs(z-zbuf[k])<=.02&&t.owner>=0)){zbuf[k]=z;owners[k]=t.owner;}
+    if(local){const index=(y-box[1])*stride+x-box[0];if(z>local[index])local[index]=z;}
+    if(!occluding)continue;
+    if(z>zbuf[k]+.02||(Math.abs(z-zbuf[k])<=.02&&owner>=0)){zbuf[k]=z;owners[k]=owner;}
+    }
    }
   }
   const clips=Array(count).fill(''),centers=Array.from({length:count},()=>[]),coverage=Array(count).fill(0);
@@ -63,7 +94,7 @@ function AbdominalVisibility({project,depth,step=1}){
    coverage[id]+=x-start;
    if(y%6===0)centers[id].push([px+length/2,py+step/2]);
   }
-  return {clips,centers,coverage,owners,zbuf,w,h,x0,y0,step,ownerZ,bounds};
+  return {clips,centers,coverage,owners,zbuf,w,h,x0,y0,step,ownerZ,bounds,projectionStrides,depthAt};
  }
  return {triangle,quad,polygon,line,solve};
 }
