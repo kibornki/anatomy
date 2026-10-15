@@ -1,9 +1,12 @@
 """Build the attributed, self-contained arm page and replace only its hub entry."""
 from pathlib import Path
 import json,re,sys
+from html import escape
 w=Path(__file__).resolve().parent;root=w.parents[1]
 head=(w/'page-template.html').read_text()
-head=head.replace('aria-label="도형화 랜드마크">','aria-label="랜드마크 선택"><option value="none">없음</option>')
+landmark_data=json.loads((w/'artist-landmarks.json').read_text())
+options='<option value="none">없음</option>'+''.join('<option value="'+escape(entry['id'])+'">'+escape(entry['label'])+'</option>' for entry in landmark_data['landmarks'] if entry.get('selectable') is True)
+head=re.sub(r'(<select[^>]*id="arm-landmark"[^>]*>).*?(</select>)',lambda m:m[1]+options+m[2],head,flags=re.S).replace('aria-label="도형화 랜드마크"','aria-label="랜드마크 선택"')
 back='<button type="button" class="btn" id="arm-back" aria-pressed="false">후면</button>'
 side='<button type="button" class="btn" id="arm-side" aria-pressed="false">측면</button>'
 head=head.replace(back+side,side+back)

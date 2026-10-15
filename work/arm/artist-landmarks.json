@@ -22,7 +22,7 @@
   "landmarks": [
     {
       "id": "sternoclavicular",
-      "short": "SC 관절",
+      "short": "흉쇄관절",
       "label": "흉쇄관절",
       "point": [
         122.36615176166038,
@@ -31,7 +31,8 @@
       ],
       "motion": "fixed",
       "source": "upperbody rig.sc mapped by common humerus registration",
-      "note": "쇄골 안쪽 끝의 기준점이다. 흉곽에서 어깨로 이어지는 쇄골의 방향과 S곡선을 잡을 때 사용한다."
+      "note": "쇄골 안쪽 끝의 기준점이다. 흉곽에서 어깨로 이어지는 쇄골의 방향과 S곡선을 잡을 때 사용한다.",
+      "selectable": true
     },
     {
       "id": "acromioclavicular",
@@ -44,12 +45,13 @@
       ],
       "motion": "fixed",
       "source": "upperbody rig.ac mapped by common humerus registration",
-      "note": "견봉과 쇄골이 만나는 어깨 상단 기준이다. 삼각근 어깨 캡의 상단 및 쇄골·견갑골 관계를 확인한다."
+      "note": "견봉과 쇄골이 만나는 어깨 상단 기준이다. 삼각근 어깨 캡의 상단 및 쇄골·견갑골 관계를 확인한다.",
+      "selectable": false
     },
     {
       "id": "glenohumeral",
-      "short": "견관절 중심",
-      "label": "견관절 중심",
+      "short": "견관절",
+      "label": "견관절",
       "point": [
         -1.4136993455544484,
         52.989275650097,
@@ -57,7 +59,8 @@
       ],
       "motion": "fixed",
       "source": "upperbody rig.gh mapped by common humerus registration",
-      "note": "위팔뼈두와 관절와가 만나는 회전 중심이다. 견봉 표면점과 구분해서 어깨 덩어리의 관절 위치를 읽는다."
+      "note": "위팔뼈두와 관절와가 만나는 회전 중심이다. 견봉 표면점과 구분해서 어깨 덩어리의 관절 위치를 읽는다.",
+      "selectable": true
     },
     {
       "id": "elbow-axis",
@@ -70,7 +73,8 @@
       ],
       "motion": "fixed",
       "source": "arm atlas joint",
-      "note": "현재 동작에서 위팔뼈와 어깨띠는 고정되고 요골·척골이 이 기준점 주위로 회전한다. 팔꿈치 동작은 0–135° 도해용 힌지다."
+      "note": "현재 동작에서 위팔뼈와 어깨띠는 고정되고 요골·척골이 이 기준점 주위로 회전한다. 팔꿈치 동작은 0–135° 도해용 힌지다.",
+      "selectable": false
     },
     {
       "id": "olecranon",
@@ -83,7 +87,8 @@
       ],
       "motion": "forearm",
       "source": "authored triceps attachment guide",
-      "note": "삼두근이 척골 주두로 이어지는 방향을 찾는 작화용 부착 가이드다. 원본 아틀라스의 개별 주두 부착 분할로 오해하지 않는다."
+      "note": "삼두근이 척골 주두로 이어지는 방향을 찾는 작화용 부착 가이드다. 원본 아틀라스의 개별 주두 부착 분할로 오해하지 않는다.",
+      "selectable": false
     },
     {
       "id": "radial-tuberosity",
@@ -96,7 +101,8 @@
       ],
       "motion": "forearm",
       "source": "authored biceps attachment guide",
-      "note": "이두근이 요골결절로 이어지는 방향을 읽는 작화용 가이드다. 정밀한 부착점 분할이나 실측 조직 경계는 아니다."
+      "note": "이두근이 요골결절로 이어지는 방향을 읽는 작화용 가이드다. 정밀한 부착점 분할이나 실측 조직 경계는 아니다.",
+      "selectable": false
     },
     {
       "id": "inferior-angle",
@@ -109,7 +115,8 @@
       ],
       "motion": "fixed",
       "source": "Mean of scapula atlas vertices within 2 atlas units of the maximum y; approximate inferior-angle blockout anchor.",
-      "note": "원본 견갑골 메시의 아래쪽 끝을 평균점으로 잡은 블록아웃 기준이다. 아틀라스에 별도 하각 라벨/실측점이 없어 윤곽 확인용 근사점으로 사용한다."
+      "note": "원본 견갑골 메시의 아래쪽 끝을 평균점으로 잡은 블록아웃 기준이다. 아틀라스에 별도 하각 라벨/실측점이 없어 윤곽 확인용 근사점으로 사용한다.",
+      "selectable": false
     }
   ],
   "inferiorAngle": {

@@ -4,7 +4,7 @@
  let angle=config.initial,view='front',mode='anatomy',showMuscles=true,playing=false,phase=0,last=0,lastDraw=0,lastCapture=0;
  let saved=hubConfig?.state;try{saved??=JSON.parse(localStorage.getItem(store)||'null');}catch{}const content=saved?.modelContent;if(content?.topic===topic){if(Number.isFinite(content.angle))angle=Math.max(config.min,Math.min(config.max,content.angle));if(views.includes(content.camera))view=content.camera;if(['anatomy','sculpt','compare'].includes(content.mode))mode=content.mode;if(typeof content.showMuscles==='boolean')showMuscles=content.showMuscles;if(typeof content.fibers==='boolean')by('fibers').checked=content.fibers;if(typeof content.transparent==='boolean')by('transparent').checked=content.transparent;playing=saved.privateContent?.playing===true&&!matchMedia('(prefers-reduced-motion: reduce)').matches;}
  const landmarks=model.landmarks;landmarks.restore(content?.landmark);landmarks.onChange(()=>{render();capture();});
- const composition=model.composition;composition.restore(content?.composition);composition.mountControls(()=>{render();capture();queueFit();});
+ const composition=model.composition;
  function render(){
   if(!root.isConnected)return;root.classList.toggle('no-fibers',!by('fibers').checked);root.classList.toggle('transparent',by('transparent').checked);root.dataset.revision='native-limb-sculpt-v2';root.dataset.angle=Math.round(angle);root.dataset.camera=view;root.dataset.mode=mode;root.dataset.showMuscles=showMuscles;
   model.render(angle,view,mode);sculpt.render(model.debug,view,mode,showMuscles,by('transparent').checked,by('fibers').checked);

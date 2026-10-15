@@ -33,7 +33,7 @@ with sync_playwright() as pw:
         page.locator('#tab-'+region).click()
         frame=page.locator('#anatomy-frame').element_handle().content_frame()
         frame.wait_for_function('!!window.'+api,timeout=120000)
-        assert frame.locator('#'+region+'-composition-muscle').is_visible()
+        assert frame.locator('.composition-controls').count()==0
         assert frame.locator('.anatomy-surface-lighting' if region!='arm' else '.arm-surface-lighting').count()>0
         assert 'CC BY-SA 2.1 Japan' in frame.locator('body').inner_text()
         frame.locator('#'+region+'-transparent').check()

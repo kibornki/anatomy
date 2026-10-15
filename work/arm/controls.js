@@ -1,12 +1,12 @@
 (()=>{
  const root=document.getElementById('arm'),model=AtlasArm(root),by=id=>document.getElementById('arm-'+id),cfg=document.getElementById('hub-config'),config=cfg?JSON.parse(cfg.textContent):null,store='artist-arm-v1',topic='팔 팔꿈치 굽힘';
- let angle=0,view='front',mode='anatomy',landmark='acromioclavicular',playing=false,phase=0,last=0,lastDraw=0,showMuscles=true;
+ let angle=0,view='front',mode='anatomy',landmark='sternoclavicular',playing=false,phase=0,last=0,lastDraw=0,showMuscles=true;
  let saved=config?.state;try{saved??=JSON.parse(localStorage.getItem(store)||'null');}catch{}
  const content=saved?.modelContent;if(content?.topic===topic){if(Number.isFinite(content.angle))angle=Math.max(0,Math.min(135,content.angle));if(['front','side','back'].includes(content.camera))view=content.camera;if(['anatomy','sculpt','compare'].includes(content.mode))mode=content.mode;if(typeof content.landmark==='string')landmark=content.landmark;if(typeof content.fibers==='boolean')by('fibers').checked=content.fibers;if(typeof content.transparent==='boolean')by('transparent').checked=content.transparent;if(typeof content.showMuscles==='boolean')showMuscles=content.showMuscles;else if(mode==='compare'&&(typeof content.showAnatomyMuscles==='boolean'||typeof content.showSculptMuscles==='boolean'))showMuscles=content.showAnatomyMuscles!==false&&content.showSculptMuscles!==false;else if(mode==='sculpt'&&typeof content.showSculptMuscles==='boolean')showMuscles=content.showSculptMuscles;else if(typeof content.showAnatomyMuscles==='boolean')showMuscles=content.showAnatomyMuscles;playing=saved.privateContent?.playing===true&&!matchMedia('(prefers-reduced-motion: reduce)').matches;}
- const composition=model.composition;composition.restore(content?.composition);composition.mountControls(()=>{render();capture();queueFit();});
+ const composition=model.composition;
  if(['front','side','back'].includes(location.hash.slice(1)))view=location.hash.slice(1);
- const landmarkById=new Map(model.landmarks.landmarks.map(item=>[item.id,item]));
- if(landmark!=='none'&&!landmarkById.has(landmark))landmark='acromioclavicular';
+ const landmarkById=new Map(model.landmarks.landmarks.filter(item=>item.selectable===true).map(item=>[item.id,item]));
+ if(landmark!=='none'&&!landmarkById.has(landmark))landmark='sternoclavicular';
  function render(){
   root.classList.toggle('no-fibers',!by('fibers').checked);root.classList.toggle('transparent',by('transparent').checked);root.dataset.angle=angle;root.dataset.camera=view;root.dataset.mode=mode;root.dataset.landmark=landmark;root.dataset.revision='arm-artist-sculpt-v1';root.dataset.showMuscles=showMuscles;const muscleButton=root.querySelector('[data-arm-toggle-muscles]');if(muscleButton)muscleButton.textContent=showMuscles?'근육 숨기기':'근육 보이기';const fiberControl=by('fibers').closest('.form-check');if(fiberControl){fiberControl.hidden=mode==='sculpt';fiberControl.style.display=mode==='sculpt'?'none':'';}by('fiber-label').textContent='근섬유';model.render(angle,view,mode,landmark);
   by('angle').value=angle;by('value').textContent=Math.round(angle)+'°';by('angle').setAttribute('aria-valuetext',Math.round(angle)+'도 굽힘');for(const v of ['front','side','back'])by(v).setAttribute('aria-pressed',v===view);

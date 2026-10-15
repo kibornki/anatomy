@@ -18,7 +18,7 @@
  if(typeof content?.fibers==='boolean')by('fibers').checked=content.fibers;
  if(typeof content?.transparent==='boolean')by('transparent').checked=content.transparent;
  const landmarks=flexion.landmarks;landmarks.restore(content?.landmark);landmarks.onChange(()=>{render();capture();});
- const composition=flexion.composition;composition.restore(content?.composition);composition.mountControls(()=>{render();capture();queueFit();});
+ const composition=flexion.composition;
  function capture(){const state={modelContent:{revision,topic:'복부 말기와 비틀기',curl,twist,angle:view==='twist'?twist:curl,camera:view,mode,showMuscles,fibers:by('fibers').checked,transparent:by('transparent').checked,landmark:landmarks.value,composition:composition.state},privateContent:{playing}};try{localStorage.setItem(store,JSON.stringify(state));}catch{}if(config)parent.postMessage({type:'anatomy-hub-state',key:config.key,state},'*');}
  function render(){
   const yaw=view==='twist',angle=yaw?twist:curl,slider=by('angle');root.dataset.mode=mode;root.dataset.showMuscles=showMuscles;slider.min=yaw?-60:0;slider.max=yaw?60:100;slider.value=angle;by('value').textContent=Math.round(angle)+(yaw?'°':'%');by('motion-label').textContent=yaw?'척추 비틀기':'몸통 말기';slider.setAttribute('aria-label',yaw?'척추 비틀기':'몸통 말기');slider.setAttribute('aria-valuetext',Math.round(angle)+(yaw?'도 비틀기':'퍼센트 말기'));

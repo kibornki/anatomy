@@ -26,7 +26,7 @@ function AtlasArm(root){
  const curve=ps=>{if(ps.length<3)return '';let d='M'+ps[0].join(',');for(let i=1;i<ps.length-1;i++)d+='Q'+ps[i].join(',')+' '+ps[i].map((v,j)=>(v+ps[i+1][j])/2).join(',');return d+'L'+ps.at(-1).join(',');};
  const offsets=new Map();for(const [view,degrees]of [['front',16],['side',90],['back',164]]){const a=degrees*Math.PI/180;let min=Infinity,max=-Infinity;for(const p of atlas.parts.filter(p=>p.kind==='bone'))for(const v of p.v){const x=v[0]*Math.cos(a)+v[2]*Math.sin(a);min=Math.min(min,x);max=Math.max(max,x);}offsets.set(view,320-(min+max)*1.05/2);}
  let debug=null,lastVisibility=null,lastKey='',posedAngle=NaN,posedCache=null,posedComposition=-1;
- function render(angle,view='front',mode='anatomy',landmark='acromioclavicular'){
+ function render(angle,view='front',mode='anatomy',landmark='sternoclavicular'){
   const transparent=root.classList.contains('transparent'),fibersOn=!root.classList.contains('no-fibers'),showMuscles=root.dataset.showMuscles!=='false',key=[angle,view,transparent,fibersOn,composition.key,mode,landmark,showMuscles,root.clientWidth].join();if(key===lastKey)return;lastKey=key;
   const start=performance.now(),degrees=view==='side'?90:view==='back'?164:16,a=degrees*Math.PI/180,c=Math.cos(a),s=Math.sin(a);
   const baseProject=p=>[offsets.get(view)+(p[0]*c+p[2]*s)*1.05,15+(p[1]-29)*1.05],depth=p=>-p[0]*s+p[2]*c;
