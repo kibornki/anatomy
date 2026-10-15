@@ -174,5 +174,38 @@
     "original": "assets/photo-comparison/figure-pirate-crouch-original.webp?v=d04dbbe0d2b6",
     "sketch": "assets/photo-comparison/figure-pirate-crouch-sketch.webp?v=782647762539",
     "thumbnail": "assets/photo-comparison/figure-pirate-crouch-thumb.webp?v=bf78a3d27483"
+  },
+  {
+    "id": "figure-horns-front",
+    "label": "캐릭터 · 뿔 장식",
+    "detail": "일러스트 · 정면",
+    "width": 626,
+    "height": 1200,
+    "cropTop": 0,
+    "original": "assets/photo-comparison/figure-horns-front-original.webp?v=0d3d43054235",
+    "sketch": "assets/photo-comparison/figure-horns-front-sketch.webp?v=26efc12c3cc0",
+    "thumbnail": "assets/photo-comparison/figure-horns-front-thumb.webp?v=af26681cdebb"
+  },
+  {
+    "id": "figure-pink-front",
+    "label": "캐릭터 · 분홍 정면",
+    "detail": "일러스트 · 정면",
+    "width": 576,
+    "height": 1280,
+    "cropTop": 0,
+    "original": "assets/photo-comparison/figure-pink-front-original.webp?v=625ba4c69b73",
+    "sketch": "assets/photo-comparison/figure-pink-front-sketch.webp?v=8edaeb2ddf27",
+    "thumbnail": "assets/photo-comparison/figure-pink-front-thumb.webp?v=9aaf34a773e4"
+  },
+  {
+    "id": "figure-pink-back",
+    "label": "캐릭터 · 분홍 후면",
+    "detail": "피규어 · 한쪽 다리 굽힘",
+    "width": 640,
+    "height": 853,
+    "cropTop": 0,
+    "original": "assets/photo-comparison/figure-pink-back-original.webp?v=15625cd6022a",
+    "sketch": "assets/photo-comparison/figure-pink-back-sketch.webp?v=99307bbb0666",
+    "thumbnail": "assets/photo-comparison/figure-pink-back-thumb.webp?v=dffa54ff7ee4"
   }
 ]

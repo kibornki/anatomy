@@ -112,5 +112,26 @@
     "detail": "피규어 · 굽힌 다리",
     "original": "assets/photo-comparison/figure-pirate-crouch-original.png",
     "sketch": "assets/photo-comparison/figure-pirate-crouch-sketch.png"
+  },
+  {
+    "id": "figure-horns-front",
+    "label": "캐릭터 · 뿔 장식",
+    "detail": "일러스트 · 정면",
+    "original": "assets/photo-comparison/figure-horns-front-original.png",
+    "sketch": "assets/photo-comparison/figure-horns-front-sketch.png"
+  },
+  {
+    "id": "figure-pink-front",
+    "label": "캐릭터 · 분홍 정면",
+    "detail": "일러스트 · 정면",
+    "original": "assets/photo-comparison/figure-pink-front-original.png",
+    "sketch": "assets/photo-comparison/figure-pink-front-sketch.png"
+  },
+  {
+    "id": "figure-pink-back",
+    "label": "캐릭터 · 분홍 후면",
+    "detail": "피규어 · 한쪽 다리 굽힘",
+    "original": "assets/photo-comparison/figure-pink-back-original.png",
+    "sketch": "assets/photo-comparison/figure-pink-back-sketch.png"
   }
 ]
