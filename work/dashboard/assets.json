@@ -42,13 +42,6 @@
     "sketch": "assets/photo-comparison/back-oblique-sketch.png"
   },
   {
-    "id": "front-hang",
-    "label": "정면 · 매달리기",
-    "detail": "정면 · 팔 위로 뻗기",
-    "original": "assets/photo-comparison/front-hang-original.png",
-    "sketch": "assets/photo-comparison/front-hang-sketch.png"
-  },
-  {
     "id": "biceps",
     "label": "팔 · 이두근",
     "detail": "굽힌 팔 · 전면",
@@ -133,5 +126,19 @@
     "detail": "피규어 · 한쪽 다리 굽힘",
     "original": "assets/photo-comparison/figure-pink-back-original.png",
     "sketch": "assets/photo-comparison/figure-pink-back-sketch.png"
+  },
+  {
+    "id": "male-torso-front",
+    "label": "상체 · 정면",
+    "detail": "가슴·복부·팔",
+    "original": "assets/photo-comparison/male-torso-front-original.png",
+    "sketch": "assets/photo-comparison/male-torso-front-sketch.png"
+  },
+  {
+    "id": "male-fullbody-pose",
+    "label": "전신 · 포즈",
+    "detail": "사선 · 팔 올린 자세",
+    "original": "assets/photo-comparison/male-fullbody-pose-original.png",
+    "sketch": "assets/photo-comparison/male-fullbody-pose-sketch.png"
   }
 ]

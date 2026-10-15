@@ -7,7 +7,7 @@
     "height": 1024,
     "cropTop": 0,
     "original": "assets/photo-comparison/thigh-front-posed-original.webp?v=7f7565eda6c3",
-    "sketch": "assets/photo-comparison/thigh-front-posed-sketch.webp?v=67f6c2ad727d",
+    "sketch": "assets/photo-comparison/thigh-front-posed-sketch.webp?v=f79fe95f5347",
     "thumbnail": "assets/photo-comparison/thigh-front-posed-thumb.webp?v=c8146403c423"
   },
   {
@@ -18,7 +18,7 @@
     "height": 1675,
     "cropTop": 0,
     "original": "assets/photo-comparison/thigh-front-close-original.webp?v=beac31ef15b2",
-    "sketch": "assets/photo-comparison/thigh-front-close-sketch.webp?v=90b7f42ee193",
+    "sketch": "assets/photo-comparison/thigh-front-close-sketch.webp?v=a7f09fb5d337",
     "thumbnail": "assets/photo-comparison/thigh-front-close-thumb.webp?v=f38db1fe2097"
   },
   {
@@ -29,7 +29,7 @@
     "height": 951,
     "cropTop": 0,
     "original": "assets/photo-comparison/thigh-press-original.webp?v=8fba041012c7",
-    "sketch": "assets/photo-comparison/thigh-press-sketch.webp?v=16daf4b50ce1",
+    "sketch": "assets/photo-comparison/thigh-press-sketch.webp?v=941369ff6131",
     "thumbnail": "assets/photo-comparison/thigh-press-thumb.webp?v=4cbdac3bd1f4"
   },
   {
@@ -40,7 +40,7 @@
     "height": 1327,
     "cropTop": 0,
     "original": "assets/photo-comparison/back-raised-original.webp?v=5dea5ebb52fd",
-    "sketch": "assets/photo-comparison/back-raised-sketch.webp?v=2f71f336e91f",
+    "sketch": "assets/photo-comparison/back-raised-sketch.webp?v=4c18396586b6",
     "thumbnail": "assets/photo-comparison/back-raised-thumb.webp?v=1528ae623b8a"
   },
   {
@@ -51,7 +51,7 @@
     "height": 1330,
     "cropTop": 0,
     "original": "assets/photo-comparison/back-spread-original.webp?v=6511439974cc",
-    "sketch": "assets/photo-comparison/back-spread-sketch.webp?v=aa240e6aacad",
+    "sketch": "assets/photo-comparison/back-spread-sketch.webp?v=f1b9a0c7d4c4",
     "thumbnail": "assets/photo-comparison/back-spread-thumb.webp?v=3e25ac46a96e"
   },
   {
@@ -62,19 +62,8 @@
     "height": 1164,
     "cropTop": 0,
     "original": "assets/photo-comparison/back-oblique-original.webp?v=04a3b6b2afef",
-    "sketch": "assets/photo-comparison/back-oblique-sketch.webp?v=2c220b074da2",
+    "sketch": "assets/photo-comparison/back-oblique-sketch.webp?v=af79d61539ef",
     "thumbnail": "assets/photo-comparison/back-oblique-thumb.webp?v=ffa0ceb93a57"
-  },
-  {
-    "id": "front-hang",
-    "label": "정면 · 매달리기",
-    "detail": "정면 · 팔 위로 뻗기",
-    "width": 1024,
-    "height": 1536,
-    "cropTop": 0,
-    "original": "assets/photo-comparison/front-hang-original.webp?v=c687a1482ca1",
-    "sketch": "assets/photo-comparison/front-hang-sketch.webp?v=06a919859492",
-    "thumbnail": "assets/photo-comparison/front-hang-thumb.webp?v=78da35eb8b8b"
   },
   {
     "id": "biceps",
@@ -207,5 +196,27 @@
     "original": "assets/photo-comparison/figure-pink-back-original.webp?v=15625cd6022a",
     "sketch": "assets/photo-comparison/figure-pink-back-sketch.webp?v=99307bbb0666",
     "thumbnail": "assets/photo-comparison/figure-pink-back-thumb.webp?v=dffa54ff7ee4"
+  },
+  {
+    "id": "male-torso-front",
+    "label": "상체 · 정면",
+    "detail": "가슴·복부·팔",
+    "width": 554,
+    "height": 554,
+    "cropTop": 0,
+    "original": "assets/photo-comparison/male-torso-front-original.webp?v=033a5e6ebd64",
+    "sketch": "assets/photo-comparison/male-torso-front-sketch.webp?v=77d9d9af71d2",
+    "thumbnail": "assets/photo-comparison/male-torso-front-thumb.webp?v=39031098bcfc"
+  },
+  {
+    "id": "male-fullbody-pose",
+    "label": "전신 · 포즈",
+    "detail": "사선 · 팔 올린 자세",
+    "width": 421,
+    "height": 626,
+    "cropTop": 0,
+    "original": "assets/photo-comparison/male-fullbody-pose-original.webp?v=eef3d233d470",
+    "sketch": "assets/photo-comparison/male-fullbody-pose-sketch.webp?v=2e41ed8016fa",
+    "thumbnail": "assets/photo-comparison/male-fullbody-pose-thumb.webp?v=70fe5deebfbd"
   }
 ]
