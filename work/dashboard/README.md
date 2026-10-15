@@ -16,7 +16,7 @@ Supplied comparison sheets can use `originalRect` and `sketchRect` as `[x, y, wi
 
 After changing photo assets or dashboard source:
 
-Generated raster studies have muscle callouts in `muscle-labels.json`. The dashboard builder embeds these into photo data; `controls.js` reveals complete callouts only on the sketch side of the wipe. Uncertain subdivisions are deliberately left unnamed. See `PHOTO_ANATOMY_REVIEW.md` for the initial review, corrections and verification limits. Changing callouts only requires running `build.py`, without repackaging images.
+Muscle-name callouts are not displayed in either dashboard tab. Bone landmark labels remain available in the anatomy controls.
 
 ```powershell
 python -X utf8 work/dashboard/package_photos.py

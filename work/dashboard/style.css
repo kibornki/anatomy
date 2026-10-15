@@ -22,12 +22,6 @@
 .photo-compare{position:relative;flex:none;margin:auto;width:100%;overflow:hidden;background:#fff;user-select:none;touch-action:pan-y}
 .photo-compare img{position:absolute;left:0;top:var(--photo-top,0%);width:100%;height:var(--photo-image-height,100%);object-fit:fill;pointer-events:none}
 .photo-sketch{position:absolute;inset:0;overflow:hidden;clip-path:inset(0 0 0 var(--photo-split));background:#fff}
-.photo-muscle-labels{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;clip-path:inset(0 0 0 var(--photo-split));overflow:hidden}
-.photo-muscle-labels[hidden]{display:none}
-.photo-muscle-labels path{fill:none;stroke:#4b5d71;stroke-width:1;vector-effect:non-scaling-stroke}
-.photo-muscle-labels circle{fill:#fff;stroke:#4b5d71;stroke-width:1;vector-effect:non-scaling-stroke}
-.photo-muscle-labels rect{fill:#fffffff0;stroke:#d3dce6;stroke-width:.7;vector-effect:non-scaling-stroke}
-.photo-muscle-labels text{font-family:system-ui,'Malgun Gothic',sans-serif;font-weight:600;fill:#24344a;text-anchor:middle;dominant-baseline:central}
 .photo-divider{position:absolute;top:0;bottom:0;left:var(--photo-split);width:2px;transform:translateX(-50%);background:#fff;box-shadow:0 0 4px #0004;pointer-events:none}
 .photo-divider span{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);display:grid;place-items:center;width:44px;height:44px;border-radius:50%;background:#fff;color:#263b51;font-size:24px;box-shadow:0 2px 12px #0003;border:1px solid #e1e5eb}
 #photo-wipe{position:absolute;inset:0;width:100%;height:100%;margin:0;opacity:0;cursor:ew-resize;touch-action:pan-y}

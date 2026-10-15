@@ -3,6 +3,7 @@
  * Elbow skinning is illustrative; it does not simulate tissue mechanics. */
 function AtlasArm(root){
  const atlas=JSON.parse(document.getElementById('arm-atlas').textContent),landmarks=JSON.parse(document.getElementById('arm-landmarks').textContent),svg=root.querySelector('svg'),defs=svg.querySelector('defs'),drawing=root.querySelector('.diagram-volumes'),labels=root.querySelector('.diagram-labels');
+ labels.replaceChildren();
  const ns='http://www.w3.org/2000/svg',make=(tag,attrs,parent)=>{const n=document.createElementNS(ns,tag);for(const [k,v] of Object.entries(attrs))n.setAttribute(k,v);parent.append(n);return n;};
  const composition=AnatomyComposition(root,atlas.parts,'arm');
  const motion=ArmMotion(atlas,JSON.parse(document.getElementById('arm-motion-reference').textContent)),forearm=motion.forearm,collision=ArmBoneCollision(atlas,forearm);
@@ -17,12 +18,6 @@ function AtlasArm(root){
  const lightSurfaces=ArmSurfaceLighting(make,nodes);
  composition.mountFat(make,drawing);
  const sculpt=ArmSculptLayer({atlas,landmarks,make,defs,drawing,svg,composition});
- const specs={
-  front:[['deltoid-anterior',ARM_MUSCLE_LABELS.parts['deltoid-anterior'],55,105],['deltoid-middle',ARM_MUSCLE_LABELS.parts['deltoid-middle'],585,145],['biceps-long',ARM_MUSCLE_LABELS.parts['biceps-long'],55,245],['biceps-short',ARM_MUSCLE_LABELS.parts['biceps-short'],585,280],['brachialis',ARM_MUSCLE_LABELS.parts.brachialis,585,330],['triceps-lateral',ARM_MUSCLE_LABELS.parts['triceps-lateral'],55,340]],
-  back:[['deltoid-posterior',ARM_MUSCLE_LABELS.parts['deltoid-posterior'],55,105],['triceps-long',ARM_MUSCLE_LABELS.parts['triceps-long'],55,245],['triceps-lateral',ARM_MUSCLE_LABELS.parts['triceps-lateral'],585,280],['triceps-medial',ARM_MUSCLE_LABELS.parts['triceps-medial'],585,355],['triceps-aponeurosis',ARM_MUSCLE_LABELS.parts['triceps-aponeurosis'],55,400]],
-  side:[['deltoid-middle',ARM_MUSCLE_LABELS.parts['deltoid-middle'],585,105],['biceps-long',ARM_MUSCLE_LABELS.parts['biceps-long'],585,245],['brachialis',ARM_MUSCLE_LABELS.parts.brachialis,585,300],['triceps-lateral',ARM_MUSCLE_LABELS.parts['triceps-lateral'],55,280],['triceps-long',ARM_MUSCLE_LABELS.parts['triceps-long'],55,340],['triceps-aponeurosis',ARM_MUSCLE_LABELS.parts['triceps-aponeurosis'],55,400]]
- };
- const labelNodes=new Map();for(const list of Object.values(specs))for(const [name,text,x,y]of list){if(labelNodes.has(name))continue;const g=make('g',{'data-label':name},labels),line=make('path',{},g),t=make('text',{},g);t.textContent=text;labelNodes.set(name,{g,line,text:t});}
  const curve=ps=>{if(ps.length<3)return '';let d='M'+ps[0].join(',');for(let i=1;i<ps.length-1;i++)d+='Q'+ps[i].join(',')+' '+ps[i].map((v,j)=>(v+ps[i+1][j])/2).join(',');return d+'L'+ps.at(-1).join(',');};
  const offsets=new Map();for(const [view,degrees]of [['front',16],['side',90],['back',164]]){const a=degrees*Math.PI/180;let min=Infinity,max=-Infinity;for(const p of atlas.parts.filter(p=>p.kind==='bone'))for(const v of p.v){const x=v[0]*Math.cos(a)+v[2]*Math.sin(a);min=Math.min(min,x);max=Math.max(max,x);}offsets.set(view,320-(min+max)*1.05/2);}
  let debug=null,lastVisibility=null,lastKey='',posedAngle=NaN,posedCache=null,posedComposition=-1;
@@ -48,13 +43,6 @@ function AtlasArm(root){
   });
   lightSurfaces(visible);
   composition.drawFat(visible,nodes.length,AtlasContour,mode!=='sculpt');
-  labelNodes.forEach(n=>n.g.style.display='none');
-  for(const [name,text,x,y]of specs[view]){
-   const id=nodes.findIndex(n=>n.part.name===name);if(!anatomyVisible(nodes[id]))continue;let points=visible.centers[id];if(transparent){points=[];const b=visible.bounds[id];for(let iy=b[1];iy<=b[3];iy+=6)for(let ix=b[0];ix<=b[2];ix+=6)if(visible.depthAt(id,iy*visible.w+ix)>-Infinity)points.push([visible.x0+(ix+.5)*visible.step,visible.y0+(iy+.5)*visible.step]);}
-   const hit=svg.createSVGPoint();points=points.filter(p=>{hit.x=p[0];hit.y=p[1];return nodes[id].fill.isPointInFill(hit);});
-   if(points.length<3||!transparent&&visible.coverage[id]<80)continue;const avg=points.reduce((sum,p)=>sum.map((v,j)=>v+p[j]/points.length),[0,0]),target=points.reduce((best,p)=>Math.hypot(...p.map((v,j)=>v-avg[j]))<Math.hypot(...best.map((v,j)=>v-avg[j]))?p:best);
-   const n=labelNodes.get(name),labelX=mode==='compare'?(x<320?14:306):x,labelY=mode==='compare'?Math.max(24,Math.min(420,y)):y;n.g.style.display='';n.text.textContent=text;n.text.setAttribute('x',labelX);n.text.setAttribute('y',labelY);n.text.setAttribute('text-anchor',mode==='compare'?(x<320?'start':'end'):labelX<320?'start':'end');AnatomyLabelLeader(n.line,n.text,target);
-  }
   svg.setAttribute('viewBox','0 0 640 430');svg.setAttribute('height',root.clientWidth*430/640);root.dataset.cameraYaw=degrees;
   debug={angle,view,posed:posed.map((v,i)=>({name:nodes[i].part.name,kind:nodes[i].part.kind,forearm:!!nodes[i].part.forearm,v})),coverage:visible.coverage,duration:performance.now()-start};
  }

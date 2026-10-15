@@ -7,7 +7,7 @@
     "height": 1024,
     "cropTop": 0,
     "original": "assets/photo-comparison/thigh-front-posed-original.webp?v=7f7565eda6c3",
-    "sketch": "assets/photo-comparison/thigh-front-posed-sketch.webp?v=f79fe95f5347",
+    "sketch": "assets/photo-comparison/thigh-front-posed-sketch.webp?v=94a123e57f46",
     "thumbnail": "assets/photo-comparison/thigh-front-posed-thumb.webp?v=c8146403c423"
   },
   {
@@ -18,7 +18,7 @@
     "height": 1675,
     "cropTop": 0,
     "original": "assets/photo-comparison/thigh-front-close-original.webp?v=beac31ef15b2",
-    "sketch": "assets/photo-comparison/thigh-front-close-sketch.webp?v=a7f09fb5d337",
+    "sketch": "assets/photo-comparison/thigh-front-close-sketch.webp?v=262fa8f0d4bb",
     "thumbnail": "assets/photo-comparison/thigh-front-close-thumb.webp?v=f38db1fe2097"
   },
   {
@@ -29,7 +29,7 @@
     "height": 951,
     "cropTop": 0,
     "original": "assets/photo-comparison/thigh-press-original.webp?v=8fba041012c7",
-    "sketch": "assets/photo-comparison/thigh-press-sketch.webp?v=941369ff6131",
+    "sketch": "assets/photo-comparison/thigh-press-sketch.webp?v=d47b5fbacc19",
     "thumbnail": "assets/photo-comparison/thigh-press-thumb.webp?v=4cbdac3bd1f4"
   },
   {
@@ -201,22 +201,22 @@
     "id": "male-torso-front",
     "label": "상체 · 정면",
     "detail": "가슴·복부·팔",
-    "width": 554,
-    "height": 554,
+    "width": 1254,
+    "height": 1254,
     "cropTop": 0,
-    "original": "assets/photo-comparison/male-torso-front-original.webp?v=033a5e6ebd64",
-    "sketch": "assets/photo-comparison/male-torso-front-sketch.webp?v=77d9d9af71d2",
-    "thumbnail": "assets/photo-comparison/male-torso-front-thumb.webp?v=39031098bcfc"
+    "original": "assets/photo-comparison/male-torso-front-original.webp?v=922900cb254b",
+    "sketch": "assets/photo-comparison/male-torso-front-sketch.webp?v=ad60f653c1b0",
+    "thumbnail": "assets/photo-comparison/male-torso-front-thumb.webp?v=2df5c1ea665f"
   },
   {
     "id": "male-fullbody-pose",
     "label": "전신 · 포즈",
     "detail": "사선 · 팔 올린 자세",
-    "width": 421,
-    "height": 626,
+    "width": 1028,
+    "height": 1530,
     "cropTop": 0,
-    "original": "assets/photo-comparison/male-fullbody-pose-original.webp?v=eef3d233d470",
-    "sketch": "assets/photo-comparison/male-fullbody-pose-sketch.webp?v=2e41ed8016fa",
-    "thumbnail": "assets/photo-comparison/male-fullbody-pose-thumb.webp?v=70fe5deebfbd"
+    "original": "assets/photo-comparison/male-fullbody-pose-original.webp?v=a49951fffb80",
+    "sketch": "assets/photo-comparison/male-fullbody-pose-sketch.webp?v=c832c7279bd5",
+    "thumbnail": "assets/photo-comparison/male-fullbody-pose-thumb.webp?v=cd558dce2e49"
   }
 ]

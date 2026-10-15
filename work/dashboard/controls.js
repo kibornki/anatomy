@@ -5,7 +5,6 @@
   const viewport=stage.parentElement,slider=document.getElementById('photo-wipe');
   const original=document.getElementById('photo-original'),sketch=document.getElementById('photo-sketch');
   const sketchLayer=document.getElementById('photo-sketch-layer');
-  const muscleLabels=document.getElementById('photo-muscle-labels');
   const title=document.getElementById('photo-title'),status=document.getElementById('selection-status');
   const storeKey='anatomy-dashboard-v1';
   let saved;try{saved=JSON.parse(localStorage.getItem(storeKey)||'null')}catch{}
@@ -14,32 +13,7 @@
   function syncAnatomyVisibility(){anatomyFrame.contentWindow?.postMessage({type:'anatomy-hub-visibility',visible:state.mode==='anatomy'},'*');}
   anatomyFrame.addEventListener('load',syncAnatomyVisibility);
   function persist(){try{localStorage.setItem(storeKey,JSON.stringify(state))}catch{}}
-  function renderSplit(){stage.style.setProperty('--photo-split',state.split+'%');slider.value=state.split;slider.setAttribute('aria-valuetext',`원본 ${Math.round(state.split)}%, 근육 스케치 ${Math.round(100-state.split)}%`);for(const group of muscleLabels.children)group.style.visibility=state.split<=Number(group.dataset.reveal)?'visible':'hidden'}
-  function renderMuscleLabels(item){
-    muscleLabels.replaceChildren();muscleLabels.toggleAttribute('hidden',!item.muscleLabels?.length);
-    if(!item.muscleLabels?.length)return;
-    const crop=item.cropTop||0,scale=item.width/stage.clientWidth;
-    muscleLabels.setAttribute('viewBox',`0 ${item.height*crop} ${item.width} ${item.height*(1-crop)}`);
-    function svg(name,attrs,text){const node=document.createElementNS('http://www.w3.org/2000/svg',name);for(const [key,value] of Object.entries(attrs))node.setAttribute(key,value);if(text)node.textContent=text;return node}
-    for(const label of item.muscleLabels){
-      const ax=label.at[0]*item.width/100,ay=label.at[1]*item.height/100;
-      let x=label.text[0]*item.width/100,y=label.text[1]*item.height/100;
-      const group=svg('g',{}),text=svg('text',{x,y,'font-size':11.5*scale},label.name);
-      group.append(text);muscleLabels.append(group);
-      const padX=5*scale,padY=3*scale,initial=text.getBBox();
-      x=Math.max(initial.width/2+padX+scale,Math.min(item.width-initial.width/2-padX-scale,x));
-      text.setAttribute('x',x);
-      const box=text.getBBox();
-      const rect={x:box.x-padX,y:box.y-padY,width:box.width+2*padX,height:box.height+2*padY,rx:4*scale};
-      // End the leader at the nearest label edge; never draw through the lettering.
-      const dx=ax-x,dy=ay-y,ratio=Math.max(Math.abs(dx)/(rect.width/2),Math.abs(dy)/(rect.height/2));
-      if(ratio>1){const endX=x+dx/ratio,endY=y+dy/ratio;group.prepend(svg('path',{d:`M ${ax} ${ay} L ${endX} ${endY}`}));group.append(svg('circle',{cx:ax,cy:ay,r:2*scale}))}
-      group.insertBefore(svg('rect',rect),text);
-      // Reveal a complete name only when its label and muscle anchor are on the sketch side.
-      group.dataset.reveal=100*Math.min(ax,rect.x)/item.width;
-    }
-    renderSplit();
-  }
+  function renderSplit(){stage.style.setProperty('--photo-split',state.split+'%');slider.value=state.split;slider.setAttribute('aria-valuetext',`원본 ${Math.round(state.split)}%, 근육 스케치 ${Math.round(100-state.split)}%`)}
   function fit(){
     if(document.getElementById('dashboard-photo').hidden)return;
     const item=photos.find(p=>p.id===state.photo),height=item.height*(1-(item.cropTop||0));
@@ -47,7 +21,6 @@
     const availableWidth=viewport.clientWidth-parseFloat(css.paddingLeft)-parseFloat(css.paddingRight);
     const availableHeight=viewport.clientHeight-parseFloat(css.paddingTop)-parseFloat(css.paddingBottom)-labels.getBoundingClientRect().height-parseFloat(css.gap);
     stage.style.width=Math.max(1,Math.min(availableWidth,availableHeight*item.width/height,900))+'px';
-    renderMuscleLabels(item);
   }
   function frameImage(image,rect,size){
     image.style.left=rect?-100*rect[0]/rect[2]+'%':'';

@@ -25,10 +25,6 @@ hub = hub.replace('</head>', '<style id="dashboard-style">\n' + (HERE / 'style.c
 hub = hub.replace('<body>\n', '<body>\n' + (HERE / 'layout.html').read_text(encoding='utf-8') + '\n', 1)
 hub = hub.replace('<p class="sr-only" id="selection-status"', '<!-- dashboard-anatomy-end -->\n  </section>\n</div>\n<!-- dashboard-end -->\n<p class="sr-only" id="selection-status"', 1)
 photos = json.loads((HERE / 'photos.json').read_text(encoding='utf-8'))
-muscle_labels = json.loads((HERE / 'muscle-labels.json').read_text(encoding='utf-8'))
-for photo in photos:
-    if photo['id'] in muscle_labels:
-        photo['muscleLabels'] = muscle_labels[photo['id']]
 data = json.dumps(photos, ensure_ascii=False).replace('<', '\\u003c')
 scripts = '<script type="application/json" id="photo-data">' + data + '</script>\n<script id="dashboard-controls">\n' + (HERE / 'controls.js').read_text(encoding='utf-8') + '\n' + (HERE / 'anatomy-controls.js').read_text(encoding='utf-8') + '\n</script>\n'
 hub = hub.replace('</body>', scripts + '</body>', 1)

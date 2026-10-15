@@ -5,6 +5,7 @@
 function AbdomenFlexion(host){
  const atlas=JSON.parse(document.getElementById('abdomen-atlas').textContent);
  const svg=host.querySelector('svg'),defs=svg.querySelector('defs'),volume=svg.querySelector('.diagram-volumes'),labels=svg.querySelector('.diagram-labels');
+ labels.replaceChildren();
  const ns='http://www.w3.org/2000/svg',make=(tag,attrs,parent)=>{const n=document.createElementNS(ns,tag);for(const [k,v]of Object.entries(attrs))n.setAttribute(k,v);parent?.append(n);return n;};
  const sculptDrawing=make('g',{'class':'sculpt-volumes','data-display-layer':'sculpt'},volume.parentNode);svg.insertBefore(sculptDrawing,labels);
  const anatomyClip=make('clipPath',{id:'abdomen-anatomy-half',clipPathUnits:'userSpaceOnUse'},defs),sculptClip=make('clipPath',{id:'abdomen-sculpt-half',clipPathUnits:'userSpaceOnUse'},defs);make('rect',{x:0,y:0,width:320,height:515},anatomyClip);make('rect',{x:320,y:0,width:320,height:515},sculptClip);
@@ -102,8 +103,6 @@ function AbdomenFlexion(host){
    surfaces.push({part,faces,group,g,mask,fill,outline,fibers,intersections,id,muscle});
   }
  }
- const names={'serratus':['전거근',558,183],'external-oblique':['외복사근',82,262],'internal-oblique':['내복사근',558,367],'rectus':['복직근',82,430],'latissimus':['광배근',82,335]};
- const labelNodes=Object.entries(names).map(([name,[text,x,y]])=>{const g=make('g',{'data-label':name},labels),line=make('path',{fill:'none',stroke:'var(--muted-foreground)','stroke-width':1},g),t=make('text',{x,y,'text-anchor':x<320?'start':'end',fill:'var(--foreground)'},g);t.textContent=text;return {name,x,y,line,text:t};});
  const partIndices=new Map(atlas.parts.map(p=>[p,[...new Set(surfaces.filter(m=>m.part===p).flatMap(m=>m.faces.flat()))]]));
  const offsets=new Map();for(const degrees of [0,16,90]){const a=degrees*Math.PI/180;let min=Infinity,max=-Infinity;for(const p of boneParts)for(const v of p.v){const x=v[0]*Math.cos(a)+v[2]*Math.sin(a);min=Math.min(min,x);max=Math.max(max,x);}offsets.set(degrees,degrees===0?320:320-(min+max)*1.04/2);}
  const lightSurfaces=AnatomySurfaceLighting(make,surfaces.filter(m=>m.part.kind==='muscle'&&m.group!=='aponeurosis'&&m.part.name!=='linea-alba').map(m=>({owner:m.id,g:m.g,clip:'url(#atlas-clip-'+m.id+')',anchor:m.outline,fill:m.fill})),{depthScale:1.04});
@@ -181,11 +180,7 @@ function AbdomenFlexion(host){
   }
   lightSurfaces(visible);
   composition.drawFat(visible,surfaces.length,AtlasContour);
-  for(const l of labelNodes){const candidates=surfaces.filter(m=>m.muscle===l.name&&m.group!=='aponeurosis').sort((a,b)=>visible.coverage[b.id]-visible.coverage[a.id]),points=visible.centers[candidates[0].id];let target;l.line.parentNode.style.display=points.length||transparent?'':'none';
-   if(points.length){const ys=points.slice().sort((a,b)=>a[1]-b[1]),mid=ys[Math.floor(ys.length/2)][1],band=points.filter(p=>Math.abs(p[1]-mid)<10),average=band.reduce((s,p)=>add(s,mul(p,1/band.length)),[0,0]);target=band.reduce((best,p)=>Math.hypot(...sub(p,average))<Math.hypot(...sub(best,average))?p:best);}
-   else {const m=candidates.find(m=>m.part.side===-1)||candidates[0],ids=[...new Set(m.faces.flat())],v=posed.get(m.part),avg=ids.reduce((s,i)=>add(s,mul(v[i],1/ids.length)),[0,0,0]);target=project(avg);}
-   AnatomyLabelLeader(l.line,l.text,target);
-  }
+
   }
   if(sculptVisible)composition.drawFat(sculptVisible,sculptGroups.length,AtlasContour,true,'sculpt');
   landmarks.render(new Map(atlas.parts.map(p=>[p.name,posed.get(p)])),paired?[{project,min:0,max:320},{project:sculptProject,min:320,max:640}]:[{project}]);
