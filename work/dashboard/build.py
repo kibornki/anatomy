@@ -1,4 +1,4 @@
-"""Add the two dashboard tabs without changing embedded anatomy documents."""
+"""Add the three dashboard tabs without changing embedded anatomy documents."""
 from pathlib import Path
 import json
 import re

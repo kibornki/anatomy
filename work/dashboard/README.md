@@ -1,6 +1,6 @@
 # Dashboard
 
-`index.html` contains two views: `실사비교` and `해부학•도형화`.
+`index.html` contains three views: `실사비교`, `카툰비교` and `해부학•도형화`. Studies whose IDs begin with `figure-` (illustrations and figurines) appear only in `카툰비교`; the other studies appear in `실사비교`. Both comparison tabs share the wipe viewer and remember their selected study separately.
 
 The existing anatomy topic data, iframe sandbox and saved topic state remain in the hub. Region builders can still update their entries in `anatomy-data`.
 
@@ -16,7 +16,7 @@ Supplied comparison sheets can use `originalRect` and `sketchRect` as `[x, y, wi
 
 After changing photo assets or dashboard source:
 
-Muscle-name callouts are not displayed in either dashboard tab. Bone landmark labels remain available in the anatomy controls.
+Muscle-name callouts are not displayed in the dashboard tabs. Bone landmark labels remain available in the anatomy controls.
 
 ```powershell
 python -X utf8 work/dashboard/package_photos.py

@@ -2,21 +2,26 @@
   const photos=JSON.parse(document.getElementById('photo-data').textContent);
   const tabs=[...document.querySelectorAll('[data-dashboard-mode]')];
   const list=document.getElementById('photo-list'),stage=document.getElementById('photo-compare');
+  const layout=document.querySelector('.photo-layout'),library=layout.querySelector('.photo-library');
+  const category=item=>item.id.startsWith('figure-')?'cartoon':'photo';
+  const photoItems=photos.filter(item=>category(item)==='photo'),cartoonItems=photos.filter(item=>category(item)==='cartoon');
   const viewport=stage.parentElement,slider=document.getElementById('photo-wipe');
   const original=document.getElementById('photo-original'),sketch=document.getElementById('photo-sketch');
   const sketchLayer=document.getElementById('photo-sketch-layer');
   const title=document.getElementById('photo-title'),status=document.getElementById('selection-status');
   const storeKey='anatomy-dashboard-v1';
   let saved;try{saved=JSON.parse(localStorage.getItem(storeKey)||'null')}catch{}
-  const state={mode:saved?.mode==='anatomy'?'anatomy':'photo',photo:photos.some(p=>p.id===saved?.photo)?saved.photo:photos[0].id,split:Number.isFinite(saved?.split)?Math.max(0,Math.min(100,saved.split)):50};
+  const legacyCartoon=cartoonItems.some(p=>p.id===saved?.photo);
+  const state={mode:saved?.mode==='anatomy'?'anatomy':saved?.mode==='cartoon'||legacyCartoon?'cartoon':'photo',photo:photoItems.some(p=>p.id===saved?.photo)?saved.photo:photoItems[0].id,cartoon:cartoonItems.some(p=>p.id===saved?.cartoon)?saved.cartoon:legacyCartoon?saved.photo:cartoonItems[0].id,split:Number.isFinite(saved?.split)?Math.max(0,Math.min(100,saved.split)):50};
+  const currentPhoto=()=>photos.find(p=>p.id===state[state.mode==='cartoon'?'cartoon':'photo']);
   const anatomyFrame=document.getElementById('anatomy-frame');
   function syncAnatomyVisibility(){anatomyFrame.contentWindow?.postMessage({type:'anatomy-hub-visibility',visible:state.mode==='anatomy'},'*');}
   anatomyFrame.addEventListener('load',syncAnatomyVisibility);
   function persist(){try{localStorage.setItem(storeKey,JSON.stringify(state))}catch{}}
   function renderSplit(){stage.style.setProperty('--photo-split',state.split+'%');slider.value=state.split;slider.setAttribute('aria-valuetext',`원본 ${Math.round(state.split)}%, 근육 스케치 ${Math.round(100-state.split)}%`)}
   function fit(){
-    if(document.getElementById('dashboard-photo').hidden)return;
-    const item=photos.find(p=>p.id===state.photo),height=item.height*(1-(item.cropTop||0));
+    if(stage.closest('.dashboard-panel').hidden)return;
+    const item=currentPhoto(),height=item.height*(1-(item.cropTop||0));
     const css=getComputedStyle(viewport),labels=viewport.querySelector('.photo-labels');
     const availableWidth=viewport.clientWidth-parseFloat(css.paddingLeft)-parseFloat(css.paddingRight);
     const availableHeight=viewport.clientHeight-parseFloat(css.paddingTop)-parseFloat(css.paddingBottom)-labels.getBoundingClientRect().height-parseFloat(css.gap);
@@ -29,9 +34,9 @@
     image.style.height=rect?100*size[1]/rect[3]+'%':'';
   }
   function selectPhoto(id,save=true){
-    const item=photos.find(p=>p.id===id);if(!item)return;
+    const item=photos.find(p=>p.id===id);if(!item||category(item)!==state.mode)return;
     const hasSketch=!!item.sketch;
-    state.photo=id;original.src=item.original;
+    state[state.mode]=id;original.src=item.original;
     if(hasSketch)sketch.src=item.sketch;else sketch.removeAttribute('src');
     frameImage(original,item.originalRect,item.sourceSize);frameImage(sketch,item.sketchRect,item.sourceSize);
     sketchLayer.hidden=!hasSketch;
@@ -39,14 +44,14 @@
     stage.querySelector('.photo-divider').hidden=!hasSketch;
     viewport.querySelector('.photo-labels span:last-child').textContent=hasSketch?'근육 스케치':'원본만';
     title.nextElementSibling.textContent=hasSketch?'원본 ↔ 근육 스케치':'원본 사진';
-    original.alt=item.label+' 원본 사진';sketch.alt=item.label+' 근육 스케치';title.textContent=item.label;
+    original.alt=item.label+(state.mode==='cartoon'?' 원본 이미지':' 원본 사진');sketch.alt=item.label+' 근육 스케치';title.textContent=item.label;
     const crop=item.cropTop||0;stage.style.aspectRatio=item.width+'/'+item.height*(1-crop);
     stage.style.setProperty('--photo-top',-100*crop/(1-crop)+'%');stage.style.setProperty('--photo-image-height',100/(1-crop)+'%');
     for(const button of list.children)button.setAttribute('aria-pressed',String(button.dataset.photo===id));
     fit();if(save){status.textContent=item.label+' 선택됨';persist()}
   }
   for(const item of photos){
-    const button=document.createElement('button');button.type='button';button.className='photo-choice';button.dataset.photo=item.id;button.setAttribute('aria-pressed','false');
+    const button=document.createElement('button');button.type='button';button.className='photo-choice';button.dataset.photo=item.id;button.dataset.category=category(item);button.setAttribute('aria-pressed','false');
     const thumb=document.createElement(item.originalRect?'span':'img');
     if(item.originalRect){const image=document.createElement('img');image.src=item.thumbnail;image.alt='';image.loading='lazy';frameImage(image,item.originalRect,item.sourceSize);thumb.className='photo-choice-sheet';thumb.setAttribute('aria-hidden','true');thumb.append(image);}
     else{thumb.src=item.thumbnail;thumb.alt='';thumb.loading='lazy';}
@@ -56,12 +61,18 @@
     state.mode=mode;
     syncAnatomyVisibility();
     for(const tab of tabs){const active=tab.dataset.dashboardMode===mode;tab.setAttribute('aria-selected',String(active));tab.tabIndex=active?0:-1;document.getElementById(tab.getAttribute('aria-controls')).hidden=!active}
-    if(mode==='photo')requestAnimationFrame(fit);
+    if(mode!=='anatomy'){
+      document.getElementById('dashboard-'+mode).append(layout);
+      library.querySelector('h2').textContent=mode==='cartoon'?'비교 일러스트·피규어':'비교 사진';
+      library.setAttribute('aria-label',mode==='cartoon'?'카툰 비교 선택':'비교 사진 선택');
+      for(const button of list.children)button.hidden=button.dataset.category!==mode;
+      selectPhoto(state[mode],false);requestAnimationFrame(fit);
+    }
     if(save)persist();
   }
   tabs.forEach((tab,i)=>{
     tab.addEventListener('click',()=>selectMode(tab.dataset.dashboardMode));
-    tab.addEventListener('keydown',event=>{let next;if(event.key==='ArrowLeft'||event.key==='ArrowRight')next=1-i;else if(event.key==='Home')next=0;else if(event.key==='End')next=1;else return;event.preventDefault();tabs[next].focus();selectMode(tabs[next].dataset.dashboardMode)});
+    tab.addEventListener('keydown',event=>{let next;if(event.key==='ArrowLeft')next=(i+tabs.length-1)%tabs.length;else if(event.key==='ArrowRight')next=(i+1)%tabs.length;else if(event.key==='Home')next=0;else if(event.key==='End')next=tabs.length-1;else return;event.preventDefault();tabs[next].focus();selectMode(tabs[next].dataset.dashboardMode)});
   });
   slider.addEventListener('input',()=>{state.split=Number(slider.value);renderSplit()});slider.addEventListener('change',persist);
   let dragging=false;
@@ -69,5 +80,5 @@
   stage.addEventListener('pointerdown',event=>{if(event.button!==0||slider.disabled)return;event.preventDefault();dragging=true;stage.setPointerCapture(event.pointerId);slider.focus({preventScroll:true});move(event)});
   stage.addEventListener('pointermove',event=>{if(dragging)move(event)});stage.addEventListener('pointerup',()=>{dragging=false;persist()});stage.addEventListener('pointercancel',()=>{dragging=false});
   new ResizeObserver(fit).observe(viewport);window.addEventListener('resize',fit);
-  selectPhoto(state.photo,false);renderSplit();selectMode(state.mode,false);
+  renderSplit();selectMode(state.mode,false);
 })();

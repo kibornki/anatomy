@@ -12,6 +12,7 @@
 .photo-list{display:grid;gap:9px;overflow:auto;padding:3px;align-content:start}
 .photo-choice{display:grid;grid-template-columns:48px minmax(0,1fr);align-items:center;gap:10px;min-height:82px;height:max-content;width:100%;padding:10px;text-align:left;background:#fff;color:#263347;border:1px solid #dce2eb;border-radius:12px;cursor:pointer}
 .photo-choice:hover{border-color:#abc6ec;background:#f5f9ff}.photo-choice[aria-pressed=true]{border-color:#6b9cdf;background:#eaf2ff}
+.photo-choice[hidden]{display:none}
 .photo-choice img{display:block;width:48px;height:58px;object-fit:contain;background:white;border-radius:5px}
 .photo-choice-sheet{display:block;position:relative;overflow:hidden;width:48px;height:58px;border-radius:5px}
 .photo-choice-sheet img{position:absolute;max-width:none;object-fit:fill}
